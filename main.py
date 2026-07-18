@@ -7,7 +7,7 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.add(
-        ft.Text("AI Tutor Buddy", size=30, weight=ft.FontWeight.BOLD, color=ft.colors.BLUE),
+        ft.Text("AI Tutor Buddy", size=30, weight=ft.FontWeight.BOLD, color="blue"),
         ft.Text("System Status: UI is Active!", size=15)
     )
 
