@@ -69,3 +69,25 @@ from .classroom_state_machine import InvalidLessonTransition, LessonStateMachine
 from .learning_goals import LearningGoalManager
 from .session_memory import ClassroomSessionMemory
 from .teacher_turn_manager import TeacherTurnManager
+
+from .knowledge_graph import KnowledgeGraphError, StudentKnowledgeGraph
+from .long_term_memory_service import LongTermStudentMemoryService
+from .memory_models import (
+    ConceptNode,
+    KnowledgeGraphSnapshot,
+    LearningMemoryEvent,
+    MasteryLevel,
+    MemoryEventType,
+    MemoryVisibility,
+    MisconceptionRecord,
+    RevisionRecommendation,
+    StudentMemoryProfile,
+)
+from .memory_privacy import MemoryAccessError, MemoryPrivacyPolicy
+from .memory_repository import (
+    InMemoryMemoryRepository,
+    JsonlMemoryRepository,
+    MemoryRepository,
+)
+from .misconception_memory import MisconceptionMemory
+from .revision_scheduler import RevisionScheduler
