@@ -1,13 +1,13 @@
-import flet as ft
+﻿import flet as ft
 from google import genai
 import os
 from dotenv import load_dotenv
+import warnings
 
-# Load variables from .env file
+# Hide unnecessary Flet update warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 load_dotenv()
 
-# We initialize the client outside the main function so Python 
-# doesn't garbage collect it and close the HTTP connection!
 api_key = os.getenv("GEMINI_API_KEY")
 ai_client = genai.Client(api_key=api_key) if api_key else None
 
@@ -16,14 +16,12 @@ def main(page: ft.Page):
         page.add(ft.Text("Error: API Key not found! Please check your .env file.", color="red"))
         return
     
-    # Strict Teacher Persona
     system_instruction = '''You are a strict but friendly AI Tutor for 7th and 8th-grade English medium students in India. 
     Rule 1: Never give direct answers to homework or math problems.
     Rule 2: Explain concepts in simple language, then ask a guiding question to make the student think.
     Rule 3: Do not blindly agree. Verify the student's logic first.
     Rule 4: Keep responses concise and engaging.'''
     
-    # Initialize Chat Session - CHANGED MODEL TO 1.5-flash
     chat_session = ai_client.chats.create(
         model='gemini-1.5-flash',
         config={"system_instruction": system_instruction}
@@ -60,5 +58,4 @@ def main(page: ft.Page):
     )
 
 if __name__ == '__main__':
-    # Using ft.app(main) which works for this version. The warnings can be ignored.
     ft.app(main)
