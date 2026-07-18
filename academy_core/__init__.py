@@ -23,3 +23,13 @@ from .reasoning_engine import (
 )
 from .reasoning_service import ReasonedLesson, ReasoningService
 from .teaching_plan import TeachingPlan, build_teaching_plan
+
+from .strategy_catalog import STRATEGY_CATALOG, all_strategies, get_strategy
+from .strategy_models import (
+    StrategyDefinition,
+    StrategyKey,
+    StrategyScore,
+    TeachingStrategySelection,
+)
+from .strategy_selector import StrategySelectionContext, TeachingStrategySelector
+from .strategy_service import StrategicLesson, TeachingStrategyService

@@ -4,14 +4,14 @@
 Core before UI; UI after intelligence; EXE/APK after stability; every phase needs backup, tests, validation, and Git checkpoint.
 
 ## Completed
-- Phase 1 Vision & Planning Ã¢Å“â€¦
-- Phase 2 Environment & Git Ã¢Å“â€¦
-- Phase 3 AI Brain Ã¢Å“â€¦
-- Phase 4 Voice Ã¢Å“â€¦
-- Phase 5 Core Tutoring Engine Ã¢Å“â€¦
+- Phase 1 Vision & Planning ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+- Phase 2 Environment & Git ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+- Phase 3 AI Brain ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+- Phase 4 Voice ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+- Phase 5 Core Tutoring Engine ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
 
 ## Phase 6: GyanVerse Intelligence
-- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests Ã¢Å“â€¦ after validation
+- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ after validation
 - **6B Student Analyzer:** context, confidence, misconception, language, pace
 - **6C Teacher Reasoning Engine:** hint/explanation/practice/revision decisions
 - **6D Teaching Strategy Selector:** subject-aware teaching methods
@@ -25,7 +25,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Phase 8 Performance, Safety & Stabilization
 - Phase 9 UI/UX
 - Phase 10 EXE, APK & Release
-### Phase 6B Ã¢â‚¬â€ Student Analyzer Ã¢Å“â€¦
+### Phase 6B ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Student Analyzer ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
 
 - Stable student-context contract
 - Subject inference from topic and current message
@@ -38,7 +38,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Non-labelling safety rules
 - Automated analyzer tests
 
-### Phase 6C â€” Teacher Reasoning Engine âœ…
+### Phase 6C Ã¢â‚¬â€ Teacher Reasoning Engine Ã¢Å“â€¦
 
 - Structured teaching-decision contract
 - Clarification and prerequisite priority rules
@@ -50,3 +50,18 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Explainable reasoning evidence
 - Safe teaching-plan generation
 - Automated reasoning-engine tests
+
+### Phase 6D â€” Teaching Strategy Selector âœ…
+
+- Central teaching-strategy catalog
+- Subject-specific pedagogy defaults
+- Strategy compatibility rules
+- Explainable strategy scoring
+- Primary and supporting strategy selection
+- Student-preference support
+- Recent-strategy variety control
+- Current-turn avoid list
+- Student-facing teaching sequence
+- Reasoning-engine integration service
+- Final-answer policy preservation
+- Automated strategy-selector tests
