@@ -4,14 +4,14 @@
 Core before UI; UI after intelligence; EXE/APK after stability; every phase needs backup, tests, validation, and Git checkpoint.
 
 ## Completed
-- Phase 1 Vision & Planning ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
-- Phase 2 Environment & Git ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
-- Phase 3 AI Brain ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
-- Phase 4 Voice ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
-- Phase 5 Core Tutoring Engine ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+- Phase 1 Vision & Planning ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+- Phase 2 Environment & Git ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+- Phase 3 AI Brain ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+- Phase 4 Voice ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+- Phase 5 Core Tutoring Engine ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
 
 ## Phase 6: GyanVerse Intelligence
-- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ after validation
+- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ after validation
 - **6B Student Analyzer:** context, confidence, misconception, language, pace
 - **6C Teacher Reasoning Engine:** hint/explanation/practice/revision decisions
 - **6D Teaching Strategy Selector:** subject-aware teaching methods
@@ -25,7 +25,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Phase 8 Performance, Safety & Stabilization
 - Phase 9 UI/UX
 - Phase 10 EXE, APK & Release
-### Phase 6B ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Student Analyzer ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+### Phase 6B ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Student Analyzer ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
 
 - Stable student-context contract
 - Subject inference from topic and current message
@@ -38,7 +38,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Non-labelling safety rules
 - Automated analyzer tests
 
-### Phase 6C Ã¢â‚¬â€ Teacher Reasoning Engine Ã¢Å“â€¦
+### Phase 6C ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Teacher Reasoning Engine ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
 
 - Structured teaching-decision contract
 - Clarification and prerequisite priority rules
@@ -51,7 +51,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Safe teaching-plan generation
 - Automated reasoning-engine tests
 
-### Phase 6D â€” Teaching Strategy Selector âœ…
+### Phase 6D Ã¢â‚¬â€ Teaching Strategy Selector Ã¢Å“â€¦
 
 - Central teaching-strategy catalog
 - Subject-specific pedagogy defaults
@@ -65,3 +65,21 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Reasoning-engine integration service
 - Final-answer policy preservation
 - Automated strategy-selector tests
+
+### Phase 6E â€” Parent, Guardian & Future Path Intelligence âœ…
+
+- Guardian profiles
+- Multiple children per guardian
+- Linked-child authorization
+- Privacy-safe progress snapshots
+- Daily guardian reports
+- Class Teacher guardian conversations
+- Principal progress overview
+- Strength and interest mapping
+- Home-support recommendations
+- Sensitive-note protection
+- Safeguarding summary boundary
+- Sibling-comparison protection
+- Exploration-based future-path guidance
+- Non-deterministic career recommendations
+- Automated guardian-intelligence tests

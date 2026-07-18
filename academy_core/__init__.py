@@ -33,3 +33,19 @@ from .strategy_models import (
 )
 from .strategy_selector import StrategySelectionContext, TeachingStrategySelector
 from .strategy_service import StrategicLesson, TeachingStrategyService
+
+from .future_path import FuturePathAdvisor
+from .guardian_models import (
+    FuturePathSuggestion,
+    GuardianConversationResponse,
+    GuardianProfile,
+    GuardianReport,
+    GuardianRole,
+    LearningActivity,
+    PrivacyLevel,
+    ReportAudience,
+    StudentProgressSnapshot,
+)
+from .guardian_privacy import GuardianAccessError, GuardianPrivacyPolicy
+from .guardian_service import GuardianLearningService
+from .progress_reporting import GuardianReportBuilder
