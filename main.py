@@ -23,9 +23,9 @@ def main(page: ft.Page):
     Rule 3: Do not blindly agree. Verify the student's logic first.
     Rule 4: Keep responses concise and engaging.'''
     
-    # Initialize Chat Session
+    # Initialize Chat Session - CHANGED MODEL TO 1.5-flash
     chat_session = ai_client.chats.create(
-        model='gemini-2.5-flash',
+        model='gemini-1.5-flash',
         config={"system_instruction": system_instruction}
     )
 
