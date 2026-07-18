@@ -140,3 +140,19 @@ from .recovery_manager import RecoveryManager
 from .data_lifecycle import DataLifecycleManager
 from .health_checks import HealthCheckRunner
 from .stabilization_service import StabilizationService
+
+from .deployment_models import (
+    EnvironmentName,
+    ReleaseManifest,
+    RuntimeConfig,
+    StartupCheck,
+    StartupStatus,
+    StartupValidationReport,
+)
+from .runtime_config import RuntimeConfigManager
+from .structured_logging import JsonLogFormatter, build_logger, set_correlation_id
+from .metrics import MetricsRegistry, MetricsSnapshot
+from .startup_validator import StartupValidator
+from .health_endpoint import HealthEndpointService
+from .release_manifest import ReleaseManifestBuilder, SemanticVersion
+from .deployment_service import ProductionPlatformService
