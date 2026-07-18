@@ -156,3 +156,21 @@ from .startup_validator import StartupValidator
 from .health_endpoint import HealthEndpointService
 from .release_manifest import ReleaseManifestBuilder, SemanticVersion
 from .deployment_service import ProductionPlatformService
+
+from .release_candidate_models import (
+    AcceptanceDecision,
+    GateStatus,
+    OperatorAcceptanceItem,
+    OperatorAcceptanceRecord,
+    ReleaseBundleManifest,
+    ReleaseCandidateAudit,
+    ReleaseGateResult,
+    RollbackDrillResult,
+)
+from .rc_audit import ReleaseCandidateAuditor
+from .release_packager import ReleasePackager
+from .freeze_policy import FreezeDecision, ReleaseFreezePolicy
+from .documentation_audit import DocumentationAuditor
+from .rollback_drill import RollbackDrill
+from .operator_acceptance import OperatorAcceptanceService
+from .final_release_service import FinalReleaseService
