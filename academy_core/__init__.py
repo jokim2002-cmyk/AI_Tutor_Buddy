@@ -105,3 +105,22 @@ from .learning_intelligence_models import (
 from .exam_readiness import ExamReadinessCalculator
 from .intelligent_revision_planner import IntelligentRevisionPlanner
 from .learning_intelligence_service import LearningIntelligenceService
+
+from .parent_reporting_models import (
+    AlertSeverity,
+    ChildDashboardCard,
+    DeliveryChannel,
+    HomeSupportAction,
+    LearningReportInput,
+    ParentAlert,
+    ParentDashboard,
+    ParentProgressReport,
+    ParentReportPreferences,
+    ReportHistoryEntry,
+    ReportPeriod,
+)
+from .parent_report_repository import ParentReportRepository
+from .home_support_planner import HomeSupportPlanner
+from .parent_alerts import ParentAlertPolicy
+from .report_exporter import ParentReportExporter
+from .parent_monitoring_service import ParentMonitoringService
