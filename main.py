@@ -60,5 +60,5 @@ def main(page: ft.Page):
     )
 
 if __name__ == '__main__':
-    # Fixed Flet deprecation warning
-    ft.run(target=main)
+    # Fixed ft.run signature
+    ft.app(main)
