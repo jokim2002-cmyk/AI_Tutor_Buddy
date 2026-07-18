@@ -124,3 +124,19 @@ from .home_support_planner import HomeSupportPlanner
 from .parent_alerts import ParentAlertPolicy
 from .report_exporter import ParentReportExporter
 from .parent_monitoring_service import ParentMonitoringService
+
+from .stabilization_models import (
+    BackupManifest,
+    DeletionReceipt,
+    HealthCheckResult,
+    HealthStatus,
+    RiskLevel,
+    SecurityFinding,
+    StabilizationReport,
+)
+from .security_policy import SecurityPolicy
+from .rate_limiter import RateLimitDecision, SlidingWindowRateLimiter
+from .recovery_manager import RecoveryManager
+from .data_lifecycle import DataLifecycleManager
+from .health_checks import HealthCheckRunner
+from .stabilization_service import StabilizationService
