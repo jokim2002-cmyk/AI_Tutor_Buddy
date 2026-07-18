@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import logging
-import wave
 import os
 import re
 import subprocess
 import tempfile
 import threading
+import wave
 from pathlib import Path
 from typing import Optional
 
@@ -18,10 +18,14 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from tutor_engine import TutorEngine, TutorEngineError
+
 APP_DIR = Path(__file__).resolve().parent
 LOG_DIR = APP_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 LOG_FILE = LOG_DIR / "ai_tutor.log"
+DATA_DIR = APP_DIR / "data"
+DATA_DIR.mkdir(exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,6 +46,7 @@ AI_CLIENT = genai.Client(api_key=API_KEY) if API_KEY else None
 
 RECORD_SECONDS = 5
 SAMPLE_RATE = 44_100
+DEFAULT_STUDENT_ID = os.getenv("AI_TUTOR_STUDENT_ID", "student-1").strip() or "student-1"
 
 _tts_lock = threading.RLock()
 
@@ -54,7 +59,6 @@ def write_pcm_wave(
     sample_rate: int = 24_000,
     sample_width: int = 2,
 ) -> None:
-    """Write Gemini TTS raw PCM bytes to a standard WAV file."""
     with wave.open(path, "wb") as wav_file:
         wav_file.setnchannels(channels)
         wav_file.setsampwidth(sample_width)
@@ -63,7 +67,6 @@ def write_pcm_wave(
 
 
 def clean_response_text(text: str) -> str:
-    """Remove markdown characters that should not be spoken aloud."""
     cleaned = re.sub(r"[*_`#>]", "", text or "")
     return re.sub(r"\n{3,}", "\n\n", cleaned).strip()
 
@@ -74,9 +77,22 @@ def main(page: ft.Page) -> None:
     page.window.height = 700
     page.padding = 16
 
+    tutor_engine = TutorEngine(
+        db_path=DATA_DIR / "ai_tutor.db",
+        ai_client=AI_CLIENT,
+        model_name=MODEL_NAME,
+    )
+    tutor_engine.ensure_student(
+        student_id=DEFAULT_STUDENT_ID,
+        name="Student",
+        grade=7,
+        board="CBSE",
+        preferred_language="English (India)",
+    )
+
     chat_history = ft.ListView(expand=True, spacing=10, auto_scroll=True)
     user_input = ft.TextField(
-        hint_text="Ask your doubt...",
+        hint_text="Ask your doubt or type /help...",
         expand=True,
         on_submit=lambda event: send_message(event),
     )
@@ -102,7 +118,6 @@ def main(page: ft.Page) -> None:
         page.update()
 
     def speak(text: str) -> None:
-        """Generate and play a warm female tutor voice using Gemini TTS."""
         temp_audio_path: Optional[str] = None
         try:
             if AI_CLIENT is None:
@@ -138,12 +153,10 @@ def main(page: ft.Page) -> None:
                         ),
                     ),
                 )
-
                 try:
                     audio_data = response.candidates[0].content.parts[0].inline_data.data
                 except (AttributeError, IndexError, TypeError) as exc:
                     raise RuntimeError("Gemini TTS returned no playable audio.") from exc
-
                 if not audio_data:
                     raise RuntimeError("Gemini TTS returned empty audio data.")
 
@@ -154,7 +167,6 @@ def main(page: ft.Page) -> None:
                 samples, sample_rate = sf.read(temp_audio_path, dtype="float32")
                 sd.play(samples, sample_rate)
                 sd.wait()
-
             LOGGER.info("Gemini female TTS completed")
         except Exception as exc:
             LOGGER.exception("Gemini female TTS failed")
@@ -166,6 +178,91 @@ def main(page: ft.Page) -> None:
                 except OSError:
                     LOGGER.warning("Could not delete temporary TTS file: %s", temp_audio_path)
 
+    def command_help() -> str:
+        return (
+            "Core Tutor commands:\n"
+            "/sync Subject | Chapter | What school taught today\n"
+            "/homework Subject | Chapter | Number of questions\n"
+            "/check HomeworkID | Answer 1 || Answer 2 || Answer 3\n"
+            "/progress\n"
+            "/today\n"
+            "/help\n\n"
+            "Example: /sync Mathematics | Fractions | Addition of unlike fractions"
+        )
+
+    def handle_core_command(text: str) -> Optional[str]:
+        lowered = text.lower().strip()
+
+        if lowered == "/help":
+            return command_help()
+
+        if lowered == "/progress":
+            return tutor_engine.format_progress(DEFAULT_STUDENT_ID)
+
+        if lowered == "/today":
+            return tutor_engine.format_today_summary(DEFAULT_STUDENT_ID)
+
+        if lowered.startswith("/sync "):
+            parts = [part.strip() for part in text[6:].split("|", 2)]
+            if len(parts) != 3 or not all(parts):
+                return "Use: /sync Subject | Chapter | What school taught today"
+            sync = tutor_engine.record_daily_sync(
+                student_id=DEFAULT_STUDENT_ID,
+                subject=parts[0],
+                chapter=parts[1],
+                topic=parts[2],
+            )
+            return (
+                f"Daily study saved. Subject: {sync['subject']}, "
+                f"Chapter: {sync['chapter']}, Topic: {sync['topic']}."
+            )
+
+        if lowered.startswith("/homework "):
+            parts = [part.strip() for part in text[10:].split("|", 2)]
+            if len(parts) < 2 or not parts[0] or not parts[1]:
+                return "Use: /homework Subject | Chapter | Number of questions"
+            count = 5
+            if len(parts) == 3 and parts[2]:
+                try:
+                    count = int(parts[2])
+                except ValueError:
+                    return "Question count must be a number from 1 to 10."
+            homework = tutor_engine.generate_homework(
+                student_id=DEFAULT_STUDENT_ID,
+                subject=parts[0],
+                chapter=parts[1],
+                question_count=count,
+            )
+            lines = [f"Homework ID: {homework['homework_id']}"]
+            for item in homework["questions"]:
+                lines.append(f"{item['number']}. {item['question']}")
+            lines.append(
+                "Submit using: /check HomeworkID | Answer 1 || Answer 2 || Answer 3"
+            )
+            return "\n".join(lines)
+
+        if lowered.startswith("/check "):
+            body = text[7:].strip()
+            if "|" not in body:
+                return "Use: /check HomeworkID | Answer 1 || Answer 2 || Answer 3"
+            homework_id, answer_text = [part.strip() for part in body.split("|", 1)]
+            answers = [item.strip() for item in answer_text.split("||")]
+            result = tutor_engine.check_homework(
+                student_id=DEFAULT_STUDENT_ID,
+                homework_id=homework_id,
+                answers=answers,
+            )
+            lines = [
+                f"Homework checked: {result['score']}/{result['total']}",
+                f"Mastery: {result['mastery_percent']}%",
+            ]
+            for feedback in result["feedback"]:
+                lines.append(
+                    f"{feedback['number']}. {feedback['status']}: {feedback['feedback']}"
+                )
+            return "\n".join(lines)
+
+        return None
 
     def send_message(_event: object = None) -> None:
         nonlocal chat_session
@@ -173,55 +270,67 @@ def main(page: ft.Page) -> None:
         if not user_text:
             return
 
-        if AI_CLIENT is None:
-            add_message("Error: GEMINI_API_KEY was not found in the .env file.", color="red")
-            return
-
-        LOGGER.info("Sending message to Gemini")
+        LOGGER.info("Processing student message")
         set_busy(True, "Tutor is thinking...")
         add_message(f"Student: {user_text}", color="blue", bold=True)
         user_input.value = ""
         page.update()
 
         try:
-            system_instruction = (
-                "You are a strict but friendly AI Tutor. "
-                "Never blindly agree with the student. Verify the student's logic first. "
-                "Guide with hints and reasoning instead of immediately giving the final answer. "
-                "Use simple language suitable for the student's class level. "
-                "Reply only in Indian English, Hindi, or Gujarati. Match the student's language. "
-                "If the student mixes these languages, reply naturally in the same mix. "
-                "Do not use markdown or asterisks."
-            )
-            if chat_session is None:
-                chat_session = AI_CLIENT.chats.create(
-                    model=MODEL_NAME,
-                    config={"system_instruction": system_instruction},
-                )
-            response = chat_session.send_message(user_text)
-            clean_text = clean_response_text(response.text)
-            if not clean_text:
-                raise RuntimeError("Gemini returned an empty response.")
+            command_response = handle_core_command(user_text)
+            if command_response is not None:
+                clean_text = clean_response_text(command_response)
+            else:
+                if AI_CLIENT is None:
+                    raise RuntimeError("GEMINI_API_KEY was not found in the .env file.")
 
-            LOGGER.info("Gemini response received successfully")
+                memory_context = tutor_engine.build_student_context(DEFAULT_STUDENT_ID)
+                system_instruction = (
+                    "You are a strict but friendly AI Tutor. "
+                    "Never blindly agree with the student. Verify the student's logic first. "
+                    "Use a hint-first method: first ask or give a small clue, then guide steps, "
+                    "and reveal the final answer only when necessary. "
+                    "Use simple language suitable for the student's class level. "
+                    "Identify likely misconception or careless error when relevant. "
+                    "Reply only in Indian English, Hindi, or Gujarati and match the student's language. "
+                    "Do not use markdown or asterisks.\n\n"
+                    f"STUDENT MEMORY:\n{memory_context}"
+                )
+                if chat_session is None:
+                    chat_session = AI_CLIENT.chats.create(
+                        model=MODEL_NAME,
+                        config={"system_instruction": system_instruction},
+                    )
+                response = chat_session.send_message(user_text)
+                clean_text = clean_response_text(response.text)
+                if not clean_text:
+                    raise RuntimeError("Gemini returned an empty response.")
+                tutor_engine.record_learning_interaction(
+                    student_id=DEFAULT_STUDENT_ID,
+                    user_text=user_text,
+                    tutor_text=clean_text,
+                )
+
             add_message(f"Tutor: {clean_text}", color="green")
             status_text.value = "Speaking..."
             page.update()
             speak(clean_text)
+        except TutorEngineError as exc:
+            LOGGER.exception("Tutor engine request failed")
+            add_message(f"Tutor engine error: {exc}", color="red")
         except Exception as exc:
-            LOGGER.exception("Gemini request failed")
+            LOGGER.exception("Tutor request failed")
             add_message(f"Tutor error: {type(exc).__name__}: {exc}", color="red")
         finally:
             set_busy(False, "Ready")
+            user_input.focus()
 
     def listen_audio(_event: object = None) -> None:
         set_busy(True, f"Listening for {RECORD_SECONDS} seconds...")
         temp_path: Optional[str] = None
-
         try:
             device = sd.query_devices(kind="input")
             LOGGER.info("Using microphone: %s", device.get("name", "Unknown"))
-
             recording = sd.rec(
                 int(RECORD_SECONDS * SAMPLE_RATE),
                 samplerate=SAMPLE_RATE,
@@ -242,9 +351,6 @@ def main(page: ft.Page) -> None:
                 recognizer.adjust_for_ambient_noise(source, duration=0.4)
                 audio = recognizer.record(source)
 
-            # SpeechRecognition launches a FLAC converter subprocess. On some
-            # Windows + Python 3.14 + Flet desktop sessions, inheriting stderr
-            # raises WinError 50. Force a valid pipe only for this conversion.
             original_popen = subprocess.Popen
 
             def safe_popen(*args, **kwargs):
@@ -253,26 +359,25 @@ def main(page: ft.Page) -> None:
 
             subprocess.Popen = safe_popen
             try:
-                transcript = recognizer.recognize_google(
-                    audio, language="en-IN"
-                ).strip()
+                transcript = recognizer.recognize_google(audio, language="en-IN").strip()
             finally:
                 subprocess.Popen = original_popen
+
             if not transcript:
                 raise sr.UnknownValueError("No speech was detected.")
 
             LOGGER.info("Speech recognized successfully")
             user_input.value = transcript
-            user_input.hint_text = "Ask your doubt..."
+            user_input.hint_text = "Ask your doubt or type /help..."
             page.update()
         except sr.UnknownValueError:
-            LOGGER.warning("Speech was not understood")
-            add_message("Voice error: Speech samajh nahi aayi. Mic ke paas clearly bolkar retry karo.", color="red")
+            add_message(
+                "Voice error: Speech samajh nahi aayi. Mic ke paas clearly bolkar retry karo.",
+                color="red",
+            )
         except sr.RequestError as exc:
-            LOGGER.exception("Google Speech Recognition request failed")
-            add_message(f"Voice service error: Internet/STT service unavailable: {exc}", color="red")
+            add_message(f"Voice service error: Internet/STT unavailable: {exc}", color="red")
         except sd.PortAudioError as exc:
-            LOGGER.exception("Microphone/PortAudio error")
             add_message(f"Microphone error: {exc}", color="red")
         except Exception as exc:
             LOGGER.exception("Unexpected voice error")
@@ -300,7 +405,14 @@ def main(page: ft.Page) -> None:
         ft.Row([user_input, mic_button, send_button]),
     )
 
-    LOGGER.info("AI Tutor Buddy started | model=%s | tts_model=%s | voice=%s | log=%s", MODEL_NAME, TTS_MODEL_NAME, TTS_VOICE_NAME, LOG_FILE)
+    add_message("Tutor: Phase 5 Core Engine ready. Type /help to see study commands.", color="green")
+    LOGGER.info(
+        "AI Tutor Buddy started | model=%s | tts_model=%s | voice=%s | database=%s",
+        MODEL_NAME,
+        TTS_MODEL_NAME,
+        TTS_VOICE_NAME,
+        tutor_engine.db_path,
+    )
 
 
 if __name__ == "__main__":
