@@ -4,14 +4,14 @@
 Core before UI; UI after intelligence; EXE/APK after stability; every phase needs backup, tests, validation, and Git checkpoint.
 
 ## Completed
-- Phase 1 Vision & Planning ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
-- Phase 2 Environment & Git ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
-- Phase 3 AI Brain ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
-- Phase 4 Voice ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
-- Phase 5 Core Tutoring Engine ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+- Phase 1 Vision & Planning ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
+- Phase 2 Environment & Git ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
+- Phase 3 AI Brain ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
+- Phase 4 Voice ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
+- Phase 5 Core Tutoring Engine ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
 
 ## Phase 6: GyanVerse Intelligence
-- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ after validation
+- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ after validation
 - **6B Student Analyzer:** context, confidence, misconception, language, pace
 - **6C Teacher Reasoning Engine:** hint/explanation/practice/revision decisions
 - **6D Teaching Strategy Selector:** subject-aware teaching methods
@@ -25,7 +25,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Phase 8 Performance, Safety & Stabilization
 - Phase 9 UI/UX
 - Phase 10 EXE, APK & Release
-### Phase 6B ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Student Analyzer ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
+### Phase 6B ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â Student Analyzer ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦
 
 - Stable student-context contract
 - Subject inference from topic and current message
@@ -38,7 +38,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Non-labelling safety rules
 - Automated analyzer tests
 
-### Phase 6C ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Teacher Reasoning Engine ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
+### Phase 6C ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Teacher Reasoning Engine ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦
 
 - Structured teaching-decision contract
 - Clarification and prerequisite priority rules
@@ -51,7 +51,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Safe teaching-plan generation
 - Automated reasoning-engine tests
 
-### Phase 6D Ã¢â‚¬â€ Teaching Strategy Selector Ã¢Å“â€¦
+### Phase 6D ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Teaching Strategy Selector ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦
 
 - Central teaching-strategy catalog
 - Subject-specific pedagogy defaults
@@ -66,7 +66,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Final-answer policy preservation
 - Automated strategy-selector tests
 
-### Phase 6E â€” Parent, Guardian & Future Path Intelligence âœ…
+### Phase 6E Ã¢â‚¬â€ Parent, Guardian & Future Path Intelligence Ã¢Å“â€¦
 
 - Guardian profiles
 - Multiple children per guardian
@@ -83,3 +83,22 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Exploration-based future-path guidance
 - Non-deterministic career recommendations
 - Automated guardian-intelligence tests
+
+### Phase 6F â€” Live Classroom Orchestrator âœ…
+
+- Lesson session manager
+- Classroom lifecycle state machine
+- Valid transition enforcement
+- Teacher turn manager
+- Guided and independent practice flow
+- Understanding-check revision routing
+- Homework and summary flow
+- Session memory
+- Progress event generation
+- Staff collaboration notifications
+- Class Teacher and Principal updates
+- Learning goals
+- Prerequisite-based goal unlocking
+- Session audit records
+- Classroom service integration boundary
+- Automated classroom-orchestrator tests

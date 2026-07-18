@@ -49,3 +49,23 @@ from .guardian_models import (
 from .guardian_privacy import GuardianAccessError, GuardianPrivacyPolicy
 from .guardian_service import GuardianLearningService
 from .progress_reporting import GuardianReportBuilder
+
+from .classroom_models import (
+    ClassroomStepResult,
+    GoalStatus,
+    LearningGoal,
+    LessonSession,
+    LessonStage,
+    ProgressEvent,
+    SessionAuditRecord,
+    SessionOutcome,
+    StaffNotification,
+    TeacherTurn,
+    TeacherTurnType,
+)
+from .classroom_orchestrator import LiveClassroomOrchestrator
+from .classroom_service import ClassroomPreparation, ClassroomService
+from .classroom_state_machine import InvalidLessonTransition, LessonStateMachine
+from .learning_goals import LearningGoalManager
+from .session_memory import ClassroomSessionMemory
+from .teacher_turn_manager import TeacherTurnManager
