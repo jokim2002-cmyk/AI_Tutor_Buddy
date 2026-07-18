@@ -1,1 +1,6 @@
+__pycache__/
+*.pyc
+backups/
+logs/
+temp.wav
 .env
