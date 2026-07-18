@@ -4,3 +4,7 @@ backups/
 logs/
 temp.wav
 .env
+data/
+*.db
+*.db-shm
+*.db-wal

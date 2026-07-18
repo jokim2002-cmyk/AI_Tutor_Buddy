@@ -5,7 +5,7 @@ import re
 import sqlite3
 import uuid
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -130,6 +130,69 @@ class TutorEngine:
                     mastery_percent INTEGER NOT NULL DEFAULT 0,
                     last_studied_at TEXT NOT NULL,
                     PRIMARY KEY(student_id, subject, chapter),
+                    FOREIGN KEY(student_id) REFERENCES students(student_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS diagnostic_assessments (
+                    diagnostic_id TEXT PRIMARY KEY,
+                    student_id TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    questions_json TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    checked_at TEXT,
+                    FOREIGN KEY(student_id) REFERENCES students(student_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS diagnostic_results (
+                    result_id TEXT PRIMARY KEY,
+                    diagnostic_id TEXT NOT NULL,
+                    student_id TEXT NOT NULL,
+                    answers_json TEXT NOT NULL,
+                    feedback_json TEXT NOT NULL,
+                    score INTEGER NOT NULL,
+                    total INTEGER NOT NULL,
+                    mastery_percent INTEGER NOT NULL,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY(diagnostic_id) REFERENCES diagnostic_assessments(diagnostic_id),
+                    FOREIGN KEY(student_id) REFERENCES students(student_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS misconceptions (
+                    misconception_id TEXT PRIMARY KEY,
+                    student_id TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    chapter TEXT NOT NULL,
+                    misconception_type TEXT NOT NULL,
+                    evidence TEXT NOT NULL,
+                    occurrence_count INTEGER NOT NULL DEFAULT 1,
+                    last_seen_at TEXT NOT NULL,
+                    UNIQUE(student_id, subject, chapter, misconception_type),
+                    FOREIGN KEY(student_id) REFERENCES students(student_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS difficulty_state (
+                    student_id TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    chapter TEXT NOT NULL,
+                    difficulty TEXT NOT NULL,
+                    updated_at TEXT NOT NULL,
+                    PRIMARY KEY(student_id, subject, chapter),
+                    FOREIGN KEY(student_id) REFERENCES students(student_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS revision_queue (
+                    revision_id TEXT PRIMARY KEY,
+                    student_id TEXT NOT NULL,
+                    subject TEXT NOT NULL,
+                    chapter TEXT NOT NULL,
+                    reason TEXT NOT NULL,
+                    due_on TEXT NOT NULL,
+                    interval_days INTEGER NOT NULL,
+                    status TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    completed_at TEXT,
+                    UNIQUE(student_id, subject, chapter, due_on),
                     FOREIGN KEY(student_id) REFERENCES students(student_id)
                 );
                 """
@@ -310,6 +373,11 @@ class TutorEngine:
             raise TutorEngineError("Subject and chapter are required.")
 
         topic = self._recent_topic(student_id, subject, chapter) or chapter
+        difficulty = self.get_adaptive_difficulty(
+            student_id=student_id,
+            subject=subject,
+            chapter=chapter,
+        )
         questions: list[dict[str, Any]]
 
         if self.ai_client is None:
@@ -318,7 +386,9 @@ class TutorEngine:
             prompt = (
                 f"Create exactly {question_count} age-appropriate homework questions for "
                 f"Grade {student['grade']} {student['board']} {subject}, chapter {chapter}, "
-                f"recent topic {topic}. Use a mix of recall, understanding and application. "
+                f"recent topic {topic}. Target difficulty: {difficulty}. "
+                "Foundation means simpler guided questions, standard means mixed understanding and "
+                "application, challenge means multi-step application. "
                 "Do not make trick questions. Return ONLY valid JSON array. Each item must have "
                 'keys: "question", "expected_answer", "keywords". keywords must be an array.'
             )
@@ -372,6 +442,7 @@ class TutorEngine:
             "chapter": chapter,
             "questions": questions,
             "status": "assigned",
+            "difficulty": difficulty,
         }
 
     @staticmethod
@@ -481,6 +552,38 @@ class TutorEngine:
                 correct_increment=score,
                 total_increment=total,
             )
+            difficulty = self._update_difficulty_state(
+                connection,
+                student_id=student_id,
+                subject=row["subject"],
+                chapter=row["chapter"],
+                mastery_percent=mastery,
+            )
+            revision = self._schedule_revision(
+                connection,
+                student_id=student_id,
+                subject=row["subject"],
+                chapter=row["chapter"],
+                mastery_percent=mastery,
+                reason="Homework result",
+            )
+            for question, answer, item_feedback in zip(
+                questions, normalized_answers, feedback
+            ):
+                if item_feedback["status"] != "Correct":
+                    misconception_type, evidence = self._classify_misconception(
+                        answer=answer,
+                        expected=str(question.get("expected_answer", "")),
+                        keywords=list(question.get("keywords", [])),
+                    )
+                    self._record_misconception(
+                        connection,
+                        student_id=student_id,
+                        subject=row["subject"],
+                        chapter=row["chapter"],
+                        misconception_type=misconception_type,
+                        evidence=evidence,
+                    )
 
         return {
             "result_id": result_id,
@@ -489,6 +592,8 @@ class TutorEngine:
             "total": total,
             "mastery_percent": mastery,
             "feedback": feedback,
+            "difficulty": difficulty,
+            "revision_due_on": revision["due_on"],
         }
 
     def _touch_progress(
@@ -545,6 +650,493 @@ class TutorEngine:
             ),
         )
 
+
+    @staticmethod
+    def _difficulty_from_mastery(mastery_percent: int) -> str:
+        if mastery_percent < 40:
+            return "foundation"
+        if mastery_percent < 75:
+            return "standard"
+        return "challenge"
+
+    def get_adaptive_difficulty(
+        self,
+        *,
+        student_id: str,
+        subject: str,
+        chapter: str,
+    ) -> str:
+        self._student(student_id)
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT difficulty FROM difficulty_state
+                WHERE student_id=? AND subject=? AND chapter=?
+                """,
+                (student_id, subject.strip(), chapter.strip()),
+            ).fetchone()
+            if row:
+                return row["difficulty"]
+
+            progress = connection.execute(
+                """
+                SELECT mastery_percent FROM topic_progress
+                WHERE student_id=? AND subject=? AND chapter=?
+                """,
+                (student_id, subject.strip(), chapter.strip()),
+            ).fetchone()
+
+        mastery = progress["mastery_percent"] if progress else 0
+        return self._difficulty_from_mastery(mastery)
+
+    def _update_difficulty_state(
+        self,
+        connection: sqlite3.Connection,
+        *,
+        student_id: str,
+        subject: str,
+        chapter: str,
+        mastery_percent: int,
+    ) -> str:
+        difficulty = self._difficulty_from_mastery(mastery_percent)
+        connection.execute(
+            """
+            INSERT INTO difficulty_state(
+                student_id, subject, chapter, difficulty, updated_at
+            ) VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(student_id, subject, chapter) DO UPDATE SET
+                difficulty=excluded.difficulty,
+                updated_at=excluded.updated_at
+            """,
+            (student_id, subject, chapter, difficulty, self._now()),
+        )
+        return difficulty
+
+    def _schedule_revision(
+        self,
+        connection: sqlite3.Connection,
+        *,
+        student_id: str,
+        subject: str,
+        chapter: str,
+        mastery_percent: int,
+        reason: str,
+    ) -> dict[str, Any]:
+        if mastery_percent < 40:
+            interval_days = 1
+        elif mastery_percent < 75:
+            interval_days = 3
+        elif mastery_percent < 90:
+            interval_days = 7
+        else:
+            interval_days = 14
+
+        due_on = (
+            datetime.now(timezone.utc) + timedelta(days=interval_days)
+        ).date().isoformat()
+        revision_id = f"rev-{uuid.uuid4().hex[:10]}"
+        connection.execute(
+            """
+            INSERT OR IGNORE INTO revision_queue(
+                revision_id, student_id, subject, chapter, reason, due_on,
+                interval_days, status, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?)
+            """,
+            (
+                revision_id,
+                student_id,
+                subject,
+                chapter,
+                reason,
+                due_on,
+                interval_days,
+                self._now(),
+            ),
+        )
+        return {
+            "revision_id": revision_id,
+            "due_on": due_on,
+            "interval_days": interval_days,
+        }
+
+    @staticmethod
+    def _classify_misconception(
+        *,
+        answer: str,
+        expected: str,
+        keywords: list[str],
+    ) -> tuple[str, str]:
+        normalized = re.sub(r"\s+", " ", answer.lower()).strip()
+        if not normalized:
+            return "no_attempt", "Student left the answer blank."
+
+        expected_norm = re.sub(r"\s+", " ", expected.lower()).strip()
+        keyword_norm = [word.lower() for word in keywords if word.strip()]
+
+        if len(normalized.split()) <= 3:
+            return "incomplete_reasoning", "Answer was too short to show understanding."
+
+        if keyword_norm and not any(word in normalized for word in keyword_norm):
+            return "concept_gap", "Answer missed all expected key concepts."
+
+        number_tokens = re.findall(r"-?\d+(?:\.\d+)?", normalized)
+        expected_numbers = re.findall(r"-?\d+(?:\.\d+)?", expected_norm)
+        if expected_numbers and number_tokens and number_tokens != expected_numbers:
+            return "calculation_error", "Numeric result did not match the expected result."
+
+        if expected_norm and normalized != expected_norm:
+            return "partial_understanding", "Student showed some understanding but not the full expected idea."
+
+        return "needs_review", "Answer needs teacher review."
+
+    def _record_misconception(
+        self,
+        connection: sqlite3.Connection,
+        *,
+        student_id: str,
+        subject: str,
+        chapter: str,
+        misconception_type: str,
+        evidence: str,
+    ) -> None:
+        now = self._now()
+        connection.execute(
+            """
+            INSERT INTO misconceptions(
+                misconception_id, student_id, subject, chapter,
+                misconception_type, evidence, occurrence_count, last_seen_at
+            ) VALUES (?, ?, ?, ?, ?, ?, 1, ?)
+            ON CONFLICT(student_id, subject, chapter, misconception_type)
+            DO UPDATE SET
+                evidence=excluded.evidence,
+                occurrence_count=misconceptions.occurrence_count + 1,
+                last_seen_at=excluded.last_seen_at
+            """,
+            (
+                f"mis-{uuid.uuid4().hex[:10]}",
+                student_id,
+                subject,
+                chapter,
+                misconception_type,
+                evidence[:500],
+                now,
+            ),
+        )
+
+    @staticmethod
+    def _fallback_diagnostic_questions(subject: str, count: int) -> list[dict[str, Any]]:
+        bank = {
+            "mathematics": [
+                ("What is -7 + 12?", "5", ["5"]),
+                ("Simplify 3/4 + 1/4.", "1", ["1"]),
+                ("Solve: 2x + 3 = 11.", "4", ["4"]),
+                ("What is 15% of 200?", "30", ["30"]),
+                ("A rectangle is 8 cm long and 5 cm wide. Find its area.", "40", ["40"]),
+                ("Write 0.75 as a fraction in simplest form.", "3/4", ["3/4"]),
+                ("Find the mean of 4, 6 and 8.", "6", ["6"]),
+                ("What is the next number: 2, 4, 8, 16, ?", "32", ["32"]),
+            ],
+            "science": [
+                ("What process do green plants use to make food?", "photosynthesis", ["photosynthesis"]),
+                ("Name the force that pulls objects toward Earth.", "gravity", ["gravity"]),
+                ("What is the boiling point of water in Celsius at sea level?", "100", ["100"]),
+                ("Which organ pumps blood through the body?", "heart", ["heart"]),
+                ("Is air a mixture or a pure substance?", "mixture", ["mixture"]),
+                ("What form of energy is stored in food?", "chemical energy", ["chemical", "energy"]),
+                ("Why does a metal spoon feel hot in tea?", "conduction", ["conduction"]),
+                ("Name one renewable source of energy.", "solar energy", ["solar"]),
+            ],
+            "english": [
+                ("Identify the verb: The child runs quickly.", "runs", ["runs"]),
+                ("Change to past tense: She walks to school.", "She walked to school.", ["walked"]),
+                ("Give the plural of child.", "children", ["children"]),
+                ("Choose the article: ___ apple.", "an", ["an"]),
+                ("What is the opposite of ancient?", "modern", ["modern"]),
+                ("Correct the sentence: He go to school.", "He goes to school.", ["goes"]),
+                ("Identify the adjective: It is a beautiful flower.", "beautiful", ["beautiful"]),
+                ("Change to passive voice: Ravi wrote the letter.", "The letter was written by Ravi.", ["letter", "written", "Ravi"]),
+            ],
+        }
+        selected = bank.get(subject.lower(), bank["mathematics"])[:count]
+        return [
+            {
+                "number": index + 1,
+                "chapter": "Baseline",
+                "question": question,
+                "expected_answer": expected,
+                "keywords": keywords,
+            }
+            for index, (question, expected, keywords) in enumerate(selected)
+        ]
+
+    def generate_diagnostic(
+        self,
+        *,
+        student_id: str,
+        subject: str,
+        question_count: int = 5,
+    ) -> dict[str, Any]:
+        student = self._student(student_id)
+        subject = subject.strip()
+        question_count = max(3, min(int(question_count), 8))
+        if not subject:
+            raise TutorEngineError("Subject is required.")
+
+        questions: list[dict[str, Any]]
+        if self.ai_client is None:
+            questions = self._fallback_diagnostic_questions(subject, question_count)
+        else:
+            prompt = (
+                f"Create exactly {question_count} short baseline diagnostic questions for "
+                f"Grade {student['grade']} {student['board']} {subject}. Cover different core skills. "
+                "Return ONLY valid JSON array. Each item must contain chapter, question, "
+                "expected_answer, and keywords array. Avoid ambiguous questions."
+            )
+            try:
+                response = self.ai_client.models.generate_content(
+                    model=self.model_name,
+                    contents=prompt,
+                )
+                raw = self._extract_json(response.text)
+                if not isinstance(raw, list) or len(raw) != question_count:
+                    raise ValueError("Unexpected diagnostic JSON shape")
+                questions = [
+                    {
+                        "number": index,
+                        "chapter": str(item.get("chapter", "Baseline")).strip() or "Baseline",
+                        "question": str(item["question"]).strip(),
+                        "expected_answer": str(item.get("expected_answer", "")).strip(),
+                        "keywords": [
+                            str(word).strip()
+                            for word in item.get("keywords", [])
+                            if str(word).strip()
+                        ],
+                    }
+                    for index, item in enumerate(raw, start=1)
+                ]
+            except Exception:
+                questions = self._fallback_diagnostic_questions(subject, question_count)
+
+        diagnostic_id = f"diag-{uuid.uuid4().hex[:8]}"
+        with self._connect() as connection:
+            connection.execute(
+                """
+                INSERT INTO diagnostic_assessments(
+                    diagnostic_id, student_id, subject, questions_json, status, created_at
+                ) VALUES (?, ?, ?, ?, 'assigned', ?)
+                """,
+                (
+                    diagnostic_id,
+                    student_id,
+                    subject,
+                    json.dumps(questions, ensure_ascii=False),
+                    self._now(),
+                ),
+            )
+        return {
+            "diagnostic_id": diagnostic_id,
+            "subject": subject,
+            "questions": questions,
+            "status": "assigned",
+        }
+
+    def check_diagnostic(
+        self,
+        *,
+        student_id: str,
+        diagnostic_id: str,
+        answers: list[str],
+    ) -> dict[str, Any]:
+        self._student(student_id)
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT * FROM diagnostic_assessments
+                WHERE diagnostic_id=? AND student_id=?
+                """,
+                (diagnostic_id.strip(), student_id),
+            ).fetchone()
+        if row is None:
+            raise TutorEngineError("Diagnostic ID not found for this student.")
+
+        questions = json.loads(row["questions_json"])
+        normalized_answers = list(answers[: len(questions)])
+        normalized_answers.extend([""] * (len(questions) - len(normalized_answers)))
+
+        score = 0
+        feedback: list[dict[str, Any]] = []
+        chapter_totals: dict[str, list[int]] = {}
+
+        with self._connect() as connection:
+            for index, (question, answer) in enumerate(
+                zip(questions, normalized_answers), start=1
+            ):
+                correct, message = self._keyword_score(
+                    answer,
+                    str(question.get("expected_answer", "")),
+                    list(question.get("keywords", [])),
+                )
+                score += int(correct)
+                chapter = str(question.get("chapter", "Baseline"))
+                chapter_totals.setdefault(chapter, [0, 0])
+                chapter_totals[chapter][0] += int(correct)
+                chapter_totals[chapter][1] += 1
+
+                misconception_type = None
+                if not correct:
+                    misconception_type, evidence = self._classify_misconception(
+                        answer=answer,
+                        expected=str(question.get("expected_answer", "")),
+                        keywords=list(question.get("keywords", [])),
+                    )
+                    self._record_misconception(
+                        connection,
+                        student_id=student_id,
+                        subject=row["subject"],
+                        chapter=chapter,
+                        misconception_type=misconception_type,
+                        evidence=evidence,
+                    )
+
+                feedback.append(
+                    {
+                        "number": index,
+                        "status": "Correct" if correct else "Needs improvement",
+                        "feedback": message,
+                        "misconception": misconception_type,
+                    }
+                )
+
+            for chapter, (correct_count, total_count) in chapter_totals.items():
+                chapter_mastery = round((correct_count / total_count) * 100)
+                self._touch_progress(
+                    connection,
+                    student_id=student_id,
+                    subject=row["subject"],
+                    chapter=chapter,
+                    attempts_increment=1,
+                    correct_increment=correct_count,
+                    total_increment=total_count,
+                )
+                self._update_difficulty_state(
+                    connection,
+                    student_id=student_id,
+                    subject=row["subject"],
+                    chapter=chapter,
+                    mastery_percent=chapter_mastery,
+                )
+                self._schedule_revision(
+                    connection,
+                    student_id=student_id,
+                    subject=row["subject"],
+                    chapter=chapter,
+                    mastery_percent=chapter_mastery,
+                    reason="Diagnostic baseline result",
+                )
+
+            total = len(questions)
+            mastery = round((score / total) * 100) if total else 0
+            result_id = f"diag-result-{uuid.uuid4().hex[:10]}"
+            now = self._now()
+            connection.execute(
+                """
+                INSERT INTO diagnostic_results(
+                    result_id, diagnostic_id, student_id, answers_json,
+                    feedback_json, score, total, mastery_percent, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    result_id,
+                    diagnostic_id,
+                    student_id,
+                    json.dumps(normalized_answers, ensure_ascii=False),
+                    json.dumps(feedback, ensure_ascii=False),
+                    score,
+                    total,
+                    mastery,
+                    now,
+                ),
+            )
+            connection.execute(
+                """
+                UPDATE diagnostic_assessments
+                SET status='checked', checked_at=?
+                WHERE diagnostic_id=?
+                """,
+                (now, diagnostic_id),
+            )
+
+        return {
+            "result_id": result_id,
+            "diagnostic_id": diagnostic_id,
+            "score": score,
+            "total": total,
+            "mastery_percent": mastery,
+            "feedback": feedback,
+        }
+
+    def format_misconceptions(self, student_id: str) -> str:
+        self._student(student_id)
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT subject, chapter, misconception_type, occurrence_count, evidence
+                FROM misconceptions WHERE student_id=?
+                ORDER BY occurrence_count DESC, last_seen_at DESC
+                """,
+                (student_id,),
+            ).fetchall()
+        if not rows:
+            return "No misconception patterns recorded yet."
+        lines = ["Misconception patterns:"]
+        for row in rows:
+            lines.append(
+                f"{row['subject']} | {row['chapter']} | "
+                f"{row['misconception_type']} | seen {row['occurrence_count']} time(s)"
+            )
+        return "\n".join(lines)
+
+    def format_revision_queue(self, student_id: str) -> str:
+        self._student(student_id)
+        with self._connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT revision_id, subject, chapter, due_on, interval_days, reason
+                FROM revision_queue
+                WHERE student_id=? AND status='pending'
+                ORDER BY due_on ASC
+                """,
+                (student_id,),
+            ).fetchall()
+        if not rows:
+            return "No pending revision is scheduled."
+        lines = ["Revision queue:"]
+        for row in rows:
+            lines.append(
+                f"{row['revision_id']} | {row['subject']} / {row['chapter']} | "
+                f"due {row['due_on']} | after {row['interval_days']} day(s)"
+            )
+        return "\n".join(lines)
+
+    def complete_revision(
+        self,
+        *,
+        student_id: str,
+        revision_id: str,
+    ) -> None:
+        self._student(student_id)
+        with self._connect() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE revision_queue
+                SET status='completed', completed_at=?
+                WHERE revision_id=? AND student_id=? AND status='pending'
+                """,
+                (self._now(), revision_id.strip(), student_id),
+            )
+            if cursor.rowcount == 0:
+                raise TutorEngineError("Pending revision ID not found.")
+
     def record_learning_interaction(
         self,
         *,
@@ -588,6 +1180,23 @@ class TutorEngine:
                 """,
                 (student_id,),
             ).fetchall()
+            misconception_rows = connection.execute(
+                """
+                SELECT subject, chapter, misconception_type, occurrence_count
+                FROM misconceptions WHERE student_id=?
+                ORDER BY occurrence_count DESC, last_seen_at DESC LIMIT 5
+                """,
+                (student_id,),
+            ).fetchall()
+            revision_rows = connection.execute(
+                """
+                SELECT subject, chapter, due_on
+                FROM revision_queue
+                WHERE student_id=? AND status='pending'
+                ORDER BY due_on ASC LIMIT 5
+                """,
+                (student_id,),
+            ).fetchall()
 
         lines = [
             f"Name: {student['name']}",
@@ -607,6 +1216,19 @@ class TutorEngine:
                 f"- {row['subject']} / {row['chapter']}: "
                 f"{row['mastery_percent']}% mastery after {row['attempts']} checked attempt(s)"
                 for row in progress_rows
+            )
+        if misconception_rows:
+            lines.append("Known misconception patterns:")
+            lines.extend(
+                f"- {row['subject']} / {row['chapter']}: "
+                f"{row['misconception_type']} ({row['occurrence_count']} occurrence(s))"
+                for row in misconception_rows
+            )
+        if revision_rows:
+            lines.append("Pending revisions:")
+            lines.extend(
+                f"- {row['subject']} / {row['chapter']} due {row['due_on']}"
+                for row in revision_rows
             )
         return "\n".join(lines)
 

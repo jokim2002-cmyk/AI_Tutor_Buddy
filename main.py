@@ -184,7 +184,12 @@ def main(page: ft.Page) -> None:
             "/sync Subject | Chapter | What school taught today\n"
             "/homework Subject | Chapter | Number of questions\n"
             "/check HomeworkID | Answer 1 || Answer 2 || Answer 3\n"
+            "/diagnostic Subject | Number of questions\n"
+            "/checkdiagnostic DiagnosticID | Answer 1 || Answer 2\n"
             "/progress\n"
+            "/mistakes\n"
+            "/revision\n"
+            "/revisiondone RevisionID\n"
             "/today\n"
             "/help\n\n"
             "Example: /sync Mathematics | Fractions | Addition of unlike fractions"
@@ -199,8 +204,72 @@ def main(page: ft.Page) -> None:
         if lowered == "/progress":
             return tutor_engine.format_progress(DEFAULT_STUDENT_ID)
 
+        if lowered == "/mistakes":
+            return tutor_engine.format_misconceptions(DEFAULT_STUDENT_ID)
+
+        if lowered == "/revision":
+            return tutor_engine.format_revision_queue(DEFAULT_STUDENT_ID)
+
+        if lowered.startswith("/revisiondone "):
+            revision_id = text[len("/revisiondone "):].strip()
+            if not revision_id:
+                return "Use: /revisiondone RevisionID"
+            tutor_engine.complete_revision(
+                student_id=DEFAULT_STUDENT_ID,
+                revision_id=revision_id,
+            )
+            return f"Revision completed: {revision_id}"
+
         if lowered == "/today":
             return tutor_engine.format_today_summary(DEFAULT_STUDENT_ID)
+
+        if lowered.startswith("/diagnostic "):
+            parts = [part.strip() for part in text[len("/diagnostic "):].split("|", 1)]
+            if not parts[0]:
+                return "Use: /diagnostic Subject | Number of questions"
+            count = 5
+            if len(parts) == 2 and parts[1]:
+                try:
+                    count = int(parts[1])
+                except ValueError:
+                    return "Question count must be a number from 3 to 8."
+            diagnostic = tutor_engine.generate_diagnostic(
+                student_id=DEFAULT_STUDENT_ID,
+                subject=parts[0],
+                question_count=count,
+            )
+            lines = [f"Diagnostic ID: {diagnostic['diagnostic_id']}"]
+            for item in diagnostic["questions"]:
+                lines.append(f"{item['number']}. {item['question']}")
+            lines.append(
+                "Submit using: /checkdiagnostic DiagnosticID | Answer 1 || Answer 2"
+            )
+            return "\n".join(lines)
+
+        if lowered.startswith("/checkdiagnostic "):
+            body = text[len("/checkdiagnostic "):].strip()
+            if "|" not in body:
+                return "Use: /checkdiagnostic DiagnosticID | Answer 1 || Answer 2"
+            diagnostic_id, answer_text = [
+                part.strip() for part in body.split("|", 1)
+            ]
+            answers = [item.strip() for item in answer_text.split("||")]
+            result = tutor_engine.check_diagnostic(
+                student_id=DEFAULT_STUDENT_ID,
+                diagnostic_id=diagnostic_id,
+                answers=answers,
+            )
+            lines = [
+                f"Diagnostic checked: {result['score']}/{result['total']}",
+                f"Baseline mastery: {result['mastery_percent']}%",
+            ]
+            for item in result["feedback"]:
+                detail = f" | Pattern: {item['misconception']}" if item["misconception"] else ""
+                lines.append(
+                    f"{item['number']}. {item['status']}: {item['feedback']}{detail}"
+                )
+            lines.append("Use /mistakes and /revision to see the learning plan.")
+            return "\n".join(lines)
 
         if lowered.startswith("/sync "):
             parts = [part.strip() for part in text[6:].split("|", 2)]
@@ -233,7 +302,10 @@ def main(page: ft.Page) -> None:
                 chapter=parts[1],
                 question_count=count,
             )
-            lines = [f"Homework ID: {homework['homework_id']}"]
+            lines = [
+                f"Homework ID: {homework['homework_id']}",
+                f"Adaptive difficulty: {homework['difficulty']}",
+            ]
             for item in homework["questions"]:
                 lines.append(f"{item['number']}. {item['question']}")
             lines.append(
@@ -255,6 +327,8 @@ def main(page: ft.Page) -> None:
             lines = [
                 f"Homework checked: {result['score']}/{result['total']}",
                 f"Mastery: {result['mastery_percent']}%",
+                f"Next difficulty: {result['difficulty']}",
+                f"Revision due: {result['revision_due_on']}",
             ]
             for feedback in result["feedback"]:
                 lines.append(
@@ -270,11 +344,17 @@ def main(page: ft.Page) -> None:
         if not user_text:
             return
 
-        LOGGER.info("Processing student message")
-        set_busy(True, "Tutor is thinking...")
-        add_message(f"Student: {user_text}", color="blue", bold=True)
+        # Clear the input immediately so the command never appears stuck in the box.
         user_input.value = ""
         page.update()
+
+        is_core_command = user_text.startswith("/")
+        LOGGER.info(
+            "Processing student message | command=%s",
+            is_core_command,
+        )
+        set_busy(True, "Processing command..." if is_core_command else "Tutor is thinking...")
+        add_message(f"Student: {user_text}", color="blue", bold=True)
 
         try:
             command_response = handle_core_command(user_text)
@@ -312,9 +392,13 @@ def main(page: ft.Page) -> None:
                 )
 
             add_message(f"Tutor: {clean_text}", color="green")
-            status_text.value = "Speaking..."
-            page.update()
-            speak(clean_text)
+
+            # Slash commands are operational reports. Do not spend 15–30 seconds
+            # generating and playing TTS for long homework/revision output.
+            if not is_core_command:
+                status_text.value = "Speaking..."
+                page.update()
+                speak(clean_text)
         except TutorEngineError as exc:
             LOGGER.exception("Tutor engine request failed")
             add_message(f"Tutor engine error: {exc}", color="red")

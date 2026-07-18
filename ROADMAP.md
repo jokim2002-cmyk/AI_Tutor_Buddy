@@ -1,77 +1,27 @@
-# ROADMAP: AI Tutor Buddy Development
+# ROADMAP: AI Tutor Buddy / GyanVerse Academy
 
-## Development Policy
+## Policy
+Core before UI; UI after intelligence; EXE/APK after stability; every phase needs backup, tests, validation, and Git checkpoint.
 
-- Core functionality always takes priority over UI.
-- UI/UX design will be done only after all major features are complete.
-- Windows EXE and Android APK builds will be created only after the application is feature-complete and stable.
-- Important missing features, safety risks, and architecture improvements must be reported immediately.
-- The tutor should solve the need for extra tuition through diagnostic, adaptive, hint-first and mastery-based teaching.
+## Completed
+- Phase 1 Vision & Planning ✅
+- Phase 2 Environment & Git ✅
+- Phase 3 AI Brain ✅
+- Phase 4 Voice ✅
+- Phase 5 Core Tutoring Engine ✅
 
-## Phase 1: Vision & Planning ✅
-- [x] Vision
-- [x] Roadmap
-- [x] README
+## Phase 6: GyanVerse Intelligence
+- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests ✅ after validation
+- **6B Student Analyzer:** context, confidence, misconception, language, pace
+- **6C Teacher Reasoning Engine:** hint/explanation/practice/revision decisions
+- **6D Teaching Strategy Selector:** subject-aware teaching methods
+- **6E Live Subject Teacher Integration:** existing chat routed through selected profile
+- **6F Knowledge Graph:** prerequisites and topic progression
+- **6G Staff Room:** cross-teacher coordination and Principal resolution
+- **6H Learning Intelligence:** long-term mastery, forgetting, exam readiness
 
-## Phase 2: Environment & Version Control ✅
-- [x] Git repository
-- [x] Python environment
-- [x] Dependency management
-- [x] Commit and push workflow
-
-## Phase 3: AI Brain ✅
-- [x] Gemini integration
-- [x] Strict Teacher persona
-- [x] Logic verification
-- [x] Session management
-
-## Phase 4: Voice System ✅
-- [x] Speech-to-Text
-- [x] Gemini Text-to-Speech
-- [x] Female Indian teacher voice
-- [x] Indian English, Hindi and Gujarati support
-- [x] Microphone stability
-- [x] Error handling
-
-## Phase 5: Core Tutoring Engine — Bunch 1
-- [x] Persistent SQLite student database
-- [x] Extensible curriculum schema and starter mapping
-- [x] Board, grade, subject, chapter and topic structure
-- [x] Daily school-learning sync
-- [x] Homework generation with offline fallback
-- [x] Homework checking and feedback
-- [x] Persistent session and interaction memory
-- [x] Topic-level progress tracking
-- [x] Today summary
-- [x] Automated unit tests
-- [ ] Full verified curriculum content import
-- [ ] Diagnostic baseline assessment
-- [ ] Misconception classification
-- [ ] Adaptive difficulty engine
-- [ ] Spaced revision scheduler
-- [ ] Tutor quality test suite
-
-## Phase 6: Parent Monitoring
-- [ ] Focus tracking
-- [ ] Anti-distraction detection
-- [ ] Parent alerts (WhatsApp/SMS)
-- [ ] Parent learning report
-
-## Phase 7: Testing & Stabilization
-- [ ] Unit test expansion
-- [ ] Integration testing
-- [ ] Tutor quality and answer accuracy testing
-- [ ] Performance optimization
-- [ ] Bug fixing
-
-## Phase 8: UI / UX (Deferred Until Core Complete)
-- [ ] Student interface
-- [ ] Parent dashboard
-- [ ] Theme and responsiveness
-- [ ] Final UI polish
-
-## Phase 9: Release
-- [ ] Windows EXE
-- [ ] Android APK
-- [ ] Final QA
-- [ ] Git release
+## Later
+- Phase 7 Parent Monitoring & Reports
+- Phase 8 Performance, Safety & Stabilization
+- Phase 9 UI/UX
+- Phase 10 EXE, APK & Release
