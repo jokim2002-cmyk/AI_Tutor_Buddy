@@ -6,15 +6,15 @@ from dotenv import load_dotenv
 # Load variables from .env file
 load_dotenv()
 
+# We initialize the client outside the main function so Python 
+# doesn't garbage collect it and close the HTTP connection!
+api_key = os.getenv("GEMINI_API_KEY")
+ai_client = genai.Client(api_key=api_key) if api_key else None
+
 def main(page: ft.Page):
-    # Fetch API key from .env
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
+    if not ai_client:
         page.add(ft.Text("Error: API Key not found! Please check your .env file.", color="red"))
         return
-        
-    # Initialize new SDK Client
-    client = genai.Client(api_key=api_key)
     
     # Strict Teacher Persona
     system_instruction = '''You are a strict but friendly AI Tutor for 7th and 8th-grade English medium students in India. 
@@ -23,8 +23,8 @@ def main(page: ft.Page):
     Rule 3: Do not blindly agree. Verify the student's logic first.
     Rule 4: Keep responses concise and engaging.'''
     
-    # Initialize Chat Session with the new SDK
-    chat_session = client.chats.create(
+    # Initialize Chat Session
+    chat_session = ai_client.chats.create(
         model='gemini-2.5-flash',
         config={"system_instruction": system_instruction}
     )
@@ -60,5 +60,5 @@ def main(page: ft.Page):
     )
 
 if __name__ == '__main__':
-    # Fixed ft.run signature
+    # Using ft.app(main) which works for this version. The warnings can be ignored.
     ft.app(main)
