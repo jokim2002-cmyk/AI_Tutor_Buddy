@@ -91,3 +91,17 @@ from .memory_repository import (
 )
 from .misconception_memory import MisconceptionMemory
 from .revision_scheduler import RevisionScheduler
+
+from .learning_intelligence_models import (
+    ConceptIntelligence,
+    ExamReadinessReport,
+    IntelligenceSummary,
+    LearningIntelligenceProfile,
+    ReadinessBand,
+    RevisionPlanItem,
+    SubjectIntelligence,
+    TrendDirection,
+)
+from .exam_readiness import ExamReadinessCalculator
+from .intelligent_revision_planner import IntelligentRevisionPlanner
+from .learning_intelligence_service import LearningIntelligenceService
