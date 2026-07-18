@@ -1,0 +1,71 @@
+# AI Tutor Agent Project
+
+## About This Project
+This repository contains the code for a custom AI Tutor Agent designed for 7th and 8th-grade students. It features voice interaction, homework tracking, and an anti-distraction parent alert system.
+
+## Developer Workflow Rules (STRICT)
+1. **No Manual Copy-Pasting:** All code updates will be provided as downloadable files.
+2. **Execution:** Files will be downloaded to the local machine and executed from the terminal.
+3. **Clipboard Output:** All run commands will pipe output to the clipboard (e.g., `python main.py | clip`) for easy sharing of results or errors.
+4. **Version Control:** After every successful run and verification, changes MUST be committed and pushed to the Git repository.
+
+## Setup Instructions (Upcoming)
+*Instructions for setting up the virtual environment, installing dependencies, and configuring API keys will be added here in Phase 2.*
+# ROADMAP: AI Tutor Agent Development
+
+## Phase 1: Project Foundation (Current)
+- [x] Define Vision, Roadmap, and Readme.
+- [ ] Initialize Local Git Repository.
+- [ ] Discuss and finalize the tech stack (Python GUI framework: e.g., Flet or PyQt for native monitoring features).
+
+## Phase 2: Environment Setup & Version Control
+- [ ] Create the main Python script framework.
+- [ ] Set up the `git commit` and `git push` pipeline.
+- [ ] Implement the clipboard output mechanism for seamless error/log sharing.
+
+## Phase 3: AI Brain & Persona Integration
+- [ ] Connect to AI API (Gemini/OpenAI).
+- [ ] Inject the "Strict Teacher" system prompt.
+- [ ] Implement the "Logic Verification" step so the AI doesn't blindly agree with the student.
+
+## Phase 4: Voice System Integration
+- [ ] Integrate Speech-to-Text (STT) so students can talk to the app.
+- [ ] Integrate Text-to-Speech (TTS) so the AI can talk back naturally.
+
+## Phase 5: Core Tutoring Engine
+- [ ] Build the Daily Sync module (asking what was taught in school).
+- [ ] Build the Homework Generation and Checking module.
+- [ ] Implement session memory (so the AI remembers yesterday's class).
+
+## Phase 6: Monitoring & Parent Alert System
+- [ ] Implement OS-level focus tracking (to detect if the app goes to the background).
+- [ ] Integrate a messaging API (like Twilio or a WhatsApp API) for sending alerts to parents.
+
+## Phase 7: Testing & Refinement
+- [ ] Run mock sessions as a student.
+- [ ] Test the parent alert system.
+- [ ] Final UI/UX polish.
+# VISION: Next-Gen AI Tutor Agent
+
+## 1. Project Goal
+To build a highly intelligent, interactive, and strict-yet-friendly AI Tutor for 7th and 8th-grade English medium students. The agent will eliminate the need for traditional extra tuition by acting as a personalized 1-on-1 teacher.
+
+## 2. Target Audience
+- **Primary Users:** Students in 7th and 8th grade.
+- **Secondary Users (Monitors):** Parents who need assurance that their kids are studying effectively and not getting distracted.
+
+## 3. Core Persona of the AI Tutor
+- **Strict but Friendly:** approachable for doubts but maintains discipline.
+- **Logical Verifier:** Does NOT blindly agree with the student. It analyzes the student's input and only agrees if the concept or answer is genuinely correct.
+- **Guiding, Not Spoon-feeding:** Explains concepts in simple language but forces the student to think and solve the final piece of the puzzle.
+
+## 4. Key Features & Capabilities
+1. **Curriculum Database (1st to 12th Std):** Pre-trained knowledge of standard syllabus to seamlessly adapt to the students' daily school progress.
+2. **Daily Revision & Homework Engine:** 
+   - Takes daily input: "Today I learned [Topic] in [Subject]."
+   - Generates customized revision questions and assigns homework based on the topic.
+   - Evaluates completed homework and provides constructive feedback.
+3. **Voice Command System:** Two-way voice interaction (like Gemini voice mode) for a natural, conversational teaching experience.
+4. **Anti-Distraction & Parent Alerts:** 
+   - Tracks app focus. 
+   - If the student minimizes the app, closes it unexpectedly, or switches to a game/browser during study time, the system will immediately trigger an alert (SMS/WhatsApp) to the parents' mobile.
