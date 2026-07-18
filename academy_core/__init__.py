@@ -12,3 +12,14 @@ from .student_analyzer import (
     UnderstandingState,
 )
 from .student_context_adapter import context_from_mapping
+
+from .reasoning_engine import (
+    DifficultyDirection,
+    ReasoningEvidence,
+    StepSize,
+    TeacherReasoningEngine,
+    TeachingAction,
+    TeachingDecision,
+)
+from .reasoning_service import ReasonedLesson, ReasoningService
+from .teaching_plan import TeachingPlan, build_teaching_plan

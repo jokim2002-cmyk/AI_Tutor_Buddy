@@ -4,14 +4,14 @@
 Core before UI; UI after intelligence; EXE/APK after stability; every phase needs backup, tests, validation, and Git checkpoint.
 
 ## Completed
-- Phase 1 Vision & Planning âœ…
-- Phase 2 Environment & Git âœ…
-- Phase 3 AI Brain âœ…
-- Phase 4 Voice âœ…
-- Phase 5 Core Tutoring Engine âœ…
+- Phase 1 Vision & Planning Ã¢Å“â€¦
+- Phase 2 Environment & Git Ã¢Å“â€¦
+- Phase 3 AI Brain Ã¢Å“â€¦
+- Phase 4 Voice Ã¢Å“â€¦
+- Phase 5 Core Tutoring Engine Ã¢Å“â€¦
 
 ## Phase 6: GyanVerse Intelligence
-- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests âœ… after validation
+- **6A Academy Foundation:** Constitution, architecture, staff profiles, routing, safe prompts, tests Ã¢Å“â€¦ after validation
 - **6B Student Analyzer:** context, confidence, misconception, language, pace
 - **6C Teacher Reasoning Engine:** hint/explanation/practice/revision decisions
 - **6D Teaching Strategy Selector:** subject-aware teaching methods
@@ -25,7 +25,7 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Phase 8 Performance, Safety & Stabilization
 - Phase 9 UI/UX
 - Phase 10 EXE, APK & Release
-### Phase 6B â€” Student Analyzer âœ…
+### Phase 6B Ã¢â‚¬â€ Student Analyzer Ã¢Å“â€¦
 
 - Stable student-context contract
 - Subject inference from topic and current message
@@ -37,3 +37,16 @@ Core before UI; UI after intelligence; EXE/APK after stability; every phase need
 - Safe adapter for database/API mappings
 - Non-labelling safety rules
 - Automated analyzer tests
+
+### Phase 6C â€” Teacher Reasoning Engine âœ…
+
+- Structured teaching-decision contract
+- Clarification and prerequisite priority rules
+- Hint, explanation, practice, revision, and extension actions
+- Step-size selection
+- Difficulty direction selection
+- Final-answer release policy
+- Teacher-profile coordination
+- Explainable reasoning evidence
+- Safe teaching-plan generation
+- Automated reasoning-engine tests
