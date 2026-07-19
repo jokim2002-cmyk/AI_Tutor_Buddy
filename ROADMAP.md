@@ -195,9 +195,7 @@ Parent / Guardian
 - JSONL durable-storage boundary
 - Automated long-term-memory tests
 
-### Phase 6H — Learning Intelligence & Exam Readiness ⏳ NEXT
-
-Planned scope:
+### Phase 6H — Learning Intelligence & Exam Readiness ✅
 
 - Student learning intelligence profile
 - Subject and concept mastery aggregation
@@ -217,7 +215,7 @@ Planned scope:
 
 ## Later Product Phases
 
-### Phase 7 — Parent Monitoring & Reports ⏳
+### Phase 7 — Parent Monitoring & Reports ✅
 
 - Parent portal backend
 - Daily, weekly, and monthly reports
@@ -227,7 +225,7 @@ Planned scope:
 - Safe alerts
 - Report history and exports
 
-### Phase 8 — Performance, Safety & Stabilization ⏳
+### Phase 8 — Performance, Safety & Stabilization ✅
 
 - Full integration testing
 - Security review
@@ -240,7 +238,7 @@ Planned scope:
 - Data-deletion workflows
 - Release-candidate stabilization
 
-### Phase 9 — UI/UX ⏳
+### Phase 9 — UI/UX ✅
 
 - Student classroom UI
 - Parent portal UI
@@ -252,8 +250,12 @@ Planned scope:
 - Accessibility
 - Responsive design
 - Final UI/UX polish
+- Responsive Flet application shell
+- Student, parent, teacher, and principal role views
+- Offline-safe core tutoring workflows
+- Settings and privacy transparency
 
-### Phase 10 — EXE, APK & Release ⏳
+### Phase 10 — EXE, APK & Release 🟡 IN PROGRESS
 
 - Production API deployment
 - Windows EXE packaging
