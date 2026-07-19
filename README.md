@@ -1,13 +1,71 @@
-# AI Tutor Agent Project
+# GyanVerse Academy / AI Tutor Buddy
 
-## About This Project
-This repository contains the code for a custom AI Tutor Agent designed for 7th and 8th-grade students. It features voice interaction, homework tracking, and an anti-distraction parent alert system.
+GyanVerse Academy is a personal tutor application for Windows and Android. It combines the existing learning-intelligence backend with a mobile-first Flet interface, persistent student/class context, homework support, multilingual voice paths and a validated GSEB syllabus foundation.
 
-## Developer Workflow Rules (STRICT)
-1. **No Manual Copy-Pasting:** All code updates will be provided as downloadable files.
-2. **Execution:** Files will be downloaded to the local machine and executed from the terminal.
-3. **Clipboard Output:** All run commands will pipe output to the clipboard (e.g., `python main.py | clip`) for easy sharing of results or errors.
-4. **Version Control:** After every successful run and verification, changes MUST be committed and pushed to the Git repository.
+## Current development checkpoint
 
-## Setup Instructions (Upcoming)
-*Instructions for setting up the virtual environment, installing dependencies, and configuring API keys will be added here in Phase 2.*
+Phase 11 source batch is implemented on top of canonical commit `3b2d16b`.
+
+Automated source regression in the prepared batch:
+
+```text
+Ran 215 tests
+OK
+```
+
+This is **not yet the final Phase 11 release**. Windows packaging, Android packaging and real-device acceptance—especially microphone, spoken answers, photo/file attachment and narrow-phone layout—must still pass before the release checkpoint is committed and pushed.
+
+## Student workflow
+
+1. On first launch, set board, medium, standard and tutor language.
+2. Save the subject, chapter and topic currently being taught at school.
+3. Open **Tutor** and choose Explain, Homework Help, Revision or Exam Answer mode.
+4. Type a question, use the microphone, or attach homework with the `+` button.
+5. Review progress, revision priorities, homework history and GSEB coverage from the hidden menu.
+
+## Run locally
+
+```powershell
+cd D:\Ai_Tutor_Buddy
+python -m pip install -r requirements.txt
+flet run main.py
+```
+
+The same commands work from the canonical PC path `E:\Ai_Tutor_Buddy`.
+
+## Configuration
+
+Create a local `.env` file when Gemini services are required:
+
+```text
+GEMINI_API_KEY=your_key_here
+GEMINI_MODEL=gemini-3.5-flash
+GEMINI_TTS_MODEL=gemini-3.1-flash-tts-preview
+GEMINI_TTS_VOICE=Aoede
+```
+
+Never commit `.env`, API keys, signing keys or student databases.
+
+Without an API key, core navigation, student context, local history and deterministic tutor guidance remain available. Online image/PDF understanding, speech-to-text and generated spoken answers show a clear fallback.
+
+## Validation and builds
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate_phase11.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build_windows_exe.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build_android_apk.ps1
+```
+
+Android minimum SDK remains 24 in `pyproject.toml`. Runtime packaging excludes the legacy desktop audio stack so Android does not depend on `sounddevice` or `soundfile`.
+
+## GSEB content integrity
+
+The importer accepts structured JSON with board, medium, standard, subject, textbook, source, edition, chapter, topic and `content_origin` metadata. Official material, teacher-authored material, AI-generated practice and metadata-only coverage are kept separate. The included schema example contains no official textbook content.
+
+## Repository workflow
+
+- Work phase-wise in cohesive batches.
+- Audit and back up before edits.
+- Keep tests and release gates green.
+- Do not commit generated builds, databases, `.env` or signing material.
+- Commit and push only after the intended validation checkpoint passes.

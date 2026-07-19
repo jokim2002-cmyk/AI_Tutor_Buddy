@@ -8,3 +8,14 @@ data/
 *.db
 *.db-shm
 *.db-wal
+
+# Phase 11 generated/runtime output
+build/
+dist/
+.flet/
+*.log
+*.apk
+*.aab
+*.exe
+*.jks
+*.keystore

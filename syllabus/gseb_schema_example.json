@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 7,
+  "subject": "Mathematics",
+  "textbook": "GSEB Standard 7 Mathematics — schema example only",
+  "source": {
+    "title": "GyanVerse schema demonstration package",
+    "publisher": "GyanVerse Academy",
+    "edition": "schema-demo-1",
+    "source_url": "",
+    "acquired_on": "2026-07-20",
+    "official": false,
+    "notes": "This file demonstrates the importer structure. It contains no official textbook content."
+  },
+  "chapters": [
+    {
+      "chapter_id": "demo-chapter-1",
+      "number": "1",
+      "title": "Chapter title from validated metadata",
+      "topics": [
+        {
+          "topic_id": "demo-topic-1",
+          "title": "Topic title from validated metadata",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    }
+  ]
+}

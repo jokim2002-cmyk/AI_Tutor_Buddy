@@ -313,6 +313,14 @@ These percentages are planning estimates, not automated measurements. They shoul
 
 ---
 
+## Phase 11 implementation checkpoint — source batch prepared (2026-07-20)
+
+The cohesive Phase 11 source batch has been implemented on top of `master / 3b2d16b`. It adds the responsive hidden-drawer shell, modern tutor composer, persistent student context, voice/attachment integration paths, local homework history, validated GSEB importer foundation, original branding, cross-platform packaging configuration and Phase 11 automated tests. Prepared regression: **215 tests PASS**.
+
+Phase 11 remains **IN PROGRESS**, not complete. Windows/Android builds and physical-device acceptance gates—including microphone, spoken output, attachment providers, narrow-screen layout and official GSEB source coverage—must pass before final commit/push and release sign-off. See `PHASE11_IMPLEMENTATION.md`.
+
+---
+
 ## Phase 11 — Production Tutor Experience, Mobile UX, Voice and GSEB Foundation
 
 ### Goal

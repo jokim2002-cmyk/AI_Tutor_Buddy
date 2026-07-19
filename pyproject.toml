@@ -1,0 +1,61 @@
+[project]
+name = "gyanverse_academy"
+version = "1.1.0"
+description = "GyanVerse Academy personal AI tutor for Windows and Android"
+requires-python = ">=3.10"
+dependencies = [
+  "flet==0.86.1",
+  "python-dotenv>=1.0",
+  "google-genai>=1.0",
+  "flet-audio>=0.1.0",
+  "flet-audio-recorder>=0.1.0",
+  "SpeechRecognition>=3.14.0",
+  "flet-desktop==0.86.1; sys_platform == 'win32'",
+]
+
+[tool.flet]
+product = "GyanVerse Academy"
+org = "com.gyanverse"
+bundle_id = "com.gyanverse.academy"
+company = "GyanVerse Academy"
+copyright = "Copyright © 2026 GyanVerse Academy"
+build_number = 11
+
+[tool.flet.app]
+path = "."
+module = "main.py"
+exclude = [
+  ".git",
+  ".github",
+  "__pycache__",
+  "backups",
+  "build",
+  "dist",
+  "release",
+  "tests",
+  "_phase11_snapshot",
+  "*.db",
+  "*.db-shm",
+  "*.db-wal",
+  ".env",
+]
+
+[tool.flet.android]
+min_sdk_version = 24
+artifact = "GyanVerse_Academy"
+adaptive_icon_background = "#3157C8"
+
+[tool.flet.android.permission]
+"android.permission.RECORD_AUDIO" = true
+"android.permission.CAMERA" = true
+
+[tool.flet.android.feature]
+"android.hardware.camera" = false
+"android.hardware.microphone" = false
+
+[tool.flet.android.splash]
+color = "#F5F7FC"
+dark_color = "#17213A"
+
+[tool.flet.windows]
+artifact = "GyanVerse_Academy"

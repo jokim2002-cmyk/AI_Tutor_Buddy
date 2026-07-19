@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="GyanVerse Academy logo">
+<rect x="38" y="38" width="436" height="436" rx="112" fill="#3157C8"/>
+<path d="M97 159 L243 193 L243 358 L102 317 Z" fill="#fff"/>
+<path d="M269 193 L415 159 L410 317 L269 358 Z" fill="#EAF4FF"/>
+<path d="M256 188 V358" stroke="#00A99D" stroke-width="14"/>
+<path d="M151 369 L256 432 L361 369" fill="none" stroke="#00A99D" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 91 L391 119 L420 130 L391 141 L380 170 L369 141 L340 130 L369 119 Z" fill="#F5B942"/>
+</svg>

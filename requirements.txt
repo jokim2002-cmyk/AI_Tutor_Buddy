@@ -1,6 +1,7 @@
-flet>=0.24,<1.0
+flet==0.86.1
 python-dotenv>=1.0
 google-genai>=1.0
-sounddevice>=0.4
-soundfile>=0.12
-SpeechRecognition>=3.10
+flet-audio>=0.1.0
+flet-audio-recorder>=0.1.0
+SpeechRecognition>=3.14.0
+flet-desktop==0.86.1; sys_platform == "win32"

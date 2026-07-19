@@ -1,253 +1,1111 @@
 from __future__ import annotations
 
+import asyncio
+import io
+import json
+import os
+import tempfile
+import time
+import uuid
+import wave
+from dataclasses import replace
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Sequence
 
 import flet as ft
 
+from gyanverse_ui_helpers import mode_label, safe_text
+from phase11_ai import AIServiceError, GyanVerseAIService
+from phase11_core import (
+    GSEBSyllabusRepository,
+    HomeworkAttachmentStore,
+    LearningContextStore,
+    LearningMode,
+    Phase11Error,
+    StudentLearningContext,
+    VoiceState,
+    detect_context_from_message,
+)
 from tutor_engine import TutorEngine
-from gyanverse_ui_helpers import StudentProfile, safe_text
+
+try:
+    import flet_audio as fta
+except ImportError:  # optional extension; UI falls back to readable text
+    fta = None
+
+try:
+    import flet_audio_recorder as far
+except ImportError:  # optional extension; UI falls back to typing
+    far = None
+
 
 APP_DIR = Path(__file__).resolve().parent
 DATA_DIR = APP_DIR / "data"
+ASSETS_DIR = APP_DIR / "assets"
 DATA_DIR.mkdir(exist_ok=True)
+ASSETS_DIR.mkdir(exist_ok=True)
+
+NAV_ITEMS = (
+    ("home", "Home", ft.Icons.HOME_OUTLINED, ft.Icons.HOME),
+    ("tutor", "Tutor", ft.Icons.SCHOOL_OUTLINED, ft.Icons.SCHOOL),
+    ("sync", "Daily Sync", ft.Icons.SYNC, ft.Icons.SYNC),
+    ("homework", "Homework", ft.Icons.ASSIGNMENT_OUTLINED, ft.Icons.ASSIGNMENT),
+    ("revision", "Revision", ft.Icons.REPLAY, ft.Icons.REPLAY),
+    ("progress", "Progress", ft.Icons.INSIGHTS_OUTLINED, ft.Icons.INSIGHTS),
+    ("syllabus", "GSEB Coverage", ft.Icons.MENU_BOOK_OUTLINED, ft.Icons.MENU_BOOK),
+    ("settings", "Settings", ft.Icons.SETTINGS_OUTLINED, ft.Icons.SETTINGS),
+)
+
+COLOR_PRIMARY = "#3157C8"
+COLOR_PRIMARY_DARK = "#1D347A"
+COLOR_ACCENT = "#00A99D"
+COLOR_BACKGROUND = "#F5F7FC"
+COLOR_SURFACE = "#FFFFFF"
+COLOR_BORDER = "#DDE3F0"
+COLOR_TEXT = "#17213A"
+COLOR_MUTED = "#68738B"
+COLOR_USER = "#E7EDFF"
+COLOR_TUTOR = "#FFFFFF"
+COLOR_SUCCESS = "#0D7C66"
+COLOR_ERROR = "#B3261E"
+FAST_REPLY_DEADLINE_SECONDS = 7.0
+
+
+def _wav_from_pcm(pcm: bytes, sample_rate: int = 44_100) -> bytes:
+    output = io.BytesIO()
+    with wave.open(output, "wb") as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(pcm)
+    return output.getvalue()
+
+
 def main(page: ft.Page) -> None:
     page.title = "GyanVerse Academy"
-    page.window.width = 1180
-    page.window.height = 760
-    page.window.min_width = 390
-    page.window.min_height = 620
     page.padding = 0
+    page.bgcolor = COLOR_BACKGROUND
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.theme = ft.Theme(color_scheme_seed="indigo", use_material3=True)
+    page.theme = ft.Theme(color_scheme_seed=COLOR_PRIMARY, use_material3=True)
+    try:
+        page.window.width = 1180
+        page.window.height = 760
+        page.window.min_width = 360
+        page.window.min_height = 600
+    except Exception:
+        pass
 
-    profile = StudentProfile()
+    context_store = LearningContextStore(DATA_DIR / "student_context.json")
+    context = context_store.load()
+    attachment_store = HomeworkAttachmentStore(DATA_DIR / "homework_attachments")
+    syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
     engine = TutorEngine(db_path=DATA_DIR / "ai_tutor.db")
+    ai_service = GyanVerseAIService()
+    session_id = f"session-{uuid.uuid4().hex[:10]}"
+
     engine.ensure_student(
-        student_id=profile.student_id,
-        name=profile.name,
-        grade=profile.grade,
-        board=profile.board,
-        preferred_language=profile.language,
+        student_id=context.student_id,
+        name=context.name,
+        grade=context.standard,
+        board=context.board,
+        preferred_language=context.preferred_language,
     )
 
-    content = ft.Container(expand=True, padding=24)
-    status = ft.Text("Ready", size=12)
-    role_label = ft.Text("Student", weight=ft.FontWeight.BOLD)
+    current_view = "tutor"
+    voice_state = VoiceState.IDLE
+    voice_capture_path: Path | None = None
+    latest_tutor_answer = ""
+    selected_attachments = []
 
-    def snackbar(message: str, error: bool = False) -> None:
-        page.snack_bar = ft.SnackBar(ft.Text(message), bgcolor="red" if error else None)
-        page.snack_bar.open = True
+    title_text = ft.Text("Tutor", size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
+    context_text = ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1)
+    status_text = ft.Text("Ready", size=11, color=COLOR_MUTED)
+    body = ft.Container(expand=True, padding=0, bgcolor=COLOR_BACKGROUND)
+    menu_button = ft.IconButton(icon=ft.Icons.MENU, tooltip="Open menu")
+
+    def update_context(new_context: StudentLearningContext, *, persist: bool = True) -> None:
+        nonlocal context
+        validated = new_context.validate()
+        meaningful_fields = (
+            "student_id",
+            "name",
+            "board",
+            "medium",
+            "standard",
+            "preferred_language",
+            "current_subject",
+            "current_chapter",
+            "current_topic",
+            "learning_mode",
+            "onboarding_complete",
+        )
+        if all(getattr(context, field) == getattr(validated, field) for field in meaningful_fields):
+            return
+        identity_changed = any(
+            getattr(context, field) != getattr(validated, field)
+            for field in (
+                "student_id",
+                "name",
+                "board",
+                "standard",
+                "preferred_language",
+            )
+        )
+        context = context_store.save(validated) if persist else validated
+        if identity_changed:
+            engine.ensure_student(
+                student_id=context.student_id,
+                name=context.name,
+                grade=context.standard,
+                board=context.board,
+                preferred_language=context.preferred_language,
+            )
+        context_text.value = context.context_label
+
+    def notify(message: str, *, error: bool = False) -> None:
+        status_text.value = message
+        status_text.color = COLOR_ERROR if error else COLOR_MUTED
+        page.show_dialog(
+            ft.SnackBar(
+                content=ft.Text(message),
+                bgcolor="#FFEDEA" if error else "#E8F7F3",
+            )
+        )
         page.update()
 
-    def panel(title: str, body: ft.Control, subtitle: str = "") -> ft.Container:
+    def surface(content: ft.Control, *, padding: int = 16) -> ft.Container:
         return ft.Container(
-            content=ft.Column([
-                ft.Text(title, size=25, weight=ft.FontWeight.BOLD),
-                ft.Text(subtitle, size=13) if subtitle else ft.Container(),
-                ft.Divider(),
-                body,
-            ], spacing=10, scroll=ft.ScrollMode.AUTO),
+            content=content,
+            padding=padding,
+            bgcolor=COLOR_SURFACE,
+            border=ft.Border.all(1, COLOR_BORDER),
+            border_radius=16,
+        )
+
+    def page_panel(title: str, subtitle: str, content: ft.Control) -> ft.Control:
+        return ft.SafeArea(
             expand=True,
+            content=ft.Container(
+                expand=True,
+                padding=ft.Padding(left=12, top=12, right=12, bottom=12),
+                content=ft.Column(
+                    [
+                        ft.Text(title, size=23, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                        ft.Text(subtitle, size=12, color=COLOR_MUTED),
+                        content,
+                    ],
+                    expand=True,
+                    spacing=12,
+                    scroll=ft.ScrollMode.AUTO,
+                ),
+            ),
         )
 
-    def metric_card(label: str, value: str, hint: str) -> ft.Container:
-        return ft.Container(
-            content=ft.Column([
-                ft.Text(label, size=12),
-                ft.Text(value, size=21, weight=ft.FontWeight.BOLD),
-                ft.Text(hint, size=11),
-            ], spacing=3),
-            padding=16,
-            border=ft.Border.all(1, "#dddddd"),
-            border_radius=12,
-            width=220,
+    def metric(label: str, value: str, hint: str) -> ft.Container:
+        return surface(
+            ft.Column(
+                [
+                    ft.Text(label, size=11, color=COLOR_MUTED),
+                    ft.Text(value, size=18, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                    ft.Text(hint, size=10, color=COLOR_MUTED),
+                ],
+                spacing=3,
+            ),
+            padding=13,
         )
 
-    def report_box(title: str, getter: Callable[[], str]) -> ft.Container:
-        output = ft.Text("Select Refresh to load the latest report.", selectable=True)
-        def refresh(_=None):
+    def report_card(title: str, getter: Callable[[], str]) -> ft.Control:
+        output = ft.Text("Tap refresh to load the latest report.", selectable=True, color=COLOR_TEXT)
+
+        def refresh(_: object = None) -> None:
             try:
                 output.value = safe_text(getter())
-                status.value = f"{title} refreshed"
+                status_text.value = f"{title} refreshed"
             except Exception as exc:
                 output.value = f"Unable to load report: {type(exc).__name__}: {exc}"
             page.update()
-        return ft.Container(
-            content=ft.Column([
-                ft.Row([ft.Text(title, size=18, weight=ft.FontWeight.BOLD), ft.IconButton(ft.Icons.REFRESH, on_click=refresh)]),
-                ft.Container(output, padding=12, border=ft.Border.all(1, "#e5e5e5"), border_radius=10),
-            ]),
-            padding=12,
-            border=ft.Border.all(1, "#dddddd"),
-            border_radius=12,
+
+        return surface(
+            ft.Column(
+                [
+                    ft.Row(
+                        [
+                            ft.Text(title, size=16, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                            ft.Container(expand=True),
+                            ft.IconButton(ft.Icons.REFRESH, tooltip="Refresh", on_click=refresh),
+                        ]
+                    ),
+                    output,
+                ],
+                spacing=8,
+            )
         )
 
-    def student_home() -> ft.Control:
-        today = engine.format_today_summary(profile.student_id)
-        return panel(
-            "Student Home",
-            ft.Column([
-                ft.Row([
-                    metric_card("Class", str(profile.grade), profile.board),
-                    metric_card("Language", profile.language, "Tutor adapts to you"),
-                    metric_card("Learning mode", "Adaptive", "Hints before answers"),
-                    metric_card("Privacy", "Protected", "Student-isolated memory"),
-                ], spacing=12, run_spacing=12, wrap=True),
-                ft.Text("Today", size=20, weight=ft.FontWeight.BOLD),
-                ft.Container(ft.Text(safe_text(today), selectable=True), padding=16, border=ft.Border.all(1, "#dddddd"), border_radius=12),
-                ft.Text("Quick actions", size=20, weight=ft.FontWeight.BOLD),
-                ft.Row([
-                    ft.ElevatedButton("Daily Sync", icon=ft.Icons.SYNC, on_click=lambda _: show_view("sync")),
-                    ft.ElevatedButton("Homework", icon=ft.Icons.ASSIGNMENT, on_click=lambda _: show_view("homework")),
-                    ft.ElevatedButton("Revision", icon=ft.Icons.REPLAY, on_click=lambda _: show_view("revision")),
-                    ft.ElevatedButton("Progress", icon=ft.Icons.INSIGHTS, on_click=lambda _: show_view("progress")),
-                ], spacing=10, wrap=True),
-            ], spacing=18),
-            "Welcome to your safe, hint-first learning space.",
+    def open_profile_dialog(_: object = None, *, first_use: bool = False) -> None:
+        name_field = ft.TextField(label="Student name", value=context.name)
+        board_field = ft.Dropdown(
+            label="Board",
+            value=context.board if context.board in {"GSEB", "CBSE", "ICSE", "Other"} else "Other",
+            options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE", "ICSE", "Other")],
+        )
+        medium_field = ft.Dropdown(
+            label="Medium",
+            value=context.medium,
+            options=[ft.dropdown.Option(item) for item in ("Gujarati", "English", "Hindi")],
+        )
+        standard_field = ft.Dropdown(
+            label="Standard",
+            value=str(context.standard),
+            options=[ft.dropdown.Option(str(item)) for item in range(1, 13)],
+        )
+        language_field = ft.Dropdown(
+            label="Tutor language",
+            value=context.preferred_language,
+            options=[ft.dropdown.Option(item) for item in ("Gujarati", "Hindi", "English")],
         )
 
-    def sync_view() -> ft.Control:
-        subject=ft.TextField(label="Subject", value="Mathematics")
-        chapter=ft.TextField(label="Chapter", value="Fractions and Decimals")
-        topic=ft.TextField(label="What was taught today?", multiline=True, min_lines=2)
-        result=ft.Text(selectable=True)
-        def save(_):
+        def save_profile(_: object = None) -> None:
             try:
-                if not subject.value.strip() or not chapter.value.strip() or not topic.value.strip():
-                    raise ValueError("All fields are required.")
-                data=engine.record_daily_sync(student_id=profile.student_id, subject=subject.value, chapter=chapter.value, topic=topic.value)
-                result.value=f"Saved: {data['subject']} â†’ {data['chapter']} â†’ {data['topic']}"
-                snackbar("Daily learning saved")
-            except Exception as exc:
-                snackbar(str(exc), True)
-            page.update()
-        return panel("Daily Sync", ft.Column([subject, chapter, topic, ft.ElevatedButton("Save today's learning", icon=ft.Icons.SAVE, on_click=save), result], spacing=12), "Tell GyanVerse what school covered today.")
+                update_context(
+                    replace(
+                        context,
+                        name=(name_field.value or "Student").strip(),
+                        board=board_field.value or "GSEB",
+                        medium=medium_field.value or "Gujarati",
+                        standard=int(standard_field.value or 7),
+                        preferred_language=language_field.value or "Gujarati",
+                        onboarding_complete=True,
+                    )
+                )
+                page.pop_dialog()
+                show_view(current_view)
+                notify("Student profile saved")
+            except (ValueError, Phase11Error) as exc:
+                notify(str(exc), error=True)
 
-    def homework_view() -> ft.Control:
-        subject=ft.TextField(label="Subject", value="Mathematics")
-        chapter=ft.TextField(label="Chapter", value="Fractions and Decimals")
-        count=ft.Dropdown(label="Questions", value="5", options=[ft.dropdown.Option(str(n)) for n in range(1,11)])
-        output=ft.Text(selectable=True)
-        def generate(_):
+        dialog = ft.AlertDialog(
+            modal=first_use,
+            title=ft.Text("Set up your personal tutor"),
+            content=ft.Column(
+                [name_field, board_field, medium_field, standard_field, language_field],
+                tight=True,
+                scroll=ft.ScrollMode.AUTO,
+            ),
+            actions=[
+                ft.TextButton("Cancel", on_click=lambda _: page.pop_dialog())
+                if not first_use
+                else ft.Container(),
+                ft.ElevatedButton("Save and continue", on_click=save_profile),
+            ],
+            scrollable=True,
+        )
+        page.show_dialog(dialog)
+
+    def build_home() -> ft.Control:
+        today = engine.format_today_summary(context.student_id)
+        return page_panel(
+            f"Hi {context.name}",
+            "Continue from the chapter your school is teaching now.",
+            ft.Column(
+                [
+                    ft.ResponsiveRow(
+                        [
+                            ft.Container(metric("Board", context.board, context.medium), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Standard", str(context.standard), context.preferred_language), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Subject", context.current_subject or "Not selected", "Current class context"), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Mode", mode_label(context.learning_mode), "Hint-first tutoring"), col={"xs": 6, "md": 3}),
+                        ],
+                        spacing=10,
+                        run_spacing=10,
+                    ),
+                    surface(
+                        ft.Column(
+                            [
+                                ft.Text("Current school context", size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text(context.context_label, color=COLOR_TEXT),
+                                ft.Row(
+                                    [
+                                        ft.ElevatedButton("Ask Tutor", icon=ft.Icons.CHAT_BUBBLE_OUTLINE, on_click=lambda _: show_view("tutor")),
+                                        ft.OutlinedButton("Update chapter", icon=ft.Icons.EDIT_OUTLINED, on_click=lambda _: show_view("sync")),
+                                    ],
+                                    wrap=True,
+                                ),
+                            ],
+                            spacing=10,
+                        )
+                    ),
+                    surface(
+                        ft.Column(
+                            [
+                                ft.Text("Today", size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text(safe_text(today), selectable=True),
+                            ],
+                            spacing=8,
+                        )
+                    ),
+                ],
+                spacing=12,
+            ),
+        )
+
+    def build_sync() -> ft.Control:
+        subject = ft.TextField(label="Subject", value=context.current_subject)
+        chapter = ft.TextField(label="Chapter", value=context.current_chapter)
+        topic = ft.TextField(label="What was taught today?", value=context.current_topic, multiline=True, min_lines=2, max_lines=5)
+        result = ft.Text(color=COLOR_SUCCESS)
+
+        def save(_: object = None) -> None:
             try:
-                hw=engine.generate_homework(student_id=profile.student_id, subject=subject.value, chapter=chapter.value, question_count=int(count.value))
-                lines=[f"Homework ID: {hw['homework_id']}", f"Difficulty: {hw['difficulty']}", ""]
-                lines += [f"{q['number']}. {q['question']}" for q in hw['questions']]
-                output.value="\n".join(lines)
-                snackbar("Homework generated")
+                values = [(subject.value or "").strip(), (chapter.value or "").strip(), (topic.value or "").strip()]
+                if not all(values):
+                    raise Phase11Error("Subject, chapter and today's topic are required.")
+                saved = engine.record_daily_sync(
+                    student_id=context.student_id,
+                    subject=values[0],
+                    chapter=values[1],
+                    topic=values[2],
+                )
+                update_context(
+                    replace(
+                        context,
+                        current_subject=saved["subject"],
+                        current_chapter=saved["chapter"],
+                        current_topic=saved["topic"],
+                    )
+                )
+                result.value = f"Saved: {saved['subject']} → {saved['chapter']} → {saved['topic']}"
+                notify("Today's class context saved")
             except Exception as exc:
-                output.value=f"Error: {exc}"
+                notify(str(exc), error=True)
             page.update()
-        return panel("Homework Studio", ft.Column([ft.ResponsiveRow([ft.Container(subject, col=5), ft.Container(chapter, col=5), ft.Container(count, col=2)]), ft.ElevatedButton("Generate adaptive homework", icon=ft.Icons.AUTO_AWESOME, on_click=generate), ft.Container(output, padding=14, border=ft.Border.all(1,"#dddddd"), border_radius=10)], spacing=14), "Practice adjusts to the student's current mastery.")
 
-    def progress_view() -> ft.Control:
-        return panel("Progress & Learning Timeline", ft.Column([
-            report_box("Progress summary", lambda: engine.format_progress(profile.student_id)),
-            report_box("Today's summary", lambda: engine.format_today_summary(profile.student_id)),
-        ], spacing=16), "Evidence-based progress without permanent labels.")
+        return page_panel(
+            "Daily Class Sync",
+            "Tell GyanVerse what happened in school so the tutor can continue from there.",
+            surface(ft.Column([subject, chapter, topic, ft.ElevatedButton("Save today's learning", icon=ft.Icons.SAVE, on_click=save), result], spacing=12)),
+        )
 
-    def revision_view() -> ft.Control:
-        return panel("Revision Centre", ft.Column([
-            report_box("Revision queue", lambda: engine.format_revision_queue(profile.student_id)),
-            report_box("Misconception patterns", lambda: engine.format_misconceptions(profile.student_id)),
-        ], spacing=16), "Topics are prioritised using learning evidence and spaced revision.")
+    def build_homework() -> ft.Control:
+        subject = ft.TextField(label="Subject", value=context.current_subject or "Mathematics")
+        chapter = ft.TextField(label="Chapter", value=context.current_chapter)
+        count = ft.Dropdown(label="Questions", value="5", options=[ft.dropdown.Option(str(n)) for n in range(1, 11)])
+        output = ft.Text(selectable=True)
 
-    def tutor_view() -> ft.Control:
-        transcript=ft.ListView(expand=True, spacing=10, auto_scroll=True)
-        prompt=ft.TextField(hint_text="Ask a question...", expand=True)
-        def add(who: str, message: str):
-            transcript.controls.append(ft.Container(ft.Text(f"{who}: {message}", selectable=True), padding=10, border=ft.Border.all(1,"#e1e1e1"), border_radius=10))
-        add("Tutor", "I am ready. I will guide with hints before giving final answers. Core reports work offline; live AI chat needs Gemini configuration.")
-        def send(_):
-            value=(prompt.value or "").strip()
-            if not value: return
-            add("Student", value); prompt.value=""
-            add("Tutor", "Live AI chat remains available through the legacy voice tutor entry point. Use the study tools here for offline-safe learning workflows.")
+        def generate(_: object = None) -> None:
+            try:
+                homework = engine.generate_homework(
+                    student_id=context.student_id,
+                    subject=subject.value or "",
+                    chapter=chapter.value or "",
+                    question_count=int(count.value or 5),
+                )
+                lines = [f"Homework ID: {homework['homework_id']}", f"Difficulty: {homework['difficulty']}", ""]
+                lines.extend(f"{item['number']}. {item['question']}" for item in homework["questions"])
+                output.value = "\n".join(lines)
+                notify("Adaptive homework generated")
+            except Exception as exc:
+                output.value = f"Unable to generate homework: {exc}"
+                notify(str(exc), error=True)
             page.update()
-        return panel("AI Tutor Classroom", ft.Column([transcript, ft.Row([prompt, ft.IconButton(ft.Icons.MIC, tooltip="Voice tutor is available in legacy mode"), ft.ElevatedButton("Send", on_click=send)])], expand=True), "Student classroom shell with safe operational fallback.")
 
-    def parent_view() -> ft.Control:
-        return panel("Parent / Guardian Portal", ft.Column([
-            ft.Row([metric_card("Linked children", "1", "Privacy-isolated"), metric_card("Alerts", "Safe", "No shame or sibling comparisons"), metric_card("Reports", "Daily / Weekly", "Support-focused language")], spacing=12, wrap=True),
-            report_box("Child progress", lambda: engine.format_progress(profile.student_id)),
-            report_box("Home revision support", lambda: engine.format_revision_queue(profile.student_id)),
-        ], spacing=16), "Clear, supportive information for home learning.")
+        history = attachment_store.list_student(context.student_id)
+        history_controls: list[ft.Control] = []
+        for item in reversed(history[-12:]):
+            def remove(_: object = None, attachment_id: str = item.attachment_id) -> None:
+                attachment_store.delete(attachment_id, student_id=context.student_id)
+                show_view("homework")
+                notify("Homework file deleted")
 
-    def teacher_view() -> ft.Control:
-        return panel("Teacher Dashboard", ft.Column([
-            ft.Row([metric_card("Student", profile.name, f"Class {profile.grade}"), metric_card("Teaching policy", "Hint first", "Explainable decisions"), metric_card("Classroom", "Ready", "Orchestrator enabled")], spacing=12, wrap=True),
-            report_box("Learning evidence", lambda: engine.format_progress(profile.student_id)),
-            report_box("Intervention queue", lambda: engine.format_misconceptions(profile.student_id)),
-        ], spacing=16), "Actionable evidence for the Class Teacher and subject teachers.")
+            history_controls.append(
+                surface(
+                    ft.Row(
+                        [
+                            ft.Icon(ft.Icons.IMAGE_OUTLINED if item.is_image else ft.Icons.DESCRIPTION_OUTLINED, color=COLOR_PRIMARY),
+                            ft.Column([ft.Text(item.original_name, weight=ft.FontWeight.BOLD), ft.Text(f"{item.display_size} • saved locally", size=10, color=COLOR_MUTED)], expand=True, spacing=2),
+                            ft.IconButton(ft.Icons.DELETE_OUTLINE, tooltip="Delete local file", on_click=remove),
+                        ]
+                    ),
+                    padding=10,
+                )
+            )
+        if not history_controls:
+            history_controls.append(ft.Text("No submitted homework files yet.", color=COLOR_MUTED))
 
-    def principal_view() -> ft.Control:
-        return panel("Principal Dashboard", ft.Column([
-            ft.Row([metric_card("Academy core", "Operational", "193 baseline tests"), metric_card("Safety", "Enforced", "Privacy and dignity gates"), metric_card("Release", "RC1", "Backend release evidence complete")], spacing=12, wrap=True),
-            ft.Container(ft.Column([
-                ft.Text("Academy capabilities", size=18, weight=ft.FontWeight.BOLD),
-                ft.Text("Student Analyzer â€¢ Teacher Reasoning â€¢ Strategy Selector â€¢ Classroom Orchestrator â€¢ Long-Term Memory â€¢ Learning Intelligence â€¢ Guardian Reporting â€¢ Stabilization"),
-            ]), padding=16, border=ft.Border.all(1,"#dddddd"), border_radius=12),
-            report_box("Current learner overview", lambda: engine.format_today_summary(profile.student_id)),
-        ], spacing=16), "School-wide operational overview and ethical governance.")
+        return page_panel(
+            "Homework Studio",
+            "Generate practice or attach homework pages in Tutor mode for hint-first review.",
+            ft.Column(
+                [
+                    surface(
+                        ft.Column(
+                            [
+                                ft.ResponsiveRow(
+                                    [
+                                        ft.Container(subject, col={"xs": 12, "md": 5}),
+                                        ft.Container(chapter, col={"xs": 12, "md": 5}),
+                                        ft.Container(count, col={"xs": 12, "md": 2}),
+                                    ]
+                                ),
+                                ft.ElevatedButton("Generate adaptive homework", icon=ft.Icons.AUTO_AWESOME, on_click=generate),
+                                output,
+                            ],
+                            spacing=12,
+                        )
+                    ),
+                    ft.Text("Local homework history", size=17, weight=ft.FontWeight.BOLD),
+                    ft.Column(history_controls, spacing=8),
+                ],
+                spacing=12,
+            ),
+        )
 
-    def settings_view() -> ft.Control:
-        return panel("Settings & Privacy", ft.Column([
-            ft.TextField(label="Student name", value=profile.name, disabled=True),
-            ft.TextField(label="Student ID", value=profile.student_id, disabled=True),
-            ft.TextField(label="Database", value=str(engine.db_path), disabled=True),
-            ft.Switch(label="Use accessible large controls", value=True),
-            ft.Switch(label="Allow voice features when configured", value=True),
-            ft.Text("Sensitive data and API secrets are never committed to Git. Local learning data is stored in the data folder."),
-        ], spacing=12), "Local configuration, accessibility, and data transparency.")
+    def build_reports(kind: str) -> ft.Control:
+        if kind == "revision":
+            return page_panel(
+                "Revision Centre",
+                "Topics are prioritised using learning evidence and spaced revision.",
+                ft.Column(
+                    [
+                        report_card("Revision queue", lambda: engine.format_revision_queue(context.student_id)),
+                        report_card("Misconception patterns", lambda: engine.format_misconceptions(context.student_id)),
+                    ],
+                    spacing=12,
+                ),
+            )
+        return page_panel(
+            "Progress",
+            "Evidence-based progress without permanent labels.",
+            ft.Column(
+                [
+                    report_card("Progress summary", lambda: engine.format_progress(context.student_id)),
+                    report_card("Today's summary", lambda: engine.format_today_summary(context.student_id)),
+                ],
+                spacing=12,
+            ),
+        )
 
-    builders={
-        "home": student_home, "tutor": tutor_view, "sync": sync_view,
-        "homework": homework_view, "revision": revision_view, "progress": progress_view,
-        "parent": parent_view, "teacher": teacher_view, "principal": principal_view,
-        "settings": settings_view,
+    def build_syllabus() -> ft.Control:
+        coverage = syllabus_repo.overall_coverage()
+        installed = syllabus_repo.all()
+
+        async def import_syllabus(_: object = None) -> None:
+            try:
+                files = await ft.FilePicker().pick_files(
+                    dialog_title="Import validated GSEB syllabus JSON",
+                    allow_multiple=False,
+                    with_data=True,
+                    file_type=ft.FilePickerFileType.CUSTOM,
+                    allowed_extensions=["json"],
+                )
+                if not files:
+                    status_text.value = "Syllabus import cancelled"
+                    page.update()
+                    return
+                picked = files[0]
+                raw = picked.bytes
+                if raw is None and getattr(picked, "path", None):
+                    raw = Path(picked.path).read_bytes()
+                if raw is None:
+                    raise Phase11Error("Unable to read the selected syllabus file.")
+                payload = json.loads(raw.decode("utf-8-sig"))
+                syllabus = syllabus_repo.install_payload(payload)
+                notify(
+                    f"Installed: {syllabus.medium} Std {syllabus.standard} {syllabus.subject}"
+                )
+                show_view("syllabus")
+            except (UnicodeDecodeError, json.JSONDecodeError, Phase11Error) as exc:
+                notify(f"Syllabus rejected: {exc}", error=True)
+            except Exception as exc:
+                notify(f"Syllabus import failed: {type(exc).__name__}: {exc}", error=True)
+        installed_controls: list[ft.Control] = []
+        for syllabus in installed:
+            item_coverage = syllabus.coverage()
+            installed_controls.append(
+                surface(
+                    ft.Column(
+                        [
+                            ft.Text(f"{syllabus.medium} • Std {syllabus.standard} • {syllabus.subject}", weight=ft.FontWeight.BOLD),
+                            ft.Text(f"{syllabus.textbook} • Edition {syllabus.source.edition}", size=11, color=COLOR_MUTED),
+                            ft.Text(
+                                f"Structured topics: {item_coverage['topics']} • Content coverage: {item_coverage['coverage_percent']}% • Official coverage: {item_coverage['official_coverage_percent']}%",
+                                size=11,
+                            ),
+                        ],
+                        spacing=4,
+                    )
+                )
+            )
+        if not installed_controls:
+            installed_controls.append(
+                surface(
+                    ft.Text(
+                        "The validated GSEB schema/importer is ready, but no official textbook dataset is installed yet. The app will not pretend that AI-generated material is official.",
+                        color=COLOR_MUTED,
+                    )
+                )
+            )
+        return page_panel(
+            "GSEB Syllabus Coverage",
+            "Official sources and AI-generated practice remain clearly separated.",
+            ft.Column(
+                [
+                    ft.Row(
+                        [
+                            ft.ElevatedButton(
+                                "Import validated JSON",
+                                icon=ft.Icons.UPLOAD_FILE_OUTLINED,
+                                on_click=import_syllabus,
+                            ),
+                            ft.Text(
+                                "Only GSEB packages with source, edition and content-origin metadata are accepted.",
+                                size=10,
+                                color=COLOR_MUTED,
+                                expand=True,
+                            ),
+                        ],
+                        wrap=True,
+                    ),
+                    ft.ResponsiveRow(
+                        [
+                            ft.Container(metric("Installed syllabi", str(coverage["syllabi"]), "Validated JSON packages"), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Topics", str(coverage["topics"]), "Structured hierarchy"), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Content coverage", f"{coverage['coverage_percent']}%", "Any validated content"), col={"xs": 6, "md": 3}),
+                            ft.Container(metric("Official coverage", f"{coverage['official_coverage_percent']}%", "Official-source only"), col={"xs": 6, "md": 3}),
+                        ],
+                        spacing=10,
+                        run_spacing=10,
+                    ),
+                    ft.Column(installed_controls, spacing=8),
+                ],
+                spacing=12,
+            ),
+        )
+
+    def build_settings() -> ft.Control:
+        ai_status = "Configured" if ai_service.configured else "Not configured — typing and offline tutor fallback remain available"
+        voice_extension = ai_service.transcription_backend if far is not None else "Recorder extension missing — typing fallback"
+        return page_panel(
+            "Settings & Privacy",
+            "Student context and homework files stay local unless the student submits them to the configured AI service.",
+            ft.Column(
+                [
+                    surface(
+                        ft.Column(
+                            [
+                                ft.ListTile(
+                                    leading=ft.Icon(ft.Icons.PERSON_OUTLINE),
+                                    title=ft.Text(context.name),
+                                    subtitle=ft.Text(context.context_label),
+                                    trailing=ft.IconButton(ft.Icons.EDIT_OUTLINED, on_click=open_profile_dialog),
+                                ),
+                                ft.Divider(),
+                                ft.Text(f"AI service: {ai_status}"),
+                                ft.Text(f"Voice recorder: {voice_extension}"),
+                                ft.Text(f"Local database: {engine.db_path}", size=10, color=COLOR_MUTED),
+                            ],
+                            spacing=8,
+                        )
+                    ),
+                    surface(
+                        ft.Column(
+                            [
+                                ft.Text("Privacy controls", size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text("• Attached homework is copied into local app storage."),
+                                ft.Text("• Files can be deleted from Homework History."),
+                                ft.Text("• API keys are read from .env and must never be committed."),
+                                ft.Text("• Missing syllabus content is shown as missing, not invented as official."),
+                            ],
+                            spacing=6,
+                        )
+                    ),
+                ],
+                spacing=12,
+            ),
+        )
+
+    def build_tutor() -> ft.Control:
+        nonlocal selected_attachments
+        transcript = ft.ListView(expand=True, spacing=10, auto_scroll=True, padding=ft.Padding(left=4, top=4, right=4, bottom=4))
+        composer = ft.TextField(
+            hint_text="Ask your doubt or describe today's chapter...",
+            multiline=True,
+            min_lines=1,
+            max_lines=5,
+            expand=True,
+            border=ft.InputBorder.NONE,
+            text_size=15,
+        )
+        mode_dropdown = ft.Dropdown(
+            value=context.learning_mode,
+            width=165,
+            dense=True,
+            options=[
+                ft.dropdown.Option(LearningMode.EXPLAIN.value, "Explain"),
+                ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework Help"),
+                ft.dropdown.Option(LearningMode.REVISION.value, "Revision"),
+                ft.dropdown.Option(LearningMode.EXAM.value, "Exam Answer"),
+            ],
+        )
+        attachment_preview = ft.Row(wrap=True, spacing=6, run_spacing=6)
+        busy = ft.ProgressRing(width=18, height=18, visible=False)
+        send_button = ft.IconButton(icon=ft.Icons.SEND_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Send")
+        mic_button = ft.IconButton(icon=ft.Icons.MIC_NONE_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Record voice")
+        speak_button = ft.IconButton(icon=ft.Icons.VOLUME_UP_OUTLINED, tooltip="Read last tutor answer", disabled=True)
+
+        def add_message(role: str, text: str, *, error: bool = False) -> None:
+            is_student = role == "student"
+            bubble = ft.Container(
+                content=ft.Column(
+                    [
+                        ft.Text("You" if is_student else "GyanVerse Tutor", size=10, weight=ft.FontWeight.BOLD, color=COLOR_PRIMARY if is_student else COLOR_SUCCESS),
+                        ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=14),
+                    ],
+                    spacing=4,
+                ),
+                bgcolor=COLOR_USER if is_student else COLOR_TUTOR,
+                border=ft.Border.all(1, "#C9D5FF" if is_student else COLOR_BORDER),
+                border_radius=ft.BorderRadius.only(
+                    top_left=16,
+                    top_right=16,
+                    bottom_left=16 if is_student else 4,
+                    bottom_right=4 if is_student else 16,
+                ),
+                padding=12,
+                width=680,
+            )
+            transcript.controls.append(
+                ft.Row(
+                    [bubble],
+                    alignment=ft.MainAxisAlignment.END if is_student else ft.MainAxisAlignment.START,
+                )
+            )
+
+        def refresh_attachment_preview() -> None:
+            attachment_preview.controls.clear()
+            for item in selected_attachments:
+                def remove(_: object = None, attachment_id: str = item.attachment_id) -> None:
+                    nonlocal selected_attachments
+                    attachment_store.delete(attachment_id, student_id=context.student_id)
+                    selected_attachments = [entry for entry in selected_attachments if entry.attachment_id != attachment_id]
+                    refresh_attachment_preview()
+                    page.update()
+
+                attachment_preview.controls.append(
+                    ft.Container(
+                        content=ft.Row(
+                            [
+                                ft.Icon(ft.Icons.IMAGE_OUTLINED if item.is_image else ft.Icons.DESCRIPTION_OUTLINED, size=16),
+                                ft.Text(item.original_name, size=10, max_lines=1),
+                                ft.IconButton(ft.Icons.CLOSE, icon_size=15, tooltip="Remove", on_click=remove),
+                            ],
+                            spacing=3,
+                            tight=True,
+                        ),
+                        padding=ft.Padding(left=8, top=2, right=2, bottom=2),
+                        bgcolor="#EEF1F8",
+                        border_radius=12,
+                    )
+                )
+
+        async def pick_files(_: object = None) -> None:
+            nonlocal selected_attachments
+            try:
+                files = await ft.FilePicker().pick_files(
+                    dialog_title="Select homework photos or files",
+                    allow_multiple=True,
+                    with_data=True,
+                    file_type=ft.FilePickerFileType.CUSTOM,
+                    allowed_extensions=["jpg", "jpeg", "png", "webp", "pdf", "txt", "md", "doc", "docx"],
+                    compression_quality=88,
+                )
+                if not files:
+                    status_text.value = "Attachment selection cancelled"
+                    page.update()
+                    return
+                for picked in files:
+                    data = picked.bytes
+                    if data is None and getattr(picked, "path", None):
+                        data = Path(picked.path).read_bytes()
+                    if data is None:
+                        raise Phase11Error(f"Unable to read {picked.name}.")
+                    record = attachment_store.add_bytes(
+                        student_id=context.student_id,
+                        session_id=session_id,
+                        original_name=picked.name,
+                        data=data,
+                    )
+                    selected_attachments.append(record)
+                refresh_attachment_preview()
+                mode_dropdown.value = LearningMode.HOMEWORK.value
+                update_context(replace(context, learning_mode=LearningMode.HOMEWORK.value))
+                notify(f"{len(files)} homework file(s) attached")
+            except Exception as exc:
+                notify(str(exc), error=True)
+
+        def set_busy(value: bool, message: str) -> None:
+            busy.visible = value
+            send_button.disabled = value
+            mic_button.disabled = value
+            status_text.value = message
+            page.update()
+
+        async def send(_: object = None) -> None:
+            nonlocal selected_attachments, latest_tutor_answer
+            text = (composer.value or "").strip()
+            if not text and not selected_attachments:
+                notify("Type a question or attach homework first.", error=True)
+                return
+            request_attachments = tuple(selected_attachments)
+            started_at = time.perf_counter()
+            try:
+                requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
+                if requested_mode != context.learning_mode:
+                    update_context(replace(context, learning_mode=requested_mode))
+                detected_context, detected = detect_context_from_message(text, context)
+                if detected:
+                    update_context(detected_context)
+                add_message("student", text or "Please review my attached homework.")
+                composer.value = ""
+                set_busy(True, "Tutor is thinking...")
+                try:
+                    answer = await asyncio.wait_for(
+                        asyncio.to_thread(
+                            ai_service.ask,
+                            message=text,
+                            context=context,
+                            attachments=request_attachments,
+                        ),
+                        timeout=FAST_REPLY_DEADLINE_SECONDS,
+                    )
+                except asyncio.TimeoutError:
+                    ai_service.disable_online_for_session(
+                        f"Tutor response exceeded {FAST_REPLY_DEADLINE_SECONDS:.0f} seconds."
+                    )
+                    answer = ai_service.offline_answer(
+                        message=text,
+                        context=context,
+                        attachments=request_attachments,
+                        reason=ai_service.last_error,
+                    )
+                latest_tutor_answer = answer
+                add_message("tutor", answer)
+                speak_button.disabled = False
+                selected_attachments = []
+                refresh_attachment_preview()
+                elapsed = time.perf_counter() - started_at
+                status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.last_backend}"
+                busy.visible = False
+                send_button.disabled = False
+                mic_button.disabled = False
+                page.update()
+                try:
+                    await asyncio.wait_for(
+                        asyncio.to_thread(
+                            engine.record_learning_interaction,
+                            student_id=context.student_id,
+                            user_text=text or "[homework attachment]",
+                            tutor_text=answer,
+                        ),
+                        timeout=2.0,
+                    )
+                except Exception:
+                    # Learning analytics must never block the visible tutor reply.
+                    pass
+            except Exception as exc:
+                fallback = ai_service.offline_answer(
+                    message=text,
+                    context=context,
+                    attachments=request_attachments,
+                    reason=f"{type(exc).__name__}: {exc}",
+                )
+                latest_tutor_answer = fallback
+                add_message("tutor", fallback)
+                status_text.value = "Fast local reply shown"
+            finally:
+                busy.visible = False
+                send_button.disabled = False
+                mic_button.disabled = False
+                page.update()
+
+        def handle_voice_state(event: object) -> None:
+            state = getattr(event, "state", None)
+            state_label = getattr(state, "value", None) or str(state or "updated")
+            status_text.value = f"Voice recorder: {state_label}"
+            page.update()
+
+        recorder = None
+        if far is not None:
+            recorder = far.AudioRecorder(on_state_change=handle_voice_state)
+            page.services.append(recorder)
+
+        async def _read_recorded_wav(path: Path) -> bytes:
+            for _ in range(30):
+                if path.exists() and path.stat().st_size > 44:
+                    data = await asyncio.to_thread(path.read_bytes)
+                    if data.startswith(b"RIFF") and data[8:12] == b"WAVE":
+                        return data
+                await asyncio.sleep(0.1)
+            raise AIServiceError("The microphone did not produce a valid WAV recording. Check Windows microphone access and try again.")
+
+        async def toggle_recording(_: object = None) -> None:
+            nonlocal voice_state, voice_capture_path
+            if recorder is None:
+                notify("Voice recorder extension is unavailable. Continue by typing.", error=True)
+                return
+            try:
+                if voice_state == VoiceState.RECORDING:
+                    voice_state = VoiceState.PROCESSING
+                    mic_button.icon = ft.Icons.MIC_NONE_ROUNDED
+                    returned_path = await recorder.stop_recording()
+                    capture_path = Path(returned_path) if returned_path else voice_capture_path
+                    if capture_path is None:
+                        raise AIServiceError("The recorder did not return an audio file.")
+                    wav_bytes = await _read_recorded_wav(capture_path)
+                    set_busy(True, f"Converting voice with {ai_service.transcription_backend}...")
+                    transcript_text = await asyncio.to_thread(
+                        ai_service.transcribe,
+                        wav_bytes,
+                        language_hint=context.preferred_language,
+                    )
+                    composer.value = transcript_text
+                    composer.focus()
+                    voice_state = VoiceState.READY
+                    status_text.value = "Voice text ready — edit it before sending"
+                    try:
+                        capture_path.unlink(missing_ok=True)
+                    except OSError:
+                        pass
+                    voice_capture_path = None
+                else:
+                    if not ai_service.transcription_available:
+                        raise AIServiceError("Voice transcription is not configured. Typing remains available.")
+                    voice_state = VoiceState.REQUESTING_PERMISSION
+                    status_text.value = "Requesting microphone permission..."
+                    page.update()
+                    if not await recorder.has_permission():
+                        voice_state = VoiceState.UNAVAILABLE
+                        raise AIServiceError(
+                            "Microphone permission was denied. Enable it in Windows Settings > Privacy & security > Microphone."
+                        )
+                    if not await recorder.is_supported_encoder(far.AudioEncoder.WAV):
+                        raise AIServiceError("WAV microphone recording is not supported on this device.")
+                    voice_capture_path = Path(tempfile.gettempdir()) / f"gyanverse_voice_{uuid.uuid4().hex}.wav"
+                    voice_capture_path.unlink(missing_ok=True)
+                    started = await recorder.start_recording(
+                        output_path=str(voice_capture_path),
+                        configuration=far.AudioRecorderConfiguration(
+                            encoder=far.AudioEncoder.WAV,
+                            sample_rate=16_000,
+                            channels=1,
+                            suppress_noise=True,
+                            cancel_echo=True,
+                            auto_gain=True,
+                        ),
+                    )
+                    if not started:
+                        raise AIServiceError("The microphone could not start. Close other apps using the mic and try again.")
+                    voice_state = VoiceState.RECORDING
+                    mic_button.icon = ft.Icons.STOP_CIRCLE_OUTLINED
+                    status_text.value = "Recording — speak now, then tap the red stop button"
+            except Exception as exc:
+                voice_state = VoiceState.ERROR
+                mic_button.icon = ft.Icons.MIC_NONE_ROUNDED
+                notify(str(exc), error=True)
+            finally:
+                busy.visible = False
+                send_button.disabled = False
+                mic_button.disabled = False
+                page.update()
+
+        async def speak_last(_: object = None) -> None:
+            nonlocal voice_state
+            if not latest_tutor_answer:
+                notify("No tutor answer is available to read aloud.", error=True)
+                return
+            if fta is None:
+                notify("Audio playback extension is unavailable. The text answer remains readable.", error=True)
+                return
+            try:
+                voice_state = VoiceState.PROCESSING
+                set_busy(True, "Preparing spoken answer...")
+                audio_bytes = await asyncio.to_thread(
+                    ai_service.synthesize,
+                    latest_tutor_answer,
+                    language_hint=context.preferred_language,
+                )
+                audio = fta.Audio(src=audio_bytes, autoplay=False, volume=1.0)
+                page.services.append(audio)
+                await audio.play()
+                voice_state = VoiceState.PLAYING
+                status_text.value = "Playing tutor answer"
+            except Exception as exc:
+                voice_state = VoiceState.ERROR
+                notify(str(exc), error=True)
+            finally:
+                set_busy(False, "Ready")
+
+        def mode_changed(_: object = None) -> None:
+            try:
+                update_context(replace(context, learning_mode=mode_dropdown.value or LearningMode.EXPLAIN.value))
+                status_text.value = f"Mode: {mode_label(context.learning_mode)}"
+                page.update()
+            except Phase11Error as exc:
+                notify(str(exc), error=True)
+
+        mode_dropdown.on_change = mode_changed
+        send_button.on_click = send
+        mic_button.on_click = toggle_recording
+        speak_button.on_click = speak_last
+
+        add_message(
+            "tutor",
+            (
+                f"Namaste {context.name}. I remember your {context.board} {context.medium} Std {context.standard} context. "
+                "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
+            ),
+        )
+        refresh_attachment_preview()
+
+        composer_shell = ft.Container(
+            content=ft.Column(
+                [
+                    attachment_preview,
+                    ft.Row(
+                        [
+                            ft.IconButton(ft.Icons.ADD_CIRCLE_OUTLINE, icon_color=COLOR_PRIMARY, tooltip="Attach photo, PDF or document", on_click=pick_files),
+                            composer,
+                            mic_button,
+                            send_button,
+                        ],
+                        vertical_alignment=ft.CrossAxisAlignment.END,
+                    ),
+                    ft.Row(
+                        [
+                            mode_dropdown,
+                            speak_button,
+                            busy,
+                            ft.Container(expand=True),
+                            ft.Text("Voice text is editable before sending", size=9, color=COLOR_MUTED),
+                        ],
+                        wrap=True,
+                    ),
+                ],
+                spacing=4,
+            ),
+            padding=ft.Padding(left=6, top=6, right=6, bottom=6),
+            bgcolor=COLOR_SURFACE,
+            border=ft.Border.all(1, COLOR_BORDER),
+            border_radius=20,
+            shadow=ft.BoxShadow(blur_radius=12, spread_radius=0, color="#22000000", offset=ft.Offset(0, 3)),
+        )
+
+        return ft.SafeArea(
+            expand=True,
+            content=ft.Container(
+                expand=True,
+                padding=ft.Padding(left=8, top=8, right=8, bottom=8),
+                content=ft.Column(
+                    [
+                        ft.Container(
+                            content=ft.Row(
+                                [
+                                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
+                                    ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
+                                    ft.Container(expand=True),
+                                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=18, on_click=open_profile_dialog),
+                                ]
+                            ),
+                            padding=ft.Padding(left=10, top=4, right=4, bottom=4),
+                            bgcolor="#EDF7F6",
+                            border_radius=12,
+                        ),
+                        transcript,
+                        composer_shell,
+                    ],
+                    expand=True,
+                    spacing=8,
+                ),
+            ),
+        )
+
+    builders = {
+        "home": build_home,
+        "tutor": build_tutor,
+        "sync": build_sync,
+        "homework": build_homework,
+        "revision": lambda: build_reports("revision"),
+        "progress": lambda: build_reports("progress"),
+        "syllabus": build_syllabus,
+        "settings": build_settings,
     }
 
-    def show_view(key: str):
-        content.content = builders.get(key, student_home)()
+    def show_view(key: str) -> None:
+        nonlocal current_view
+        current_view = key if key in builders else "tutor"
+        label = next((item[1] for item in NAV_ITEMS if item[0] == current_view), "Tutor")
+        title_text.value = label
+        body.content = builders[current_view]()
         page.update()
 
-    nav = ft.NavigationRail(
-        selected_index=0,
-        label_type=ft.NavigationRailLabelType.ALL,
-        min_width=92,
-        min_extended_width=220,
-        destinations=[
-            ft.NavigationRailDestination(icon=ft.Icons.HOME_OUTLINED, selected_icon=ft.Icons.HOME, label="Home"),
-            ft.NavigationRailDestination(icon=ft.Icons.SCHOOL_OUTLINED, selected_icon=ft.Icons.SCHOOL, label="Tutor"),
-            ft.NavigationRailDestination(icon=ft.Icons.SYNC, label="Daily Sync"),
-            ft.NavigationRailDestination(icon=ft.Icons.ASSIGNMENT_OUTLINED, selected_icon=ft.Icons.ASSIGNMENT, label="Homework"),
-            ft.NavigationRailDestination(icon=ft.Icons.REPLAY, label="Revision"),
-            ft.NavigationRailDestination(icon=ft.Icons.INSIGHTS, label="Progress"),
-            ft.NavigationRailDestination(icon=ft.Icons.FAMILY_RESTROOM, label="Parent"),
-            ft.NavigationRailDestination(icon=ft.Icons.CAST_FOR_EDUCATION, label="Teacher"),
-            ft.NavigationRailDestination(icon=ft.Icons.ADMIN_PANEL_SETTINGS, label="Principal"),
-            ft.NavigationRailDestination(icon=ft.Icons.SETTINGS, label="Settings"),
+    async def open_drawer(_: object = None) -> None:
+        await page.show_drawer()
+
+    async def drawer_changed(event: object) -> None:
+        index = int(getattr(event.control, "selected_index", 1))
+        key = NAV_ITEMS[index][0]
+        show_view(key)
+        await page.close_drawer()
+
+    menu_button.on_click = open_drawer
+    page.drawer = ft.NavigationDrawer(
+        selected_index=1,
+        width=292,
+        bgcolor=COLOR_SURFACE,
+        indicator_color="#E2E9FF",
+        on_change=drawer_changed,
+        controls=[
+            ft.Container(
+                content=ft.Row(
+                    [
+                        ft.Image(src="logo_mark.png", width=42, height=42, error_content=ft.Icon(ft.Icons.SCHOOL, color=COLOR_PRIMARY)),
+                        ft.Column(
+                            [
+                                ft.Text("GyanVerse Academy", size=17, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                                ft.Text("Your personal tutor", size=10, color=COLOR_MUTED),
+                            ],
+                            spacing=0,
+                        ),
+                    ]
+                ),
+                padding=ft.Padding(left=20, top=20, right=12, bottom=14),
+            ),
+            ft.Divider(height=1),
+            *[
+                ft.NavigationDrawerDestination(icon=icon, selected_icon=selected_icon, label=label)
+                for _, label, icon, selected_icon in NAV_ITEMS
+            ],
         ],
     )
-    keys=["home","tutor","sync","homework","revision","progress","parent","teacher","principal","settings"]
-    def nav_change(event):
-        key=keys[event.control.selected_index]
-        role_label.value = "Student" if key in keys[:6] else key.title()
-        show_view(key)
-    nav.on_change=nav_change
 
-    topbar=ft.Container(
-        content=ft.Row([
-            ft.Column([ft.Text("GyanVerse Academy", size=22, weight=ft.FontWeight.BOLD), ft.Text("AI Tutor Buddy learning platform", size=11)], spacing=0),
-            ft.Container(expand=True), role_label, ft.VerticalDivider(), status,
-        ]), padding=ft.Padding(left=20, top=12, right=20, bottom=12), border=ft.Border(bottom=ft.BorderSide(1, "#dddddd"))
+    topbar = ft.Container(
+        content=ft.Row(
+            [
+                menu_button,
+                ft.Column([title_text, context_text], spacing=0, expand=True),
+                status_text,
+            ],
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        ),
+        padding=ft.Padding(left=4, top=7, right=12, bottom=7),
+        bgcolor=COLOR_SURFACE,
+        border=ft.Border(bottom=ft.BorderSide(1, COLOR_BORDER)),
     )
-    page.add(ft.Column([topbar, ft.Row([nav, ft.VerticalDivider(width=1), content], expand=True)], expand=True, spacing=0))
-    show_view("home")
+
+    page.add(ft.Column([topbar, body], expand=True, spacing=0))
+    show_view("tutor")
+    if not context.onboarding_complete:
+        open_profile_dialog(first_use=True)
 
 
 if __name__ == "__main__":
-    ft.run(main)
-
-
+    ft.run(main, assets_dir="assets")
