@@ -174,3 +174,11 @@ from .documentation_audit import DocumentationAuditor
 from .rollback_drill import RollbackDrill
 from .operator_acceptance import OperatorAcceptanceService
 from .final_release_service import FinalReleaseService
+
+from .release_execution import (
+    ReleaseExecutionResult,
+    ReleaseExecutionService,
+    git_commit,
+    git_working_tree_clean,
+)
+from .release_bundle_writer import ReleaseBundleWriter
