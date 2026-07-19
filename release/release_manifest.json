@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "commit": "cc3858365b73ed2c0ea97255b8725e501c242672",
+  "build_id": "gyanverse-1.0.0-cc3858365b73",
+  "generated_at": "2026-07-19T00:07:49.040403+00:00",
+  "files": [
+    "FINAL_RELEASE_CANDIDATE.md",
+    "GYANVERSE_CONSTITUTION.md",
+    "PERFORMANCE_SAFETY_STABILIZATION.md",
+    "PRODUCTION_PLATFORM_DEPLOYMENT.md",
+    "README.md",
+    "RELEASE_NOTES.md",
+    "ROADMAP.md",
+    "VISION.md"
+  ],
+  "checksums": {
+    "FINAL_RELEASE_CANDIDATE.md": "d9ab17eef05685a9f94d3930c6539a5eede0195069041943c45640b9728b25a9",
+    "GYANVERSE_CONSTITUTION.md": "cb49cb368215ba457a54e2c63bd55c6d5766273b78f22cf29cd31fcf450d1a1d",
+    "PERFORMANCE_SAFETY_STABILIZATION.md": "106ee38d3923f7e99b972c515f8ab938b60b03fb8cc0e88eadf991203855cc1a",
+    "PRODUCTION_PLATFORM_DEPLOYMENT.md": "b02443db316c7a2dc6ec835dea413c9629c5cb32170e715a1e2b4102f25556c1",
+    "README.md": "dc74daa8fe042f80b6b88312fda5e67207d40f5352d1ecb7653abc3e537b0844",
+    "RELEASE_NOTES.md": "392d656ba827fff3a43d6fb6f01bd244e9deb90f491151df41c25e2fcdad1f8d",
+    "ROADMAP.md": "a18e676596968db00440a2b7137de6dff8b0f61a6dcccad0cd039543d2cab2dd",
+    "VISION.md": "8c32584a4443b42acf1ed54a785606581c1bc7619045b6d56dee632a5686b970"
+  },
+  "bundle_checksum": "f945d6d4eeeccedcc56b8a816852b22659f645cab53c7161a47ee39e2ec1ba3a",
+  "test_count": 193,
+  "test_status": "passed",
+  "frozen": true,
+  "schema_version": 1
+}

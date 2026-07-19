@@ -1,0 +1,12 @@
+{
+  "drill_id": "drill_eb74ae45cf8da364",
+  "started_at": "2026-07-19T00:07:49.009221+00:00",
+  "completed_at": "2026-07-19T00:07:49.009372+00:00",
+  "backup_verified": true,
+  "restore_verified": true,
+  "checksum_verified": true,
+  "passed": true,
+  "notes": [
+    "Backup created and restored in isolated memory"
+  ]
+}
