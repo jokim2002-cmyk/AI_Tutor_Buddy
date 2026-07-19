@@ -310,3 +310,140 @@ Pending after 6H:
 - Overall user-ready product: approximately 60%
 
 These percentages are planning estimates, not automated measurements. They should be revised after every major phase.
+
+---
+
+## Phase 11 — Production Tutor Experience, Mobile UX, Voice and GSEB Foundation
+
+### Goal
+
+Deliver a polished Windows EXE and Android APK that feel like a trusted personal tutor rather than a generic demo app. The student must be able to open the app and immediately continue learning from the chapter currently being taught in school.
+
+### 11.1 Mobile-first responsive shell
+
+- Fit every screen correctly on common Android phone sizes without horizontal clipping.
+- Replace the permanently visible left navigation rail with a hidden slide-out drawer.
+- Provide a compact menu or arrow control to open and close the drawer.
+- Keep the main learning area full-width when the drawer is closed.
+- Reduce oversized icons, padding and empty space.
+- Add safe scrolling for long lessons, answers and homework reviews.
+- Preserve a clean equivalent desktop layout for the Windows EXE.
+
+### 11.2 Tutor-grade conversational interface
+
+- Build a modern ChatGPT/Gemini-style chat experience.
+- Add a clearly visible rounded message composer fixed near the bottom.
+- Support multiline typing and long questions.
+- Show user and tutor messages in readable conversation bubbles or cards.
+- Add typing/loading indicators, retry states and clear error messages.
+- Preserve conversation context within the current learning session.
+- Use a professional student-friendly colour system with accessible contrast.
+- Avoid developer terminology and technical configuration in the student UI.
+
+### 11.3 Student learning-context onboarding
+
+The student should not be forced to begin from zero every time.
+
+- On first use, collect board, medium, standard and preferred language.
+- Let the student say or type: “Today we studied Chapter 4 in class.”
+- Detect or ask for subject, chapter and topic only when needed.
+- Save the current school-learning context locally.
+- Reopen the app at the latest subject/chapter context.
+- Let the student quickly switch class, medium, subject or chapter.
+- Adapt explanation depth, examples, vocabulary and answer format to the selected standard.
+- Distinguish explanation, homework help, revision and exam-answer modes.
+
+### 11.4 GSEB syllabus and knowledge foundation
+
+- Add a structured GSEB content model:
+  - Board
+  - Medium
+  - Standard
+  - Subject
+  - Textbook
+  - Chapter
+  - Topic
+  - Learning objective
+  - Explanation
+  - Examples
+  - Exercises
+  - Solutions
+  - Practice questions
+  - Marks pattern
+- Support Gujarati, English and Hindi-medium learning paths where source material is available.
+- Add a syllabus import and validation pipeline instead of hard-coding content into the UI.
+- Track source, edition, standard, subject and chapter metadata.
+- Clearly separate official textbook material from AI-generated examples and practice.
+- Prevent unsupported claims when syllabus content is missing.
+- Add chapter-completion and syllabus-coverage reporting.
+
+### 11.5 Voice input and spoken answers
+
+- Add Android microphone permission handling.
+- Add working speech-to-text for Gujarati, Hindi and English.
+- Show recognised speech in the composer before submission.
+- Let the student edit recognised text.
+- Add text-to-speech playback for tutor responses.
+- Provide visible recording, processing, playback, stop and failure states.
+- Fall back gracefully to typing when voice services are unavailable.
+- Test voice functionality on a real Android device and Windows.
+
+### 11.6 Homework submission and review
+
+- Add a prominent “+” attachment button beside the chat composer.
+- Support camera capture, gallery images, PDFs and common document formats.
+- Let the student submit one or multiple homework pages.
+- Show upload previews before submission.
+- Provide progress, cancellation and retry controls.
+- Allow the tutor to read the question, identify subject/chapter, explain the method, review the student’s attempt, highlight mistakes and provide hints before revealing the final answer.
+- Save homework sessions and review history locally.
+- Add privacy-safe file handling and clear deletion controls.
+
+### 11.7 GyanVerse brand system
+
+- Create an original GyanVerse Academy logo suitable for Android launcher icon, Windows app icon, splash screen, app header, and light/dark backgrounds.
+- Define a consistent colour palette, typography scale, icon style and spacing system.
+- Ensure the app looks credible, calm and education-focused.
+- Avoid a template-like or random-app appearance.
+
+### 11.8 Reliability and release quality
+
+- Keep existing backend and packaging tests passing.
+- Add responsive-layout tests for narrow phone widths.
+- Add tests for drawer open/close behaviour.
+- Add chat-composer and attachment-flow tests.
+- Add voice permission and fallback tests.
+- Add learning-context persistence tests.
+- Add GSEB syllabus schema/import validation tests.
+- Add homework upload and error-state tests.
+- Test Android back-button behaviour.
+- Test app close/reopen and offline-safe behaviour.
+- Produce a signed/reproducible Windows EXE and Android APK.
+- Run full Windows and real-device Android acceptance testing.
+
+### Phase 11 release gates
+
+Phase 11 is complete only when all of the following pass:
+
+1. Android UI fits common phone screens without clipping.
+2. Navigation drawer is hidden by default and does not consume learning space.
+3. Chat experience feels clear and familiar to a student.
+4. Voice input and spoken output work on a real Android phone.
+5. The “+” attachment flow accepts homework photos and files.
+6. The app remembers board, medium, standard and current chapter.
+7. GSEB content is loaded through the validated syllabus structure.
+8. Long answers and homework reviews remain readable and scrollable.
+9. Windows EXE and Android APK pass the same core tutor workflows.
+10. Automated tests, packaging checks and operator acceptance all pass.
+
+### Planned implementation order
+
+1. Responsive shell and hidden navigation drawer.
+2. Tutor chat composer and conversation layout.
+3. Student profile and current-chapter context.
+4. Voice input/output.
+5. Homework attachment and review flow.
+6. GSEB syllabus schema and importer.
+7. GyanVerse visual identity and logo integration.
+8. Full regression, device acceptance, packaging, commit and release checkpoint.
+
