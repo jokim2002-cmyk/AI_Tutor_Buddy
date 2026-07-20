@@ -37,6 +37,40 @@ class Phase11UIContractTests(unittest.TestCase):
         ):
             self.assertIn(marker, UI)
 
+
+    def test_tutor_transcript_avoids_expanded_scroll_render_bug(self):
+        self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
+        self.assertIn("transcript_height = max(260.0, min(620.0, viewport_height - 315.0))", UI)
+        self.assertIn("transcript = ft.ListView(", UI)
+        self.assertIn("height=transcript_height", UI)
+        self.assertIn("auto_scroll=True", UI)
+        self.assertIn("            [context_banner, transcript],", UI)
+        self.assertNotIn("transcript = ft.Column(", UI)
+        self.assertNotIn("transcript_surface", UI)
+        transcript_block = UI.split("transcript = ft.ListView(", 1)[1].split("composer = ft.TextField(", 1)[0]
+        self.assertNotIn("expand=True", transcript_block)
+
+
+    def test_tutor_layout_uses_explicit_bottom_composer_shell(self):
+        composer_block = UI.split("composer = ft.TextField(", 1)[1].split("mode_dropdown = ft.Dropdown(", 1)[0]
+        self.assertIn("multiline=True", composer_block)
+        self.assertIn("min_lines=1", composer_block)
+        self.assertIn("max_lines=5", composer_block)
+        self.assertIn("shift_enter=True", composer_block)
+        self.assertIn("composer_slot = ft.Container(content=composer, expand=True)", composer_block)
+        self.assertIn("composer.on_submit = send", UI)
+        shell_block = UI.split("composer_shell = ft.Container(", 1)[1].split("context_banner = ft.Container(", 1)[0]
+        self.assertIn("height=122", shell_block)
+        self.assertIn("clip_behavior=ft.ClipBehavior.HARD_EDGE", shell_block)
+        self.assertIn("composer_shell.height = 158 if selected_attachments else 122", UI)
+        self.assertIn("attachment_preview.visible = bool(selected_attachments)", UI)
+        self.assertIn("alignment=ft.MainAxisAlignment.SPACE_BETWEEN", UI)
+        self.assertIn("conversation_area = ft.Column(", UI)
+        self.assertNotIn("                        transcript,\n                        composer_shell,", UI)
+
+    def test_async_composer_focus_is_awaited(self):
+        self.assertIn("await composer.focus()", UI)
+        self.assertNotIn("\n                    composer.focus()", UI)
     def test_context_and_syllabus_contracts_exist(self):
         for marker in (
             "LearningContextStore",

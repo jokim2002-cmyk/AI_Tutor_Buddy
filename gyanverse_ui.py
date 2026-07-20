@@ -625,16 +625,30 @@ def main(page: ft.Page) -> None:
 
     def build_tutor() -> ft.Control:
         nonlocal selected_attachments
-        transcript = ft.ListView(expand=True, spacing=10, auto_scroll=True, padding=ft.Padding(left=4, top=4, right=4, bottom=4))
+        # Stable desktop layout: the transcript keeps a bounded viewport,
+        # while the composer has an explicit height and is anchored at the
+        # bottom by the root Column. No child is allowed to absorb the spare
+        # window height inside the white composer card.
+        viewport_height = float(getattr(page, "height", 0) or 760)
+        transcript_height = max(260.0, min(620.0, viewport_height - 315.0))
+        transcript = ft.ListView(
+            height=transcript_height,
+            spacing=10,
+            auto_scroll=True,
+            padding=ft.Padding(left=4, top=4, right=4, bottom=4),
+        )
         composer = ft.TextField(
             hint_text="Ask your doubt or describe today's chapter...",
             multiline=True,
             min_lines=1,
             max_lines=5,
-            expand=True,
+            shift_enter=True,
             border=ft.InputBorder.NONE,
+            bgcolor=COLOR_SURFACE,
+            filled=True,
             text_size=15,
         )
+        composer_slot = ft.Container(content=composer, expand=True)
         mode_dropdown = ft.Dropdown(
             value=context.learning_mode,
             width=165,
@@ -646,7 +660,13 @@ def main(page: ft.Page) -> None:
                 ft.dropdown.Option(LearningMode.EXAM.value, "Exam Answer"),
             ],
         )
-        attachment_preview = ft.Row(wrap=True, spacing=6, run_spacing=6)
+        attachment_preview = ft.Row(
+            wrap=False,
+            spacing=6,
+            scroll=ft.ScrollMode.AUTO,
+            height=32,
+            visible=False,
+        )
         busy = ft.ProgressRing(width=18, height=18, visible=False)
         send_button = ft.IconButton(icon=ft.Icons.SEND_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Send")
         mic_button = ft.IconButton(icon=ft.Icons.MIC_NONE_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Record voice")
@@ -682,6 +702,8 @@ def main(page: ft.Page) -> None:
 
         def refresh_attachment_preview() -> None:
             attachment_preview.controls.clear()
+            attachment_preview.visible = bool(selected_attachments)
+            composer_shell.height = 158 if selected_attachments else 122
             for item in selected_attachments:
                 def remove(_: object = None, attachment_id: str = item.attachment_id) -> None:
                     nonlocal selected_attachments
@@ -868,7 +890,7 @@ def main(page: ft.Page) -> None:
                         language_hint=context.preferred_language,
                     )
                     composer.value = transcript_text
-                    composer.focus()
+                    await composer.focus()
                     voice_state = VoiceState.READY
                     status_text.value = "Voice text ready — edit it before sending"
                     try:
@@ -954,6 +976,7 @@ def main(page: ft.Page) -> None:
 
         mode_dropdown.on_change = mode_changed
         send_button.on_click = send
+        composer.on_submit = send
         mic_button.on_click = toggle_recording
         speak_button.on_click = speak_last
 
@@ -964,16 +987,16 @@ def main(page: ft.Page) -> None:
                 "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
             ),
         )
-        refresh_attachment_preview()
 
         composer_shell = ft.Container(
+            height=122,
             content=ft.Column(
                 [
                     attachment_preview,
                     ft.Row(
                         [
                             ft.IconButton(ft.Icons.ADD_CIRCLE_OUTLINE, icon_color=COLOR_PRIMARY, tooltip="Attach photo, PDF or document", on_click=pick_files),
-                            composer,
+                            composer_slot,
                             mic_button,
                             send_button,
                         ],
@@ -985,19 +1008,43 @@ def main(page: ft.Page) -> None:
                             speak_button,
                             busy,
                             ft.Container(expand=True),
-                            ft.Text("Voice text is editable before sending", size=9, color=COLOR_MUTED),
+                            ft.Text("Enter sends • Shift+Enter adds a new line", size=9, color=COLOR_MUTED),
                         ],
-                        wrap=True,
+                        wrap=False,
                     ),
                 ],
                 spacing=4,
+                tight=True,
             ),
             padding=ft.Padding(left=6, top=6, right=6, bottom=6),
             bgcolor=COLOR_SURFACE,
             border=ft.Border.all(1, COLOR_BORDER),
             border_radius=20,
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
             shadow=ft.BoxShadow(blur_radius=12, spread_radius=0, color="#22000000", offset=ft.Offset(0, 3)),
         )
+
+        context_banner = ft.Container(
+            content=ft.Row(
+                [
+                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
+                    ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
+                    ft.Container(expand=True),
+                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=18, on_click=open_profile_dialog),
+                ]
+            ),
+            padding=ft.Padding(left=10, top=4, right=4, bottom=4),
+            bgcolor="#EDF7F6",
+            border_radius=12,
+        )
+
+        conversation_area = ft.Column(
+            [context_banner, transcript],
+            spacing=8,
+            tight=True,
+        )
+
+        refresh_attachment_preview()
 
         return ft.SafeArea(
             expand=True,
@@ -1005,25 +1052,10 @@ def main(page: ft.Page) -> None:
                 expand=True,
                 padding=ft.Padding(left=8, top=8, right=8, bottom=8),
                 content=ft.Column(
-                    [
-                        ft.Container(
-                            content=ft.Row(
-                                [
-                                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
-                                    ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
-                                    ft.Container(expand=True),
-                                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=18, on_click=open_profile_dialog),
-                                ]
-                            ),
-                            padding=ft.Padding(left=10, top=4, right=4, bottom=4),
-                            bgcolor="#EDF7F6",
-                            border_radius=12,
-                        ),
-                        transcript,
-                        composer_shell,
-                    ],
+                    [conversation_area, composer_shell],
                     expand=True,
                     spacing=8,
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
             ),
         )
