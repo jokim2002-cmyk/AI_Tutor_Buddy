@@ -68,7 +68,9 @@ COLOR_USER = "#E7EDFF"
 COLOR_TUTOR = "#FFFFFF"
 COLOR_SUCCESS = "#0D7C66"
 COLOR_ERROR = "#B3261E"
-FAST_REPLY_DEADLINE_SECONDS = 7.0
+FAST_REPLY_DEADLINE_SECONDS = 30.0
+SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0
+SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0
 
 
 def _wav_from_pcm(pcm: bytes, sample_rate: int = 44_100) -> bytes:
@@ -115,6 +117,7 @@ def main(page: ft.Page) -> None:
     voice_state = VoiceState.IDLE
     voice_capture_path: Path | None = None
     latest_tutor_answer = ""
+    active_audio = None
     selected_attachments = []
 
     title_text = ft.Text("Tutor", size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
@@ -625,34 +628,49 @@ def main(page: ft.Page) -> None:
 
     def build_tutor() -> ft.Control:
         nonlocal selected_attachments
-        # Stable desktop layout: the transcript keeps a bounded viewport,
-        # while the composer has an explicit height and is anchored at the
-        # bottom by the root Column. No child is allowed to absorb the spare
-        # window height inside the white composer card.
+        # Stable desktop layout: use a fixed-height scrollable Column.
+        # The earlier ListView clipped dynamic-height chat bubbles at its
+        # viewport edge on Windows. A non-expanded Column avoids that render
+        # path, keeps full controls mounted, and uses native auto-scroll
+        # pinning that pauses when the student scrolls away from the end.
         viewport_height = float(getattr(page, "height", 0) or 760)
-        transcript_height = max(260.0, min(620.0, viewport_height - 315.0))
-        transcript = ft.ListView(
+        transcript_height = max(260.0, min(640.0, viewport_height - 245.0))
+        transcript_bottom_spacer = ft.Container(height=24)
+        transcript = ft.Column(
             height=transcript_height,
-            spacing=10,
+            spacing=12,
+            horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+            scroll=ft.ScrollMode.AUTO,
             auto_scroll=True,
-            padding=ft.Padding(left=4, top=4, right=4, bottom=4),
+            auto_scroll_animation=0,
+            controls=[transcript_bottom_spacer],
+        )
+        transcript_surface = ft.Container(
+            content=transcript,
+            height=transcript_height,
+            padding=ft.Padding(left=8, top=8, right=8, bottom=8),
+            bgcolor=COLOR_BACKGROUND,
+            clip_behavior=ft.ClipBehavior.HARD_EDGE,
         )
         composer = ft.TextField(
             hint_text="Ask your doubt or describe today's chapter...",
             multiline=True,
             min_lines=1,
-            max_lines=5,
+            max_lines=4,
             shift_enter=True,
             border=ft.InputBorder.NONE,
             bgcolor=COLOR_SURFACE,
             filled=True,
-            text_size=15,
+            dense=True,
+            content_padding=ft.Padding(left=0, top=4, right=0, bottom=4),
+            text_size=14,
         )
         composer_slot = ft.Container(content=composer, expand=True)
         mode_dropdown = ft.Dropdown(
             value=context.learning_mode,
-            width=165,
+            width=132,
             dense=True,
+            text_size=12,
             options=[
                 ft.dropdown.Option(LearningMode.EXPLAIN.value, "Explain"),
                 ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework Help"),
@@ -662,15 +680,40 @@ def main(page: ft.Page) -> None:
         )
         attachment_preview = ft.Row(
             wrap=False,
-            spacing=6,
+            spacing=4,
             scroll=ft.ScrollMode.AUTO,
-            height=32,
+            height=28,
             visible=False,
         )
-        busy = ft.ProgressRing(width=18, height=18, visible=False)
-        send_button = ft.IconButton(icon=ft.Icons.SEND_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Send")
-        mic_button = ft.IconButton(icon=ft.Icons.MIC_NONE_ROUNDED, icon_color=COLOR_PRIMARY, tooltip="Record voice")
-        speak_button = ft.IconButton(icon=ft.Icons.VOLUME_UP_OUTLINED, tooltip="Read last tutor answer", disabled=True)
+        busy = ft.ProgressRing(width=16, height=16, visible=False)
+        attach_button = ft.IconButton(
+            icon=ft.Icons.ADD_CIRCLE_OUTLINE,
+            icon_color=COLOR_PRIMARY,
+            icon_size=22,
+            padding=4,
+            tooltip="Attach photo, PDF or document",
+        )
+        send_button = ft.IconButton(
+            icon=ft.Icons.SEND_ROUNDED,
+            icon_color=COLOR_PRIMARY,
+            icon_size=22,
+            padding=4,
+            tooltip="Send",
+        )
+        mic_button = ft.IconButton(
+            icon=ft.Icons.MIC_NONE_ROUNDED,
+            icon_color=COLOR_PRIMARY,
+            icon_size=22,
+            padding=4,
+            tooltip="Record voice",
+        )
+        speak_button = ft.IconButton(
+            icon=ft.Icons.VOLUME_UP_OUTLINED,
+            icon_size=21,
+            padding=4,
+            tooltip="Read last tutor answer",
+            disabled=True,
+        )
 
         def add_message(role: str, text: str, *, error: bool = False) -> None:
             is_student = role == "student"
@@ -693,17 +736,58 @@ def main(page: ft.Page) -> None:
                 padding=12,
                 width=680,
             )
-            transcript.controls.append(
+            transcript.controls.insert(
+                max(0, len(transcript.controls) - 1),
                 ft.Row(
                     [bubble],
                     alignment=ft.MainAxisAlignment.END if is_student else ft.MainAxisAlignment.START,
-                )
+                ),
             )
+
+        def estimated_composer_lines() -> int:
+            value = composer.value or ""
+            available_width = max(320.0, float(getattr(page, "width", 0) or 1200) - 290.0)
+            chars_per_line = max(32, int(available_width / 8.0))
+            visual_lines = 0
+            for segment in value.split("\n"):
+                visual_lines += max(1, (len(segment) + chars_per_line - 1) // chars_per_line)
+            return max(1, min(4, visual_lines))
+
+        def update_compact_tutor_layout(*, page_height: float | None = None) -> None:
+            line_count = estimated_composer_lines()
+            attachment_extra = 34.0 if selected_attachments else 0.0
+            composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra
+            composer_shell.height = composer_height
+
+            current_page_height = float(
+                page_height
+                or getattr(page, "height", 0)
+                or 760
+            )
+            resized_height = max(260.0, min(640.0, current_page_height - (193.0 + composer_height)))
+            transcript.height = resized_height
+            transcript_surface.height = resized_height
+
+        def handle_composer_change(_: object = None) -> None:
+            update_compact_tutor_layout()
+            page.update()
+
+        def handle_tutor_resize(event: object) -> None:
+            new_height = float(
+                getattr(event, "height", 0)
+                or getattr(page, "height", 0)
+                or 760
+            )
+            update_compact_tutor_layout(page_height=new_height)
+            try:
+                transcript_surface.update()
+                composer_shell.update()
+            except Exception:
+                pass
 
         def refresh_attachment_preview() -> None:
             attachment_preview.controls.clear()
             attachment_preview.visible = bool(selected_attachments)
-            composer_shell.height = 158 if selected_attachments else 122
             for item in selected_attachments:
                 def remove(_: object = None, attachment_id: str = item.attachment_id) -> None:
                     nonlocal selected_attachments
@@ -718,16 +802,17 @@ def main(page: ft.Page) -> None:
                             [
                                 ft.Icon(ft.Icons.IMAGE_OUTLINED if item.is_image else ft.Icons.DESCRIPTION_OUTLINED, size=16),
                                 ft.Text(item.original_name, size=10, max_lines=1),
-                                ft.IconButton(ft.Icons.CLOSE, icon_size=15, tooltip="Remove", on_click=remove),
+                                ft.IconButton(ft.Icons.CLOSE, icon_size=15, padding=2, tooltip="Remove", on_click=remove),
                             ],
                             spacing=3,
                             tight=True,
                         ),
-                        padding=ft.Padding(left=8, top=2, right=2, bottom=2),
+                        padding=ft.Padding(left=8, top=1, right=2, bottom=1),
                         bgcolor="#EEF1F8",
                         border_radius=12,
                     )
                 )
+            update_compact_tutor_layout()
 
         async def pick_files(_: object = None) -> None:
             nonlocal selected_attachments
@@ -768,6 +853,7 @@ def main(page: ft.Page) -> None:
             busy.visible = value
             send_button.disabled = value
             mic_button.disabled = value
+            speak_button.disabled = value or not bool(latest_tutor_answer)
             status_text.value = message
             page.update()
 
@@ -788,6 +874,7 @@ def main(page: ft.Page) -> None:
                     update_context(detected_context)
                 add_message("student", text or "Please review my attached homework.")
                 composer.value = ""
+                update_compact_tutor_layout()
                 set_busy(True, "Tutor is thinking...")
                 try:
                     answer = await asyncio.wait_for(
@@ -800,7 +887,7 @@ def main(page: ft.Page) -> None:
                         timeout=FAST_REPLY_DEADLINE_SECONDS,
                     )
                 except asyncio.TimeoutError:
-                    ai_service.disable_online_for_session(
+                    ai_service.defer_online_after_failure(
                         f"Tutor response exceeded {FAST_REPLY_DEADLINE_SECONDS:.0f} seconds."
                     )
                     answer = ai_service.offline_answer(
@@ -815,7 +902,7 @@ def main(page: ft.Page) -> None:
                 selected_attachments = []
                 refresh_attachment_preview()
                 elapsed = time.perf_counter() - started_at
-                status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.last_backend}"
+                status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}"
                 busy.visible = False
                 send_button.disabled = False
                 mic_button.disabled = False
@@ -890,6 +977,7 @@ def main(page: ft.Page) -> None:
                         language_hint=context.preferred_language,
                     )
                     composer.value = transcript_text
+                    update_compact_tutor_layout()
                     await composer.focus()
                     voice_state = VoiceState.READY
                     status_text.value = "Voice text ready — edit it before sending"
@@ -939,32 +1027,95 @@ def main(page: ft.Page) -> None:
                 mic_button.disabled = False
                 page.update()
 
-        async def speak_last(_: object = None) -> None:
+        def handle_audio_state(event: object) -> None:
             nonlocal voice_state
+            state_name = str(getattr(event, "state", "")).lower()
+            if "playing" in state_name:
+                voice_state = VoiceState.PLAYING
+                status_text.value = "Playing tutor answer"
+            elif "completed" in state_name or "stopped" in state_name:
+                voice_state = VoiceState.IDLE
+                status_text.value = "Ready"
+            page.update()
+
+        async def speak_last(_: object = None) -> None:
+            nonlocal voice_state, active_audio
             if not latest_tutor_answer:
                 notify("No tutor answer is available to read aloud.", error=True)
                 return
-            if fta is None:
-                notify("Audio playback extension is unavailable. The text answer remains readable.", error=True)
+            if fta is None and not ai_service.native_playback_available:
+                notify("Audio playback is unavailable. The text answer remains readable.", error=True)
                 return
             try:
                 voice_state = VoiceState.PROCESSING
                 set_busy(True, "Preparing spoken answer...")
-                audio_bytes = await asyncio.to_thread(
-                    ai_service.synthesize,
-                    latest_tutor_answer,
-                    language_hint=context.preferred_language,
+                audio_bytes = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        ai_service.synthesize,
+                        latest_tutor_answer,
+                        language_hint=context.preferred_language,
+                    ),
+                    timeout=SPOKEN_ANSWER_DEADLINE_SECONDS,
                 )
-                audio = fta.Audio(src=audio_bytes, autoplay=False, volume=1.0)
+                if not audio_bytes.startswith(b"RIFF") or b"WAVE" not in audio_bytes[:16]:
+                    raise AIServiceError("Spoken answer did not return a valid WAV audio file.")
+
+                if ai_service.native_playback_available:
+                    voice_state = VoiceState.PLAYING
+                    status_text.value = (
+                        f"Playing tutor answer • {ai_service.last_tts_backend or ai_service.tts_backend_label}"
+                    )
+                    page.update()
+                    await asyncio.wait_for(
+                        asyncio.to_thread(ai_service.play_wav_bytes, audio_bytes),
+                        timeout=SPOKEN_PLAYBACK_DEADLINE_SECONDS,
+                    )
+                    voice_state = VoiceState.IDLE
+                    status_text.value = "Ready"
+                    return
+
+                if active_audio is not None:
+                    try:
+                        await active_audio.release()
+                    except Exception:
+                        pass
+                    try:
+                        page.services.remove(active_audio)
+                    except ValueError:
+                        pass
+
+                audio = fta.Audio(
+                    src=audio_bytes,
+                    autoplay=False,
+                    volume=1.0,
+                    release_mode=fta.ReleaseMode.STOP,
+                    on_state_change=handle_audio_state,
+                )
                 page.services.append(audio)
-                await audio.play()
+                active_audio = audio
+
+                # Non-Windows runtimes retain the Flet audio-service fallback.
+                page.update()
+                await asyncio.sleep(0.15)
+                await asyncio.wait_for(audio.play(), timeout=20.0)
+
                 voice_state = VoiceState.PLAYING
                 status_text.value = "Playing tutor answer"
+            except asyncio.TimeoutError:
+                voice_state = VoiceState.ERROR
+                notify(
+                    "Spoken answer timed out. The text answer remains available; tap the speaker to retry.",
+                    error=True,
+                )
             except Exception as exc:
                 voice_state = VoiceState.ERROR
                 notify(str(exc), error=True)
             finally:
-                set_busy(False, "Ready")
+                busy.visible = False
+                send_button.disabled = False
+                mic_button.disabled = False
+                speak_button.disabled = not bool(latest_tutor_answer)
+                page.update()
 
         def mode_changed(_: object = None) -> None:
             try:
@@ -975,7 +1126,9 @@ def main(page: ft.Page) -> None:
                 notify(str(exc), error=True)
 
         mode_dropdown.on_change = mode_changed
+        attach_button.on_click = pick_files
         send_button.on_click = send
+        composer.on_change = handle_composer_change
         composer.on_submit = send
         mic_button.on_click = toggle_recording
         speak_button.on_click = speak_last
@@ -989,49 +1142,46 @@ def main(page: ft.Page) -> None:
         )
 
         composer_shell = ft.Container(
-            height=122,
+            height=52,
             content=ft.Column(
                 [
                     attachment_preview,
                     ft.Row(
                         [
-                            ft.IconButton(ft.Icons.ADD_CIRCLE_OUTLINE, icon_color=COLOR_PRIMARY, tooltip="Attach photo, PDF or document", on_click=pick_files),
+                            attach_button,
                             composer_slot,
+                            busy,
+                            speak_button,
                             mic_button,
                             send_button,
                         ],
-                        vertical_alignment=ft.CrossAxisAlignment.END,
-                    ),
-                    ft.Row(
-                        [
-                            mode_dropdown,
-                            speak_button,
-                            busy,
-                            ft.Container(expand=True),
-                            ft.Text("Enter sends • Shift+Enter adds a new line", size=9, color=COLOR_MUTED),
-                        ],
-                        wrap=False,
+                        spacing=2,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
                     ),
                 ],
-                spacing=4,
+                spacing=2,
                 tight=True,
             ),
-            padding=ft.Padding(left=6, top=6, right=6, bottom=6),
+            padding=ft.Padding(left=6, top=2, right=4, bottom=2),
             bgcolor=COLOR_SURFACE,
             border=ft.Border.all(1, COLOR_BORDER),
-            border_radius=20,
+            border_radius=18,
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
-            shadow=ft.BoxShadow(blur_radius=12, spread_radius=0, color="#22000000", offset=ft.Offset(0, 3)),
+            shadow=ft.BoxShadow(blur_radius=8, spread_radius=0, color="#22000000", offset=ft.Offset(0, 2)),
         )
 
         context_banner = ft.Container(
             content=ft.Row(
                 [
                     ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
-                    ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
-                    ft.Container(expand=True),
+                    ft.Container(
+                        content=ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
+                        expand=True,
+                    ),
+                    mode_dropdown,
                     ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=18, on_click=open_profile_dialog),
-                ]
+                ],
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
             padding=ft.Padding(left=10, top=4, right=4, bottom=4),
             bgcolor="#EDF7F6",
@@ -1039,11 +1189,12 @@ def main(page: ft.Page) -> None:
         )
 
         conversation_area = ft.Column(
-            [context_banner, transcript],
+            [context_banner, transcript_surface],
             spacing=8,
             tight=True,
         )
 
+        page.on_resize = handle_tutor_resize
         refresh_attachment_preview()
 
         return ft.SafeArea(
@@ -1076,6 +1227,7 @@ def main(page: ft.Page) -> None:
         current_view = key if key in builders else "tutor"
         label = next((item[1] for item in NAV_ITEMS if item[0] == current_view), "Tutor")
         title_text.value = label
+        page.on_resize = None
         body.content = builders[current_view]()
         page.update()
 

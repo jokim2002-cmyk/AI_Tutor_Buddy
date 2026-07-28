@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 import wave
-from unittest.mock import patch
+from unittest.mock import PropertyMock, patch
 from dataclasses import replace
 from pathlib import Path
 
@@ -15,6 +15,7 @@ from phase11_core import (
     HomeworkAttachmentStore,
     LearningContextStore,
     LearningMode,
+    offline_tutor_response,
     Phase11Error,
     StudentLearningContext,
     detect_context_from_message,
@@ -240,14 +241,111 @@ class Phase11AIContractTests(unittest.TestCase):
             service._client = FakeClient()
             answer = service.ask(message="Explain heat", context=context)
 
-        self.assertIn("fast local reply", answer.lower())
+        self.assertIn("heat is energy", answer.lower())
+        self.assertNotIn("retry the online tutor", answer.lower())
         self.assertEqual(service.last_backend, "offline-fallback")
         self.assertFalse(service.configured)
 
-    def test_timeout_configuration_is_bounded(self):
+    def test_offline_tutor_answers_common_question_instead_of_generic_prompt(self):
+        context = replace(
+            StudentLearningContext().validate(),
+            current_subject="Mathematics",
+            current_chapter="",
+        )
+        answer = offline_tutor_response("What is photosynthesis?", context)
+        self.assertIn("sunlight", answer.lower())
+        self.assertIn("carbon dioxide", answer.lower())
+        self.assertNotIn("tell me the exact line", answer.lower())
+
+    def test_offline_tutor_varies_with_the_actual_question(self):
+        context = StudentLearningContext().validate()
+        first = offline_tutor_response("Explain an unknown topic alpha", context)
+        second = offline_tutor_response("Explain an unknown topic beta", context)
+        self.assertNotEqual(first, second)
+        self.assertIn("alpha", first.lower())
+        self.assertIn("beta", second.lower())
+
+    def test_offline_tutor_handles_simple_arithmetic(self):
+        context = StudentLearningContext().validate()
+        self.assertIn("70", offline_tutor_response("what is 50 + 20?", context))
+
+    def test_online_failure_uses_retry_cooldown_not_permanent_disable(self):
+        with patch.object(phase11_ai, "types", object()):
+            service = GyanVerseAIService(api_key="")
+            service._client = object()
+            service.defer_online_after_failure("temporary timeout")
+            self.assertFalse(service.configured)
+            self.assertGreater(service.retry_after_seconds, 0)
+            service._retry_after_monotonic = 0.0
+            self.assertTrue(service.configured)
+
+
+    def test_timeout_configuration_is_bounded_for_real_provider_latency(self):
+        with patch.dict("os.environ", {"GYANVERSE_AI_TIMEOUT_MS": "6000"}):
+            service = GyanVerseAIService(api_key="")
+        self.assertEqual(service.request_timeout_ms, 25_000)
+
         with patch.dict("os.environ", {"GYANVERSE_AI_TIMEOUT_MS": "999999"}):
             service = GyanVerseAIService(api_key="")
-        self.assertEqual(service.request_timeout_ms, 20_000)
+        self.assertEqual(service.request_timeout_ms, 35_000)
+
+
+
+    def test_tts_timeout_configuration_is_separate_and_bounded(self):
+        with patch.dict("os.environ", {"GYANVERSE_TTS_TIMEOUT_MS": "1000"}):
+            service = GyanVerseAIService(api_key="")
+        self.assertEqual(service.tts_timeout_ms, 45_000)
+
+        with patch.dict("os.environ", {"GYANVERSE_TTS_TIMEOUT_MS": "999999"}):
+            service = GyanVerseAIService(api_key="")
+        self.assertEqual(service.tts_timeout_ms, 90_000)
+
+    def test_tts_configured_uses_dedicated_voice_client(self):
+        with patch.object(phase11_ai, "types", object()):
+            service = GyanVerseAIService(api_key="")
+            service._client = None
+            service._tts_client = object()
+            self.assertTrue(service.tts_configured)
+            self.assertFalse(service.configured)
+
+    def test_local_tts_is_default_and_cached_for_replay(self):
+        wav_bytes = pcm_to_wav_bytes(b"\x00\x00" * 400, sample_rate=24000)
+        with tempfile.TemporaryDirectory() as directory:
+            service = GyanVerseAIService(
+                api_key="",
+                tts_cache_dir=Path(directory),
+            )
+            self.assertEqual(service.tts_backend, "local-first")
+            with patch.object(
+                GyanVerseAIService,
+                "local_tts_available",
+                new_callable=PropertyMock,
+                return_value=True,
+            ), patch.object(
+                service,
+                "_synthesize_windows_sapi",
+                return_value=wav_bytes,
+            ) as local_synth:
+                first = service.synthesize(
+                    "A fraction is part of a whole.",
+                    language_hint="English",
+                )
+                second = service.synthesize(
+                    "A fraction is part of a whole.",
+                    language_hint="English",
+                )
+
+            self.assertEqual(first, wav_bytes)
+            self.assertEqual(second, wav_bytes)
+            local_synth.assert_called_once()
+            self.assertEqual(service.last_tts_backend, "cached voice")
+
+    def test_native_playback_is_windows_only(self):
+        service = GyanVerseAIService(api_key="")
+        with patch.object(phase11_ai.sys, "platform", "win32"):
+            self.assertTrue(service.native_playback_available)
+        with patch.object(phase11_ai.sys, "platform", "linux"):
+            self.assertFalse(service.native_playback_available)
 
     def test_pcm_is_wrapped_as_valid_wav(self):
         pcm = b"\x00\x00" * 400

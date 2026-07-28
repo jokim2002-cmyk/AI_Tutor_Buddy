@@ -657,48 +657,142 @@ def build_tutor_system_instruction(context: StudentLearningContext) -> str:
     )
 
 
+def _local_topic_answer(message: str) -> str:
+    lowered = message.casefold()
+    topics = (
+        (
+            ("photosynthesis", "food in plants"),
+            "Photosynthesis is the process by which green plants use sunlight, chlorophyll, carbon dioxide and water to make glucose (food). Oxygen is released. In short: carbon dioxide + water --sunlight/chlorophyll--> glucose + oxygen. Check yourself: which gas does the plant take in?",
+        ),
+        (
+            ("force",),
+            "Force is a push or pull that can change an object's speed, direction or shape. Its SI unit is the newton (N). Example: pushing a door applies force. Check yourself: is friction also a force?",
+        ),
+        (
+            ("pressure",),
+            "Pressure means force acting on each unit of area: pressure = force / area. The same force creates more pressure on a smaller area. Its SI unit is pascal (Pa).",
+        ),
+        (
+            ("heat", "temperature"),
+            "Heat is energy transferred from a hotter object to a colder one, while temperature tells how hot or cold an object is. Heat is measured in joules; temperature is commonly measured in degrees Celsius or kelvin.",
+        ),
+        (
+            ("photosynthesis",),
+            "Photosynthesis is how green plants prepare food using sunlight, chlorophyll, carbon dioxide and water, releasing oxygen as a by-product.",
+        ),
+        (
+            ("rational number", "rational numbers"),
+            "A rational number can be written as p/q, where p and q are integers and q is not zero. Examples: 3/4, -2, and 0.5 are rational numbers.",
+        ),
+        (
+            ("linear equation",),
+            "A linear equation has a variable with highest power 1, such as 2x + 3 = 11. Keep both sides balanced: subtract 3 from both sides, then divide by 2, so x = 4.",
+        ),
+        (
+            ("fraction", "fractions"),
+            "A fraction represents parts of a whole. The top number is the numerator and the bottom number is the denominator. To add unlike fractions, first make their denominators equal.",
+        ),
+        (
+            ("active voice", "passive voice"),
+            "In active voice the subject performs the action: 'Riya writes a letter.' In passive voice the receiver comes first: 'A letter is written by Riya.'",
+        ),
+        (
+            ("noun",),
+            "A noun names a person, place, animal, thing or idea. Examples: teacher, Ahmedabad, tiger, book and honesty.",
+        ),
+        (
+            ("verb",),
+            "A verb shows an action, occurrence or state. Examples: run, write, become and is.",
+        ),
+    )
+    for keywords, answer in topics:
+        if any(keyword in lowered for keyword in keywords):
+            return answer
+    return ""
+
+
+def _local_arithmetic_answer(message: str) -> str:
+    match = re.fullmatch(
+        r"(?:what\s+is|calculate|solve)?\s*(-?\d+(?:\.\d+)?)\s*([+\-*/x×÷])\s*(-?\d+(?:\.\d+)?)\s*\??",
+        message.strip(),
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return ""
+    left = float(match.group(1))
+    operator = match.group(2)
+    right = float(match.group(3))
+    if operator == "+":
+        result = left + right
+    elif operator == "-":
+        result = left - right
+    elif operator in {"*", "x", "×"}:
+        result = left * right
+    else:
+        if right == 0:
+            return "Division by zero is not defined."
+        result = left / right
+    formatted = str(int(result)) if result.is_integer() else f"{result:.6g}"
+    return f"{match.group(1)} {operator} {match.group(3)} = {formatted}."
+
+
 def offline_tutor_response(
     message: str,
     context: StudentLearningContext,
     attachments: Sequence[AttachmentRecord] = (),
 ) -> str:
-    """Useful deterministic fallback when Gemini/Internet is unavailable."""
+    """Question-aware deterministic tutor used when online AI is unavailable."""
 
     cleaned = clean_student_text(message)
     if not cleaned and not attachments:
         return "Please type a question or attach a homework page."
+
     attachment_note = ""
     if attachments:
         attachment_note = (
-            f" I received {len(attachments)} homework file(s), but image/PDF understanding needs "
-            "the configured AI service. Your files are saved locally and can be removed from Homework History."
+            f"\n\nI received {len(attachments)} homework file(s). Their text/image content needs the online AI service, "
+            "but the files remain saved locally and can be removed from Homework History."
         )
-    chapter = context.current_chapter or "your current chapter"
-    subject = context.current_subject or "your subject"
+
+    arithmetic_answer = _local_arithmetic_answer(cleaned)
+    if arithmetic_answer:
+        return arithmetic_answer + attachment_note
+
+    topic_answer = _local_topic_answer(cleaned)
+    if topic_answer:
+        return topic_answer + attachment_note
+
+    chapter = context.current_chapter or "the current chapter"
+    subject = context.current_subject or "the current subject"
+    quoted_question = cleaned or "the attached homework"
+
     if context.learning_mode == LearningMode.HOMEWORK.value:
         return (
-            f"Let us solve this as homework from {subject}, {chapter}. First write what you already tried, "
-            "then I will check the method and give the smallest useful hint before the final answer."
+            f'Your homework question is: “{quoted_question}”\n\n'
+            f"For {subject}, {chapter}, first show the step you already tried. I will check that exact step, "
+            "point out the first mistake and give one hint before the final answer."
             + attachment_note
         )
     if context.learning_mode == LearningMode.REVISION.value:
         return (
-            f"Revision mode is ready for {subject}, {chapter}. Start by writing the three most important ideas "
-            "you remember. I will identify the missing point and give a quick recall question."
+            f'You want to revise: “{quoted_question}”\n\n'
+            f"Write one definition, one rule and one example you remember from {subject}, {chapter}. "
+            "I will compare them and ask a focused recall question."
             + attachment_note
         )
     if context.learning_mode == LearningMode.EXAM.value:
         return (
-            f"Exam-answer mode is ready for {subject}, {chapter}. Send the exact question and marks. "
-            "I will structure the answer with key points, steps and a final check."
+            f'Exam question received: “{quoted_question}”\n\n'
+            "Add the marks or expected answer length. I will organize it as definition/key idea, working or evidence, "
+            "and a concise final statement."
             + attachment_note
         )
     return (
-        f"I understand that you are studying {subject}, {chapter}. Tell me the exact line, example or step "
-        "that feels confusing. I will explain it in simple language and then ask one check question."
+        f'You asked: “{quoted_question}”\n\n'
+        f"I am using the local tutor for this reply. For {subject}, {chapter}, tell me which word, rule or step is confusing, "
+        "or paste the related textbook line. I will explain that exact part instead of giving a generic answer."
         + attachment_note
     )
-
 
 def attachment_prompt(records: Sequence[AttachmentRecord]) -> str:
     if not records:

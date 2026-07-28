@@ -34,36 +34,78 @@ class Phase11UIContractTests(unittest.TestCase):
             "Voice text ready — edit it before sending",
             "LearningMode.HOMEWORK",
             "Read last tutor answer",
+            "SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0",
+            "SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0",
+            "active_audio = None",
+            "await active_audio.release()",
+            "page.services.append(audio)",
+            "await asyncio.sleep(0.15)",
+            "await asyncio.wait_for(audio.play(), timeout=20.0)",
+            "on_state_change=handle_audio_state",
+            "ai_service.native_playback_available",
+            "asyncio.to_thread(ai_service.play_wav_bytes, audio_bytes)",
+            "ai_service.last_tts_backend",
         ):
             self.assertIn(marker, UI)
 
 
-    def test_tutor_transcript_avoids_expanded_scroll_render_bug(self):
+    def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
-        self.assertIn("transcript_height = max(260.0, min(620.0, viewport_height - 315.0))", UI)
-        self.assertIn("transcript = ft.ListView(", UI)
+        self.assertIn("transcript_height = max(260.0, min(640.0, viewport_height - 245.0))", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=24)", UI)
+        self.assertIn("transcript = ft.Column(", UI)
         self.assertIn("height=transcript_height", UI)
+        self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.STRETCH", UI)
+        self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
         self.assertIn("auto_scroll=True", UI)
-        self.assertIn("            [context_banner, transcript],", UI)
-        self.assertNotIn("transcript = ft.Column(", UI)
-        self.assertNotIn("transcript_surface", UI)
-        transcript_block = UI.split("transcript = ft.ListView(", 1)[1].split("composer = ft.TextField(", 1)[0]
+        self.assertIn("auto_scroll_animation=0", UI)
+        self.assertIn("controls=[transcript_bottom_spacer]", UI)
+        self.assertIn("transcript_surface = ft.Container(", UI)
+        self.assertIn("content=transcript", UI)
+        self.assertIn("            [context_banner, transcript_surface],", UI)
+        self.assertIn("page.on_resize = handle_tutor_resize", UI)
+        self.assertIn("transcript_surface.height = resized_height", UI)
+        self.assertIn("transcript_surface.update()", UI)
+        self.assertIn("transcript.controls.insert(", UI)
+        self.assertNotIn("transcript = ft.ListView(", UI)
+        self.assertNotIn("build_controls_on_demand", UI)
+        self.assertNotIn("cache_extent", UI)
+        self.assertNotIn("await transcript.scroll_to(", UI)
+        transcript_block = UI.split("transcript = ft.Column(", 1)[1].split("composer = ft.TextField(", 1)[0]
         self.assertNotIn("expand=True", transcript_block)
 
 
-    def test_tutor_layout_uses_explicit_bottom_composer_shell(self):
+    def test_tutor_layout_uses_auto_growing_ultra_compact_composer(self):
         composer_block = UI.split("composer = ft.TextField(", 1)[1].split("mode_dropdown = ft.Dropdown(", 1)[0]
         self.assertIn("multiline=True", composer_block)
         self.assertIn("min_lines=1", composer_block)
-        self.assertIn("max_lines=5", composer_block)
+        self.assertIn("max_lines=4", composer_block)
         self.assertIn("shift_enter=True", composer_block)
+        self.assertIn("dense=True", composer_block)
+        self.assertIn("content_padding=ft.Padding(left=0, top=4, right=0, bottom=4)", composer_block)
+        self.assertIn("text_size=14", composer_block)
         self.assertIn("composer_slot = ft.Container(content=composer, expand=True)", composer_block)
+        self.assertIn("composer.on_change = handle_composer_change", UI)
         self.assertIn("composer.on_submit = send", UI)
+        self.assertIn("def estimated_composer_lines() -> int:", UI)
+        self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
+        self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
+        self.assertIn("current_page_height - (193.0 + composer_height)", UI)
+        mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
+        self.assertIn("width=132", mode_block)
+        self.assertIn("text_size=12", mode_block)
         shell_block = UI.split("composer_shell = ft.Container(", 1)[1].split("context_banner = ft.Container(", 1)[0]
-        self.assertIn("height=122", shell_block)
-        self.assertIn("clip_behavior=ft.ClipBehavior.HARD_EDGE", shell_block)
-        self.assertIn("composer_shell.height = 158 if selected_attachments else 122", UI)
+        self.assertIn("height=52", shell_block)
+        self.assertIn("padding=ft.Padding(left=6, top=2, right=4, bottom=2)", shell_block)
+        self.assertIn("border_radius=18", shell_block)
+        self.assertIn("                            attach_button,", shell_block)
+        self.assertIn("                            busy,\n                            speak_button,\n                            mic_button,", shell_block)
+        self.assertIn("                        spacing=2,", shell_block)
         self.assertIn("attachment_preview.visible = bool(selected_attachments)", UI)
+        self.assertNotIn("Enter sends • Shift+Enter adds a new line", shell_block)
+        banner_block = UI.split("context_banner = ft.Container(", 1)[1].split("conversation_area = ft.Column(", 1)[0]
+        self.assertIn("                    mode_dropdown,", banner_block)
+        self.assertIn("                        expand=True,", banner_block)
         self.assertIn("alignment=ft.MainAxisAlignment.SPACE_BETWEEN", UI)
         self.assertIn("conversation_area = ft.Column(", UI)
         self.assertNotIn("                        transcript,\n                        composer_shell,", UI)
@@ -126,9 +168,11 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_tutor_reply_has_hard_deadline_and_nonblocking_analytics(self):
         for marker in (
-            "FAST_REPLY_DEADLINE_SECONDS = 7.0",
+            "FAST_REPLY_DEADLINE_SECONDS = 30.0",
             "asyncio.wait_for(",
             "ai_service.offline_answer(",
+            "ai_service.defer_online_after_failure(",
+            "ai_service.status_label",
             "Learning analytics must never block the visible tutor reply",
             "Ready • {elapsed:.1f}s",
         ):
