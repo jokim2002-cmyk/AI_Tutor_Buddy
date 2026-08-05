@@ -9,6 +9,8 @@ class GateStatus(str, Enum):
     PASS = "pass"
     FAIL = "fail"
     WARN = "warn"
+    PENDING = "pending"
+    NOT_APPLICABLE = "not_applicable"
 
 
 class AcceptanceDecision(str, Enum):
@@ -37,6 +39,7 @@ class ReleaseCandidateAudit:
     generated_at: str
     gates: Tuple[ReleaseGateResult, ...]
     blocking_failures: Tuple[str, ...]
+    pending_gates: Tuple[str, ...]
     warnings: Tuple[str, ...]
     release_candidate_ready: bool
     summary: str

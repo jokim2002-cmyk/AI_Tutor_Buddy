@@ -175,6 +175,9 @@ from .rollback_drill import RollbackDrill
 from .operator_acceptance import OperatorAcceptanceService
 from .final_release_service import FinalReleaseService
 
+from phase11_core import BoardSyllabus, SyllabusRepository, GSEBSyllabus, GSEBSyllabusRepository
+from .version_utils import get_project_version
+from .manual_evidence import ManualAcceptanceEvidence, classify_artifact
 from .release_execution import (
     ReleaseExecutionResult,
     ReleaseExecutionService,

@@ -24,14 +24,25 @@ class FinalReleaseCandidateTests(unittest.TestCase):
     def test_rc_audit_passes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
+            (root / "pyproject.toml").write_text('[project]\nversion = "1.1.0"\n', encoding="utf-8")
             self.make_docs(root)
+            win_exe = root / "app.exe"
+            win_exe.write_bytes(b"exe")
+            apk = root / "app.apk"
+            apk.write_bytes(b"apk")
             audit = ReleaseCandidateAuditor().audit(
                 root=root,
-                version="1.0.0",
+                version="1.1.0",
                 commit="abc123",
                 test_count=166,
                 tests_passed=True,
                 working_tree_clean=True,
+                startup_verified=True,
+                documentation_reviewed=True,
+                windows_artifact=win_exe,
+                android_artifact=apk,
+                physical_android_device_verified=True,
+                curriculum_readiness_verified=True,
             )
             self.assertTrue(audit.release_candidate_ready)
 

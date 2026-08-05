@@ -8,17 +8,22 @@ from academy_core import ReleaseBundleWriter, ReleaseExecutionService
 
 class ReleaseExecutionTests(unittest.TestCase):
     def prepare_root(self, root: Path):
+        (root / "pyproject.toml").write_text('[project]\nversion = "1.1.0"\n', encoding="utf-8")
         for name in ReleaseExecutionService.DEFAULT_BUNDLE_FILES:
-            (root / name).write_text(f"{name} release 1.0.0", encoding="utf-8")
+            (root / name).write_text(f"{name} release 1.1.0", encoding="utf-8")
 
     def test_execution_generates_artifacts(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self.prepare_root(root)
+            win_exe = root / "app.exe"
+            win_exe.write_bytes(b"exe")
+            apk = root / "app.apk"
+            apk.write_bytes(b"apk")
             result = ReleaseExecutionService().execute(
                 root=root,
                 release_dir=root / "release",
-                version="1.0.0",
+                version="1.1.0",
                 commit="abc123",
                 test_count=186,
                 tests_passed=True,
@@ -26,6 +31,10 @@ class ReleaseExecutionTests(unittest.TestCase):
                 operator_name="Jokim",
                 startup_verified=True,
                 documentation_reviewed=True,
+                windows_artifact=win_exe,
+                android_artifact=apk,
+                physical_android_device_verified=True,
+                curriculum_readiness_verified=True,
             )
             self.assertTrue(result.rc_ready)
             self.assertTrue(result.rollback_passed)
@@ -37,10 +46,9 @@ class ReleaseExecutionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self.prepare_root(root)
-            result = ReleaseExecutionService().execute(
+            result = ReleaseExecutionService().evaluate_only(
                 root=root,
-                release_dir=root / "release",
-                version="1.0.0",
+                version="1.1.0",
                 commit="abc123",
                 test_count=186,
                 tests_passed=False,
@@ -56,10 +64,9 @@ class ReleaseExecutionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self.prepare_root(root)
-            result = ReleaseExecutionService().execute(
+            result = ReleaseExecutionService().evaluate_only(
                 root=root,
-                release_dir=root / "release",
-                version="1.0.0",
+                version="1.1.0",
                 commit="abc123",
                 test_count=186,
                 tests_passed=True,
@@ -68,16 +75,20 @@ class ReleaseExecutionTests(unittest.TestCase):
                 startup_verified=False,
                 documentation_reviewed=True,
             )
-            self.assertEqual(result.acceptance_decision, "rejected")
+            self.assertEqual(result.acceptance_decision, "pending")
 
     def test_summary_is_valid_json(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self.prepare_root(root)
+            win_exe = root / "app.exe"
+            win_exe.write_bytes(b"exe")
+            apk = root / "app.apk"
+            apk.write_bytes(b"apk")
             ReleaseExecutionService().execute(
                 root=root,
                 release_dir=root / "release",
-                version="1.0.0",
+                version="1.1.0",
                 commit="abc123",
                 test_count=186,
                 tests_passed=True,
@@ -85,11 +96,15 @@ class ReleaseExecutionTests(unittest.TestCase):
                 operator_name="Jokim",
                 startup_verified=True,
                 documentation_reviewed=True,
+                windows_artifact=win_exe,
+                android_artifact=apk,
+                physical_android_device_verified=True,
+                curriculum_readiness_verified=True,
             )
             payload = json.loads(
                 (root / "release" / "release_execution_summary.json").read_text(encoding="utf-8")
             )
-            self.assertEqual(payload["version"], "1.0.0")
+            self.assertEqual(payload["version"], "1.1.0")
 
     def test_bundle_writer(self):
         with tempfile.TemporaryDirectory() as tmp:

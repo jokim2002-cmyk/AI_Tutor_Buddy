@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import argparse
 import json
+import os
+import re
 import subprocess
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,69 +14,162 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from academy_core import (
-    ReleaseBundleWriter,
     ReleaseExecutionService,
+    get_project_version,
     git_commit,
     git_working_tree_clean,
 )
 
 
-def main() -> int:
-    root = Path(__file__).resolve().parents[1]
-    release_dir = root / "release"
-    version = "1.0.0"
+@dataclass(frozen=True)
+class RegressionRunResult:
+    command: str
+    exit_code: int
+    test_count: int
+    passed: bool
+    output_snippet: str
+
+
+def run_real_regression(root: Path) -> RegressionRunResult:
+    cmd = [sys.executable, "-m", "unittest", "discover", "-s", "tests"]
+    env = dict(os.environ)
+    env["_REAL_REGRESSION_RUNNING"] = "1"
+    try:
+        proc = subprocess.run(
+            cmd,
+            cwd=root,
+            capture_output=True,
+            text=True,
+            env=env,
+            timeout=120,
+        )
+        output = (proc.stdout or "") + "\n" + (proc.stderr or "")
+        test_count = 0
+        for line in output.splitlines():
+            if "Ran " in line and "test" in line:
+                match = re.search(r"Ran (\d+) test", line)
+                if match:
+                    test_count = int(match.group(1))
+        passed = (proc.returncode == 0) and (test_count > 0)
+        snippet = output[-2000:].strip()
+        return RegressionRunResult(
+            command=" ".join(cmd),
+            exit_code=proc.returncode,
+            test_count=test_count,
+            passed=passed,
+            output_snippet=snippet,
+        )
+    except Exception as exc:
+        return RegressionRunResult(
+            command=" ".join(cmd),
+            exit_code=-1,
+            test_count=0,
+            passed=False,
+            output_snippet=f"Failed to execute regression: {exc}",
+        )
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="GyanVerse Academy Release Auditor & Evaluation Tool"
+    )
+    parser.add_argument(
+        "--generate",
+        action="store_true",
+        help="Explicitly generate final release artifacts and freeze package (fails if any gate is PENDING/FAIL).",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Directory to write generated release files when --generate is specified (defaults to release/generated).",
+    )
+    parser.add_argument(
+        "--operator",
+        type=str,
+        default="System Auditor",
+        help="Operator identity for evaluation report.",
+    )
+    args = parser.parse_args(argv)
+
+    root = ROOT
+    version = get_project_version(root)
     commit = git_commit(root)
     clean = git_working_tree_clean(root)
 
+    print("============================================================")
+    print(f"GYANVERSE ACADEMY RELEASE EVALUATION (Version: {version})")
+    print("============================================================")
+
+    regression = run_real_regression(root)
+    print(f"Real regression command: {regression.command}")
+    print(f"Regression result: {'PASS' if regression.passed else 'FAIL'} ({regression.test_count} tests executed)")
+
     service = ReleaseExecutionService()
-    result = service.execute(
+    evaluation = service.evaluate_only(
         root=root,
-        release_dir=release_dir,
         version=version,
         commit=commit,
-        test_count=193,
-        tests_passed=True,
+        test_count=regression.test_count,
+        tests_passed=regression.passed,
         working_tree_clean=clean,
-        operator_name="Jokim Macwan",
-        startup_verified=True,
-        documentation_reviewed=True,
+        operator_name=args.operator,
+        startup_verified=False,
+        documentation_reviewed=False,
+        windows_artifact=None,
+        android_artifact=None,
+        physical_android_device_verified=False,
+        curriculum_readiness_verified=False,
     )
 
-    manifest = json.loads((release_dir / "release_manifest.json").read_text(encoding="utf-8"))
-    bundle = release_dir / f"GyanVerse_Academy_v{version}_RC.zip"
-    ReleaseBundleWriter().write(
+    print("\n--- Mandatory Release Gate Audit ---")
+    audit = service.auditor.audit(
         root=root,
-        output_zip=bundle,
-        relative_files=manifest["files"],
-        extra_files=(
-            release_dir / "rc_audit.json",
-            release_dir / "rollback_drill.json",
-            release_dir / "release_manifest.json",
-            release_dir / "operator_acceptance.json",
-            release_dir / "RELEASE_FREEZE",
-            release_dir / "release_execution_summary.json",
-        ),
+        version=version,
+        commit=commit,
+        test_count=regression.test_count,
+        tests_passed=regression.passed,
+        working_tree_clean=clean,
     )
+    for gate in audit.gates:
+        print(f"  [{gate.status.value.upper():<7}] {gate.gate:<30} : {gate.details}")
 
-    if not ReleaseBundleWriter().verify_readable(bundle):
-        print("FINAL RELEASE BUNDLE VERIFY: FAIL")
-        return 1
+    print("\n============================================================")
+    print(f"FINAL RELEASE DECISION : {evaluation.acceptance_decision.upper()}")
+    print("============================================================")
 
-    print(json.dumps(result.to_dict(), indent=2))
-    print(f"FINAL RELEASE BUNDLE: {bundle}")
-    if (
-        result.rc_ready
-        and result.rollback_passed
-        and result.bundle_verified
-        and result.acceptance_decision == "approved"
-        and clean
-    ):
-        print("FINAL OPERATOR ACCEPTANCE: PASS")
-        print("RELEASE FREEZE: ACTIVE")
+    if evaluation.acceptance_decision != "approved":
+        print("\nPRODUCT RELEASE STATUS: NOT APPROVED")
+        print("Reason: Mandatory build, device, startup, or curriculum acceptance evidence is missing/pending.")
+        print("Required incomplete items:")
+        if audit.pending_gates:
+            for item in audit.pending_gates:
+                print(f"  - {item}: PENDING")
+        if audit.blocking_failures:
+            for item in audit.blocking_failures:
+                print(f"  - {item}: FAILED")
+
+    if args.generate:
+        if evaluation.acceptance_decision != "approved" or not evaluation.rc_ready:
+            print("\nRELEASE GENERATION ERROR: Refusing to generate release bundle because mandatory release gates are incomplete.")
+            return 1
+
+        out_dir = args.output_dir or (root / "release" / "generated")
+        service.execute(
+            root=root,
+            release_dir=out_dir,
+            version=version,
+            commit=commit,
+            test_count=regression.test_count,
+            tests_passed=regression.passed,
+            working_tree_clean=clean,
+            operator_name=args.operator,
+            dry_run=False,
+        )
+        print(f"\nFinal release bundle successfully written to: {out_dir}")
         return 0
 
-    print("FINAL OPERATOR ACCEPTANCE: FAIL")
-    return 1
+    return 0
 
 
 if __name__ == "__main__":
