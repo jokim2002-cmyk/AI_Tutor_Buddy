@@ -19,3 +19,4 @@ dist/
 *.exe
 *.jks
 *.keystore
+.local_voice_auditions/

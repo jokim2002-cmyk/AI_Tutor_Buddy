@@ -779,6 +779,7 @@ def offline_tutor_response(
     message: str,
     context: StudentLearningContext,
     attachments: Sequence[AttachmentRecord] = (),
+    provider_failed: bool = False,
 ) -> str:
     """Question-aware deterministic tutor used when online AI is unavailable."""
 
@@ -800,6 +801,9 @@ def offline_tutor_response(
     topic_answer = _local_topic_answer(cleaned)
     if topic_answer:
         return topic_answer + attachment_note
+
+    if provider_failed:
+        return "The online tutor could not respond right now. Your question is saved. Please tap Retry." + attachment_note
 
     chapter = context.current_chapter or "the current chapter"
     subject = context.current_subject or "the current subject"
@@ -893,3 +897,160 @@ def format_tutor_response(
     text = re.sub(r"\n{3,}", "\n\n", text)
 
     return text.strip()
+
+
+INSTANT_INTENT_GREETING = "greeting"
+INSTANT_INTENT_THANKS = "thanks"
+INSTANT_INTENT_BYE = "bye"
+INSTANT_INTENT_HELP = "help"
+
+ACADEMIC_KEYWORDS = {
+    "explain", "what", "why", "how", "solve", "calculate", "chapter", "math",
+    "science", "formula", "question", "problem", "mean", "define", "derivative",
+    "equation", "photosynthesis", "fraction", "decimal", "geometry", "algebra",
+    "physics", "chemistry", "biology", "history", "geography", "grammar",
+    "translate", "summarize", "evaluate", "find", "derive", "proof", "example"
+}
+
+
+def classify_instant_intent(text: str) -> str | None:
+    raw = clean_student_text(text, max_length=200).lower()
+    if not raw:
+        return None
+
+    words = re.findall(r"\b[a-z0-9]+\b", raw)
+    if not words or len(words) > 6:
+        return None
+
+    if any(w in ACADEMIC_KEYWORDS for w in words):
+        return None
+
+    clean = " ".join(words)
+
+    if re.fullmatch(
+        r"(hello|hi|hey|namaste|good morning|good afternoon|good evening|kem cho|su prabhat|namaskar)( (there|ji|tutor|buddy|friend|bhai|sir|maam))?",
+        clean,
+    ):
+        return INSTANT_INTENT_GREETING
+
+    if re.fullmatch(
+        r"(thanks|thank you|thanku|dhanyawad|aabhar|thx)( (very much|so much|a lot|ji|tutor))?",
+        clean,
+    ):
+        return INSTANT_INTENT_THANKS
+
+    if re.fullmatch(
+        r"(bye|goodbye|alvida|aavjo|see you)( (tutor|buddy|later))?",
+        clean,
+    ):
+        return INSTANT_INTENT_BYE
+
+    if re.fullmatch(r"(help|commands|study tools|options)", clean):
+        return INSTANT_INTENT_HELP
+
+    return None
+
+
+def instant_tutor_response(intent: str, context: StudentLearningContext) -> str:
+    lang = (context.preferred_language or context.medium or "English").strip().lower()
+
+    if intent == INSTANT_INTENT_HELP:
+        return (
+            "Available study tools:\n"
+            "• Ask doubts directly in Explain, Homework, Revision or Exam mode\n"
+            "• Attach homework photos or PDFs for hint-first review\n"
+            "• Record voice questions in Gujarati, Hindi or English\n"
+            "• Daily Sync: save what school taught today"
+        )
+
+    if "gujarati" in lang:
+        if intent == INSTANT_INTENT_GREETING:
+            return f"નમસ્તે {context.name}! હું તમારો જ્ઞાનવર્સ ટ્યુટર છું. આજે Std {context.standard} {context.current_subject or 'અભ્યાસ'}માં શું મદદ કરું?"
+        if intent == INSTANT_INTENT_THANKS:
+            return "તમારો ખૂબ આભાર! સરસ રીતે ભણતા રહો."
+        if intent == INSTANT_INTENT_BYE:
+            return "આવજો! સરસ અભ્યાસ કરો અને ફરી મળીશું."
+
+    elif "hindi" in lang:
+        if intent == INSTANT_INTENT_GREETING:
+            return f"नमस्ते {context.name}! मैं आपका ज्ञानवर्स ट्यूटर हूँ। आज कक्षा {context.standard} के {context.current_subject or 'पढ़ाई'} में क्या समझना चाहते हैं?"
+        if intent == INSTANT_INTENT_THANKS:
+            return "आपका स्वागत है! मन लगाकर पढ़ते रहिए।"
+        if intent == INSTANT_INTENT_BYE:
+            return "अलविदा! अच्छे से पढ़ाई करें, फिर मिलेंगे।"
+
+    elif "hinglish" in lang:
+        if intent == INSTANT_INTENT_GREETING:
+            return f"Namaste {context.name}! Main aapka GyanVerse tutor hoon. Aaj Std {context.standard} {context.current_subject or 'subject'} mein kya padhenge?"
+        if intent == INSTANT_INTENT_THANKS:
+            return "Welcome! Aise hi mehnat se padhte rahiye."
+        if intent == INSTANT_INTENT_BYE:
+            return "Bye! Acche se padhai karna, phir milenge."
+
+    if intent == INSTANT_INTENT_GREETING:
+        return f"Hello {context.name}! I am your GyanVerse tutor. What would you like to study in Class {context.standard} {context.current_subject or 'today'}?"
+    if intent == INSTANT_INTENT_THANKS:
+        return "You are very welcome! Keep up the great learning."
+    if intent == INSTANT_INTENT_BYE:
+        return "Goodbye! Have a productive study session."
+
+    return f"Hello {context.name}! How can I help you with your studies today?"
+
+
+ABBREVIATIONS = (
+    "mr.", "mrs.", "ms.", "dr.", "prof.", "sr.", "jr.", "e.g.", "i.e.",
+    "vs.", "etc.", "std.", "no.", "st.", "fig.", "approx.", "rs.", "vol."
+)
+
+
+def split_into_sentences(text: str) -> list[str]:
+    """
+    Deterministic sentence segmenter supporting English, Hindi, and Gujarati.
+    Preserves decimal numbers, abbreviations, numbered steps, and bullet points.
+    Discards empty/whitespace segments.
+    """
+    if not text or not str(text).strip():
+        return []
+
+    raw = str(text).strip()
+
+    PH_DECIMAL = "\uF000"
+    PH_ABBR = "\uF001"
+    PH_LIST = "\uF002"
+
+    # Step 1: Protect decimal numbers (e.g. 3.14, 0.5)
+    protected = re.sub(r"(\d)\.(\d)", lambda m: m.group(1) + PH_DECIMAL + m.group(2), raw)
+
+    # Step 2: Protect common abbreviations
+    for abbr in ABBREVIATIONS:
+        pattern = re.compile(re.escape(abbr), re.IGNORECASE)
+        replacement = abbr[:-1] + PH_ABBR
+        protected = pattern.sub(replacement, protected)
+
+    # Step 3: Insert boundary marker before step prefixes if preceded by whitespace
+    protected = re.sub(r"(?<=\s)(step\s+\d+[\.:]?|\d+[\.:])", r"\n\1", protected, flags=re.IGNORECASE)
+
+    # Step 4: Protect numbered list prefixes at line starts (e.g. "1. ", "2. ")
+    protected = re.sub(r"(^|\n)(\s*\d+)\.\s+", lambda m: m.group(1) + m.group(2) + PH_LIST + " ", protected)
+
+    # Step 4: Split by sentence boundaries (. ! ? । ॥) or newlines
+    raw_segments = re.split(r"(?<=[.!?।॥])\s+|\n+", protected)
+
+    results: list[str] = []
+    for seg in raw_segments:
+        cleaned_seg = seg.replace(PH_DECIMAL, ".").replace(PH_ABBR, ".").replace(PH_LIST, ". ").strip()
+        if cleaned_seg:
+            results.append(cleaned_seg)
+
+    merged_results: list[str] = []
+    i = 0
+    while i < len(results):
+        seg = results[i]
+        if i + 1 < len(results) and re.fullmatch(r"(step\s+\d+[\.:]?|phase\s+\d+[\.:]?|\d+[\.:])", seg, flags=re.IGNORECASE):
+            merged_results.append(f"{seg} {results[i+1]}")
+            i += 2
+        else:
+            merged_results.append(seg)
+            i += 1
+
+    return merged_results

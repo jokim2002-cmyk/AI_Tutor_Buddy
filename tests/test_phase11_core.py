@@ -284,24 +284,22 @@ class Phase11AIContractTests(unittest.TestCase):
 
 
     def test_timeout_configuration_is_bounded_for_real_provider_latency(self):
-        with patch.dict("os.environ", {"GYANVERSE_AI_TIMEOUT_MS": "6000"}):
+        with patch.dict("os.environ", {"GYANVERSE_AI_TIMEOUT_MS": "1000"}):
             service = GyanVerseAIService(api_key="")
-        self.assertEqual(service.request_timeout_ms, 25_000)
+        self.assertEqual(service.request_timeout_ms, 5_000)
 
         with patch.dict("os.environ", {"GYANVERSE_AI_TIMEOUT_MS": "999999"}):
             service = GyanVerseAIService(api_key="")
-        self.assertEqual(service.request_timeout_ms, 35_000)
-
-
+        self.assertEqual(service.request_timeout_ms, 20_000)
 
     def test_tts_timeout_configuration_is_separate_and_bounded(self):
         with patch.dict("os.environ", {"GYANVERSE_TTS_TIMEOUT_MS": "1000"}):
             service = GyanVerseAIService(api_key="")
-        self.assertEqual(service.tts_timeout_ms, 45_000)
+        self.assertEqual(service.tts_timeout_ms, 5_000)
 
         with patch.dict("os.environ", {"GYANVERSE_TTS_TIMEOUT_MS": "999999"}):
             service = GyanVerseAIService(api_key="")
-        self.assertEqual(service.tts_timeout_ms, 90_000)
+        self.assertEqual(service.tts_timeout_ms, 20_000)
 
     def test_tts_configured_uses_dedicated_voice_client(self):
         with patch.object(phase11_ai, "types", object()):
@@ -319,6 +317,7 @@ class Phase11AIContractTests(unittest.TestCase):
                 tts_cache_dir=Path(directory),
             )
             self.assertEqual(service.tts_backend, "local-first")
+            service.tts_mode = "local"
             with patch.object(
                 GyanVerseAIService,
                 "local_tts_available",

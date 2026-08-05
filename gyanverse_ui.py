@@ -68,7 +68,7 @@ COLOR_USER = "#E7EDFF"
 COLOR_TUTOR = "#FFFFFF"
 COLOR_SUCCESS = "#0D7C66"
 COLOR_ERROR = "#B3261E"
-FAST_REPLY_DEADLINE_SECONDS = 30.0
+FAST_REPLY_DEADLINE_SECONDS = 15.0
 SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0
 SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0
 
@@ -715,14 +715,195 @@ def main(page: ft.Page) -> None:
             disabled=True,
         )
 
+        def play_answer_audio(answer_text: str, voice_status_ctrl: ft.Text | None = None) -> None:
+            nonlocal voice_state
+            if not answer_text:
+                return
+            ai_service.stop_playback()
+            try:
+                voice_state = VoiceState.PROCESSING
+                if voice_status_ctrl:
+                    voice_status_ctrl.value = f"Preparing natural voice • {ai_service.tts_voice_name}…" if ai_service.tts_mode != "local" else "Preparing local voice…"
+                    page.update()
+                audio_bytes = ai_service.synthesize(
+                    answer_text,
+                    language_hint=context.preferred_language,
+                )
+                m = ai_service.last_tts_metrics
+                if ai_service.native_playback_available:
+                    ai_service.play_wav_bytes(audio_bytes)
+                    voice_state = VoiceState.PLAYING
+                    if voice_status_ctrl:
+                        voice_status_ctrl.value = f"Playing • {m.selected_voice}" if ai_service.tts_mode != "local" else "Playing local voice"
+                else:
+                    notify("Audio playback unavailable", error=True)
+            except Exception as exc:
+                voice_state = VoiceState.ERROR
+                if voice_status_ctrl:
+                    voice_status_ctrl.value = "Natural voice failed • Tap Play to retry"
+                notify(str(exc), error=True)
+            finally:
+                page.update()
+
+        def stop_answer_audio(voice_status_ctrl: ft.Text | None = None) -> None:
+            nonlocal voice_state
+            ai_service.stop_playback()
+            voice_state = VoiceState.IDLE
+            if voice_status_ctrl:
+                voice_status_ctrl.value = "Audio stopped"
+            page.update()
+
+        async def prefetch_voice(answer_text: str, bubble_id: str, voice_status_ctrl: ft.Text) -> None:
+            try:
+                await asyncio.to_thread(
+                    ai_service.synthesize,
+                    answer_text,
+                    language_hint=context.preferred_language,
+                    answer_id=bubble_id,
+                )
+                m = ai_service.last_tts_metrics
+                if m.success:
+                    if m.cache_hit:
+                        voice_status_ctrl.value = f"Natural voice ready • {m.selected_voice} • cached"
+                    else:
+                        prep_sec = m.total_prepare_ms / 1000.0
+                        voice_status_ctrl.value = f"Natural voice ready • {m.selected_voice} • {prep_sec:.1f}s"
+                else:
+                    voice_status_ctrl.value = "Natural voice failed • Tap Play to retry"
+            except Exception:
+                voice_status_ctrl.value = "Natural voice failed • Tap Play to retry"
+            finally:
+                page.update()
+
+        def create_tutor_voice_controls(answer_text: str, message_id: str) -> tuple[ft.Row, ft.Text]:
+            voice_name = ai_service.tts_voice_name
+            init_status = f"Natural voice available • {voice_name}"
+            voice_status_control = ft.Text(init_status, size=11, color=COLOR_MUTED)
+
+            def handle_play(_: object = None) -> None:
+                ai_service.stop_playback()
+                voice_status_control.value = f"Connecting natural voice • {voice_name}…"
+                try:
+                    page.update()
+                except Exception:
+                    pass
+
+                def play_worker():
+                    def on_playable(chunk_bytes: bytes) -> None:
+                        voice_status_control.value = f"Playing • {voice_name} • streaming"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+
+                    try:
+                        audio_bytes = ai_service.synthesize(
+                            answer_text,
+                            language_hint=context.preferred_language,
+                            answer_id=message_id,
+                            on_playable_chunk=on_playable,
+                        )
+                        m = ai_service.last_tts_metrics
+                        if m.cache_hit:
+                            voice_status_control.value = f"Natural voice cached • {voice_name}"
+                        else:
+                            voice_status_control.value = f"Playing • {voice_name}"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+
+                        if ai_service.native_playback_available:
+                            ai_service.play_wav_bytes(audio_bytes)
+                            voice_status_control.value = f"Natural voice cached • {voice_name}"
+                            try:
+                                page.update()
+                            except Exception:
+                                pass
+                    except AIServiceError as exc:
+                        if getattr(exc, "quota_limited", False) or "quota" in str(exc).lower() or "429" in str(exc):
+                            voice_status_control.value = "Natural voice temporarily unavailable • quota limit"
+                        else:
+                            voice_status_control.value = "Natural voice failed • Retry"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                    except Exception:
+                        voice_status_control.value = "Natural voice failed • Retry"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+
+                asyncio.to_thread(play_worker)
+
+            def handle_stop(_: object = None) -> None:
+                ai_service.stop_playback()
+                voice_status_control.value = "Audio stopped"
+                try:
+                    page.update()
+                except Exception:
+                    pass
+
+            def handle_replay(_: object = None) -> None:
+                handle_play()
+
+            btn_play = ft.IconButton(
+                icon=ft.Icons.PLAY_ARROW, icon_size=16, padding=2, tooltip="Play spoken answer", on_click=handle_play
+            )
+            btn_stop = ft.IconButton(
+                icon=ft.Icons.STOP, icon_size=16, padding=2, tooltip="Stop audio", on_click=handle_stop
+            )
+            btn_replay = ft.IconButton(
+                icon=ft.Icons.REPLAY, icon_size=16, padding=2, tooltip="Replay answer", on_click=handle_replay
+            )
+
+            controls_row = ft.Row(
+                [voice_status_control, btn_play, btn_stop, btn_replay],
+                spacing=2,
+                alignment=ft.MainAxisAlignment.END,
+            )
+
+            if ai_service.tts_prefetch_policy == "on-answer-complete":
+                def prefetch_worker():
+                    try:
+                        ai_service.synthesize(
+                            answer_text,
+                            language_hint=context.preferred_language,
+                            answer_id=message_id,
+                        )
+                        voice_status_control.value = f"Natural voice cached • {voice_name}"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                    except Exception:
+                        pass
+
+                asyncio.to_thread(prefetch_worker)
+
+            return controls_row, voice_status_control
+
         def add_message(role: str, text: str, *, error: bool = False) -> None:
             is_student = role == "student"
+            message_controls: list[ft.Control] = [
+                ft.Text(
+                    "You" if is_student else "GyanVerse Tutor",
+                    size=10,
+                    weight=ft.FontWeight.BOLD,
+                    color=COLOR_PRIMARY if is_student else COLOR_SUCCESS,
+                ),
+                ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=14),
+            ]
+            if not is_student and not error:
+                msg_id = f"msg_{time.time_ns()}"
+                controls_row, _ = create_tutor_voice_controls(text, msg_id)
+                message_controls.append(controls_row)
+
             bubble = ft.Container(
                 content=ft.Column(
-                    [
-                        ft.Text("You" if is_student else "GyanVerse Tutor", size=10, weight=ft.FontWeight.BOLD, color=COLOR_PRIMARY if is_student else COLOR_SUCCESS),
-                        ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=14),
-                    ],
+                    message_controls,
                     spacing=4,
                 ),
                 bgcolor=COLOR_USER if is_student else COLOR_TUTOR,
@@ -743,6 +924,7 @@ def main(page: ft.Page) -> None:
                     alignment=ft.MainAxisAlignment.END if is_student else ft.MainAxisAlignment.START,
                 ),
             )
+
 
         def estimated_composer_lines() -> int:
             value = composer.value or ""
@@ -857,7 +1039,7 @@ def main(page: ft.Page) -> None:
             status_text.value = message
             page.update()
 
-        async def send(_: object = None) -> None:
+        async def send(_: object = None, *, is_retry: bool = False) -> None:
             nonlocal selected_attachments, latest_tutor_answer
             text = (composer.value or "").strip()
             if not text and not selected_attachments:
@@ -865,6 +1047,7 @@ def main(page: ft.Page) -> None:
                 return
             request_attachments = tuple(selected_attachments)
             started_at = time.perf_counter()
+            ai_service.stop_playback()
             try:
                 requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
                 if requested_mode != context.learning_mode:
@@ -872,7 +1055,8 @@ def main(page: ft.Page) -> None:
                 detected_context, detected = detect_context_from_message(text, context)
                 if detected:
                     update_context(detected_context)
-                add_message("student", text or "Please review my attached homework.")
+                if not is_retry:
+                    add_message("student", text or "Please review my attached homework.")
                 composer.value = ""
                 update_compact_tutor_layout()
 
@@ -881,13 +1065,53 @@ def main(page: ft.Page) -> None:
                 else:
                     set_busy(True, "Using local tutor...")
 
+                tutor_text_control = ft.Text("", selectable=True, color=COLOR_TEXT, size=14)
+                message_controls: list[ft.Control] = [
+                    ft.Text("GyanVerse Tutor", size=10, weight=ft.FontWeight.BOLD, color=COLOR_SUCCESS),
+                    tutor_text_control,
+                ]
+                bubble_container = ft.Column(message_controls, spacing=4)
+                tutor_bubble = ft.Container(
+                    content=bubble_container,
+                    bgcolor=COLOR_TUTOR,
+                    border=ft.Border.all(1, COLOR_BORDER),
+                    border_radius=ft.BorderRadius.only(
+                        top_left=16,
+                        top_right=16,
+                        bottom_left=4,
+                        bottom_right=16,
+                    ),
+                    padding=12,
+                    width=680,
+                )
+                transcript.controls.insert(
+                    max(0, len(transcript.controls) - 1),
+                    ft.Row([tutor_bubble], alignment=ft.MainAxisAlignment.START),
+                )
+                page.update()
+
+                last_ui_update_time = [0.0]
+
+                def on_chunk(accumulated_text: str, chunk_text: str) -> None:
+                    tutor_text_control.value = accumulated_text
+                    t_now = time.perf_counter()
+                    if t_now - last_ui_update_time[0] >= 0.08:
+                        last_ui_update_time[0] = t_now
+                        try:
+                            tutor_text_control.update()
+                        except Exception:
+                            pass
+
                 try:
+                    status_text.value = "Answering…"
+                    page.update()
                     answer = await asyncio.wait_for(
                         asyncio.to_thread(
-                            ai_service.ask,
+                            ai_service.ask_stream,
                             message=text,
                             context=context,
                             attachments=request_attachments,
+                            on_chunk=on_chunk,
                         ),
                         timeout=FAST_REPLY_DEADLINE_SECONDS,
                     )
@@ -902,12 +1126,35 @@ def main(page: ft.Page) -> None:
                         reason=ai_service.last_error,
                     )
                 latest_tutor_answer = answer
-                add_message("tutor", answer)
+                tutor_text_control.value = answer
+
+                msg_id = f"msg_{time.time_ns()}"
+                if "could not respond right now" in answer.lower():
+                    def retry_question(_: object = None, orig_msg: str = text) -> None:
+                        composer.value = orig_msg
+                        page.update()
+                        asyncio.create_task(send(is_retry=True))
+
+                    btn_retry = ft.TextButton("Retry question", icon=ft.Icons.REFRESH, on_click=retry_question)
+                    voice_controls_row = ft.Row([btn_retry], alignment=ft.MainAxisAlignment.END)
+                else:
+                    voice_controls_row, _ = create_tutor_voice_controls(answer, msg_id)
+
+                if len(bubble_container.controls) == 2:
+                    bubble_container.controls.append(voice_controls_row)
+
                 speak_button.disabled = False
                 selected_attachments = []
                 refresh_attachment_preview()
+
+                m = ai_service.last_metrics
                 elapsed = time.perf_counter() - started_at
-                status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}"
+                if m.stream_used and m.ui_first_visible_ms > 0:
+                    first_sec = m.ui_first_visible_ms / 1000.0
+                    status_text.value = f"Ready • first text {first_sec:.1f}s • complete {elapsed:.1f}s • {ai_service.status_label}"
+                else:
+                    status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}"
+
                 busy.visible = False
                 send_button.disabled = False
                 page.update()
@@ -940,6 +1187,7 @@ def main(page: ft.Page) -> None:
                 send_button.disabled = False
                 mic_button.disabled = False
                 page.update()
+
 
         def handle_voice_state(event: object) -> None:
             state = getattr(event, "state", None)
@@ -1141,7 +1389,7 @@ def main(page: ft.Page) -> None:
         add_message(
             "tutor",
             (
-                f"Namaste {context.name}. I remember your {context.board} {context.medium} Std {context.standard} context. "
+                f"Namaste {context.name}. Your current learning profile is {context.board} • {context.medium} • Standard {context.standard}. "
                 "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
             ),
         )

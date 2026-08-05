@@ -1,53 +1,29 @@
-# Phase 11 Implementation Checkpoint
+# Phase 11 Implementation & Phase 1 Checkpoint
 
-Base checkpoint: `master / 3b2d16b`
+Base checkpoint: `master / 7c04f78`
 
-## Implemented in this cohesive source batch
+## Implemented and Verified Functionality
 
-- Responsive full-width Flet shell with a hidden `NavigationDrawer`.
-- Student-friendly top bar and original GyanVerse brand assets.
-- Tutor conversation bubbles and a fixed multiline bottom composer.
-- Explain, Homework Help, Revision and Exam Answer modes.
-- First-use onboarding for board (GSEB, CBSE), medium, standard (1–10) and preferred language.
-- Atomic local persistence of current student, subject, chapter and topic context.
-- Conservative context extraction from typed/spoken messages.
-- Multi-file homework attachment picker for images, PDF and common documents.
-- Local attachment hashing, size/type limits, preview, cancellation, removal and history deletion.
-- Hint-first AI request contract with deterministic offline fallback.
-- Optional Gemini image/PDF understanding through inline file bytes.
-- Optional Android/Windows microphone recording with permission request and editable transcript.
-- Optional spoken tutor output with readable-text fallback.
-- Board-neutral syllabus schema, source validation, importer, repository lookup and coverage reporting for GSEB and CBSE packages.
-- Explicit separation of official, teacher-authored, AI-generated and metadata-only content.
-- Cross-platform Flet packaging configuration with Android minimum SDK 24.
-- Android and Windows build scripts with UTF-8 safeguards and dynamic project-root resolution.
-- Comprehensive automated regression tests verified dynamically via `validate_phase11.ps1`.
+- **Instant Conversational Routing**: Implemented and manually verified in Windows UI. Instant greetings (`hello`, `namaste`) bypass online AI with ~0.0ms latency.
+- **Academic Text Streaming**: Implemented and manually verified in Windows UI. Academic text streaming renders initial visible response in ~3.4s and completes in ~3.4s.
+- **Natural Voice Selection**: `Aoede` is the selected natural Indian female teacher voice.
+- **1-Request Streaming Audio Pipeline**: Natural TTS uses exactly one streaming provider request (`generate_content_stream`) per tutor answer. Play, prefetch, and Replay share the single request/cache identity.
+- **Default TTS Mode**: Default TTS mode is `natural`.
+- **Prohibited Windows Local Fallback**: Windows robotic SAPI voice fallback is strictly prohibited in `natural` mode to ensure consistent natural voice UX.
+- **Visible Error States**: Quota (`429`) and timeout errors update UI status controls to explicit persistent states (`Natural voice temporarily unavailable • quota limit`, `Natural voice failed • Retry`).
+- **Diagnostic Utilities**: [`scripts/diagnose_tutor_voice.py`](file:///D:/Ai_Tutor_Buddy/scripts/diagnose_tutor_voice.py) with `--stream` support and [`scripts/benchmark_tutor_latency.py`](file:///D:/Ai_Tutor_Buddy/scripts/benchmark_tutor_latency.py).
 
-## Intentionally not claimed as passed yet
+## Intentionally Not Claimed as Passed Yet
 
-The following remain pending and are clearly separated from implemented source and automated test passes:
+1. **Real Aoede Streaming Playback Acceptance**: Remaining pending because the natural TTS provider returned `429 RESOURCE_EXHAUSTED`. (The 429 status is logged as provider rate limit without asserting an unverified daily quota category).
+2. **Google Login & Cloud Sync**: Pending future phase.
+3. **Curriculum & Syllabus Ingestion**: Pending official textbook dataset acquisition.
+4. **Premium UI Redesign**: Pending future phase.
+5. **Windows Packaged EXE (.exe)**: Build and workflow acceptance pending.
+6. **Android Packaged APK (.apk)**: Build, physical device installation, and workflow acceptance pending.
 
-1. Flet runtime visual acceptance at common phone widths.
-2. Drawer and Android back-button behaviour on a physical phone.
-3. Microphone permission, Gujarati/Hindi/English transcription and editable recognised text.
-4. Spoken-answer playback and graceful fallback.
-5. Camera/provider/gallery/PDF/document selection on the installed APK.
-6. Homework image/PDF understanding with the configured Gemini key.
-7. Windows EXE build and workflow acceptance.
-8. Android APK build, installation and workflow acceptance.
-9. Official GSEB and CBSE source-package acquisition, provenance validation and real coverage reporting.
-10. Final roadmap update, release commit and push.
+## Safety Decisions
 
-## Safety decisions
-
-- Existing TutorEngine/database behaviour is preserved.
-- `legacy_voice_tutor.py` remains available, but its binary desktop audio dependencies are excluded from Android production dependencies.
-- No official GSEB textbook content is invented or bundled.
-- Local databases, student files, `.env`, keys and generated builds stay untracked.
-
-## Desktop voice and no-console acceptance hotfix
-
-- Desktop microphone capture now records a real mono WAV file instead of relying only on raw stream events.
-- Voice transcription uses Gemini when configured and a Gujarati/Hindi/English web-speech fallback when needed.
-- A `pythonw.exe` desktop launcher and shortcut path keep the app console-free while preserving file logs.
-- Final Android microphone and spoken-output acceptance remain release gates.
+- Existing TutorEngine and local database behavior preserved.
+- No official GSEB/CBSE textbook content is invented or bundled.
+- Local databases, student files, `.env`, keys, logs, and generated cache files remain untracked.

@@ -173,7 +173,7 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_tutor_reply_has_hard_deadline_and_nonblocking_analytics(self):
         for marker in (
-            "FAST_REPLY_DEADLINE_SECONDS = 30.0",
+            "FAST_REPLY_DEADLINE_SECONDS = 15.0",
             "asyncio.wait_for(",
             "ai_service.offline_answer(",
             "ai_service.defer_online_after_failure(",
