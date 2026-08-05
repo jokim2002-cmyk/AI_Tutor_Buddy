@@ -15,10 +15,20 @@
   - clean working tree.
 - Student dignity, privacy, explainability, and guardian-safe reporting are mandatory across all phases.
 
-## Product Identity
+## Product Identity & Canonical Scope
 
 - **Internal engine:** AI Tutor Buddy
 - **Public brand:** GyanVerse Academy
+- **Supported classes/standards:** Classes 1 through 10
+- **First production boards:** GSEB and CBSE
+- **Target platforms:** Windows and Android
+
+### Status Separation
+- **Implemented source:** Responsive shell, tutor composer, context persistence, voice/attachment flow, board-neutral syllabus repository foundation.
+- **Automated validation:** Executed dynamically via test suite and `validate_phase11.ps1`.
+- **Pending curriculum coverage:** Acquisition and validation of official textbook packages for GSEB and CBSE.
+- **Pending build acceptance:** Windows EXE packaging and Android APK packaging verification.
+- **Pending device acceptance:** Physical Android phone and Windows desktop acceptance.
 
 ## Academy Architecture
 
@@ -313,11 +323,11 @@ These percentages are planning estimates, not automated measurements. They shoul
 
 ---
 
-## Phase 11 implementation checkpoint — source batch prepared (2026-07-20)
+## Phase 11 implementation checkpoint
 
-The cohesive Phase 11 source batch has been implemented on top of `master / 3b2d16b`. It adds the responsive hidden-drawer shell, modern tutor composer, persistent student context, voice/attachment integration paths, local homework history, validated GSEB importer foundation, original branding, cross-platform packaging configuration and Phase 11 automated tests. Prepared regression: **215 tests PASS**.
+The cohesive Phase 11 source batch adds the responsive hidden-drawer shell, modern tutor composer, persistent student context (Classes 1–10, GSEB and CBSE), voice/attachment integration paths, local homework history, board-neutral syllabus repository foundation, original branding, cross-platform packaging configuration and Phase 11 automated tests. Historical initial checkpoint baseline was 215 tests; actual current total is evaluated dynamically by `validate_phase11.ps1`.
 
-Phase 11 remains **IN PROGRESS**, not complete. Windows/Android builds and physical-device acceptance gates—including microphone, spoken output, attachment providers, narrow-screen layout and official GSEB source coverage—must pass before final commit/push and release sign-off. See `PHASE11_IMPLEMENTATION.md`.
+Phase 11 remains **IN PROGRESS**, not complete. Windows/Android builds and physical-device acceptance gates—including microphone, spoken output, attachment providers, narrow-screen layout and official syllabus source coverage—must pass before final release sign-off. See `PHASE11_IMPLEMENTATION.md`.
 
 ---
 

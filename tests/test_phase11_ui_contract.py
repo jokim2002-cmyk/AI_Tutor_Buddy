@@ -117,11 +117,16 @@ class Phase11UIContractTests(unittest.TestCase):
         for marker in (
             "LearningContextStore",
             "onboarding_complete",
-            "GSEBSyllabusRepository",
+            "SyllabusRepository",
             "content_origin",
             "official_coverage_percent",
         ):
             self.assertIn(marker, UI + CORE)
+
+    def test_ui_board_and_standard_dropdown_options(self):
+        self.assertIn('options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE")]', UI)
+        self.assertIn('options=[ft.dropdown.Option(str(item)) for item in range(1, 11)]', UI)
+        self.assertNotIn('options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE", "ICSE", "Other")]', UI)
 
     def test_mobile_width_and_assets(self):
         self.assertIn("page.window.min_width = 360", UI)

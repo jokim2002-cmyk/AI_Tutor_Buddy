@@ -38,10 +38,10 @@ class VoiceState(str, Enum):
     ERROR = "error"
 
 
-SUPPORTED_BOARDS = ("GSEB", "CBSE", "ICSE", "Other")
+SUPPORTED_BOARDS = ("GSEB", "CBSE")
 SUPPORTED_MEDIUMS = ("Gujarati", "English", "Hindi")
 SUPPORTED_LANGUAGES = ("Gujarati", "Hindi", "English")
-SUPPORTED_STANDARDS = tuple(range(1, 13))
+SUPPORTED_STANDARDS = tuple(range(1, 11))
 SUPPORTED_ATTACHMENT_EXTENSIONS = {
     ".jpg",
     ".jpeg",
@@ -90,7 +90,9 @@ class StudentLearningContext:
     def validate(self) -> "StudentLearningContext":
         student_id = clean_student_text(self.student_id, max_length=80) or "student-1"
         name = clean_student_text(self.name, max_length=80) or "Student"
-        board = clean_student_text(self.board, max_length=40) or "GSEB"
+        board = clean_student_text(self.board, max_length=40).upper() or "GSEB"
+        if board not in SUPPORTED_BOARDS:
+            raise Phase11Error(f"Unsupported board: {self.board}. Supported boards: GSEB, CBSE.")
         medium = clean_student_text(self.medium, max_length=40) or "Gujarati"
         language = clean_student_text(self.preferred_language, max_length=40) or medium
         subject = clean_student_text(self.current_subject, max_length=100)
@@ -99,9 +101,9 @@ class StudentLearningContext:
         try:
             standard = int(self.standard)
         except (TypeError, ValueError) as exc:
-            raise Phase11Error("Standard must be a number from 1 to 12.") from exc
+            raise Phase11Error("Standard must be a number from 1 to 10.") from exc
         if standard not in SUPPORTED_STANDARDS:
-            raise Phase11Error("Standard must be between 1 and 12.")
+            raise Phase11Error("Standard must be between 1 and 10.")
         mode = str(self.learning_mode or LearningMode.EXPLAIN.value).lower().strip()
         if mode not in {item.value for item in LearningMode}:
             raise Phase11Error(f"Unsupported learning mode: {mode}")
@@ -424,7 +426,7 @@ class SyllabusChapter:
 
 
 @dataclass(frozen=True)
-class GSEBSyllabus:
+class BoardSyllabus:
     schema_version: int
     board: str
     medium: str
@@ -435,15 +437,16 @@ class GSEBSyllabus:
     chapters: tuple[SyllabusChapter, ...]
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "GSEBSyllabus":
-        if clean_student_text(payload.get("board"), max_length=20).upper() != "GSEB":
-            raise Phase11Error("This importer accepts only GSEB syllabus documents.")
+    def from_dict(cls, payload: Mapping[str, Any]) -> "BoardSyllabus":
+        raw_board = clean_student_text(payload.get("board"), max_length=20).upper()
+        if raw_board not in SUPPORTED_BOARDS:
+            raise Phase11Error(f"Unsupported board: {raw_board}. Supported boards: GSEB, CBSE.")
         try:
             standard = int(payload.get("standard"))
         except (TypeError, ValueError) as exc:
-            raise Phase11Error("Syllabus standard must be a number from 1 to 12.") from exc
+            raise Phase11Error("Syllabus standard must be a number from 1 to 10.") from exc
         if standard not in SUPPORTED_STANDARDS:
-            raise Phase11Error("Syllabus standard must be between 1 and 12.")
+            raise Phase11Error("Syllabus standard must be between 1 and 10.")
         medium = clean_student_text(payload.get("medium"), max_length=40)
         subject = clean_student_text(payload.get("subject"), max_length=120)
         textbook = clean_student_text(payload.get("textbook"), max_length=200)
@@ -455,7 +458,7 @@ class GSEBSyllabus:
         )
         syllabus = cls(
             schema_version=int(payload.get("schema_version", 1)),
-            board="GSEB",
+            board=raw_board,
             medium=medium,
             standard=standard,
             subject=subject,
@@ -489,7 +492,7 @@ class GSEBSyllabus:
 
     @property
     def key(self) -> str:
-        return f"gseb-{self.medium.lower()}-{self.standard}-{safe_filename(self.subject).lower()}"
+        return f"{self.board.lower()}-{self.medium.lower()}-{self.standard}-{safe_filename(self.subject).lower()}"
 
     def coverage(self) -> dict[str, Any]:
         topics = [topic for chapter in self.chapters for topic in chapter.topics]
@@ -502,6 +505,7 @@ class GSEBSyllabus:
         official_topics = [topic for topic in content_topics if topic.content_origin == "official"]
         total = len(topics)
         return {
+            "board": self.board,
             "chapters": len(self.chapters),
             "topics": total,
             "content_topics": len(content_topics),
@@ -513,47 +517,50 @@ class GSEBSyllabus:
         }
 
 
-class GSEBSyllabusRepository:
+class SyllabusRepository:
     def __init__(self, root: str | Path):
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
 
-    def import_json(self, path: str | Path) -> GSEBSyllabus:
+    def import_json(self, path: str | Path) -> BoardSyllabus:
         source_path = Path(path)
         try:
             payload = json.loads(source_path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             raise Phase11Error(f"Unable to read syllabus JSON: {exc}") from exc
-        syllabus = GSEBSyllabus.from_dict(payload)
+        syllabus = BoardSyllabus.from_dict(payload)
         target = self.root / f"{syllabus.key}.json"
         target.write_text(
             json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8"
         )
         return syllabus
 
-    def install_payload(self, payload: Mapping[str, Any]) -> GSEBSyllabus:
-        syllabus = GSEBSyllabus.from_dict(payload)
+    def install_payload(self, payload: Mapping[str, Any]) -> BoardSyllabus:
+        syllabus = BoardSyllabus.from_dict(payload)
         target = self.root / f"{syllabus.key}.json"
         target.write_text(
             json.dumps(dict(payload), indent=2, ensure_ascii=False), encoding="utf-8"
         )
         return syllabus
 
-    def all(self) -> list[GSEBSyllabus]:
-        results: list[GSEBSyllabus] = []
-        for path in sorted(self.root.glob("gseb-*.json")):
+    def all(self, board: str | None = None) -> list[BoardSyllabus]:
+        results: list[BoardSyllabus] = []
+        for path in sorted(self.root.glob("*.json")):
             try:
-                results.append(GSEBSyllabus.from_dict(json.loads(path.read_text(encoding="utf-8"))))
+                syllabus = BoardSyllabus.from_dict(json.loads(path.read_text(encoding="utf-8")))
+                if board is None or syllabus.board.casefold() == board.casefold():
+                    results.append(syllabus)
             except (OSError, json.JSONDecodeError, Phase11Error):
                 continue
         return results
 
     def find(
-        self, *, medium: str, standard: int, subject: str
-    ) -> GSEBSyllabus | None:
-        needle = (medium.casefold(), int(standard), subject.casefold())
-        for syllabus in self.all():
+        self, *, board: str = "GSEB", medium: str, standard: int, subject: str
+    ) -> BoardSyllabus | None:
+        needle = (board.casefold(), medium.casefold(), int(standard), subject.casefold())
+        for syllabus in self.all(board=board):
             if (
+                syllabus.board.casefold(),
                 syllabus.medium.casefold(),
                 syllabus.standard,
                 syllabus.subject.casefold(),
@@ -561,8 +568,8 @@ class GSEBSyllabusRepository:
                 return syllabus
         return None
 
-    def overall_coverage(self) -> dict[str, Any]:
-        syllabi = self.all()
+    def overall_coverage(self, board: str | None = None) -> dict[str, Any]:
+        syllabi = self.all(board=board)
         topics = sum(item.coverage()["topics"] for item in syllabi)
         content = sum(item.coverage()["content_topics"] for item in syllabi)
         official = sum(item.coverage()["official_topics"] for item in syllabi)
@@ -574,6 +581,10 @@ class GSEBSyllabusRepository:
             "coverage_percent": round((content / topics) * 100, 2) if topics else 0.0,
             "official_coverage_percent": round((official / topics) * 100, 2) if topics else 0.0,
         }
+
+
+GSEBSyllabus = BoardSyllabus
+GSEBSyllabusRepository = SyllabusRepository
 
 
 SUBJECT_ALIASES = {

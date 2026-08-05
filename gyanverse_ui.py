@@ -52,7 +52,7 @@ NAV_ITEMS = (
     ("homework", "Homework", ft.Icons.ASSIGNMENT_OUTLINED, ft.Icons.ASSIGNMENT),
     ("revision", "Revision", ft.Icons.REPLAY, ft.Icons.REPLAY),
     ("progress", "Progress", ft.Icons.INSIGHTS_OUTLINED, ft.Icons.INSIGHTS),
-    ("syllabus", "GSEB Coverage", ft.Icons.MENU_BOOK_OUTLINED, ft.Icons.MENU_BOOK),
+    ("syllabus", "Syllabus Coverage", ft.Icons.MENU_BOOK_OUTLINED, ft.Icons.MENU_BOOK),
     ("settings", "Settings", ft.Icons.SETTINGS_OUTLINED, ft.Icons.SETTINGS),
 )
 
@@ -248,8 +248,8 @@ def main(page: ft.Page) -> None:
         name_field = ft.TextField(label="Student name", value=context.name)
         board_field = ft.Dropdown(
             label="Board",
-            value=context.board if context.board in {"GSEB", "CBSE", "ICSE", "Other"} else "Other",
-            options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE", "ICSE", "Other")],
+            value=context.board if context.board in {"GSEB", "CBSE"} else "GSEB",
+            options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE")],
         )
         medium_field = ft.Dropdown(
             label="Medium",
@@ -258,8 +258,8 @@ def main(page: ft.Page) -> None:
         )
         standard_field = ft.Dropdown(
             label="Standard",
-            value=str(context.standard),
-            options=[ft.dropdown.Option(str(item)) for item in range(1, 13)],
+            value=str(context.standard) if 1 <= context.standard <= 10 else "7",
+            options=[ft.dropdown.Option(str(item)) for item in range(1, 11)],
         )
         language_field = ft.Dropdown(
             label="Tutor language",
@@ -494,7 +494,7 @@ def main(page: ft.Page) -> None:
         async def import_syllabus(_: object = None) -> None:
             try:
                 files = await ft.FilePicker().pick_files(
-                    dialog_title="Import validated GSEB syllabus JSON",
+                    dialog_title="Import validated GSEB/CBSE syllabus JSON",
                     allow_multiple=False,
                     with_data=True,
                     file_type=ft.FilePickerFileType.CUSTOM,
@@ -513,7 +513,7 @@ def main(page: ft.Page) -> None:
                 payload = json.loads(raw.decode("utf-8-sig"))
                 syllabus = syllabus_repo.install_payload(payload)
                 notify(
-                    f"Installed: {syllabus.medium} Std {syllabus.standard} {syllabus.subject}"
+                    f"Installed: {syllabus.board} {syllabus.medium} Std {syllabus.standard} {syllabus.subject}"
                 )
                 show_view("syllabus")
             except (UnicodeDecodeError, json.JSONDecodeError, Phase11Error) as exc:
@@ -527,7 +527,7 @@ def main(page: ft.Page) -> None:
                 surface(
                     ft.Column(
                         [
-                            ft.Text(f"{syllabus.medium} • Std {syllabus.standard} • {syllabus.subject}", weight=ft.FontWeight.BOLD),
+                            ft.Text(f"{syllabus.board} • {syllabus.medium} • Std {syllabus.standard} • {syllabus.subject}", weight=ft.FontWeight.BOLD),
                             ft.Text(f"{syllabus.textbook} • Edition {syllabus.source.edition}", size=11, color=COLOR_MUTED),
                             ft.Text(
                                 f"Structured topics: {item_coverage['topics']} • Content coverage: {item_coverage['coverage_percent']}% • Official coverage: {item_coverage['official_coverage_percent']}%",
@@ -542,13 +542,13 @@ def main(page: ft.Page) -> None:
             installed_controls.append(
                 surface(
                     ft.Text(
-                        "The validated GSEB schema/importer is ready, but no official textbook dataset is installed yet. The app will not pretend that AI-generated material is official.",
+                        "The validated syllabus schema/importer is ready, but no official textbook dataset is installed yet. The app will not pretend that AI-generated material is official.",
                         color=COLOR_MUTED,
                     )
                 )
             )
         return page_panel(
-            "GSEB Syllabus Coverage",
+            "Syllabus Coverage",
             "Official sources and AI-generated practice remain clearly separated.",
             ft.Column(
                 [
@@ -560,7 +560,7 @@ def main(page: ft.Page) -> None:
                                 on_click=import_syllabus,
                             ),
                             ft.Text(
-                                "Only GSEB packages with source, edition and content-origin metadata are accepted.",
+                                "Only GSEB and CBSE packages with source, edition and content-origin metadata are accepted.",
                                 size=10,
                                 color=COLOR_MUTED,
                                 expand=True,

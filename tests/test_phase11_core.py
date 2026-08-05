@@ -426,5 +426,93 @@ class Phase11TutorResponseAndFormatterTests(unittest.TestCase):
         self.assertEqual(len(print_calls), 0, "No print() calls should remain in production AI service")
 
 
+class Phase11CanonicalScopeTests(unittest.TestCase):
+    def test_accepted_and_rejected_boards_and_standards(self):
+        for board in ("GSEB", "CBSE"):
+            for std in range(1, 11):
+                ctx = StudentLearningContext(board=board, standard=std).validate()
+                self.assertEqual(ctx.board, board)
+                self.assertEqual(ctx.standard, std)
+
+        for invalid_board in ("ICSE", "Other", "StateBoard", "invalid"):
+            with self.assertRaises(Phase11Error):
+                StudentLearningContext(board=invalid_board).validate()
+
+        for invalid_std in (0, 11, 12, -1, 99):
+            with self.assertRaises(Phase11Error):
+                StudentLearningContext(standard=invalid_std).validate()
+
+    def test_invalid_stored_context_falls_back_safely(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "student_context.json"
+            bad_payload = {
+                "student_id": "s1",
+                "name": "Test",
+                "board": "ICSE",
+                "medium": "English",
+                "standard": 11,
+                "preferred_language": "English",
+                "current_subject": "Math",
+                "current_chapter": "",
+                "current_topic": "",
+                "learning_mode": "explain",
+                "onboarding_complete": True,
+                "updated_at": "2026-08-06T00:00:00Z"
+            }
+            path.write_text(json.dumps(bad_payload), encoding="utf-8")
+            loaded = LearningContextStore(path).load()
+            self.assertFalse(loaded.onboarding_complete)
+            self.assertEqual(loaded.board, "GSEB")
+            self.assertEqual(loaded.standard, 7)
+            self.assertTrue(path.with_suffix(".json.invalid").exists())
+
+    def test_board_neutral_syllabus_and_repository(self):
+        from phase11_core import BoardSyllabus, SyllabusRepository, GSEBSyllabus, GSEBSyllabusRepository
+        self.assertIs(GSEBSyllabus, BoardSyllabus)
+        self.assertIs(GSEBSyllabusRepository, SyllabusRepository)
+
+        gseb_payload = sample_syllabus(official=True, origin="official", explanation="Official GSEB content")
+        gseb_payload["board"] = "GSEB"
+        gseb_syllabus = BoardSyllabus.from_dict(gseb_payload)
+        self.assertEqual(gseb_syllabus.board, "GSEB")
+        self.assertEqual(gseb_syllabus.standard, 7)
+
+        cbse_payload = sample_syllabus(official=True, origin="official", explanation="Official CBSE content")
+        cbse_payload["board"] = "CBSE"
+        cbse_syllabus = BoardSyllabus.from_dict(cbse_payload)
+        self.assertEqual(cbse_syllabus.board, "CBSE")
+        self.assertEqual(cbse_syllabus.standard, 7)
+
+        invalid_board_payload = sample_syllabus()
+        invalid_board_payload["board"] = "ICSE"
+        with self.assertRaises(Phase11Error):
+            BoardSyllabus.from_dict(invalid_board_payload)
+
+        invalid_std_payload = sample_syllabus()
+        invalid_std_payload["standard"] = 11
+        with self.assertRaises(Phase11Error):
+            BoardSyllabus.from_dict(invalid_std_payload)
+
+        with tempfile.TemporaryDirectory() as directory:
+            repo = SyllabusRepository(directory)
+            repo.install_payload(gseb_payload)
+            repo.install_payload(cbse_payload)
+
+            self.assertEqual(len(repo.all()), 2)
+            self.assertEqual(len(repo.all(board="GSEB")), 1)
+            self.assertEqual(len(repo.all(board="CBSE")), 1)
+            self.assertEqual(repo.find(board="CBSE", medium="gujarati", standard=7, subject="mathematics"), cbse_syllabus)
+
+    def test_validate_script_contracts(self):
+        script_path = Path(__file__).resolve().parents[1] / "scripts" / "validate_phase11.ps1"
+        content = script_path.read_text(encoding="utf-8")
+
+        self.assertIn('[string]$ProjectRoot = ""', content)
+        self.assertIn('Split-Path -Parent $PSScriptRoot', content)
+        self.assertIn('DYNAMIC_TEST_COUNT', content)
+        self.assertNotIn('Expected prepared total: 215 tests.', content)
+        self.assertIn('Windows EXE, Android APK, and physical-device acceptance remain pending.', content)
+
+
 if __name__ == "__main__":
     unittest.main()
