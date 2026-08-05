@@ -1,3 +1,4 @@
+import ast
 import io
 import json
 import tempfile
@@ -15,10 +16,12 @@ from phase11_core import (
     HomeworkAttachmentStore,
     LearningContextStore,
     LearningMode,
-    offline_tutor_response,
     Phase11Error,
     StudentLearningContext,
+    build_tutor_system_instruction,
     detect_context_from_message,
+    format_tutor_response,
+    offline_tutor_response,
 )
 
 
@@ -354,6 +357,73 @@ class Phase11AIContractTests(unittest.TestCase):
             self.assertEqual(audio.getnchannels(), 1)
             self.assertEqual(audio.getframerate(), 24000)
             self.assertEqual(audio.getsampwidth(), 2)
+
+
+class Phase11TutorResponseAndFormatterTests(unittest.TestCase):
+    def test_tutor_system_instruction_does_not_fabricate_memory_or_quizzes(self):
+        context = StudentLearningContext().validate()
+        instruction = build_tutor_system_instruction(context)
+        self.assertIn("Do NOT mention previous sessions, memory", instruction)
+        self.assertIn("Never ask 'Let's check your understanding' by default", instruction)
+        self.assertIn("Never generate quizzes or follow-up questions unless", instruction)
+
+    def test_formatter_removes_unnecessary_leading_filler(self):
+        result = format_tutor_response("Hello! Here is the explanation.", student_message="Explain force")
+        self.assertEqual(result, "Here is the explanation.")
+
+        result_greeted = format_tutor_response("Hello! Here is the explanation.", student_message="Hi")
+        self.assertEqual(result_greeted, "Hello! Here is the explanation.")
+
+    def test_formatter_preserves_meaningful_multiline_steps(self):
+        multiline = "Step 1: Identify given values.\nStep 2: Apply formula.\n\nFinal result = 10."
+        result = format_tutor_response(multiline, student_message="Solve this")
+        self.assertEqual(result, multiline)
+
+    def test_formatter_preserves_gujarati_and_hindi_unicode(self):
+        gu_text = "આ ગણિતનો પ્રશ્ન છે:\n1. પ્રથમ પગલું\n2. બીજું પગલું"
+        hi_text = "यह गणित का प्रश्न है:\n1. पहला कदम\n2. दूसरा कदम"
+        self.assertEqual(format_tutor_response(gu_text, student_message="ઉકેલો"), gu_text)
+        self.assertEqual(format_tutor_response(hi_text, student_message="हल करो"), hi_text)
+
+    def test_formatter_does_not_remove_mathematical_meaning(self):
+        math_text = "50 + 20 = 70\nx² + y² = z²\np / q, q ≠ 0"
+        self.assertEqual(format_tutor_response(math_text, student_message="Solve"), math_text)
+
+    def test_offline_service_applies_formatting(self):
+        service = GyanVerseAIService(api_key="")
+        context = StudentLearningContext().validate()
+        answer = service.offline_answer(message="Explain photosynthesis", context=context)
+        self.assertTrue(len(answer) > 0)
+        self.assertIn("Photosynthesis is", answer)
+
+    def test_online_service_applies_formatting_using_mocked_provider(self):
+        class FakeResponse:
+            text = "Hello! Step 1: Plants convert light.\nStep 2: Oxygen is released."
+
+        class FakeModels:
+            def generate_content(self, **_):
+                return FakeResponse()
+
+        class FakeClient:
+            models = FakeModels()
+
+        context = StudentLearningContext().validate()
+        with patch.object(phase11_ai, "types", object()):
+            service = GyanVerseAIService(api_key="")
+            service._client = FakeClient()
+            answer = service.ask(message="Explain photosynthesis", context=context)
+
+        self.assertNotIn("Hello!", answer)
+        self.assertIn("Step 1: Plants convert light.\nStep 2: Oxygen is released.", answer)
+
+    def test_no_temporary_debug_prints_remain_in_ai_service(self):
+        ai_source = Path(phase11_ai.__file__).read_text(encoding="utf-8")
+        parsed = ast.parse(ai_source)
+        print_calls = [
+            node for node in ast.walk(parsed)
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "print"
+        ]
+        self.assertEqual(len(print_calls), 0, "No print() calls should remain in production AI service")
 
 
 if __name__ == "__main__":

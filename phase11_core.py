@@ -641,19 +641,47 @@ def detect_context_from_message(
 
 def build_tutor_system_instruction(context: StudentLearningContext) -> str:
     mode_guidance = {
-        LearningMode.EXPLAIN.value: "Explain the idea clearly with a small example, then check understanding.",
-        LearningMode.HOMEWORK.value: "Review the student's attempt and give hints before revealing a final answer.",
-        LearningMode.REVISION.value: "Use active recall, short questions and spaced-revision style prompts.",
-        LearningMode.EXAM.value: "Teach the board-appropriate answer structure, marks logic and concise presentation.",
+        LearningMode.EXPLAIN.value:
+            "Explain clearly. Give one simple example only if it helps.",
+        LearningMode.HOMEWORK.value:
+            "Help solve the homework. If the student asks for the final answer, give it with a brief explanation.",
+        LearningMode.REVISION.value:
+            "Give a concise revision answer. Ask one revision question only if the student requests practice.",
+        LearningMode.EXAM.value:
+            "Write a board-exam style answer that is clear, well structured and concise.",
     }[context.learning_mode]
+
     return (
-        "You are GyanVerse Academy, a strict but friendly personal tutor. "
-        "Never blindly agree. Verify the student's logic and protect their dignity. "
-        "Use hint-first teaching. Do not claim textbook facts are official unless validated syllabus metadata is supplied. "
+        "You are GyanVerse, an AI tutor for school students (Standards 1-10). "
+
+        "Your highest priority is answering the student's actual question correctly. "
+
+        "Do NOT invent conversation. "
+        "Do NOT greet unless the student greeted first. "
+        "Do NOT say 'Welcome back'. "
+        "Do NOT mention previous sessions, memory, records, learning history, or assumed subjects. "
+        "Do NOT say things like 'I noticed you were studying Mathematics'. "
+
+        "Answer immediately. Do not write introductions or motivational paragraphs. "
+
+        "Keep answers concise unless the student explicitly asks for a detailed explanation. "
+        "Normally stay under about 200 words. "
+
+        "Use simple school-level language. "
+        "Avoid unnecessary markdown. "
+        "Avoid LaTeX unless the student explicitly requests mathematical notation. "
+
+        "Never ask 'Let's check your understanding' by default. "
+        "Never generate quizzes or follow-up questions unless the student asks for practice, quiz, MCQs or test questions. "
+
+        "If the student's question is ambiguous, ask one short clarification question instead of guessing. "
+
         f"Reply in {context.preferred_language} unless the student clearly uses another supported language. "
-        f"Student: {context.name}; board {context.board}; medium {context.medium}; standard {context.standard}. "
-        f"Current subject: {context.current_subject or 'unknown'}; chapter: {context.current_chapter or 'unknown'}; "
-        f"topic: {context.current_topic or 'unknown'}. Mode: {context.learning_mode}. {mode_guidance}"
+
+        f"Board: {context.board}; Medium: {context.medium}; Standard: {context.standard}. "
+
+        f"Current learning mode: {context.learning_mode}. "
+        f"{mode_guidance}"
     )
 
 
@@ -805,3 +833,52 @@ def attachment_prompt(records: Sequence[AttachmentRecord]) -> str:
         "Highlight mistakes respectfully and give hints before the final answer."
     )
     return "\n".join(lines)
+
+
+def format_tutor_response(
+    text: str,
+    *,
+    student_message: str = "",
+) -> str:
+    """
+    Post-processes tutor responses without changing their meaning.
+    Safe for both Gemini and Offline tutor.
+    """
+    if not text:
+        return ""
+
+    text = str(text or "")[:20000]
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+
+    greeted = bool(
+        re.match(
+            r"^\s*(hi|hello|hey|namaste|good morning|good afternoon|good evening)\b",
+            student_message,
+            flags=re.IGNORECASE,
+        )
+    )
+
+    if not greeted:
+        text = re.sub(
+            r"^(hello|hi|hey|certainly|sure|absolutely|of course)[,!\.\s]*",
+            "",
+            text,
+            flags=re.IGNORECASE,
+        ).strip()
+
+    text = re.sub(
+        r"\b(As an AI language model|As an AI|I'm an AI|I am an AI)\b",
+        "",
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    text = text.replace("**", "")
+    text = text.replace("__", "")
+    text = text.replace("```", "")
+
+    lines = [line.rstrip() for line in text.split("\n")]
+    text = "\n".join(lines)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+
+    return text.strip()

@@ -192,6 +192,11 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn("C:\\Ai_Tutor_Buddy", runtime)
         self.assertNotIn("E:\\Ai_Tutor_Buddy", runtime)
 
+    def test_send_flow_duplicate_submission_protection_for_online_and_offline(self):
+        self.assertIn('set_busy(True, "Thinking...")', UI)
+        self.assertIn('set_busy(True, "Using local tutor...")', UI)
+        self.assertIn('finally:\n                busy.visible = False', UI)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -875,7 +875,12 @@ def main(page: ft.Page) -> None:
                 add_message("student", text or "Please review my attached homework.")
                 composer.value = ""
                 update_compact_tutor_layout()
-                set_busy(True, "Tutor is thinking...")
+
+                if ai_service.configured:
+                    set_busy(True, "Thinking...")
+                else:
+                    set_busy(True, "Using local tutor...")
+
                 try:
                     answer = await asyncio.wait_for(
                         asyncio.to_thread(
@@ -905,8 +910,8 @@ def main(page: ft.Page) -> None:
                 status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}"
                 busy.visible = False
                 send_button.disabled = False
-                mic_button.disabled = False
                 page.update()
+
                 try:
                     await asyncio.wait_for(
                         asyncio.to_thread(

@@ -27,9 +27,9 @@ from phase11_core import (
     attachment_prompt,
     build_tutor_system_instruction,
     clean_student_text,
+    format_tutor_response,
     offline_tutor_response,
 )
-
 
 try:
     import speech_recognition as sr
@@ -246,7 +246,15 @@ class GyanVerseAIService:
     ) -> str:
         self.last_backend = "offline-fallback" if reason else "offline"
         self.last_error = clean_student_text(reason, max_length=500)
-        answer = offline_tutor_response(message, context, attachments)
+        raw_answer = offline_tutor_response(
+            message,
+            context,
+            attachments,
+        )
+        answer = format_tutor_response(
+            raw_answer,
+            student_message=message,
+        )
         self._history.append((message or "[homework attachment]", answer))
         self._history = self._history[-self.max_history_turns :]
         return answer
@@ -299,7 +307,11 @@ class GyanVerseAIService:
                 model=self.model_name,
                 contents=contents,
             )
-            answer = clean_student_text(getattr(response, "text", ""), max_length=20_000)
+            raw_text = str(getattr(response, "text", "") or "")
+            answer = format_tutor_response(
+                raw_text,
+                student_message=message,
+            )
             if not answer:
                 raise AIServiceError("AI service returned an empty answer.")
         except Exception as exc:
@@ -356,6 +368,8 @@ class GyanVerseAIService:
                 f"Likely language: {language_hint}. Return plain editable text only."
             )
             try:
+                start = time.perf_counter()
+
                 response = self._client.models.generate_content(
                     model=self.model_name,
                     contents=[
