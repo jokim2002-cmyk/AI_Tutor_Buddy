@@ -14,6 +14,7 @@ from typing import Callable, Sequence
 
 import flet as ft
 
+from conversation_store import ConversationStore, DeviceIdentityStore
 from gyanverse_ui_helpers import mode_label, safe_text
 from phase11_ai import AIServiceError, GyanVerseAIService
 from phase11_core import (
@@ -99,11 +100,24 @@ def main(page: ft.Page) -> None:
 
     context_store = LearningContextStore(DATA_DIR / "student_context.json")
     context = context_store.load()
+    device_identity = DeviceIdentityStore(DATA_DIR / "device_identity.json").load_or_create()
+    local_owner_id = device_identity.local_owner_id
+    conversation_store = ConversationStore(
+        DATA_DIR / "conversations.db", device_id=device_identity.device_id
+    )
+    active_conversation = conversation_store.get_or_create_active(
+        owner_id=local_owner_id,
+        student_id=context.student_id,
+        board=context.board,
+        standard=context.standard,
+        subject=context.current_subject,
+        chapter=context.current_chapter,
+    )
     attachment_store = HomeworkAttachmentStore(DATA_DIR / "homework_attachments")
     syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
     engine = TutorEngine(db_path=DATA_DIR / "ai_tutor.db")
     ai_service = GyanVerseAIService()
-    session_id = f"session-{uuid.uuid4().hex[:10]}"
+    session_id = active_conversation.conversation_id
 
     engine.ensure_student(
         student_id=context.student_id,
@@ -627,7 +641,7 @@ def main(page: ft.Page) -> None:
         )
 
     def build_tutor() -> ft.Control:
-        nonlocal selected_attachments
+        nonlocal selected_attachments, latest_tutor_answer
         # Stable desktop layout: use a fixed-height scrollable Column.
         # The earlier ListView clipped dynamic-height chat bubbles at its
         # viewport edge on Windows. A non-expanded Column avoids that render
@@ -885,8 +899,48 @@ def main(page: ft.Page) -> None:
 
             return controls_row, voice_status_control
 
-        def add_message(role: str, text: str, *, error: bool = False) -> None:
+        def persist_message(
+            role: str,
+            text: str,
+            *,
+            message_id: str | None = None,
+            backend: str = "",
+        ):
+            return conversation_store.append_message(
+                conversation_id=active_conversation.conversation_id,
+                owner_id=local_owner_id,
+                student_id=context.student_id,
+                role=role,
+                text=text,
+                language=context.preferred_language,
+                board=context.board,
+                standard=context.standard,
+                subject=context.current_subject,
+                chapter=context.current_chapter,
+                backend=backend,
+                message_id=message_id,
+            )
+
+        def add_message(
+            role: str,
+            text: str,
+            *,
+            error: bool = False,
+            persist: bool = True,
+            message_id: str | None = None,
+            backend: str = "",
+        ) -> str | None:
             is_student = role == "student"
+            saved_message = None
+            if persist and not error and role in {"student", "tutor"}:
+                saved_message = persist_message(
+                    role, text, message_id=message_id, backend=backend
+                )
+            resolved_message_id = (
+                saved_message.message_id
+                if saved_message is not None
+                else message_id or f"msg_{time.time_ns()}"
+            )
             message_controls: list[ft.Control] = [
                 ft.Text(
                     "You" if is_student else "GyanVerse Tutor",
@@ -897,8 +951,7 @@ def main(page: ft.Page) -> None:
                 ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=14),
             ]
             if not is_student and not error:
-                msg_id = f"msg_{time.time_ns()}"
-                controls_row, _ = create_tutor_voice_controls(text, msg_id)
+                controls_row, _ = create_tutor_voice_controls(text, resolved_message_id)
                 message_controls.append(controls_row)
 
             bubble = ft.Container(
@@ -924,6 +977,7 @@ def main(page: ft.Page) -> None:
                     alignment=ft.MainAxisAlignment.END if is_student else ft.MainAxisAlignment.START,
                 ),
             )
+            return resolved_message_id
 
 
         def estimated_composer_lines() -> int:
@@ -1128,7 +1182,12 @@ def main(page: ft.Page) -> None:
                 latest_tutor_answer = answer
                 tutor_text_control.value = answer
 
-                msg_id = f"msg_{time.time_ns()}"
+                saved_tutor_message = persist_message(
+                    "tutor",
+                    answer,
+                    backend=ai_service.status_label,
+                )
+                msg_id = saved_tutor_message.message_id
                 if "could not respond right now" in answer.lower():
                     def retry_question(_: object = None, orig_msg: str = text) -> None:
                         composer.value = orig_msg
@@ -1386,13 +1445,42 @@ def main(page: ft.Page) -> None:
         mic_button.on_click = toggle_recording
         speak_button.on_click = speak_last
 
-        add_message(
-            "tutor",
-            (
-                f"Namaste {context.name}. Your current learning profile is {context.board} • {context.medium} • Standard {context.standard}. "
-                "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
-            ),
+        stored_messages = conversation_store.list_messages(
+            conversation_id=active_conversation.conversation_id,
+            owner_id=local_owner_id,
+            limit=500,
         )
+        restored_turns: list[tuple[str, str]] = []
+        pending_student_text = ""
+        for stored_message in stored_messages:
+            add_message(
+                stored_message.role,
+                stored_message.text,
+                persist=False,
+                message_id=stored_message.message_id,
+                backend=stored_message.backend,
+            )
+            if stored_message.role == "student":
+                pending_student_text = stored_message.text
+            elif stored_message.role == "tutor":
+                latest_tutor_answer = stored_message.text
+                if pending_student_text:
+                    restored_turns.append((pending_student_text, stored_message.text))
+                    pending_student_text = ""
+        ai_service.restore_session_history(restored_turns)
+
+        if stored_messages:
+            status_text.value = f"Restored {len(stored_messages)} local chat message(s)"
+            speak_button.disabled = not bool(latest_tutor_answer)
+        else:
+            add_message(
+                "tutor",
+                (
+                    f"Namaste {context.name}. Your current learning profile is {context.board} • {context.medium} • Standard {context.standard}. "
+                    "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
+                ),
+                persist=False,
+            )
 
         composer_shell = ft.Container(
             height=52,

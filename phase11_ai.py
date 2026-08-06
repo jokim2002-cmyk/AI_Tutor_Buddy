@@ -413,6 +413,16 @@ class GyanVerseAIService:
         self.last_metrics = TutorLatencyMetrics()
         self.last_tts_metrics = TTSLatencyMetrics()
 
+    def restore_session_history(self, turns: Sequence[tuple[str, str]]) -> None:
+        """Restore only bounded student/tutor pairs from trusted local persistence."""
+        restored: list[tuple[str, str]] = []
+        for student_text, tutor_text in turns:
+            student = clean_student_text(student_text, max_length=8_000)
+            tutor = str(tutor_text or "").strip()[:20_000]
+            if student and tutor:
+                restored.append((student, tutor))
+        self._history = restored[-self.max_history_turns :]
+
     def defer_online_after_failure(self, reason: str) -> None:
         self._consecutive_failures += 1
         retry_delay = min(30, 2 ** min(self._consecutive_failures, 5))

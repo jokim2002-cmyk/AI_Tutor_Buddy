@@ -27,3 +27,21 @@ Base checkpoint: `master / 7c04f78`
 - Existing TutorEngine and local database behavior preserved.
 - No official GSEB/CBSE textbook content is invented or bundled.
 - Local databases, student files, `.env`, keys, logs, and generated cache files remain untracked.
+
+## Phase 2A — Conversation Persistence and Cloud-Sync Foundation
+
+Implemented in source, pending live cloud acceptance:
+
+- Local SQLite conversations and messages survive app restarts.
+- A stable local device owner keeps offline data isolated before sign-in.
+- Recent stored student/tutor turns restore the bounded tutor session context.
+- Every local write creates a durable outbox event for later cloud upload.
+- Firebase Authentication and Firestore REST adapters are present with no embedded secrets.
+- Firestore rules template isolates every user's data under their Firebase UID.
+
+Still pending:
+
+- Visible Google sign-in/sign-out UI and encrypted token persistence.
+- Firebase project configuration and deployed security rules.
+- Real upload, pull, conflict resolution, delete propagation and two-device acceptance.
+- Attachment/audio cloud storage. The first sync scope is chat text and metadata only.
