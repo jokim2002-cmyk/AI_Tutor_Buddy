@@ -16,12 +16,17 @@ service cloud.firestore {
 
       match /conversations/{conversationId} {
         allow read: if owns(uid);
-        allow create, update: if owns(uid) && request.resource.data.ownerId == uid;
+        allow create, update: if owns(uid)
+          && request.resource.data.ownerId == uid
+          && request.resource.data.conversation_id == conversationId;
         allow delete: if owns(uid);
 
         match /messages/{messageId} {
           allow read: if owns(uid);
-          allow create, update: if owns(uid) && request.resource.data.ownerId == uid;
+          allow create, update: if owns(uid)
+            && request.resource.data.ownerId == uid
+            && request.resource.data.message_id == messageId
+            && request.resource.data.conversation_id == conversationId;
           allow delete: if owns(uid);
         }
       }

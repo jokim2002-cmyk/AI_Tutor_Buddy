@@ -13,7 +13,16 @@ from pathlib import Path
 from typing import Callable, Sequence
 
 import flet as ft
+from flet.auth.providers import GoogleOAuthProvider
 
+from cloud_auth_session import FirebaseSessionManager, OAuthTokenStore
+from cloud_sync import (
+    CloudSyncError,
+    ConversationSyncService,
+    FirebaseAuthREST,
+    FirebaseConfig,
+    FirestoreREST,
+)
 from conversation_store import ConversationStore, DeviceIdentityStore
 from gyanverse_ui_helpers import mode_label, safe_text
 from phase11_ai import AIServiceError, GyanVerseAIService
@@ -102,6 +111,7 @@ def main(page: ft.Page) -> None:
     context = context_store.load()
     device_identity = DeviceIdentityStore(DATA_DIR / "device_identity.json").load_or_create()
     local_owner_id = device_identity.local_owner_id
+    current_owner_id = local_owner_id
     conversation_store = ConversationStore(
         DATA_DIR / "conversations.db", device_id=device_identity.device_id
     )
@@ -119,6 +129,22 @@ def main(page: ft.Page) -> None:
     ai_service = GyanVerseAIService()
     session_id = active_conversation.conversation_id
 
+    firebase_config = FirebaseConfig.from_env()
+    firebase_auth = FirebaseAuthREST(firebase_config)
+    firebase_sessions = FirebaseSessionManager(firebase_config, auth=firebase_auth)
+    firestore = FirestoreREST(firebase_config)
+    cloud_sync_service = ConversationSyncService(conversation_store, firestore)
+    oauth_token_store = OAuthTokenStore(DATA_DIR / "google_oauth_token.enc")
+    google_provider = (
+        GoogleOAuthProvider(
+            client_id=firebase_config.google_client_id,
+            client_secret=firebase_config.google_client_secret,
+            redirect_url=firebase_config.oauth_redirect_url,
+        )
+        if firebase_config.live_sync_ready
+        else None
+    )
+
     engine.ensure_student(
         student_id=context.student_id,
         name=context.name,
@@ -133,12 +159,163 @@ def main(page: ft.Page) -> None:
     latest_tutor_answer = ""
     active_audio = None
     selected_attachments = []
+    cloud_sync_busy = False
 
     title_text = ft.Text("Tutor", size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
     context_text = ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1)
     status_text = ft.Text("Ready", size=11, color=COLOR_MUTED)
+    cloud_status_text = ft.Text("Cloud: signed out", size=10, color=COLOR_MUTED)
+    account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
     body = ft.Container(expand=True, padding=0, bgcolor=COLOR_BACKGROUND)
     menu_button = ft.IconButton(icon=ft.Icons.MENU, tooltip="Open menu")
+
+    def activate_owner(owner_id: str) -> None:
+        nonlocal current_owner_id, active_conversation, session_id
+        current_owner_id = str(owner_id or local_owner_id)
+        active_conversation = conversation_store.get_or_create_active(
+            owner_id=current_owner_id,
+            student_id=context.student_id,
+            board=context.board,
+            standard=context.standard,
+            subject=context.current_subject,
+            chapter=context.current_chapter,
+        )
+        session_id = active_conversation.conversation_id
+
+    def refresh_cloud_status(message: str | None = None, *, error: bool = False) -> None:
+        session = firebase_sessions.session
+        if message is not None:
+            label = message
+        elif session is not None:
+            identity = session.display_name or session.email or "Google account"
+            pending = conversation_store.pending_outbox_count(owner_id=session.uid)
+            label = f"Cloud: {identity} • {pending} pending" if pending else f"Cloud: {identity} • synced"
+        elif not firebase_config.live_sync_ready:
+            label = "Cloud: setup required"
+        else:
+            label = "Cloud: signed out"
+        cloud_status_text.value = label
+        cloud_status_text.color = COLOR_ERROR if error else COLOR_MUTED
+        account_button.icon = (
+            ft.Icons.CLOUD_DONE if session is not None else ft.Icons.ACCOUNT_CIRCLE_OUTLINED
+        )
+        account_button.tooltip = label
+
+    async def sync_cloud_now(*, show_result: bool = True, refresh_tutor: bool = True) -> None:
+        nonlocal cloud_sync_busy
+        if cloud_sync_busy:
+            return
+        if firebase_sessions.session is None:
+            if show_result:
+                notify("Sign in with Google before cloud sync.", error=True)
+            return
+        cloud_sync_busy = True
+        refresh_cloud_status("Cloud: syncing…")
+        page.update()
+        try:
+            session = await asyncio.to_thread(firebase_sessions.current)
+            pushed, pulled = await asyncio.to_thread(
+                cloud_sync_service.sync_bidirectional, session=session
+            )
+            refresh_cloud_status()
+            if refresh_tutor and (pulled.conversations_merged or pulled.messages_merged):
+                activate_owner(session.uid)
+                show_view("tutor")
+            elif show_result:
+                notify(
+                    f"Cloud sync complete: {pushed.synced} uploaded, "
+                    f"{pulled.messages_merged} messages downloaded."
+                )
+            else:
+                page.update()
+        except CloudSyncError as exc:
+            refresh_cloud_status(f"Cloud sync unavailable • {exc.category}", error=True)
+            if show_result:
+                notify("Cloud sync could not complete. Local chat remains safe.", error=True)
+            else:
+                page.update()
+        except Exception:
+            refresh_cloud_status("Cloud sync unavailable", error=True)
+            if show_result:
+                notify("Cloud sync could not complete. Local chat remains safe.", error=True)
+            else:
+                page.update()
+        finally:
+            cloud_sync_busy = False
+
+    async def cloud_sync_button_click(_: object = None) -> None:
+        await sync_cloud_now()
+
+    async def google_login_click(_: object = None) -> None:
+        if google_provider is None:
+            missing = ", ".join(firebase_config.missing_live_sync_fields())
+            notify(f"Google cloud setup is incomplete: {missing}", error=True)
+            return
+        refresh_cloud_status("Cloud: opening Google sign-in…")
+        page.update()
+        await page.login(google_provider, scope=["openid", "email", "profile"])
+
+    async def google_login_completed(event: object) -> None:
+        error = str(getattr(event, "error", "") or "").strip()
+        if error:
+            refresh_cloud_status("Cloud: Google sign-in failed", error=True)
+            notify("Google sign-in did not complete.", error=True)
+            return
+        try:
+            if page.auth is None:
+                raise RuntimeError("Flet OAuth completed without an auth context.")
+            oauth_token = await page.auth.get_token()
+            access_token = str(oauth_token.access_token or "").strip()
+            session = await asyncio.to_thread(
+                firebase_sessions.exchange_google_access_token, access_token
+            )
+            token_json = str(oauth_token.to_json() or "")
+            if oauth_token_store.enabled:
+                await asyncio.to_thread(oauth_token_store.save, token_json)
+            conversation_store.claim_local_owner(
+                local_owner_id=local_owner_id, authenticated_owner_id=session.uid
+            )
+            activate_owner(session.uid)
+            await sync_cloud_now(show_result=False, refresh_tutor=True)
+            refresh_cloud_status()
+            show_view("tutor")
+        except CloudSyncError as exc:
+            firebase_sessions.clear()
+            refresh_cloud_status(f"Cloud sign-in failed • {exc.category}", error=True)
+            notify("Google account connected, but Firebase sign-in failed.", error=True)
+        except Exception as exc:
+            firebase_sessions.clear()
+            _frames = __import__("traceback").extract_tb(exc.__traceback__)
+            _last = _frames[-1] if _frames else None
+            _location = (
+                f"{_last.filename}:{_last.lineno} in {_last.name}"
+                if _last is not None
+                else "unknown"
+            )
+            print(
+                "GYANVERSE_GOOGLE_SIGNIN_ERROR "
+                f"type={type(exc).__name__} location={_location}",
+                flush=True,
+            )
+            refresh_cloud_status(
+                f"Cloud sign-in failed â€¢ {type(exc).__name__}", error=True
+            )
+            notify("Google cloud sign-in could not complete.", error=True)
+
+    def complete_logout() -> None:
+        firebase_sessions.clear()
+        oauth_token_store.clear()
+        activate_owner(local_owner_id)
+        status_text.value = "Ready"
+        refresh_cloud_status()
+        show_view("tutor")
+
+    async def google_logout_click(_: object = None) -> None:
+        oauth_token_store.clear()
+        page.logout()
+
+    def google_logout_completed(_: object = None) -> None:
+        complete_logout()
 
     def update_context(new_context: StudentLearningContext, *, persist: bool = True) -> None:
         nonlocal context
@@ -626,6 +803,48 @@ def main(page: ft.Page) -> None:
                     surface(
                         ft.Column(
                             [
+                                ft.Text("Google account & cloud sync", size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text(cloud_status_text.value, color=cloud_status_text.color),
+                                ft.Text(
+                                    "Chats stay in local SQLite first. Signed-in messages are uploaded to owner-isolated Firestore paths.",
+                                    size=11,
+                                    color=COLOR_MUTED,
+                                ),
+                                ft.Text(
+                                    "Remember me is encrypted only when GYANVERSE_AUTH_STORAGE_SECRET is configured.",
+                                    size=10,
+                                    color=COLOR_MUTED,
+                                ),
+                                ft.Row(
+                                    [
+                                        ft.ElevatedButton(
+                                            "Sign in with Google",
+                                            icon=ft.Icons.LOGIN,
+                                            on_click=google_login_click,
+                                            disabled=firebase_sessions.session is not None,
+                                        ),
+                                        ft.OutlinedButton(
+                                            "Sync now",
+                                            icon=ft.Icons.SYNC,
+                                            on_click=cloud_sync_button_click,
+                                            disabled=firebase_sessions.session is None,
+                                        ),
+                                        ft.TextButton(
+                                            "Sign out",
+                                            icon=ft.Icons.LOGOUT,
+                                            on_click=google_logout_click,
+                                            disabled=firebase_sessions.session is None,
+                                        ),
+                                    ],
+                                    wrap=True,
+                                ),
+                            ],
+                            spacing=8,
+                        )
+                    ),
+                    surface(
+                        ft.Column(
+                            [
                                 ft.Text("Privacy controls", size=16, weight=ft.FontWeight.BOLD),
                                 ft.Text("• Attached homework is copied into local app storage."),
                                 ft.Text("• Files can be deleted from Homework History."),
@@ -908,7 +1127,7 @@ def main(page: ft.Page) -> None:
         ):
             return conversation_store.append_message(
                 conversation_id=active_conversation.conversation_id,
-                owner_id=local_owner_id,
+                owner_id=current_owner_id,
                 student_id=context.student_id,
                 role=role,
                 text=text,
@@ -1217,6 +1436,8 @@ def main(page: ft.Page) -> None:
                 busy.visible = False
                 send_button.disabled = False
                 page.update()
+                if firebase_sessions.session is not None:
+                    asyncio.create_task(sync_cloud_now(show_result=False, refresh_tutor=False))
 
                 try:
                     await asyncio.wait_for(
@@ -1447,7 +1668,7 @@ def main(page: ft.Page) -> None:
 
         stored_messages = conversation_store.list_messages(
             conversation_id=active_conversation.conversation_id,
-            owner_id=local_owner_id,
+            owner_id=current_owner_id,
             limit=500,
         )
         restored_turns: list[tuple[str, str]] = []
@@ -1582,6 +1803,10 @@ def main(page: ft.Page) -> None:
         await page.close_drawer()
 
     menu_button.on_click = open_drawer
+    account_button.on_click = lambda _: show_view("settings")
+    page.on_login = google_login_completed
+    page.on_logout = google_logout_completed
+    refresh_cloud_status()
     page.drawer = ft.NavigationDrawer(
         selected_index=1,
         width=292,
@@ -1617,7 +1842,8 @@ def main(page: ft.Page) -> None:
             [
                 menu_button,
                 ft.Column([title_text, context_text], spacing=0, expand=True),
-                status_text,
+                ft.Column([status_text, cloud_status_text], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.END),
+                account_button,
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
@@ -1628,9 +1854,15 @@ def main(page: ft.Page) -> None:
 
     page.add(ft.Column([topbar, body], expand=True, spacing=0))
     show_view("tutor")
+    saved_oauth_token = oauth_token_store.load() if google_provider is not None else ""
+    if saved_oauth_token:
+        refresh_cloud_status("Cloud: restoring Google session…")
+        page.update()
+        page.run_task(page.login, google_provider, saved_token=saved_oauth_token)
     if not context.onboarding_complete:
         open_profile_dialog(first_use=True)
 
 
 if __name__ == "__main__":
-    ft.run(main, assets_dir="assets")
+    oauth_port = int(os.getenv("GYANVERSE_OAUTH_PORT", "8550"))
+    ft.run(main, assets_dir="assets", port=oauth_port)

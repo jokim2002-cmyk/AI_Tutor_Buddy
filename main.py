@@ -3,6 +3,7 @@ from __future__ import annotations
 import traceback
 from datetime import datetime
 from pathlib import Path
+import os
 
 import flet as ft
 
@@ -26,4 +27,5 @@ def main(page: ft.Page) -> None:
 
 
 if __name__ == "__main__":
-    ft.run(main, assets_dir="assets")
+    oauth_port = int(os.getenv("GYANVERSE_OAUTH_PORT", "8550"))
+    ft.run(main, assets_dir="assets", port=oauth_port)

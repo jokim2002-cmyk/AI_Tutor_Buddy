@@ -47,6 +47,18 @@ def _safe_id(value: object, *, prefix: str) -> str:
     return cleaned[:180] or f"{prefix}-{uuid.uuid4().hex}"
 
 
+
+def _remote_version_key(*, updated_at: object, revision: object, device_id: object) -> tuple[str, int, str]:
+    try:
+        resolved_revision = max(1, int(revision))
+    except (TypeError, ValueError):
+        resolved_revision = 1
+    return (
+        _clean_text(updated_at, max_length=80),
+        resolved_revision,
+        _safe_id(device_id, prefix="device"),
+    )
+
 def suggest_conversation_title(text: object) -> str:
     title = _clean_text(text, max_length=MAX_TITLE_CHARS)
     if not title:
@@ -292,9 +304,18 @@ class ConversationStore:
         with self._lock, self._connection() as connection:
             row = connection.execute(
                 """
-                SELECT * FROM conversations
-                WHERE owner_id=? AND student_id=? AND deleted_at=''
-                ORDER BY updated_at DESC, conversation_id DESC
+                SELECT c.* FROM conversations AS c
+                WHERE c.owner_id=? AND c.student_id=? AND c.deleted_at=''
+                ORDER BY
+                    EXISTS(
+                        SELECT 1
+                        FROM messages AS m
+                        WHERE m.conversation_id=c.conversation_id
+                          AND m.owner_id=c.owner_id
+                          AND m.deleted_at=''
+                    ) DESC,
+                    c.updated_at DESC,
+                    c.conversation_id DESC
                 LIMIT 1
                 """,
                 (owner_id, student_id),
@@ -512,6 +533,190 @@ class ConversationStore:
                 (owner_id, now, limit),
             ).fetchall()
         return [SyncOutboxRecord(**dict(row)) for row in rows]
+
+    def pending_outbox_count(self, *, owner_id: str) -> int:
+        owner_id = _safe_owner_id(owner_id)
+        with self._lock, self._connection() as connection:
+            row = connection.execute(
+                "SELECT COUNT(*) AS count FROM sync_outbox WHERE owner_id=?",
+                (owner_id,),
+            ).fetchone()
+        return int(row["count"] if row is not None else 0)
+
+    def merge_remote_conversation(
+        self, *, owner_id: str, payload: Mapping[str, Any]
+    ) -> bool:
+        """Merge one owner-validated Firestore conversation without creating an outbox event."""
+        owner_id = _safe_owner_id(owner_id)
+        payload_owner = str(payload.get("owner_id") or payload.get("ownerId") or "").strip()
+        if payload_owner != owner_id:
+            raise ConversationStoreError("Remote conversation owner mismatch")
+        conversation_id = _safe_id(payload.get("conversation_id"), prefix="conversation")
+        student_id = _safe_id(payload.get("student_id"), prefix="student")
+        try:
+            standard = int(payload.get("standard"))
+        except (TypeError, ValueError) as exc:
+            raise ConversationStoreError("Remote standard must be a number") from exc
+        if standard < 1 or standard > 10:
+            raise ConversationStoreError("Remote standard must be between 1 and 10")
+        created_at = _clean_text(payload.get("created_at"), max_length=80) or utc_now()
+        updated_at = _clean_text(payload.get("updated_at"), max_length=80) or created_at
+        try:
+            revision = max(1, int(payload.get("revision") or 1))
+        except (TypeError, ValueError):
+            revision = 1
+        record = ConversationRecord(
+            conversation_id=conversation_id,
+            owner_id=owner_id,
+            student_id=student_id,
+            device_id=_safe_id(payload.get("device_id") or payload.get("deviceId"), prefix="device"),
+            title=_clean_text(payload.get("title"), max_length=MAX_TITLE_CHARS) or "New conversation",
+            board=_clean_text(payload.get("board"), max_length=40).upper(),
+            standard=standard,
+            subject=_clean_text(payload.get("subject"), max_length=120),
+            chapter=_clean_text(payload.get("chapter"), max_length=180),
+            created_at=created_at,
+            updated_at=updated_at,
+            revision=revision,
+            sync_state=SYNC_SYNCED,
+            deleted_at=_clean_text(payload.get("deleted_at"), max_length=80),
+        )
+        with self._lock, self._connection() as connection:
+            existing = connection.execute(
+                "SELECT * FROM conversations WHERE conversation_id=?",
+                (conversation_id,),
+            ).fetchone()
+            if existing is not None:
+                if str(existing["owner_id"]) != owner_id:
+                    raise ConversationStoreError("Remote conversation conflicts with another owner")
+                local_key = _remote_version_key(
+                    updated_at=existing["updated_at"],
+                    revision=existing["revision"],
+                    device_id=existing["device_id"],
+                )
+                remote_key = _remote_version_key(
+                    updated_at=record.updated_at, revision=record.revision, device_id=record.device_id
+                )
+                if str(existing["sync_state"]) in {SYNC_PENDING, SYNC_FAILED} and local_key >= remote_key:
+                    return False
+                if remote_key <= local_key:
+                    return False
+                connection.execute(
+                    """
+                    UPDATE conversations
+                    SET owner_id=?, student_id=?, device_id=?, title=?, board=?, standard=?,
+                        subject=?, chapter=?, created_at=?, updated_at=?, revision=?,
+                        sync_state=?, deleted_at=?
+                    WHERE conversation_id=?
+                    """,
+                    (*self._conversation_values(record)[1:], conversation_id),
+                )
+            else:
+                connection.execute(
+                    """
+                    INSERT INTO conversations(
+                        conversation_id, owner_id, student_id, device_id, title, board, standard,
+                        subject, chapter, created_at, updated_at, revision, sync_state, deleted_at
+                    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                    """,
+                    self._conversation_values(record),
+                )
+        return True
+
+    def merge_remote_message(self, *, owner_id: str, payload: Mapping[str, Any]) -> bool:
+        """Merge one owner-validated Firestore message without creating an outbox event."""
+        owner_id = _safe_owner_id(owner_id)
+        payload_owner = str(payload.get("owner_id") or payload.get("ownerId") or "").strip()
+        if payload_owner != owner_id:
+            raise ConversationStoreError("Remote message owner mismatch")
+        message_id = _safe_id(payload.get("message_id"), prefix="message")
+        conversation_id = _safe_id(payload.get("conversation_id"), prefix="conversation")
+        student_id = _safe_id(payload.get("student_id"), prefix="student")
+        role = _clean_text(payload.get("role"), max_length=20).lower()
+        if role not in VALID_ROLES:
+            raise ConversationStoreError("Remote message role is invalid")
+        text = str(payload.get("text") or "").strip()[:MAX_MESSAGE_CHARS]
+        if not text:
+            raise ConversationStoreError("Remote message text is required")
+        try:
+            standard = int(payload.get("standard"))
+        except (TypeError, ValueError) as exc:
+            raise ConversationStoreError("Remote standard must be a number") from exc
+        if standard < 1 or standard > 10:
+            raise ConversationStoreError("Remote standard must be between 1 and 10")
+        created_at = _clean_text(payload.get("created_at"), max_length=80) or utc_now()
+        updated_at = _clean_text(payload.get("updated_at"), max_length=80) or created_at
+        try:
+            revision = max(1, int(payload.get("revision") or 1))
+        except (TypeError, ValueError):
+            revision = 1
+        record = ChatMessageRecord(
+            message_id=message_id,
+            conversation_id=conversation_id,
+            owner_id=owner_id,
+            student_id=student_id,
+            device_id=_safe_id(payload.get("device_id") or payload.get("deviceId"), prefix="device"),
+            role=role,
+            text=text,
+            language=_clean_text(payload.get("language"), max_length=40),
+            board=_clean_text(payload.get("board"), max_length=40).upper(),
+            standard=standard,
+            subject=_clean_text(payload.get("subject"), max_length=120),
+            chapter=_clean_text(payload.get("chapter"), max_length=180),
+            backend=_clean_text(payload.get("backend"), max_length=100),
+            created_at=created_at,
+            updated_at=updated_at,
+            revision=revision,
+            sync_state=SYNC_SYNCED,
+            deleted_at=_clean_text(payload.get("deleted_at"), max_length=80),
+        )
+        with self._lock, self._connection() as connection:
+            parent = connection.execute(
+                "SELECT owner_id FROM conversations WHERE conversation_id=?",
+                (conversation_id,),
+            ).fetchone()
+            if parent is None or str(parent["owner_id"]) != owner_id:
+                raise ConversationStoreError("Remote message conversation is unavailable")
+            existing = connection.execute(
+                "SELECT * FROM messages WHERE message_id=?", (message_id,)
+            ).fetchone()
+            if existing is not None:
+                if str(existing["owner_id"]) != owner_id:
+                    raise ConversationStoreError("Remote message conflicts with another owner")
+                local_key = _remote_version_key(
+                    updated_at=existing["updated_at"],
+                    revision=existing["revision"],
+                    device_id=existing["device_id"],
+                )
+                remote_key = _remote_version_key(
+                    updated_at=record.updated_at, revision=record.revision, device_id=record.device_id
+                )
+                if str(existing["sync_state"]) in {SYNC_PENDING, SYNC_FAILED} and local_key >= remote_key:
+                    return False
+                if remote_key <= local_key:
+                    return False
+                connection.execute(
+                    """
+                    UPDATE messages
+                    SET conversation_id=?, owner_id=?, student_id=?, device_id=?, role=?, text=?,
+                        language=?, board=?, standard=?, subject=?, chapter=?, backend=?, created_at=?,
+                        updated_at=?, revision=?, sync_state=?, deleted_at=?
+                    WHERE message_id=?
+                    """,
+                    (*self._message_values(record)[1:], message_id),
+                )
+            else:
+                connection.execute(
+                    """
+                    INSERT INTO messages(
+                        message_id, conversation_id, owner_id, student_id, device_id, role, text,
+                        language, board, standard, subject, chapter, backend, created_at,
+                        updated_at, revision, sync_state, deleted_at
+                    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                    """,
+                    self._message_values(record),
+                )
+        return True
 
     def mark_outbox_synced(self, event_id: str) -> None:
         with self._lock, self._connection() as connection:

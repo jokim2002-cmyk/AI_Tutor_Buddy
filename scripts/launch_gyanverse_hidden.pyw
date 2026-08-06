@@ -22,7 +22,8 @@ try:
     import flet as ft
     from gyanverse_ui import main
 
-    ft.run(main)
+    oauth_port = int(os.getenv("GYANVERSE_OAUTH_PORT", "8550"))
+    ft.run(main, port=oauth_port)
 except BaseException:
     traceback.print_exc()
     raise

@@ -16,7 +16,7 @@ Base checkpoint: `master / 7c04f78`
 ## Intentionally Not Claimed as Passed Yet
 
 1. **Real Aoede Streaming Playback Acceptance**: Remaining pending because the natural TTS provider returned `429 RESOURCE_EXHAUSTED`. (The 429 status is logged as provider rate limit without asserting an unverified daily quota category).
-2. **Google Login & Cloud Sync**: Pending future phase.
+2. **Google Login & Cloud Sync live acceptance**: UI and bidirectional sync code are implemented, but Firebase configuration and two-device acceptance remain pending.
 3. **Curriculum & Syllabus Ingestion**: Pending official textbook dataset acquisition.
 4. **Premium UI Redesign**: Pending future phase.
 5. **Windows Packaged EXE (.exe)**: Build and workflow acceptance pending.
@@ -39,9 +39,22 @@ Implemented in source, pending live cloud acceptance:
 - Firebase Authentication and Firestore REST adapters are present with no embedded secrets.
 - Firestore rules template isolates every user's data under their Firebase UID.
 
+## Phase 2B — Google Login and Bidirectional Chat Sync
+
+Implemented in source, pending live Firebase acceptance:
+
+- Visible Google sign-in, sign-out and manual Sync now controls.
+- Flet OAuth callback uses a fixed configurable port (default 8550).
+- Google access tokens exchange for Firebase user sessions; Firebase sessions refresh before sync.
+- OAuth token persistence is encrypted when `GYANVERSE_AUTH_STORAGE_SECRET` is configured and disabled otherwise.
+- Local anonymous chat ownership is re-keyed to the signed-in Firebase UID.
+- Durable outbox upload and owner-isolated Firestore remote pull are both implemented.
+- Remote merge preserves newer unsynced local records and does not create duplicate outbox events.
+- Signed-out local chats remain isolated from cloud-owned chats.
+
 Still pending:
 
-- Visible Google sign-in/sign-out UI and encrypted token persistence.
-- Firebase project configuration and deployed security rules.
-- Real upload, pull, conflict resolution, delete propagation and two-device acceptance.
-- Attachment/audio cloud storage. The first sync scope is chat text and metadata only.
+- User Firebase project configuration, Google provider enablement and deployed security rules.
+- Real Windows Google OAuth acceptance and Firestore upload/download.
+- Two-device Windows/Android sync acceptance.
+- Delete propagation and attachment/audio cloud storage.

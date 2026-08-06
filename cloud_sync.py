@@ -37,7 +37,8 @@ class FirebaseConfig:
             google_client_id=os.getenv("GYANVERSE_GOOGLE_CLIENT_ID", "").strip(),
             google_client_secret=os.getenv("GYANVERSE_GOOGLE_CLIENT_SECRET", "").strip(),
             oauth_redirect_url=os.getenv(
-                "GYANVERSE_GOOGLE_REDIRECT_URL", "http://localhost:8550/oauth_callback"
+                "GYANVERSE_GOOGLE_REDIRECT_URL",
+                f"http://localhost:{os.getenv('GYANVERSE_OAUTH_PORT', '8550').strip() or '8550'}/oauth_callback",
             ).strip(),
         )
 
@@ -47,7 +48,29 @@ class FirebaseConfig:
 
     @property
     def google_oauth_ready(self) -> bool:
-        return bool(self.google_client_id and self.oauth_redirect_url)
+        return bool(
+            self.google_client_id
+            and self.google_client_secret
+            and self.oauth_redirect_url
+        )
+
+    @property
+    def live_sync_ready(self) -> bool:
+        return self.firebase_ready and self.google_oauth_ready
+
+    def missing_live_sync_fields(self) -> tuple[str, ...]:
+        fields = []
+        if not self.project_id:
+            fields.append("GYANVERSE_FIREBASE_PROJECT_ID")
+        if not self.web_api_key:
+            fields.append("GYANVERSE_FIREBASE_WEB_API_KEY")
+        if not self.google_client_id:
+            fields.append("GYANVERSE_GOOGLE_CLIENT_ID")
+        if not self.google_client_secret:
+            fields.append("GYANVERSE_GOOGLE_CLIENT_SECRET")
+        if not self.oauth_redirect_url:
+            fields.append("GYANVERSE_GOOGLE_REDIRECT_URL")
+        return tuple(fields)
 
     def validate_firebase(self) -> None:
         if not self.project_id:
@@ -81,6 +104,15 @@ class SyncResult:
     synced: int
     failed: int
     skipped: int
+
+
+@dataclass(frozen=True)
+class PullResult:
+    conversations_seen: int
+    conversations_merged: int
+    messages_seen: int
+    messages_merged: int
+    failed: int
 
 
 class JsonHttpClient:
@@ -256,6 +288,44 @@ def _firestore_value(value: Any) -> dict[str, Any]:
     return {"stringValue": str(value)}
 
 
+def _from_firestore_value(value: Mapping[str, Any]) -> Any:
+    if "nullValue" in value:
+        return None
+    if "booleanValue" in value:
+        return bool(value["booleanValue"])
+    if "integerValue" in value:
+        try:
+            return int(value["integerValue"])
+        except (TypeError, ValueError):
+            return 0
+    if "doubleValue" in value:
+        try:
+            return float(value["doubleValue"])
+        except (TypeError, ValueError):
+            return 0.0
+    if "stringValue" in value:
+        return str(value["stringValue"])
+    if "timestampValue" in value:
+        return str(value["timestampValue"])
+    if "arrayValue" in value:
+        raw = value.get("arrayValue") or {}
+        return [_from_firestore_value(item) for item in raw.get("values") or []]
+    if "mapValue" in value:
+        raw = value.get("mapValue") or {}
+        return {
+            str(key): _from_firestore_value(item)
+            for key, item in (raw.get("fields") or {}).items()
+        }
+    return ""
+
+
+def _firestore_document_data(document: Mapping[str, Any]) -> dict[str, Any]:
+    fields = document.get("fields") or {}
+    if not isinstance(fields, Mapping):
+        raise CloudSyncError("Firestore document fields were invalid.", category="invalid_response")
+    return {str(key): _from_firestore_value(value) for key, value in fields.items()}
+
+
 class FirestoreREST:
     """User-token Firestore REST client; Firebase Security Rules remain authoritative."""
 
@@ -285,9 +355,53 @@ class FirestoreREST:
             payload={"fields": {str(k): _firestore_value(v) for k, v in data.items()}},
         )
 
+    def list_documents(
+        self,
+        *,
+        session: FirebaseSession,
+        collection_path: str,
+        page_size: int = 100,
+        max_documents: int = 500,
+    ) -> list[dict[str, Any]]:
+        self.config.validate_firebase()
+        parts = [part for part in str(collection_path or "").strip("/").split("/") if part]
+        if not parts:
+            raise CloudSyncError("Firestore collection path is missing.", category="configuration")
+        path = "/".join(urllib.parse.quote(part, safe="") for part in parts)
+        page_size = max(1, min(int(page_size), 300))
+        max_documents = max(1, min(int(max_documents), 2_000))
+        base_url = (
+            f"https://firestore.googleapis.com/v1/projects/{urllib.parse.quote(self.config.project_id, safe='')}"
+            f"/databases/(default)/documents/{path}"
+        )
+        documents: list[dict[str, Any]] = []
+        page_token = ""
+        while len(documents) < max_documents:
+            query = {"pageSize": str(min(page_size, max_documents - len(documents)))}
+            if page_token:
+                query["pageToken"] = page_token
+            response = self.http.request(
+                "GET",
+                base_url + "?" + urllib.parse.urlencode(query),
+                headers={"Authorization": f"Bearer {session.id_token}"},
+            )
+            raw_documents = response.get("documents") or []
+            if not isinstance(raw_documents, list):
+                raise CloudSyncError("Firestore list response was invalid.", category="invalid_response")
+            for document in raw_documents:
+                if not isinstance(document, Mapping):
+                    continue
+                documents.append(_firestore_document_data(document))
+                if len(documents) >= max_documents:
+                    break
+            page_token = str(response.get("nextPageToken") or "")
+            if not page_token or not raw_documents:
+                break
+        return documents
+
 
 class ConversationSyncService:
-    """Pushes the local durable outbox to owner-isolated Firestore paths."""
+    """Pushes local outbox events and pulls owner-isolated Firestore chat records."""
 
     def __init__(
         self,
@@ -324,6 +438,60 @@ class ConversationSyncService:
                 failed += 1
         return SyncResult(attempted=len(events), synced=synced, failed=failed, skipped=skipped)
 
+    def pull_remote(
+        self,
+        *,
+        session: FirebaseSession,
+        conversation_limit: int = 100,
+        message_limit_per_conversation: int = 500,
+    ) -> PullResult:
+        owner_id = session.uid
+        conversations = self.firestore.list_documents(
+            session=session,
+            collection_path=f"users/{owner_id}/conversations",
+            max_documents=conversation_limit,
+        )
+        merged_conversations = merged_messages = messages_seen = failed = 0
+        for payload in conversations:
+            try:
+                conversation_id = str(payload.get("conversation_id") or "").strip()
+                if not conversation_id:
+                    raise ValueError("missing conversation id")
+                if self.store.merge_remote_conversation(owner_id=owner_id, payload=payload):
+                    merged_conversations += 1
+                messages = self.firestore.list_documents(
+                    session=session,
+                    collection_path=(
+                        f"users/{owner_id}/conversations/{conversation_id}/messages"
+                    ),
+                    max_documents=message_limit_per_conversation,
+                )
+                messages_seen += len(messages)
+                for message_payload in messages:
+                    try:
+                        if self.store.merge_remote_message(
+                            owner_id=owner_id, payload=message_payload
+                        ):
+                            merged_messages += 1
+                    except (ValueError, CloudSyncError):
+                        failed += 1
+            except (ValueError, CloudSyncError):
+                failed += 1
+        return PullResult(
+            conversations_seen=len(conversations),
+            conversations_merged=merged_conversations,
+            messages_seen=messages_seen,
+            messages_merged=merged_messages,
+            failed=failed,
+        )
+
+    def sync_bidirectional(
+        self, *, session: FirebaseSession, push_limit: int = 100
+    ) -> tuple[SyncResult, PullResult]:
+        pushed = self.push_pending(session=session, limit=push_limit)
+        pulled = self.pull_remote(session=session)
+        return pushed, pulled
+
     @staticmethod
     def _event_document(
         event: SyncOutboxRecord, *, owner_id: str
@@ -343,6 +511,7 @@ class ConversationSyncService:
         else:
             raise CloudSyncError("Unsupported outbox entity.", category="invalid_local_payload")
         cloud_payload = dict(payload)
+        cloud_payload["sync_state"] = "synced"
         cloud_payload["ownerId"] = owner_id
         device_id = str(payload.get("device_id") or "")
         if device_id:
