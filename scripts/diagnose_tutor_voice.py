@@ -42,9 +42,22 @@ def main() -> int:
     print(f"Selected Mode: {service.tts_mode}")
     print(f"Selected Voice: {service.tts_voice_name}")
     print(f"TTS Model: {service.tts_model_name}")
+    prefetch_active = (
+        service.tts_prefetch_enabled
+        and service.tts_prefetch_policy != "none"
+    )
+    if service.tts_mode == "natural":
+        configured_route = "natural-only"
+    elif service.tts_mode == "local":
+        configured_route = "local-only"
+    elif service.tts_backend in {"gemini-first", "gemini-only"}:
+        configured_route = service.tts_backend
+    else:
+        configured_route = "natural-first with local fallback"
+
     print(f"Prefetch Policy: {service.tts_prefetch_policy}")
-    print(f"Prefetch Enabled: {service.tts_prefetch_enabled}")
-    print(f"Configured TTS Backend: {service.tts_backend}")
+    print(f"Prefetch Active: {prefetch_active}")
+    print(f"Configured TTS Route: {configured_route}")
     print(f"Local Desktop Voice Available: {service.local_tts_available}")
     print(f"Gemini Voice Configured: {service.tts_configured}")
     print(f"Selected TTS Backend Label: {service.tts_backend_label}")
