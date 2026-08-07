@@ -195,17 +195,350 @@
         {
           "topic_id": "ch02-t01-overview",
           "title": "Fractions and Decimals",
-          "learning_objectives": [],
-          "explanation": "",
-          "examples": [],
-          "exercises": [],
-          "solutions": [],
-          "practice_questions": [],
-          "marks_pattern": "",
-          "content_origin": "metadata_only",
           "aliases": [
             "અપૂર્ણાંક અને દશાંશ સંખ્યાઓ"
-          ]
+          ],
+          "learning_objectives": [
+            "Understand fractions as parts of a whole and decimals as place-value numbers.",
+            "Recognise when fraction and decimal operations are needed."
+          ],
+          "explanation": "અપૂર્ણાંકમાં ઉપરની સંખ્યા અંશ અને નીચેની સંખ્યા છેદ દર્શાવે છે. દશાંશ સંખ્યામાં decimal point પછીના અંકો દશાંશ, શતાંશ, સહસ્રાંશ વગેરે સ્થાનમૂલ્ય દર્શાવે છે. આ અધ્યાયમાં અપૂર્ણાંક અને દશાંશ સંખ્યાઓના ગુણાકાર અને ભાગાકાર પર ધ્યાન આપીએ છીએ.",
+          "examples": [
+            "3/4 એટલે કોઈ પૂર્ણ વસ્તુના 4 સમાન ભાગમાંથી 3 ભાગ.",
+            "0.25 એટલે 25/100, જેને 1/4 તરીકે પણ લખી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "5/8 માં અંશ અને છેદ ઓળખો.",
+            "0.7 ને દશાંશ સ્થાનમૂલ્યથી સમજાવો.",
+            "0.5 ને અપૂર્ણાંકમાં લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t02-fraction-times-whole",
+          "title": "Multiplication of a Fraction by a Whole Number",
+          "aliases": [
+            "અપૂર્ણાંકનો પૂર્ણ સંખ્યા સાથે ગુણાકાર",
+            "અપૂર્ણાંકનો પૂર્ણાંક સાથે ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply a fraction by a whole number.",
+            "Reduce the resulting fraction when possible."
+          ],
+          "explanation": "અપૂર્ણાંકનો પૂર્ણ સંખ્યા સાથે ગુણાકાર કરવા માટે પૂર્ણ સંખ્યાને અંશ સાથે ગુણો અને છેદ એ જ રાખો. પછી શક્ય હોય તો જવાબને સાદા રૂપમાં લાવો.",
+          "examples": [
+            "3/5 × 4 = 12/5 = 2 2/5.",
+            "2/7 × 3 = 6/7."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 5/6 × 3 = (5×3)/6 = 15/6 = 5/2 = 2 1/2."
+          ],
+          "practice_questions": [
+            "4/9 × 3 શોધો.",
+            "7/10 × 5 શોધો.",
+            "2/3 × 8 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t03-fraction-times-fraction",
+          "title": "Multiplication of a Fraction by a Fraction",
+          "aliases": [
+            "અપૂર્ણાંકનો અપૂર્ણાંક સાથે ગુણાકાર",
+            "બે અપૂર્ણાંકોનો ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply two fractions.",
+            "Simplify before or after multiplication."
+          ],
+          "explanation": "બે અપૂર્ણાંકોના ગુણાકારમાં અંશને અંશ સાથે અને છેદને છેદ સાથે ગુણો. ગણતરી સરળ બનાવવા માટે ગુણાકાર પહેલાં common factors કાપી શકાય છે.",
+          "examples": [
+            "2/3 × 5/7 = 10/21.",
+            "3/4 × 2/9 = 6/36 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 4/5 × 15/8. પહેલા 4 અને 8 ને 4થી, તથા 15 અને 5 ને 5થી simplify કરીએ: 1/1 × 3/2 = 3/2."
+          ],
+          "practice_questions": [
+            "3/8 × 4/5 શોધો.",
+            "7/9 × 3/14 શોધો.",
+            "5/6 × 9/10 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t04-division-fractions",
+          "title": "Division of Fractions",
+          "aliases": [
+            "અપૂર્ણાંકોનો ભાગાકાર",
+            "અપૂર્ણાંકનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Understand division of fractions through reciprocals.",
+            "Choose the correct reciprocal of the divisor."
+          ],
+          "explanation": "અપૂર્ણાંકોના ભાગાકારમાં મુખ્ય નિયમ છે: જે સંખ્યાથી ભાગીએ છીએ તેનો reciprocal લો અને પછી ગુણાકાર કરો. Reciprocal એટલે અંશ અને છેદની જગ્યા બદલી દેવી. Zero નો reciprocal નથી.",
+          "examples": [
+            "3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8.",
+            "1/2 ÷ 3 = 1/2 × 1/3 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "2/3 ÷ 4/5 શોધો.",
+            "5/7 ÷ 2 શોધો.",
+            "6 ÷ 3/4 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t05-whole-divided-by-fraction",
+          "title": "Division of Whole Number by a Fraction",
+          "aliases": [
+            "પૂર્ણ સંખ્યાનો અપૂર્ણાંક વડે ભાગાકાર",
+            "પૂર્ણાંકનો અપૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a whole number by a fraction using the reciprocal."
+          ],
+          "explanation": "પૂર્ણ સંખ્યાને અપૂર્ણાંકથી ભાગવા માટે પૂર્ણ સંખ્યાને divisor અપૂર્ણાંકના reciprocal સાથે ગુણો. પૂર્ણ સંખ્યા n ને n/1 તરીકે વિચારી શકાય.",
+          "examples": [
+            "6 ÷ 3/4 = 6 × 4/3 = 8.",
+            "5 ÷ 2/3 = 5 × 3/2 = 15/2."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 8 ÷ 4/5 = 8 × 5/4 = 40/4 = 10."
+          ],
+          "practice_questions": [
+            "7 ÷ 1/2 શોધો.",
+            "9 ÷ 3/5 શોધો.",
+            "4 ÷ 8/9 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t06-fraction-divided-by-whole",
+          "title": "Division of a Fraction by a Whole Number",
+          "aliases": [
+            "અપૂર્ણાંકનો પૂર્ણ સંખ્યા વડે ભાગાકાર",
+            "અપૂર્ણાંકનો પૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a fraction by a non-zero whole number."
+          ],
+          "explanation": "અપૂર્ણાંકને પૂર્ણ સંખ્યાથી ભાગવા માટે પૂર્ણ સંખ્યાનો reciprocal 1/n લો અને અપૂર્ણાંક સાથે ગુણો. એટલે a/b ÷ n = a/b × 1/n.",
+          "examples": [
+            "3/4 ÷ 2 = 3/4 × 1/2 = 3/8.",
+            "5/6 ÷ 5 = 5/6 × 1/5 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 7/9 ÷ 14 = 7/9 × 1/14 = 7/126 = 1/18."
+          ],
+          "practice_questions": [
+            "2/5 ÷ 3 શોધો.",
+            "8/9 ÷ 4 શોધો.",
+            "11/12 ÷ 2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t07-fraction-divided-by-fraction",
+          "title": "Division of a Fraction by Another Fraction",
+          "aliases": [
+            "અપૂર્ણાંકનો બીજા અપૂર્ણાંક વડે ભાગાકાર",
+            "બે અપૂર્ણાંકોનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide one fraction by another fraction.",
+            "Simplify the final answer."
+          ],
+          "explanation": "એક અપૂર્ણાંકને બીજા અપૂર્ણાંકથી ભાગવા માટે પહેલા અપૂર્ણાંકને બીજા અપૂર્ણાંકના reciprocal સાથે ગુણો. પછી મળેલા અપૂર્ણાંકને શક્ય હોય ત્યાં સુધી simplify કરો.",
+          "examples": [
+            "2/3 ÷ 5/6 = 2/3 × 6/5 = 12/15 = 4/5.",
+            "7/8 ÷ 7/4 = 7/8 × 4/7 = 1/2."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 9/10 ÷ 3/5 = 9/10 × 5/3. 9 અને 3 simplify કરીને 3, તથા 5 અને 10 simplify કરીને 1/2 મળે; તેથી જવાબ 3/2."
+          ],
+          "practice_questions": [
+            "3/7 ÷ 2/5 શોધો.",
+            "5/12 ÷ 10/9 શોધો.",
+            "4/15 ÷ 8/25 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t08-decimal-multiplication",
+          "title": "Multiplication of Decimal Numbers",
+          "aliases": [
+            "દશાંશ સંખ્યાઓનો ગુણાકાર",
+            "દશાંશનો ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply decimal numbers accurately.",
+            "Place the decimal point using total decimal places."
+          ],
+          "explanation": "દશાંશ સંખ્યાઓના ગુણાકારમાં પહેલા decimal point ને થોડા સમય માટે અવગણીને પૂર્ણ સંખ્યાની જેમ ગુણાકાર કરો. પછી બંને factorsમાં decimal પછી કુલ જેટલા અંકો હતા એટલા અંક જમણી બાજુથી ગણીને જવાબમાં decimal point મૂકો.",
+          "examples": [
+            "2.4 × 1.5: 24 × 15 = 360; કુલ 2 decimal places હોવાથી જવાબ 3.60 = 3.6.",
+            "0.7 × 0.3 = 0.21."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 1.25 × 0.4. 125 × 4 = 500. કુલ 3 decimal places હોવાથી 0.500 = 0.5."
+          ],
+          "practice_questions": [
+            "3.2 × 1.4 શોધો.",
+            "0.6 × 0.08 શોધો.",
+            "2.75 × 1.2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t09-decimal-times-powers-ten",
+          "title": "Multiplication of Decimal Numbers by 10, 100 and 1000",
+          "aliases": [
+            "દશાંશ સંખ્યાનો 10 100 1000 વડે ગુણાકાર",
+            "દશાંશને 10 100 1000 થી ગુણો"
+          ],
+          "learning_objectives": [
+            "Multiply decimals by powers of ten using place value."
+          ],
+          "explanation": "દશાંશ સંખ્યાને 10, 100 અથવા 1000થી ગુણીએ ત્યારે decimal point અનુક્રમે 1, 2 અથવા 3 સ્થાન જમણી તરફ ખસે છે. જરૂર પડે તો અંતે zero ઉમેરો.",
+          "examples": [
+            "2.35 × 10 = 23.5.",
+            "2.35 × 100 = 235.",
+            "0.48 × 1000 = 480."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4.27 × 10 શોધો.",
+            "0.063 × 100 શોધો.",
+            "5.009 × 1000 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t10-decimal-division",
+          "title": "Division of Decimal Numbers",
+          "aliases": [
+            "દશાંશ સંખ્યાઓનો ભાગાકાર",
+            "દશાંશનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide decimal numbers using place value and equivalent scaling."
+          ],
+          "explanation": "દશાંશ ભાગાકારમાં divisor કઈ જાતનો છે તે જુઓ. પૂર્ણ સંખ્યા divisor હોય તો સામાન્ય long division સાથે decimal point યોગ્ય સ્થાન પર મૂકો. divisor પણ decimal હોય તો બંને સંખ્યાને 10, 100, 1000 વગેરેના સમાન ગુણકથી ગુણ કરીને divisor ને પૂર્ણ સંખ્યા બનાવો.",
+          "examples": [
+            "12.6 ÷ 3 = 4.2.",
+            "4.5 ÷ 0.5 = 45 ÷ 5 = 9."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "8.4 ÷ 2 શોધો.",
+            "6.25 ÷ 0.5 શોધો.",
+            "3.6 ÷ 1.2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t11-decimal-divide-powers-ten",
+          "title": "Division by 10, 100 and 1000",
+          "aliases": [
+            "દશાંશ સંખ્યાનો 10 100 1000 વડે ભાગાકાર",
+            "દશાંશને 10 100 1000 થી ભાગો"
+          ],
+          "learning_objectives": [
+            "Divide decimals by powers of ten using place value."
+          ],
+          "explanation": "કોઈ સંખ્યાને 10, 100 અથવા 1000થી ભાગીએ ત્યારે decimal point અનુક્રમે 1, 2 અથવા 3 સ્થાન ડાબી તરફ ખસે છે. ડાબી બાજુ સ્થાન ન હોય તો જરૂરી zero ઉમેરો.",
+          "examples": [
+            "31.5 ÷ 10 = 3.15.",
+            "31.5 ÷ 100 = 0.315.",
+            "31.5 ÷ 1000 = 0.0315."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "48.2 ÷ 10 શોધો.",
+            "7.5 ÷ 100 શોધો.",
+            "63 ÷ 1000 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t12-decimal-divided-by-whole",
+          "title": "Division of Decimal Number by a Whole Number",
+          "aliases": [
+            "દશાંશ સંખ્યાનો પૂર્ણ સંખ્યા વડે ભાગાકાર",
+            "દશાંશનો પૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a decimal number by a non-zero whole number."
+          ],
+          "explanation": "દશાંશ સંખ્યાને પૂર્ણ સંખ્યાથી ભાગતી વખતે સામાન્ય long division કરો. Dividendના decimal pointની સીધી ઉપર quotientમાં decimal point મૂકો. જરૂર પડે તો dividendની જમણી બાજુ zero ઉમેરી શકાય.",
+          "examples": [
+            "6.4 ÷ 2 = 3.2.",
+            "25.5 ÷ 5 = 5.1."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 7.35 ÷ 3 = 2.45, કારણ કે 2.45 × 3 = 7.35."
+          ],
+          "practice_questions": [
+            "9.6 ÷ 4 શોધો.",
+            "18.75 ÷ 5 શોધો.",
+            "4.32 ÷ 8 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t13-decimal-divided-by-decimal",
+          "title": "Division of Decimal Number by Another Decimal Number",
+          "aliases": [
+            "દશાંશ સંખ્યાનો બીજી દશાંશ સંખ્યા વડે ભાગાકાર",
+            "બે દશાંશ સંખ્યાઓનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Convert a decimal divisor to a whole number before division."
+          ],
+          "explanation": "એક દશાંશ સંખ્યાને બીજી દશાંશ સંખ્યાથી ભાગવા માટે divisorમાં decimal પછી જેટલા અંક હોય એટલા સ્થાન decimal point જમણી તરફ ખસેડો. Dividendમાં પણ decimal point એટલા જ સ્થાન ખસેડવો જરૂરી છે. પછી સામાન્ય ભાગાકાર કરો.",
+          "examples": [
+            "25.5 ÷ 0.5 = 255 ÷ 5 = 51.",
+            "3.75 ÷ 1.5 = 37.5 ÷ 15 = 2.5."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 2.04 ÷ 0.12 = 204 ÷ 12 = 17."
+          ],
+          "practice_questions": [
+            "4.8 ÷ 0.6 શોધો.",
+            "7.2 ÷ 1.2 શોધો.",
+            "0.84 ÷ 0.07 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
         }
       ]
     },
