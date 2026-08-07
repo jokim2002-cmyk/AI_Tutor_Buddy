@@ -364,6 +364,7 @@ class SyllabusSource:
 class SyllabusTopic:
     topic_id: str
     title: str
+    aliases: tuple[str, ...] = ()
     learning_objectives: tuple[str, ...] = ()
     explanation: str = ""
     examples: tuple[str, ...] = ()
@@ -389,6 +390,7 @@ class SyllabusTopic:
         return cls(
             topic_id=clean_student_text(payload.get("topic_id"), max_length=100) or fallback_id,
             title=title,
+            aliases=values("aliases"),
             learning_objectives=values("learning_objectives"),
             explanation=clean_student_text(payload.get("explanation"), max_length=10_000),
             examples=values("examples"),
@@ -664,55 +666,70 @@ class SyllabusRepository:
             )
             for topic_index, topic in enumerate(chapter.topics):
                 topic_title = _normalize_syllabus_lookup_text(topic.title)
-                if not topic_title:
+                topic_terms: list[str] = []
+                for raw_term in (topic.title, *topic.aliases):
+                    normalized_term = _normalize_syllabus_lookup_text(raw_term)
+                    if normalized_term and normalized_term not in topic_terms:
+                        topic_terms.append(normalized_term)
+
+                if not topic_terms:
                     continue
 
-                specificity_words = len(topic_title.split())
-                specificity_chars = len(topic_title)
+                for topic_term in topic_terms:
+                    specificity_words = len(topic_term.split())
+                    specificity_chars = len(topic_term)
 
-                if _contains_syllabus_phrase(message_text, topic_title):
-                    exact_message = int(message_text == topic_title)
-                    score = (
-                        exact_message,
-                        specificity_words,
-                        specificity_chars,
-                        int(chapter_message_match),
-                        -((chapter_index * 1000) + topic_index),
-                    )
-                    message_candidates.append(
-                        (
-                            score,
-                            SyllabusTopicMatch(
-                                syllabus=syllabus,
-                                chapter=chapter,
-                                topic=topic,
-                                matched_by="message-topic-specific",
-                            ),
+                    if _contains_syllabus_phrase(message_text, topic_term):
+                        exact_message = int(message_text == topic_term)
+                        score = (
+                            exact_message,
+                            specificity_words,
+                            specificity_chars,
+                            int(chapter_message_match),
+                            -((chapter_index * 1000) + topic_index),
                         )
-                    )
+                        message_candidates.append(
+                            (
+                                score,
+                                SyllabusTopicMatch(
+                                    syllabus=syllabus,
+                                    chapter=chapter,
+                                    topic=topic,
+                                    matched_by=(
+                                        "message-topic-specific"
+                                        if topic_term == topic_title
+                                        else "message-topic-alias"
+                                    ),
+                                ),
+                            )
+                        )
 
-                context_match = bool(topic_context) and (
-                    topic_context == topic_title
-                    or _contains_syllabus_phrase(topic_context, topic_title)
-                )
-                if context_match:
-                    score = (
-                        int(topic_context == topic_title),
-                        specificity_words,
-                        specificity_chars,
-                        int(chapter_context_match),
+                    context_match = bool(topic_context) and (
+                        topic_context == topic_term
+                        or _contains_syllabus_phrase(topic_context, topic_term)
                     )
-                    context_candidates.append(
-                        (
-                            score,
-                            SyllabusTopicMatch(
-                                syllabus=syllabus,
-                                chapter=chapter,
-                                topic=topic,
-                                matched_by="context-topic-fallback",
-                            ),
+                    if context_match:
+                        score = (
+                            int(topic_context == topic_term),
+                            specificity_words,
+                            specificity_chars,
+                            int(chapter_context_match),
                         )
-                    )
+                        context_candidates.append(
+                            (
+                                score,
+                                SyllabusTopicMatch(
+                                    syllabus=syllabus,
+                                    chapter=chapter,
+                                    topic=topic,
+                                    matched_by=(
+                                        "context-topic-fallback"
+                                        if topic_term == topic_title
+                                        else "context-topic-alias"
+                                    ),
+                                ),
+                            )
+                        )
 
         if message_candidates:
             return max(message_candidates, key=lambda item: item[0])[1]

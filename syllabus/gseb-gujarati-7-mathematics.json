@@ -41,7 +41,11 @@
             "કયું મોટું છે: -4 કે -9? કારણ લખો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંક સંખ્યાઓ",
+            "પૂર્ણાંકો"
+          ]
         },
         {
           "topic_id": "ch01-t02-addition",
@@ -65,7 +69,11 @@
             "(-9) + 14 શોધો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો સરવાળો",
+            "પૂર્ણાંક સંખ્યાઓનો સરવાળો"
+          ]
         },
         {
           "topic_id": "ch01-t03-subtraction",
@@ -88,7 +96,11 @@
             "(-10) - (-13) શોધો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોની બાદબાકી",
+            "પૂર્ણાંક સંખ્યાઓની બાદબાકી"
+          ]
         },
         {
           "topic_id": "ch01-t04-multiplication",
@@ -111,7 +123,11 @@
             "15 × (-6) શોધો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો ગુણાકાર",
+            "પૂર્ણાંક સંખ્યાઓનો ગુણાકાર"
+          ]
         },
         {
           "topic_id": "ch01-t05-properties",
@@ -135,7 +151,11 @@
             "શું division commutative છે? 12 ÷ 3 અને 3 ÷ 12થી તપાસો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોની ક્રિયાઓના ગુણધર્મો",
+            "પૂર્ણાંક સંખ્યાઓના ગુણધર્મો"
+          ]
         },
         {
           "topic_id": "ch01-t06-division",
@@ -159,7 +179,11 @@
             "(-63) ÷ (-9) શોધો."
           ],
           "marks_pattern": "",
-          "content_origin": "teacher_authored"
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો ભાગાકાર",
+            "પૂર્ણાંક સંખ્યાઓનો ભાગાકાર"
+          ]
         }
       ]
     },
@@ -178,7 +202,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "અપૂર્ણાંક અને દશાંશ સંખ્યાઓ"
+          ]
         }
       ]
     },
@@ -197,7 +224,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "માહિતીનું નિયમન"
+          ]
         }
       ]
     },
@@ -216,7 +246,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સાદા સમીકરણ"
+          ]
         }
       ]
     },
@@ -235,7 +268,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "રેખા અને ખૂણા"
+          ]
         }
       ]
     },
@@ -254,7 +290,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ત્રિકોણ અને તેના ગુણધર્મો"
+          ]
         }
       ]
     },
@@ -273,7 +312,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "રાશિઓની તુલના"
+          ]
         }
       ]
     },
@@ -292,7 +334,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સંમેય સંખ્યાઓ"
+          ]
         }
       ]
     },
@@ -311,7 +356,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "પરિમિતિ અને ક્ષેત્રફળ"
+          ]
         }
       ]
     },
@@ -330,7 +378,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "બીજગણિતીય પદાવલિ"
+          ]
         }
       ]
     },
@@ -349,7 +400,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ઘાત અને ઘાતાંક"
+          ]
         }
       ]
     },
@@ -368,7 +422,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સમમિતિ"
+          ]
         }
       ]
     },
@@ -387,7 +444,10 @@
           "solutions": [],
           "practice_questions": [],
           "marks_pattern": "",
-          "content_origin": "metadata_only"
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ઘન આકારોનું પ્રત્યક્ષીકરણ"
+          ]
         }
       ]
     }
