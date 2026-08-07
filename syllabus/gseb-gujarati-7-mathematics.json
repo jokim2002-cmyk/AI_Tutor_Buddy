@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 7,
+  "subject": "Mathematics",
+  "textbook": "Std-7 Mathematics — Gujarati Medium",
+  "source": {
+    "title": "Std-7_Maths_Gujaratimedium.pdf",
+    "publisher": "Gujarat State School Textbook Board",
+    "edition": "Revised edition 2023; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=1a8YB-FIBNEfXKMnZm8TE1Ap-BU6cgUXx",
+    "acquired_on": "2026-08-08",
+    "official": true,
+    "notes": "Official GSSTB-linked textbook PDF independently verified. Chapter structure is source-aligned; tutoring explanations/examples/practice below are original teacher-authored material, not copied textbook prose."
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-integers",
+      "number": "1",
+      "title": "પૂર્ણાંક સંખ્યાઓ (Integers)",
+      "topics": [
+        {
+          "topic_id": "ch01-t01-integers",
+          "title": "Integers",
+          "learning_objectives": [
+            "Identify positive integers, negative integers and zero.",
+            "Compare integers using a number line.",
+            "Recognise opposites such as 5 and -5."
+          ],
+          "explanation": "પૂર્ણાંક સંખ્યાઓ (integers)માં 0, ધન પૂર્ણાંક 1, 2, 3, ... અને ઋણ પૂર્ણાંક -1, -2, -3, ... આવે છે. સંખ્યા રેખા પર જમણી બાજુની સંખ્યા મોટી હોય છે અને ડાબી બાજુની સંખ્યા નાની હોય છે. ઉદાહરણ તરીકે -2, -5 કરતાં મોટું છે કારણ કે -2 સંખ્યા રેખા પર -5ની જમણી બાજુ છે.",
+          "examples": [
+            "5 અને -5 એકબીજાના opposites છે; બંને 0થી સમાન અંતરે છે.",
+            "-3 < 1, કારણ કે -3 સંખ્યા રેખા પર 1ની ડાબી બાજુ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "નાનીથી મોટી ક્રમમાં ગોઠવો: 4, -2, 0, -7, 3.",
+            "-6 અને 6 વચ્ચે શું સંબંધ છે?",
+            "કયું મોટું છે: -4 કે -9? કારણ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-t02-addition",
+          "title": "Addition of Integers",
+          "learning_objectives": [
+            "Add integers with the same sign.",
+            "Add integers with different signs.",
+            "Use sign and magnitude correctly."
+          ],
+          "explanation": "પૂર્ણાંકોના સરવાળામાં બંને સંખ્યાનું ચિહ્ન એકસરખું હોય તો તેમની absolute values ઉમેરો અને એ જ ચિહ્ન રાખો. ચિહ્ન અલગ હોય તો મોટી absolute valueમાંથી નાની absolute value બાદ કરો અને મોટી absolute value ધરાવતી સંખ્યાનું ચિહ્ન રાખો.",
+          "examples": [
+            "(-4) + (-3) = -7.",
+            "(-8) + 13 = 5, કારણ કે 13 - 8 = 5 અને 13ની absolute value મોટી છે.",
+            "7 + (-10) = -3."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-12) + (-5) શોધો.",
+            "18 + (-25) શોધો.",
+            "(-9) + 14 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-t03-subtraction",
+          "title": "Subtraction of Integers",
+          "learning_objectives": [
+            "Convert subtraction into addition of the additive inverse.",
+            "Subtract positive and negative integers correctly."
+          ],
+          "explanation": "પૂર્ણાંકોમાં બાદબાકી કરવા માટે a - b ને a + (-b) તરીકે લખી શકાય છે. એટલે જે સંખ્યા બાદ કરવાની છે તેનું ચિહ્ન બદલીને સરવાળો કરો. ખાસ ધ્યાન રાખો કે negative સંખ્યા બાદ કરવાથી તે positive ઉમેરવા જેવું બને છે.",
+          "examples": [
+            "7 - (-4) = 7 + 4 = 11.",
+            "(-5) - 3 = (-5) + (-3) = -8.",
+            "(-6) - (-2) = (-6) + 2 = -4."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "12 - (-7) શોધો.",
+            "(-15) - 6 શોધો.",
+            "(-10) - (-13) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-t04-multiplication",
+          "title": "Multiplication of Integers",
+          "learning_objectives": [
+            "Apply sign rules for multiplication.",
+            "Multiply positive, negative and zero integers."
+          ],
+          "explanation": "પૂર્ણાંકોના ગુણાકારમાં ચિહ્નનો નિયમ સરળ છે: બંને ચિહ્ન સમાન હોય તો જવાબ positive, અને ચિહ્ન અલગ હોય તો જવાબ negative. કોઈપણ પૂર્ણાંકનો 0 સાથે ગુણાકાર 0 થાય છે.",
+          "examples": [
+            "(-6) × 4 = -24.",
+            "(-5) × (-3) = 15.",
+            "9 × 0 = 0."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-8) × 7 શોધો.",
+            "(-12) × (-4) શોધો.",
+            "15 × (-6) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-t05-properties",
+          "title": "Properties of Integer Operations",
+          "learning_objectives": [
+            "Recognise closure, commutative and associative properties.",
+            "Use additive and multiplicative identities.",
+            "Apply the distributive property."
+          ],
+          "explanation": "પૂર્ણાંકોમાં સરવાળો અને ગુણાકાર closure, commutative અને associative properties ધરાવે છે. 0 additive identity છે કારણ કે a + 0 = a, અને 1 multiplicative identity છે કારણ કે a × 1 = a. Distributive property મુજબ a × (b + c) = a×b + a×c. બાદબાકી અને ભાગાકાર સામાન્ય રીતે commutative કે associative નથી.",
+          "examples": [
+            "(-3) + 5 = 5 + (-3), એટલે addition commutative છે.",
+            "4 × [(-2) + 3] = (4×-2) + (4×3) = 4.",
+            "8 - 3 ≠ 3 - 8, એટલે subtraction commutative નથી."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "6 × [(-4) + 7] distributive propertyથી શોધો.",
+            "(-9) + 0 = ? કઈ identity property છે?",
+            "શું division commutative છે? 12 ÷ 3 અને 3 ÷ 12થી તપાસો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-t06-division",
+          "title": "Division of Integers",
+          "learning_objectives": [
+            "Apply sign rules for division.",
+            "Recognise that division by zero is undefined.",
+            "Recognise that integer division is not always closed."
+          ],
+          "explanation": "પૂર્ણાંકોના ભાગાકારમાં પણ ગુણાકાર જેવા sign rules લાગુ પડે છે: સમાન ચિહ્નોનો quotient positive અને અલગ ચિહ્નોનો quotient negative. 0થી ભાગાકાર કરી શકાતો નથી. બે પૂર્ણાંકોનો ભાગાકાર હંમેશા પૂર્ણાંક મળે જ એવું નથી; ઉદાહરણ તરીકે 5 ÷ 2 પૂર્ણાંક નથી.",
+          "examples": [
+            "(-24) ÷ 6 = -4.",
+            "(-24) ÷ (-6) = 4.",
+            "0 ÷ 5 = 0, પરંતુ 5 ÷ 0 undefined છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-42) ÷ 7 શોધો.",
+            "56 ÷ (-8) શોધો.",
+            "(-63) ÷ (-9) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-fractions-decimals",
+      "number": "2",
+      "title": "અપૂર્ણાંક અને દશાંશ સંખ્યાઓ (Fractions and Decimals)",
+      "topics": [
+        {
+          "topic_id": "ch02-t01-overview",
+          "title": "Fractions and Decimals",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-data-handling",
+      "number": "3",
+      "title": "માહિતીનું નિયમન (Data Handling)",
+      "topics": [
+        {
+          "topic_id": "ch03-t01-overview",
+          "title": "Data Handling",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-simple-equations",
+      "number": "4",
+      "title": "સાદા સમીકરણ (Simple Equations)",
+      "topics": [
+        {
+          "topic_id": "ch04-t01-overview",
+          "title": "Simple Equations",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-lines-angles",
+      "number": "5",
+      "title": "રેખા અને ખૂણા (Lines and Angles)",
+      "topics": [
+        {
+          "topic_id": "ch05-t01-overview",
+          "title": "Lines and Angles",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-triangle-properties",
+      "number": "6",
+      "title": "ત્રિકોણ અને તેના ગુણધર્મો (The Triangle and Its Properties)",
+      "topics": [
+        {
+          "topic_id": "ch06-t01-overview",
+          "title": "The Triangle and Its Properties",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-comparing-quantities",
+      "number": "7",
+      "title": "રાશિઓની તુલના (Comparing Quantities)",
+      "topics": [
+        {
+          "topic_id": "ch07-t01-overview",
+          "title": "Comparing Quantities",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-rational-numbers",
+      "number": "8",
+      "title": "સંમેય સંખ્યાઓ (Rational Numbers)",
+      "topics": [
+        {
+          "topic_id": "ch08-t01-overview",
+          "title": "Rational Numbers",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch09-perimeter-area",
+      "number": "9",
+      "title": "પરિમિતિ અને ક્ષેત્રફળ (Perimeter and Area)",
+      "topics": [
+        {
+          "topic_id": "ch09-t01-overview",
+          "title": "Perimeter and Area",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch10-algebraic-expressions",
+      "number": "10",
+      "title": "બીજગણિતીય પદાવલિ (Algebraic Expressions)",
+      "topics": [
+        {
+          "topic_id": "ch10-t01-overview",
+          "title": "Algebraic Expressions",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch11-exponents-powers",
+      "number": "11",
+      "title": "ઘાત અને ઘાતાંક (Exponents and Powers)",
+      "topics": [
+        {
+          "topic_id": "ch11-t01-overview",
+          "title": "Exponents and Powers",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch12-symmetry",
+      "number": "12",
+      "title": "સમમિતિ (Symmetry)",
+      "topics": [
+        {
+          "topic_id": "ch12-t01-overview",
+          "title": "Symmetry",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch13-solid-shapes",
+      "number": "13",
+      "title": "ઘન આકારોનું પ્રત્યક્ષીકરણ (Visualising Solid Shapes)",
+      "topics": [
+        {
+          "topic_id": "ch13-t01-overview",
+          "title": "Visualising Solid Shapes",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only"
+        }
+      ]
+    }
+  ]
+}

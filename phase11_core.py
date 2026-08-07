@@ -605,7 +605,8 @@ class SyllabusRepository:
         message: str,
         context: StudentLearningContext,
     ) -> SyllabusTopicMatch | None:
-        # Conservatively match one installed topic for the exact learning context.
+        # Prefer the student's explicit message over stale context and choose the
+        # most-specific matching topic instead of the first generic substring.
         syllabus = self.find(
             board=context.board,
             medium=context.medium,
@@ -619,7 +620,7 @@ class SyllabusRepository:
         chapter_context = _normalize_syllabus_lookup_text(context.current_chapter)
         topic_context = _normalize_syllabus_lookup_text(context.current_topic)
 
-        chapter_matches: list[tuple[SyllabusChapter, str]] = []
+        chapter_signals: dict[str, tuple[bool, bool]] = {}
         for chapter in syllabus.chapters:
             chapter_title = _normalize_syllabus_lookup_text(chapter.title)
             chapter_number = _normalize_syllabus_lookup_text(chapter.number)
@@ -648,39 +649,76 @@ class SyllabusRepository:
                         f"અધ્યાય {chapter.number}",
                     )
                 )
-            if context_match:
-                chapter_matches.append((chapter, "context-chapter"))
-            elif message_match:
-                chapter_matches.append((chapter, "message-chapter"))
+            chapter_signals[chapter.chapter_id] = (context_match, message_match)
 
-        candidate_chapters = (
-            chapter_matches
-            if chapter_matches
-            else [(chapter, "package-topic") for chapter in syllabus.chapters]
-        )
+        message_candidates: list[
+            tuple[tuple[int, int, int, int, int], SyllabusTopicMatch]
+        ] = []
+        context_candidates: list[
+            tuple[tuple[int, int, int, int], SyllabusTopicMatch]
+        ] = []
 
-        for chapter, chapter_reason in candidate_chapters:
-            for topic in chapter.topics:
+        for chapter_index, chapter in enumerate(syllabus.chapters):
+            chapter_context_match, chapter_message_match = chapter_signals.get(
+                chapter.chapter_id, (False, False)
+            )
+            for topic_index, topic in enumerate(chapter.topics):
                 topic_title = _normalize_syllabus_lookup_text(topic.title)
+                if not topic_title:
+                    continue
+
+                specificity_words = len(topic_title.split())
+                specificity_chars = len(topic_title)
+
+                if _contains_syllabus_phrase(message_text, topic_title):
+                    exact_message = int(message_text == topic_title)
+                    score = (
+                        exact_message,
+                        specificity_words,
+                        specificity_chars,
+                        int(chapter_message_match),
+                        -((chapter_index * 1000) + topic_index),
+                    )
+                    message_candidates.append(
+                        (
+                            score,
+                            SyllabusTopicMatch(
+                                syllabus=syllabus,
+                                chapter=chapter,
+                                topic=topic,
+                                matched_by="message-topic-specific",
+                            ),
+                        )
+                    )
+
                 context_match = bool(topic_context) and (
                     topic_context == topic_title
                     or _contains_syllabus_phrase(topic_context, topic_title)
                 )
-                message_match = _contains_syllabus_phrase(message_text, topic_title)
                 if context_match:
-                    return SyllabusTopicMatch(
-                        syllabus=syllabus,
-                        chapter=chapter,
-                        topic=topic,
-                        matched_by=f"{chapter_reason}+context-topic",
+                    score = (
+                        int(topic_context == topic_title),
+                        specificity_words,
+                        specificity_chars,
+                        int(chapter_context_match),
                     )
-                if message_match:
-                    return SyllabusTopicMatch(
-                        syllabus=syllabus,
-                        chapter=chapter,
-                        topic=topic,
-                        matched_by=f"{chapter_reason}+message-topic",
+                    context_candidates.append(
+                        (
+                            score,
+                            SyllabusTopicMatch(
+                                syllabus=syllabus,
+                                chapter=chapter,
+                                topic=topic,
+                                matched_by="context-topic-fallback",
+                            ),
+                        )
                     )
+
+        if message_candidates:
+            return max(message_candidates, key=lambda item: item[0])[1]
+
+        if context_candidates:
+            return max(context_candidates, key=lambda item: item[0])[1]
 
         return None
 
