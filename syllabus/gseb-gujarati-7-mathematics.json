@@ -550,17 +550,256 @@
         {
           "topic_id": "ch03-t01-overview",
           "title": "Data Handling",
-          "learning_objectives": [],
-          "explanation": "",
-          "examples": [],
+          "aliases": [
+            "માહિતીનું નિયમન",
+            "માહિતીનું સંચાલન"
+          ],
+          "learning_objectives": [
+            "Organise numerical data so that it is easier to read and compare.",
+            "Choose suitable representative values and graphical displays."
+          ],
+          "explanation": "માહિતીનું નિયમન એટલે એકત્ર કરેલી સંખ્યાત્મક માહિતી ગોઠવવી, તેનો સાર કાઢવો અને તેને સરળ રીતે સમજાય એવી રીતે રજૂ કરવી. આ માટે સરેરાશ, વિસ્તાર, બહુલક, મધ્યક, tally/frequency table અને bar graph જેવા સાધનો ઉપયોગી છે.",
+          "examples": [
+            "એક વર્ગના વિદ્યાર્થીઓના ગુણ ગોઠવીને average, mode અને median શોધી શકાય.",
+            "વિવિધ દિવસોના વેચાણને bar graphમાં દર્શાવીને તરત સરખામણી કરી શકાય."
+          ],
           "exercises": [],
           "solutions": [],
-          "practice_questions": [],
+          "practice_questions": [
+            "Data handling શા માટે ઉપયોગી છે?",
+            "એકત્ર કરેલી માહિતી રજૂ કરવાની બે રીત લખો.",
+            "Representative value શું બતાવે છે?"
+          ],
           "marks_pattern": "",
-          "content_origin": "metadata_only",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t02-representative-values",
+          "title": "Representative Values",
           "aliases": [
-            "માહિતીનું નિયમન"
-          ]
+            "પ્રતિનિધિ મૂલ્યો",
+            "પ્રતિનિધિ મૂલ્ય",
+            "Representative Value"
+          ],
+          "learning_objectives": [
+            "Understand why one value can be used to summarise a data set.",
+            "Distinguish common representative values such as mean, median and mode."
+          ],
+          "explanation": "ઘણી સંખ્યાઓની સંપૂર્ણ યાદી જોવાને બદલે ક્યારેક એક એવી સંખ્યા જોઈએ છે જે આખા data setનું સામાન્ય ચિત્ર આપે. આવી સંખ્યાને representative value કહી શકાય. Mean, median અને mode અલગ રીતે dataનું પ્રતિનિધિત્વ કરે છે.",
+          "examples": [
+            "5 બાળકોના ગુણ 40, 45, 50, 55, 60 હોય તો mean 50 આખા સમૂહનું મધ્યમ સ્તર બતાવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Representative valueનો હેતુ શું છે?",
+            "Mean, median અને modeમાંથી કયા representative values છે?",
+            "એક data set માટે એકથી વધુ representative values કેમ હોઈ શકે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t03-arithmetic-mean",
+          "title": "Arithmetic Mean",
+          "aliases": [
+            "ગાણિતિક સરેરાશ",
+            "સરેરાશ",
+            "અંકગણિતીય સરેરાશ",
+            "Mean",
+            "Average"
+          ],
+          "learning_objectives": [
+            "Calculate arithmetic mean from ungrouped data.",
+            "Use mean to compare small data sets."
+          ],
+          "explanation": "Arithmetic mean અથવા સરેરાશ શોધવા માટે બધા observationsનો સરવાળો કરો અને observationsની સંખ્યાથી ભાગો. સૂત્ર: Mean = observationsનો કુલ સરવાળો ÷ observationsની સંખ્યા.",
+          "examples": [
+            "4, 5, 3, 4, 4 નો mean = (4+5+3+4+4) ÷ 5 = 20 ÷ 5 = 4.",
+            "10, 20, 30 નો mean = 60 ÷ 3 = 20."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 12, 15, 9, 14. કુલ = 50 અને observations = 4, તેથી mean = 50 ÷ 4 = 12.5."
+          ],
+          "practice_questions": [
+            "6, 8, 10, 12 નો mean શોધો.",
+            "15, 20, 25, 30, 35 નો mean શોધો.",
+            "4 સંખ્યાઓનો સરવાળો 72 હોય તો mean કેટલો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t04-range",
+          "title": "Range",
+          "aliases": [
+            "વિસ્તાર",
+            "માહિતીનો વિસ્તાર",
+            "રેન્જ"
+          ],
+          "learning_objectives": [
+            "Calculate the range of a data set.",
+            "Use range as a simple measure of spread."
+          ],
+          "explanation": "Range data કેટલું ફેલાયેલું છે તેનો સરળ માપ છે. Range = સૌથી મોટી કિંમત − સૌથી નાની કિંમત. Range મોટો હોય તો values વધારે ફેલાયેલી હોય છે.",
+          "examples": [
+            "23, 26, 28, 32, 35 માટે range = 35 − 23 = 12.",
+            "5, 5, 6, 6 માટે range = 6 − 5 = 1."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "12, 18, 9, 25, 14 નો range શોધો.",
+            "સૌથી મોટી value 80 અને નાની value 35 હોય તો range કેટલો?",
+            "Range 0 ક્યારે મળે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t05-mode",
+          "title": "Mode",
+          "aliases": [
+            "બહુલક",
+            "મોડ",
+            "સૌથી વધુ વાર આવતું મૂલ્ય"
+          ],
+          "learning_objectives": [
+            "Identify the mode of a data set.",
+            "Recognise data sets with one mode, more than one mode or no mode."
+          ],
+          "explanation": "Mode અથવા બહુલક એ value છે જે data setમાં સૌથી વધુ વાર આવે છે. જો બે values સમાન સૌથી વધારે વાર આવે તો data setને બે modes હોઈ શકે. કોઈ value repeat ન થાય તો mode ન પણ હોય.",
+          "examples": [
+            "2, 3, 3, 4, 5 માં mode = 3.",
+            "1, 1, 2, 2, 3 માં 1 અને 2 બંને modes છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4, 6, 6, 7, 8, 6, 9 નો mode શોધો.",
+            "2, 3, 4, 5 માં mode છે કે નહીં?",
+            "1, 2, 2, 3, 3 માં modes લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t06-frequency-tally",
+          "title": "Frequency Tables and Tally Marks",
+          "aliases": [
+            "આવૃત્તિ કોષ્ટક અને ટેલી માર્ક્સ",
+            "આવૃત્તિ કોષ્ટક",
+            "ટેલી માર્ક્સ",
+            "Tally Marks",
+            "Tally Mark",
+            "Frequency Table",
+            "Frequency Tables"
+          ],
+          "learning_objectives": [
+            "Organise repeated observations using tally marks.",
+            "Convert tally marks into frequencies."
+          ],
+          "explanation": "ઘણી observationsમાં દરેક value કેટલી વાર આવે છે તે ગણવા frequency table ઉપયોગી છે. Tally marksમાં સામાન્ય રીતે પાંચમી ગણતરી પહેલાંની ચાર vertical marksને કાપતી diagonal markથી બતાવવામાં આવે છે, જેથી ગણતરી ઝડપથી થઈ શકે.",
+          "examples": [
+            "Data: 2, 2, 3, 3, 3, 4. Frequencies: 2→2, 3→3, 4→1."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "1, 2, 2, 2, 3, 3, 4 માટે frequency table બનાવો.",
+            "Tally marksમાં 12 observations કેવી રીતે જૂથબદ્ધ કરશો?",
+            "Frequency અને observation વચ્ચે શું ફરક છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t07-median",
+          "title": "Median",
+          "aliases": [
+            "મધ્યક",
+            "મીડિયન"
+          ],
+          "learning_objectives": [
+            "Find the median of ordered data.",
+            "Handle odd and even numbers of observations."
+          ],
+          "explanation": "Median અથવા મધ્યક dataને ascending અથવા descending orderમાં ગોઠવ્યા પછી મધ્યમાં આવતી value છે. Observationsની સંખ્યા odd હોય તો એક middle value મળે. Even હોય તો બે middle valuesનો mean median બને છે.",
+          "examples": [
+            "3, 5, 7, 9, 11 માં median = 7.",
+            "2, 4, 6, 8 માં median = (4+6) ÷ 2 = 5."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 9, 2, 7, 5, 4 ને પહેલા 2, 4, 5, 7, 9 ગોઠવો; મધ્યની value 5 છે, તેથી median = 5."
+          ],
+          "practice_questions": [
+            "1, 3, 5, 7, 9, 11, 13 નો median શોધો.",
+            "4, 8, 10, 12 નો median શોધો.",
+            "Median શોધતાં પહેલાં data ગોઠવવું કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t08-bar-graph-scale",
+          "title": "Bar Graphs and Choosing a Scale",
+          "aliases": [
+            "લંબઆલેખ અને પ્રમાણમાપ",
+            "બાર ગ્રાફ અને સ્કેલ",
+            "પ્રમાણમાપ પસંદ કરવું",
+            "Bar Graph",
+            "Bar Graphs",
+            "Bar Graph Scale",
+            "Choosing a Scale"
+          ],
+          "learning_objectives": [
+            "Read and draw a bar graph.",
+            "Choose a sensible scale for the axis."
+          ],
+          "explanation": "Bar graphમાં સમાન પહોળાઈના bars data values દર્શાવે છે. Axis પર યોગ્ય scale પસંદ કરવાથી graph વાંચવો સરળ બને છે. Scale એવી હોવી જોઈએ કે values graphમાં સ્પષ્ટ રીતે fit થાય અને દરેક unitનો અર્થ સતત રહે.",
+          "examples": [
+            "જો values 100થી 600 વચ્ચે હોય તો 1 division = 100 જેવી scale યોગ્ય હોઈ શકે.",
+            "જો values 10, 20, 30, 40 હોય તો 1 division = 10 પસંદ કરી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "50, 100, 150, 200 values માટે એક યોગ્ય scale સૂચવો.",
+            "Bar graphમાં barsની પહોળાઈ સમાન કેમ રાખીએ?",
+            "Scale 1 division = 5 હોય તો 30 માટે કેટલા divisions જોઈએ?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t09-double-bar-graph",
+          "title": "Double Bar Graph",
+          "aliases": [
+            "દ્વિ લંબઆલેખ",
+            "ડબલ બાર ગ્રાફ",
+            "દ્વિ-લંબ આલેખ",
+            "Double Bar Graphs"
+          ],
+          "learning_objectives": [
+            "Compare two related data series using a double bar graph.",
+            "Read legends and compare paired bars."
+          ],
+          "explanation": "Double bar graphમાં દરેક category માટે બે bars બાજુબાજુ મુકાય છે જેથી બે related data seriesની સીધી સરખામણી થઈ શકે. અલગ series ઓળખવા legend જરૂરી છે અને બંને series માટે એક જ scale રાખવી જોઈએ.",
+          "examples": [
+            "એક જ મહિનામાં બે શહેરોના વરસાદની સરખામણી double bar graphથી કરી શકાય.",
+            "બે termsમાં વિદ્યાર્થીઓના marks category પ્રમાણે compare કરી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Double bar graph ક્યારે single bar graph કરતાં વધારે ઉપયોગી છે?",
+            "Legendનો ઉપયોગ શું છે?",
+            "બે series માટે અલગ scale રાખવી યોગ્ય છે? કારણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
         }
       ]
     },
