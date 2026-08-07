@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-08-07",
+  "policy": {
+    "content_copying_default": "blocked_until_reuse_rights_verified",
+    "third_party_mirrors": "not_allowed_as_production_sources",
+    "required_fingerprint": "sha256",
+    "required_metadata": [
+      "authority",
+      "source_url",
+      "academic_year",
+      "edition_or_revision",
+      "reuse_status",
+      "license_reference"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "gseb-board-official",
+      "board": "GSEB",
+      "authority": "Gujarat Secondary and Higher Secondary Education Board",
+      "source_url": "https://website.gseb.org/",
+      "standards": [9, 10],
+      "mediums": ["Gujarati", "English", "Hindi"],
+      "content_scope": "board notices, curriculum-linked resources and question banks",
+      "academic_year": "2026-27",
+      "review_status": "approved_for_metadata",
+      "reuse_status": "metadata_only",
+      "license_reference": "",
+      "sha256_required": true,
+      "notes": "Use for board identity, current notices and source discovery. Do not copy content into production packages without explicit reuse rights."
+    },
+    {
+      "source_id": "gsbstb-textbook-portal",
+      "board": "GSEB",
+      "authority": "Gujarat State School Textbook Board",
+      "source_url": "https://gsbstb.online/",
+      "standards": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "mediums": ["Gujarati", "English", "Hindi", "Other"],
+      "content_scope": "official textbook catalog and textbook distribution portal",
+      "academic_year": "2026-27",
+      "review_status": "approved_for_metadata",
+      "reuse_status": "verification_required",
+      "license_reference": "",
+      "sha256_required": true,
+      "notes": "Authoritative discovery root for Gujarat textbooks. Content reuse permission or licensing must be verified before importing textbook text."
+    },
+    {
+      "source_id": "cbse-secondary-curriculum-2026-27",
+      "board": "CBSE",
+      "authority": "Central Board of Secondary Education Academics Unit",
+      "source_url": "https://cbseacademic.nic.in/curriculum_2027.html",
+      "standards": [9, 10],
+      "mediums": ["English", "Hindi", "Gujarati", "Other"],
+      "content_scope": "detailed secondary curriculum and subject syllabi",
+      "academic_year": "2026-27",
+      "review_status": "approved_for_metadata",
+      "reuse_status": "metadata_only",
+      "license_reference": "",
+      "sha256_required": true,
+      "notes": "Current detailed CBSE curriculum source for Classes IX-X. It does not establish complete Classes I-VIII subject coverage."
+    },
+    {
+      "source_id": "ncert-textbook-catalog",
+      "board": "CBSE",
+      "authority": "National Council of Educational Research and Training",
+      "source_url": "https://ncert.nic.in/textbook.php",
+      "standards": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "mediums": ["English", "Hindi", "Urdu", "Other"],
+      "content_scope": "official textbook catalog and chapter PDF discovery",
+      "academic_year": "current published catalog",
+      "review_status": "approved_for_metadata",
+      "reuse_status": "verification_required",
+      "license_reference": "",
+      "sha256_required": true,
+      "notes": "Official NCERT textbook discovery root. Download availability does not by itself grant redistribution or derivative-content rights."
+    }
+  ]
+}
