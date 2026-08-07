@@ -517,6 +517,37 @@ class BoardSyllabus:
         }
 
 
+def _normalize_syllabus_lookup_text(value: object) -> str:
+    text = clean_student_text(value, max_length=4_000).casefold()
+    return re.sub(r"[^\w]+", " ", text, flags=re.UNICODE).strip()
+
+
+def _contains_syllabus_phrase(haystack: str, needle: str) -> bool:
+    if not haystack or not needle:
+        return False
+    return f" {needle} " in f" {haystack} "
+
+
+@dataclass(frozen=True)
+class SyllabusTopicMatch:
+    syllabus: BoardSyllabus
+    chapter: SyllabusChapter
+    topic: SyllabusTopic
+    matched_by: str
+
+    @property
+    def has_validated_content(self) -> bool:
+        return self.topic.content_origin != "metadata_only" and any(
+            (
+                self.topic.explanation,
+                self.topic.examples,
+                self.topic.exercises,
+                self.topic.solutions,
+                self.topic.practice_questions,
+            )
+        )
+
+
 class SyllabusRepository:
     def __init__(self, root: str | Path):
         self.root = Path(root)
@@ -568,6 +599,91 @@ class SyllabusRepository:
                 return syllabus
         return None
 
+    def lookup_topic(
+        self,
+        *,
+        message: str,
+        context: StudentLearningContext,
+    ) -> SyllabusTopicMatch | None:
+        # Conservatively match one installed topic for the exact learning context.
+        syllabus = self.find(
+            board=context.board,
+            medium=context.medium,
+            standard=context.standard,
+            subject=context.current_subject,
+        )
+        if syllabus is None:
+            return None
+
+        message_text = _normalize_syllabus_lookup_text(message)
+        chapter_context = _normalize_syllabus_lookup_text(context.current_chapter)
+        topic_context = _normalize_syllabus_lookup_text(context.current_topic)
+
+        chapter_matches: list[tuple[SyllabusChapter, str]] = []
+        for chapter in syllabus.chapters:
+            chapter_title = _normalize_syllabus_lookup_text(chapter.title)
+            chapter_number = _normalize_syllabus_lookup_text(chapter.number)
+            context_aliases = {
+                chapter_title,
+                chapter_number,
+                _normalize_syllabus_lookup_text(f"chapter {chapter.number}"),
+                _normalize_syllabus_lookup_text(f"chap {chapter.number}"),
+                _normalize_syllabus_lookup_text(f"ch {chapter.number}"),
+                _normalize_syllabus_lookup_text(f"પાઠ {chapter.number}"),
+                _normalize_syllabus_lookup_text(f"અધ્યાય {chapter.number}"),
+            }
+            context_match = bool(chapter_context) and chapter_context in context_aliases
+            message_match = _contains_syllabus_phrase(message_text, chapter_title)
+            if chapter_number:
+                message_match = message_match or any(
+                    _contains_syllabus_phrase(
+                        message_text,
+                        _normalize_syllabus_lookup_text(prefix),
+                    )
+                    for prefix in (
+                        f"chapter {chapter.number}",
+                        f"chap {chapter.number}",
+                        f"ch {chapter.number}",
+                        f"પાઠ {chapter.number}",
+                        f"અધ્યાય {chapter.number}",
+                    )
+                )
+            if context_match:
+                chapter_matches.append((chapter, "context-chapter"))
+            elif message_match:
+                chapter_matches.append((chapter, "message-chapter"))
+
+        candidate_chapters = (
+            chapter_matches
+            if chapter_matches
+            else [(chapter, "package-topic") for chapter in syllabus.chapters]
+        )
+
+        for chapter, chapter_reason in candidate_chapters:
+            for topic in chapter.topics:
+                topic_title = _normalize_syllabus_lookup_text(topic.title)
+                context_match = bool(topic_context) and (
+                    topic_context == topic_title
+                    or _contains_syllabus_phrase(topic_context, topic_title)
+                )
+                message_match = _contains_syllabus_phrase(message_text, topic_title)
+                if context_match:
+                    return SyllabusTopicMatch(
+                        syllabus=syllabus,
+                        chapter=chapter,
+                        topic=topic,
+                        matched_by=f"{chapter_reason}+context-topic",
+                    )
+                if message_match:
+                    return SyllabusTopicMatch(
+                        syllabus=syllabus,
+                        chapter=chapter,
+                        topic=topic,
+                        matched_by=f"{chapter_reason}+message-topic",
+                    )
+
+        return None
+
     def overall_coverage(self, board: str | None = None) -> dict[str, Any]:
         syllabi = self.all(board=board)
         topics = sum(item.coverage()["topics"] for item in syllabi)
@@ -585,6 +701,71 @@ class SyllabusRepository:
 
 GSEBSyllabus = BoardSyllabus
 GSEBSyllabusRepository = SyllabusRepository
+
+
+def render_syllabus_match(
+    match: SyllabusTopicMatch,
+    *,
+    context: StudentLearningContext,
+    message: str,
+) -> str:
+    # Render validated local syllabus content without changing its origin claim.
+    syllabus = match.syllabus
+    topic = match.topic
+
+    if not match.has_validated_content:
+        return (
+            f"{topic.title} is listed in the installed {syllabus.board} "
+            f"{syllabus.medium} Standard {syllabus.standard} {syllabus.subject} syllabus, "
+            "but a validated local explanation for this topic is not installed yet. "
+            "I will not invent textbook content or label an AI-generated answer as official."
+        )
+
+    requested = _normalize_syllabus_lookup_text(message)
+    sections: list[str] = [topic.title]
+
+    if context.learning_mode == LearningMode.REVISION.value and topic.learning_objectives:
+        sections.append(
+            "Key objectives: " + "; ".join(topic.learning_objectives[:3])
+        )
+
+    if topic.explanation:
+        sections.append(topic.explanation)
+
+    wants_solution = any(
+        token in requested
+        for token in ("solution", "solve", "answer", "ઉકેલ", "हल")
+    )
+    wants_practice = any(
+        token in requested
+        for token in ("practice", "quiz", "mcq", "exercise", "પ્રેક્ટિસ", "अभ्यास")
+    )
+
+    if wants_solution and topic.solutions:
+        sections.append("Validated solution: " + topic.solutions[0])
+    elif wants_practice and topic.practice_questions:
+        questions = "\n".join(
+            f"{index}. {question}"
+            for index, question in enumerate(topic.practice_questions[:3], start=1)
+        )
+        sections.append("Practice:\n" + questions)
+    elif topic.examples:
+        sections.append("Example: " + topic.examples[0])
+
+    if context.learning_mode == LearningMode.EXAM.value and topic.marks_pattern:
+        sections.append("Marks pattern: " + topic.marks_pattern)
+
+    origin_label = {
+        "official": "Official source content",
+        "teacher_authored": "Teacher-authored content",
+        "ai_generated": "AI-generated practice content",
+    }.get(topic.content_origin, "Validated local content")
+    sections.append(
+        f"Source type: {origin_label}. "
+        f"{syllabus.textbook}; edition {syllabus.source.edition}."
+    )
+
+    return "\n\n".join(section for section in sections if section).strip()
 
 
 SUBJECT_ALIASES = {

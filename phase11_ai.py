@@ -24,6 +24,8 @@ if load_dotenv is not None:
 from phase11_core import (
     AttachmentRecord,
     StudentLearningContext,
+    SyllabusRepository,
+    render_syllabus_match,
     attachment_prompt,
     build_tutor_system_instruction,
     classify_instant_intent,
@@ -225,6 +227,7 @@ class GyanVerseAIService:
     tts_timeout_ms: int = 12_000
     tts_backend: str = "local-first"
     tts_cache_dir: Path | None = None
+    syllabus_repository: SyllabusRepository | None = None
     on_segment_failed: Callable[[TutorVoiceSegment], None] | None = None
     _client: Any = field(default=None, init=False, repr=False)
     _tts_client: Any = field(default=None, init=False, repr=False)
@@ -439,6 +442,71 @@ class GyanVerseAIService:
     def disable_online_for_session(self, reason: str) -> None:
         self.defer_online_after_failure(reason)
 
+    def _local_syllabus_answer(
+        self,
+        *,
+        message: str,
+        context: StudentLearningContext,
+        attachments: Sequence[AttachmentRecord] = (),
+        t_start: float | None = None,
+    ) -> str | None:
+        if attachments or self.syllabus_repository is None:
+            return None
+        match = self.syllabus_repository.lookup_topic(
+            message=message,
+            context=context,
+        )
+        if match is None:
+            return None
+
+        if t_start is None:
+            t_start = time.perf_counter()
+        t_format_start = time.perf_counter()
+        raw_answer = render_syllabus_match(
+            match,
+            context=context,
+            message=message,
+        )
+        answer = format_tutor_response(
+            raw_answer,
+            student_message=message,
+        )
+        t_end = time.perf_counter()
+        route = (
+            "local-syllabus"
+            if match.has_validated_content
+            else "local-syllabus-missing-content"
+        )
+        backend = (
+            "local syllabus"
+            if match.has_validated_content
+            else "local syllabus metadata"
+        )
+
+        self.last_backend = backend
+        self.last_error = ""
+        self._history.append((message or "[syllabus request]", answer))
+        self._history = self._history[-self.max_history_turns :]
+        self.last_metrics = TutorLatencyMetrics(
+            route=route,
+            request_start_ms=t_start * 1000.0,
+            prompt_build_ms=0.0,
+            attachment_prepare_ms=0.0,
+            provider_first_chunk_ms=0.0,
+            ui_first_visible_ms=0.0,
+            provider_complete_ms=0.0,
+            formatting_ms=(t_end - t_format_start) * 1000.0,
+            final_render_ms=0.0,
+            provider_ms=0.0,
+            total_ms=(t_end - t_start) * 1000.0,
+            backend=backend,
+            fallback_used=False,
+            timed_out=False,
+            stream_used=False,
+            chunk_count=1,
+        )
+        return answer
+
     def offline_answer(
         self,
         *,
@@ -454,6 +522,14 @@ class GyanVerseAIService:
     ) -> str:
         if t_start is None:
             t_start = time.perf_counter()
+        syllabus_answer = self._local_syllabus_answer(
+            message=message,
+            context=context,
+            attachments=attachments,
+            t_start=t_start,
+        )
+        if syllabus_answer is not None:
+            return syllabus_answer
         req_start_ms = t_start * 1000.0
         route_label = (
             "timeout-fallback" if timed_out else ("provider-error-fallback" if reason else "offline")
@@ -537,6 +613,15 @@ class GyanVerseAIService:
                 self._history.append((clean_msg or intent, answer))
                 self._history = self._history[-self.max_history_turns :]
                 return answer
+
+        syllabus_answer = self._local_syllabus_answer(
+            message=clean_msg,
+            context=context,
+            attachments=attachments,
+            t_start=t_start,
+        )
+        if syllabus_answer is not None:
+            return syllabus_answer
 
         if not self.configured:
             if self._client is None or types is None:
@@ -675,6 +760,19 @@ class GyanVerseAIService:
                 if callable(on_chunk):
                     on_chunk(answer, answer)
                 return self.ask(message=message, context=context, attachments=attachments)
+
+        syllabus_answer = self._local_syllabus_answer(
+            message=clean_msg,
+            context=context,
+            attachments=attachments,
+            t_start=t_start,
+        )
+        if syllabus_answer is not None:
+            if callable(on_chunk):
+                on_chunk(syllabus_answer, syllabus_answer)
+            if callable(on_first_visible):
+                on_first_visible(self.last_metrics.total_ms)
+            return syllabus_answer
 
         if not self.configured or not hasattr(
             getattr(self._client, "models", None), "generate_content_stream"

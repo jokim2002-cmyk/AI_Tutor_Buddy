@@ -126,7 +126,7 @@ def main(page: ft.Page) -> None:
     attachment_store = HomeworkAttachmentStore(DATA_DIR / "homework_attachments")
     syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
     engine = TutorEngine(db_path=DATA_DIR / "ai_tutor.db")
-    ai_service = GyanVerseAIService()
+    ai_service = GyanVerseAIService(syllabus_repository=syllabus_repo)
     session_id = active_conversation.conversation_id
 
     firebase_config = FirebaseConfig.from_env()
@@ -738,41 +738,88 @@ def main(page: ft.Page) -> None:
                     )
                 )
             )
+        coverage_cards: list[ft.Control] = [
+            ft.Container(
+                content=metric(
+                    "Installed syllabi",
+                    str(coverage["syllabi"]),
+                    "Validated JSON packages",
+                ),
+                width=210,
+            ),
+            ft.Container(
+                content=metric(
+                    "Topics",
+                    str(coverage["topics"]),
+                    "Structured hierarchy",
+                ),
+                width=210,
+            ),
+            ft.Container(
+                content=metric(
+                    "Content coverage",
+                    f"{coverage['coverage_percent']}%",
+                    "Any validated content",
+                ),
+                width=210,
+            ),
+            ft.Container(
+                content=metric(
+                    "Official coverage",
+                    f"{coverage['official_coverage_percent']}%",
+                    "Official-source only",
+                ),
+                width=210,
+            ),
+        ]
+        coverage_grid = ft.Row(
+            controls=coverage_cards,
+            wrap=True,
+            spacing=10,
+            run_spacing=10,
+            vertical_alignment=ft.CrossAxisAlignment.START,
+        )
+        installed_packages = ft.Column(
+            controls=installed_controls,
+            spacing=8,
+            tight=True,
+        )
+        syllabus_content = ft.Column(
+            controls=[
+                ft.Row(
+                    controls=[
+                        ft.ElevatedButton(
+                            "Import validated JSON",
+                            icon=ft.Icons.UPLOAD_FILE_OUTLINED,
+                            on_click=import_syllabus,
+                        ),
+                        ft.Text(
+                            "Only GSEB and CBSE packages with source, edition and content-origin metadata are accepted.",
+                            size=10,
+                            color=COLOR_MUTED,
+                        ),
+                    ],
+                    wrap=True,
+                    spacing=10,
+                    run_spacing=8,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+                coverage_grid,
+                ft.Text(
+                    "Installed syllabus packages",
+                    size=15,
+                    weight=ft.FontWeight.BOLD,
+                    color=COLOR_TEXT,
+                ),
+                installed_packages,
+            ],
+            spacing=12,
+            tight=True,
+        )
         return page_panel(
             "Syllabus Coverage",
             "Official sources and AI-generated practice remain clearly separated.",
-            ft.Column(
-                [
-                    ft.Row(
-                        [
-                            ft.ElevatedButton(
-                                "Import validated JSON",
-                                icon=ft.Icons.UPLOAD_FILE_OUTLINED,
-                                on_click=import_syllabus,
-                            ),
-                            ft.Text(
-                                "Only GSEB and CBSE packages with source, edition and content-origin metadata are accepted.",
-                                size=10,
-                                color=COLOR_MUTED,
-                                expand=True,
-                            ),
-                        ],
-                        wrap=True,
-                    ),
-                    ft.ResponsiveRow(
-                        [
-                            ft.Container(metric("Installed syllabi", str(coverage["syllabi"]), "Validated JSON packages"), col={"xs": 6, "md": 3}),
-                            ft.Container(metric("Topics", str(coverage["topics"]), "Structured hierarchy"), col={"xs": 6, "md": 3}),
-                            ft.Container(metric("Content coverage", f"{coverage['coverage_percent']}%", "Any validated content"), col={"xs": 6, "md": 3}),
-                            ft.Container(metric("Official coverage", f"{coverage['official_coverage_percent']}%", "Official-source only"), col={"xs": 6, "md": 3}),
-                        ],
-                        spacing=10,
-                        run_spacing=10,
-                    ),
-                    ft.Column(installed_controls, spacing=8),
-                ],
-                spacing=12,
-            ),
+            syllabus_content,
         )
 
     def build_settings() -> ft.Control:
