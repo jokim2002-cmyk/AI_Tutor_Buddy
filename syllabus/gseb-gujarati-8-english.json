@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 8,
+  "subject": "English",
+  "textbook": "Std-8 English Second Language 1st Semester",
+  "source": {
+    "title": "Std-8 English Second Language 1St Sem",
+    "publisher": "Gujarat State School Textbook Board",
+    "edition": "First edition 2014; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=1D9hb8FX5LRxasExGI2T6NOnsZV2yTHHp",
+    "official": true
+  },
+  "chapters": [
+    {
+      "chapter_id": "unit01-q-for-question",
+      "number": "1",
+      "title": "Q for Question",
+      "topics": [
+        {
+          "topic_id": "unit01-overview",
+          "title": "Q for Question",
+          "aliases": [
+            "Q for Question",
+            "Questions",
+            "Question Forms",
+            "WH Questions",
+            "Wh Questions",
+            "Interrogative Sentences"
+          ],
+          "learning_objectives": [
+            "Understand how questions are formed in everyday English.",
+            "Use suitable question words and sentence patterns."
+          ],
+          "explanation": "This unit focuses on asking for information clearly. A question usually changes word order or uses a question word such as who, what, when, where, why or how. The correct form depends on the tense and the information being requested.",
+          "examples": [
+            "Where do you live? asks about place.",
+            "When did the train arrive? asks about time.",
+            "Who is your science teacher? asks about a person."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Make a question to ask someone's place of birth.",
+            "Change 'You play cricket.' into a yes/no question.",
+            "Write one question each using who, where and why."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "unit02-lmbdb",
+      "number": "2",
+      "title": "LMBDB: Learn More, Be Brighter",
+      "topics": [
+        {
+          "topic_id": "unit02-overview",
+          "title": "LMBDB: Learn More, Be Brighter",
+          "aliases": [
+            "LMBDB",
+            "Learn More Be Brighter",
+            "Learn More, Be Brighter",
+            "Learning and Knowledge",
+            "Importance of Learning"
+          ],
+          "learning_objectives": [
+            "Understand ideas related to learning, knowledge and personal growth.",
+            "Use English to describe how learning helps us improve."
+          ],
+          "explanation": "This unit develops reading and communication around the value of learning. The key idea is that knowledge grows when we stay curious, read, observe, ask questions and use what we learn in real situations.",
+          "examples": [
+            "Reading different kinds of books can expand vocabulary and ideas.",
+            "Asking a clear question is often the first step toward learning something new."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Write three habits that can make a learner stronger.",
+            "Explain in two sentences why curiosity is useful.",
+            "Use the word 'knowledge' in your own sentence."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "unit03-what-were-you-doing",
+      "number": "3",
+      "title": "What Were You Doing?",
+      "topics": [
+        {
+          "topic_id": "unit03-overview",
+          "title": "What Were You Doing?",
+          "aliases": [
+            "What Were You Doing",
+            "Past Continuous",
+            "Past Continuous Tense",
+            "Was Were Ing",
+            "Actions in Progress in the Past"
+          ],
+          "learning_objectives": [
+            "Use the past continuous tense for actions in progress in the past.",
+            "Form affirmative, negative and question sentences with was/were plus verb-ing."
+          ],
+          "explanation": "The past continuous tense describes an action that was in progress at a particular time in the past. Its common structure is subject + was/were + verb-ing. Use 'was' with I/he/she/it and 'were' with you/we/they.",
+          "examples": [
+            "I was reading at 8 p.m.",
+            "They were playing when it started to rain.",
+            "Were you sleeping at ten o'clock?"
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Complete: She ___ (study) at 7 p.m.",
+            "Change 'They were running.' into a question.",
+            "Write one past-continuous sentence about yesterday evening."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "unit04-sun-tour",
+      "number": "4",
+      "title": "Sun-Tour",
+      "topics": [
+        {
+          "topic_id": "unit04-overview",
+          "title": "Sun-Tour",
+          "aliases": [
+            "Sun Tour",
+            "Sun-Tour",
+            "Travel and Tour",
+            "Tour and Travel",
+            "Travel English"
+          ],
+          "learning_objectives": [
+            "Use practical English related to travel, places and planning a tour.",
+            "Describe a journey or place using clear sequence and suitable vocabulary."
+          ],
+          "explanation": "This unit uses travel as a context for communication. Useful travel English includes describing places, asking for directions, discussing a plan, talking about time and distance, and narrating events in a sensible order.",
+          "examples": [
+            "First we visited the museum, and then we went to the lake.",
+            "How far is the station from here?",
+            "We are planning to leave early in the morning."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Write four sentences about a short tour.",
+            "Make a question asking for directions to a bus stand.",
+            "Use first, then and finally in three connected sentences."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}
