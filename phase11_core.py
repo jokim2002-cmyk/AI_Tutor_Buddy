@@ -837,6 +837,10 @@ SUBJECT_ALIASES = {
     "ગુજરાતી": "Gujarati",
     "hindi": "Hindi",
     "social science": "Social Science",
+    "social studies": "Social Science",
+    "sst": "Social Science",
+    "સામાજિક વિજ્ઞાન": "Social Science",
+    "સામાજિકવિજ્ઞાન": "Social Science",
 }
 
 
@@ -850,11 +854,15 @@ def detect_context_from_message(
     changes: dict[str, Any] = {}
     detected: dict[str, str] = {}
 
+    subject_matches: list[tuple[int, str, str]] = []
     for alias, canonical in SUBJECT_ALIASES.items():
         if re.search(rf"(?<!\w){re.escape(alias.casefold())}(?!\w)", lowered):
-            changes["current_subject"] = canonical
-            detected["subject"] = canonical
-            break
+            subject_matches.append((len(alias), alias, canonical))
+
+    if subject_matches:
+        _, _, canonical = max(subject_matches, key=lambda item: item[0])
+        changes["current_subject"] = canonical
+        detected["subject"] = canonical
 
     chapter_match = re.search(
         r"(?:chapter|chap|ch|પાઠ|અધ્યાય)\s*(?:number|no\.?|નંબર)?\s*[:#-]?\s*([\w.-]+)",
