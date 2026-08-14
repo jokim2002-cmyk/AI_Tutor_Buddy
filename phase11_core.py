@@ -371,6 +371,7 @@ class SyllabusTopic:
     exercises: tuple[str, ...] = ()
     solutions: tuple[str, ...] = ()
     practice_questions: tuple[str, ...] = ()
+    practice_solutions: tuple[str, ...] = ()
     marks_pattern: str = ""
     content_origin: str = "metadata_only"
 
@@ -397,6 +398,7 @@ class SyllabusTopic:
             exercises=values("exercises"),
             solutions=values("solutions"),
             practice_questions=values("practice_questions"),
+            practice_solutions=values("practice_solutions"),
             marks_pattern=clean_student_text(payload.get("marks_pattern"), max_length=1_000),
             content_origin=origin,
         )
@@ -481,6 +483,7 @@ class BoardSyllabus:
                         topic.exercises,
                         topic.solutions,
                         topic.practice_questions,
+                        topic.practice_solutions,
                     ]
                 )
                 if topic.content_origin == "official" and not self.source.official:
@@ -490,6 +493,16 @@ class BoardSyllabus:
                 if topic.content_origin == "metadata_only" and has_material:
                     raise Phase11Error(
                         "metadata_only topics cannot contain explanations, exercises or solutions."
+                    )
+                if topic.practice_solutions and (
+                    len(topic.practice_solutions) != len(topic.practice_questions)
+                ):
+                    raise Phase11Error(
+                        "practice_solutions must map one-to-one with practice_questions."
+                    )
+                if topic.solutions and len(topic.solutions) != len(topic.exercises):
+                    raise Phase11Error(
+                        "solutions must map one-to-one with exercises."
                     )
 
     @property
@@ -527,7 +540,95 @@ def _normalize_syllabus_lookup_text(value: object) -> str:
 def _contains_syllabus_phrase(haystack: str, needle: str) -> bool:
     if not haystack or not needle:
         return False
-    return f" {needle} " in f" {haystack} "
+    padded_haystack = f" {haystack} "
+    if f" {needle} " in padded_haystack:
+        return True
+
+    # English textbook aliases frequently differ only by a safe singular/plural
+    # ending (for example, "symbol" vs "symbols").  Treat that one-word form as
+    # equivalent without applying broad stemming that could create false routes.
+    if " " not in needle and len(needle) > 3:
+        variants: set[str] = set()
+        if needle.endswith("s") and not needle.endswith(("ss", "is", "us")):
+            variants.add(needle[:-1])
+        elif not needle.endswith(("s", "x", "z")):
+            variants.add(needle + "s")
+        if any(f" {variant} " in padded_haystack for variant in variants):
+            return True
+    return False
+
+
+def _semester_chapter_reference(value: object) -> str:
+    """Return an unambiguous installed chapter number such as ``s2-1``.
+
+    Some GSEB semester books restart their printed chapter numbering at 1.
+    Plain ``Chapter 1`` therefore remains supported for books with ordinary
+    numbering, while an explicit ``Semester 2 Chapter 1`` is converted to the
+    canonical semester-qualified number used by the combined syllabus package.
+    """
+
+    text = _normalize_syllabus_lookup_text(value)
+    if not text:
+        return ""
+
+    semester_first = re.search(
+        r"\b(?:semester|sem)\s*([12])\s+"
+        r"(?:(?:chapter|chap|ch)\s*(?:number|no)?\s*(\d{1,2})"
+        r"|(?:revision|rev)\s*(\d{1,2}))\b",
+        text,
+    )
+    if semester_first:
+        semester, chapter, revision = semester_first.groups()
+        suffix = chapter if chapter else f"r{revision}"
+        return f"s{semester}-{suffix}"
+
+    reference_first = re.search(
+        r"\b(?:(?:chapter|chap|ch)\s*(?:number|no)?\s*(\d{1,2})"
+        r"|(?:revision|rev)\s*(\d{1,2}))\s+"
+        r"(?:of\s+)?(?:semester|sem)\s*([12])\b",
+        text,
+    )
+    if reference_first:
+        chapter, revision, semester = reference_first.groups()
+        suffix = chapter if chapter else f"r{revision}"
+        return f"s{semester}-{suffix}"
+
+    return ""
+
+
+_CONTEXT_FALLBACK_WORDS = {
+    "a", "about", "again", "an", "and", "answer", "answers", "any", "are",
+    "can", "chapter", "check", "correct", "do", "easy", "example", "examples",
+    "exercise", "exercises", "explain", "for", "give", "help", "homework", "how",
+    "i", "in", "is", "it", "language", "mark", "marks", "me", "my", "of", "one",
+    "please", "practice", "question", "questions", "quiz", "repeat", "revision",
+    "revise", "right", "show", "simple", "solution", "solutions", "solve", "summary",
+    "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
+    "what", "with", "without", "wrong", "you", "your",
+}
+
+
+def _message_allows_context_topic_fallback(message_text: str) -> bool:
+    """Allow stale-context fallback only for clearly referential tutor requests."""
+
+    if not message_text:
+        return True
+    evaluation_phrases = (
+        "check my answer",
+        "check this answer",
+        "is my answer correct",
+        "is this correct",
+        "is it correct",
+        "my attempt",
+        "review my answer",
+        "evaluate my answer",
+        "mark my answer",
+    )
+    if any(phrase in message_text for phrase in evaluation_phrases):
+        return True
+
+    tokens = set(message_text.split())
+    return bool(tokens) and tokens.issubset(_CONTEXT_FALLBACK_WORDS)
 
 
 @dataclass(frozen=True)
@@ -546,6 +647,7 @@ class SyllabusTopicMatch:
                 self.topic.exercises,
                 self.topic.solutions,
                 self.topic.practice_questions,
+                self.topic.practice_solutions,
             )
         )
 
@@ -621,6 +723,9 @@ class SyllabusRepository:
         message_text = _normalize_syllabus_lookup_text(message)
         chapter_context = _normalize_syllabus_lookup_text(context.current_chapter)
         topic_context = _normalize_syllabus_lookup_text(context.current_topic)
+        semester_chapter = _normalize_syllabus_lookup_text(
+            _semester_chapter_reference(message)
+        )
 
         chapter_signals: dict[str, tuple[bool, bool]] = {}
         for chapter in syllabus.chapters:
@@ -637,6 +742,8 @@ class SyllabusRepository:
             }
             context_match = bool(chapter_context) and chapter_context in context_aliases
             message_match = _contains_syllabus_phrase(message_text, chapter_title)
+            if semester_chapter:
+                message_match = message_match or semester_chapter == chapter_number
             if chapter_number:
                 message_match = message_match or any(
                     _contains_syllabus_phrase(
@@ -654,7 +761,7 @@ class SyllabusRepository:
             chapter_signals[chapter.chapter_id] = (context_match, message_match)
 
         message_candidates: list[
-            tuple[tuple[int, int, int, int, int], SyllabusTopicMatch]
+            tuple[tuple[int, int, int, int, int, int], SyllabusTopicMatch]
         ] = []
         context_candidates: list[
             tuple[tuple[int, int, int, int], SyllabusTopicMatch]
@@ -672,6 +779,42 @@ class SyllabusRepository:
                     if normalized_term and normalized_term not in topic_terms:
                         topic_terms.append(normalized_term)
 
+                # Stored exercise and practice templates are explicit syllabus
+                # signals too.  A pasted homework question often omits the
+                # chapter/topic name, so title-and-alias-only routing loses the
+                # validated solution even though that exact question is installed.
+                question_groups = (
+                    ("message-exercise-template", topic.exercises),
+                    ("message-practice-template", topic.practice_questions),
+                )
+                for matched_by, raw_questions in question_groups:
+                    for raw_question in raw_questions:
+                        question_term = _normalize_syllabus_lookup_text(raw_question)
+                        if not question_term or not _contains_syllabus_phrase(
+                            message_text,
+                            question_term,
+                        ):
+                            continue
+                        score = (
+                            2,
+                            int(message_text == question_term),
+                            len(question_term.split()),
+                            len(question_term),
+                            int(chapter_message_match or chapter_context_match),
+                            -((chapter_index * 1000) + topic_index),
+                        )
+                        message_candidates.append(
+                            (
+                                score,
+                                SyllabusTopicMatch(
+                                    syllabus=syllabus,
+                                    chapter=chapter,
+                                    topic=topic,
+                                    matched_by=matched_by,
+                                ),
+                            )
+                        )
+
                 if not topic_terms:
                     continue
 
@@ -682,6 +825,7 @@ class SyllabusRepository:
                     if _contains_syllabus_phrase(message_text, topic_term):
                         exact_message = int(message_text == topic_term)
                         score = (
+                            1,
                             exact_message,
                             specificity_words,
                             specificity_chars,
@@ -734,8 +878,38 @@ class SyllabusRepository:
         if message_candidates:
             return max(message_candidates, key=lambda item: item[0])[1]
 
-        if context_candidates:
+        # A chapter-level request (for example, "Chapter 1 test") may not name
+        # one topic.  Return a representative topic while preserving the exact
+        # matched chapter so the renderer can build a balanced chapter response.
+        for chapter in syllabus.chapters:
+            chapter_context_match, chapter_message_match = chapter_signals.get(
+                chapter.chapter_id, (False, False)
+            )
+            if chapter_message_match and chapter.topics:
+                return SyllabusTopicMatch(
+                    syllabus=syllabus,
+                    chapter=chapter,
+                    topic=chapter.topics[0],
+                    matched_by="message-chapter",
+                )
+
+        if context_candidates and _message_allows_context_topic_fallback(message_text):
             return max(context_candidates, key=lambda item: item[0])[1]
+
+        # Profile context can still support a generic chapter request even when
+        # no topic was saved, but must not hijack an unrelated academic question.
+        if _message_allows_context_topic_fallback(message_text):
+            for chapter in syllabus.chapters:
+                chapter_context_match, _ = chapter_signals.get(
+                    chapter.chapter_id, (False, False)
+                )
+                if chapter_context_match and chapter.topics:
+                    return SyllabusTopicMatch(
+                        syllabus=syllabus,
+                        chapter=chapter,
+                        topic=chapter.topics[0],
+                        matched_by="context-chapter-fallback",
+                    )
 
         return None
 
@@ -758,11 +932,525 @@ GSEBSyllabus = BoardSyllabus
 GSEBSyllabusRepository = SyllabusRepository
 
 
+def canonicalize_installed_syllabus_context(
+    context: StudentLearningContext,
+    syllabus_repository: SyllabusRepository,
+) -> StudentLearningContext:
+    """Repair stored synthetic chapter labels using the installed syllabus."""
+
+    syllabus = syllabus_repository.find(
+        board=context.board,
+        medium=context.medium,
+        standard=context.standard,
+        subject=context.current_subject,
+    )
+    if syllabus is None or not context.current_chapter:
+        return context
+
+    current_chapter = context.current_chapter.strip().casefold()
+    canonical_chapter = next(
+        (
+            item
+            for item in syllabus.chapters
+            if current_chapter
+            in {
+                item.title.strip().casefold(),
+                item.number.strip().casefold(),
+                f"chapter {item.number}".casefold(),
+            }
+        ),
+        None,
+    )
+    if canonical_chapter is None or canonical_chapter.title == context.current_chapter:
+        return context
+
+    valid_topics = {item.title for item in canonical_chapter.topics}
+    topic = context.current_topic if context.current_topic in valid_topics else ""
+    return replace(
+        context,
+        current_chapter=canonical_chapter.title,
+        current_topic=topic,
+    ).validate()
+
+
+_SYLLABUS_COUNT_WORDS = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+}
+
+
+@dataclass(frozen=True)
+class SyllabusTutorRequest:
+    intent: str = "explain"
+    requested_count: int = 1
+    explicit_count: bool = False
+    include_answers: bool = False
+    requires_provider_review: bool = False
+
+
+def classify_syllabus_tutor_request(message: str) -> SyllabusTutorRequest:
+    """Classify a syllabus request without guessing at open-ended student work."""
+
+    requested = _normalize_syllabus_lookup_text(message)
+    padded = f" {requested} "
+
+    def contains_any(phrases: Sequence[str]) -> bool:
+        return any(f" {phrase} " in padded for phrase in phrases)
+
+    evaluation_phrases = (
+        "check my answer",
+        "check this answer",
+        "is my answer correct",
+        "is this answer correct",
+        "is this correct",
+        "is it correct",
+        "my attempt",
+        "review my answer",
+        "evaluate my answer",
+        "mark my answer",
+        "correct my answer",
+    )
+    explain_phrases = (
+        "explain",
+        "define",
+        "definition",
+        "what is",
+        "what are",
+        "meaning",
+        "understand",
+        "samjhao",
+    )
+    example_phrases = ("example", "examples", "illustration", "illustrations")
+    test_phrases = ("test", "quiz", "mcq", "question paper")
+    practice_phrases = ("practice", "exercise", "exercises", "practice questions")
+    solution_phrases = ("solution", "solutions", "solve", "final answer", "answer key")
+    hint_phrases = (
+        "hint",
+        "hints",
+        "give me a hint",
+        "give me only one hint",
+        "hint only",
+        "need a hint",
+        "help me start",
+    )
+    summary_phrases = ("revision", "revise", "summary", "summarize", "key points")
+    homework_phrases = ("give homework", "homework questions", "assign homework")
+
+    has_explain = contains_any(explain_phrases)
+    has_examples = contains_any(example_phrases)
+    explicit_hint_request = bool(
+        re.match(
+            r"^(?:please\s+)?(?:"
+            r"(?:give|show)\s+me\s+(?:(?:only|just)\s+)?"
+            r"(?:(?:a|an|\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten)\s+)?hints?\b"
+            r"|(?:i\s+)?need\s+(?:a\s+|one\s+)?hints?\b"
+            r"|hints?\s+only\b"
+            r"|help\s+me\s+start\b"
+            r")",
+            requested,
+        )
+    )
+    explicit_explain_request = bool(
+        re.match(
+            r"^(?:please\s+)?(?:explain|define|what\s+(?:is|are))\b",
+            requested,
+        )
+    )
+    explicit_solution_request = bool(
+        re.match(r"^(?:please\s+)?(?:solve|answer)\b", requested)
+    ) or any(
+        phrase in requested
+        for phrase in (
+            "solve this homework question",
+            "solve the following question",
+            "give me the final answer",
+        )
+    )
+    if any(phrase in requested for phrase in evaluation_phrases):
+        intent = "evaluate"
+    elif explicit_hint_request:
+        intent = "hint"
+    elif explicit_solution_request:
+        intent = "solution"
+    elif explicit_explain_request:
+        intent = "explain"
+    elif contains_any(test_phrases):
+        intent = "test"
+    elif contains_any(hint_phrases):
+        intent = "hint"
+    elif contains_any(homework_phrases):
+        intent = "homework"
+    elif contains_any(practice_phrases):
+        intent = "practice"
+    elif contains_any(solution_phrases):
+        intent = "solution"
+    elif has_examples and not has_explain:
+        intent = "example"
+    elif contains_any(summary_phrases):
+        intent = "summary"
+    else:
+        intent = "explain"
+
+    count_pattern = re.compile(
+        r"\b(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten)\s+"
+        r"(?:short\s+|simple\s+|practice\s+)?"
+        r"(?:examples?|questions?|exercises?|mcqs?|items?|problems?|hints?)\b"
+    )
+    count_match = count_pattern.search(requested)
+    explicit_count = count_match is not None or " all examples " in padded
+    if count_match:
+        raw_count = count_match.group(1)
+        requested_count = (
+            int(raw_count) if raw_count.isdigit() else _SYLLABUS_COUNT_WORDS[raw_count]
+        )
+    elif " all examples " in padded:
+        requested_count = 10
+    else:
+        requested_count = {
+            "test": 5,
+            "practice": 3,
+            "homework": 2,
+            "summary": 3,
+        }.get(intent, 1)
+    requested_count = max(1, min(requested_count, 10))
+
+    include_answers = any(
+        phrase in requested
+        for phrase in (
+            "with answer",
+            "with answers",
+            "and answer",
+            "and answers",
+            "answer key",
+            "answers included",
+            "include answer",
+            "include answers",
+            "with solution",
+            "with solutions",
+        )
+    )
+    return SyllabusTutorRequest(
+        intent=intent,
+        requested_count=requested_count,
+        explicit_count=explicit_count,
+        include_answers=include_answers,
+        requires_provider_review=intent in {"evaluate", "hint"},
+    )
+
+
+def _numbered_lines(items: Sequence[str]) -> str:
+    return "\n".join(f"{index}. {item}" for index, item in enumerate(items, start=1))
+
+
+def _topic_question_bank(
+    topic: SyllabusTopic,
+    *,
+    prefer_solved: bool = False,
+) -> list[tuple[str, str]]:
+    exercises = [
+        (
+            question,
+            topic.solutions[index] if index < len(topic.solutions) else "",
+        )
+        for index, question in enumerate(topic.exercises)
+    ]
+    practice = [
+        (
+            question,
+            (
+                topic.practice_solutions[index]
+                if index < len(topic.practice_solutions)
+                else ""
+            ),
+        )
+        for index, question in enumerate(topic.practice_questions)
+    ]
+    ordered = exercises + practice if prefer_solved else practice + exercises
+    unique: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for question, guide in ordered:
+        key = question.casefold()
+        if key not in seen:
+            seen.add(key)
+            unique.append((question, guide))
+    return unique
+
+
+def _chapter_question_bank(
+    chapter: SyllabusChapter,
+    *,
+    prefer_solved: bool = False,
+) -> list[tuple[str, str, str]]:
+    per_topic = [
+        (topic.title, _topic_question_bank(topic, prefer_solved=prefer_solved))
+        for topic in chapter.topics
+    ]
+    balanced: list[tuple[str, str, str]] = []
+    index = 0
+    while True:
+        added = False
+        for topic_title, questions in per_topic:
+            if index < len(questions):
+                question, guide = questions[index]
+                balanced.append((topic_title, question, guide))
+                added = True
+        if not added:
+            break
+        index += 1
+    return balanced
+
+
+def _requested_question_index(
+    bank: Sequence[tuple[str, str]],
+    message: str,
+) -> int:
+    requested_text = _normalize_syllabus_lookup_text(message)
+    question_number_match = re.search(
+        r"\b(?:question|q)\s*(\d{1,2})\b",
+        requested_text,
+    )
+    selected_index = (
+        int(question_number_match.group(1)) - 1
+        if question_number_match
+        else -1
+    )
+    if 0 <= selected_index < len(bank):
+        return selected_index
+    return next(
+        (
+            index
+            for index, (question, _) in enumerate(bank)
+            if _contains_syllabus_phrase(
+                requested_text,
+                _normalize_syllabus_lookup_text(question),
+            )
+        ),
+        -1,
+    )
+
+
+def _student_review_answer(message: str) -> str:
+    raw = clean_student_text(message, max_length=4_000)
+    match = re.search(
+        r"\b(?:my answer|my attempt)\s*:\s*(.+)",
+        raw,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return ""
+    answer = re.split(
+        r"\s+(?:is\s+(?:my|this)\s+answer\s+correct|is\s+this\s+correct|"
+        r"is\s+it\s+correct|am\s+i\s+correct)\b",
+        match.group(1),
+        maxsplit=1,
+        flags=re.IGNORECASE,
+    )[0]
+    return answer.strip(" \t\r\n.?!")
+
+
+_SHORT_NUMERIC_REVIEW_RE = re.compile(
+    r"^\s*([−-]?\s*₹?\s*\d[\d,]*(?:\.\d+)?"
+    r"(?:\s*/\s*[−-]?\s*\d[\d,]*(?:\.\d+)?)?)\s*"
+    r"(?:%|percent|percentage|degrees?|years?|months?|days?|students?|items?|rupees?)?\s*$",
+    flags=re.IGNORECASE,
+)
+_FINAL_NUMERIC_SOLUTION_RE = re.compile(
+    r"([−-]?\s*₹?\s*\d[\d,]*(?:\.\d+)?"
+    r"(?:\s*/\s*[−-]?\s*\d[\d,]*(?:\.\d+)?)?)\s*"
+    r"(?:%|percent|percentage|degrees?|years?|months?|days?|students?|items?|rupees?)?"
+    r"\s*[.!]?\s*$",
+    flags=re.IGNORECASE,
+)
+
+
+def _canonical_numeric_review_value(value: str) -> str:
+    return (
+        value.replace("−", "-")
+        .replace("₹", "")
+        .replace(",", "")
+        .replace(" ", "")
+    )
+
+
+def _short_numeric_review_value(value: str) -> str:
+    match = _SHORT_NUMERIC_REVIEW_RE.fullmatch(value.strip())
+    return _canonical_numeric_review_value(match.group(1)) if match else ""
+
+
+def _final_numeric_solution_value(solution: str) -> str:
+    match = _FINAL_NUMERIC_SOLUTION_RE.search(solution)
+    return _canonical_numeric_review_value(match.group(1)) if match else ""
+
+
+def _question_supports_short_numeric_review(question: str) -> bool:
+    normalized = _normalize_syllabus_lookup_text(question)
+    task = re.search(
+        r"\b(?:find|calculate|determine|evaluate|solve|what is|how many)\b(.+)$",
+        normalized,
+    )
+    if not task:
+        return False
+    requested_part = task.group(1)
+    return " and " not in requested_part and " both " not in requested_part
+
+
+def _local_question_hints(
+    topic: SyllabusTopic,
+    question: str,
+    solution: str = "",
+) -> list[str]:
+    normalized = _normalize_syllabus_lookup_text(question)
+    hint_stop_words = _CONTEXT_FALLBACK_WORDS | {
+        "calculate", "complete", "determine", "find", "given", "identify",
+        "name", "show", "state", "using", "value", "values", "which",
+    }
+    question_tokens = {
+        token
+        for token in normalized.split()
+        if len(token) > 1 and token not in hint_stop_words
+    }
+    solution_text = _normalize_syllabus_lookup_text(solution)
+    explanation_sentences = [
+        sentence.strip()
+        for sentence in re.split(r"(?<=[.!?])\s+", topic.explanation)
+        if sentence.strip()
+        and not (
+            solution_text
+            and solution_text in _normalize_syllabus_lookup_text(sentence)
+        )
+    ]
+    scored_sentences: list[tuple[int, int]] = []
+    for index, sentence in enumerate(explanation_sentences):
+        sentence_tokens = {
+            token
+            for token in _normalize_syllabus_lookup_text(sentence).split()
+            if len(token) > 1 and token not in hint_stop_words
+        }
+        scored_sentences.append((len(question_tokens & sentence_tokens), index))
+
+    matched_indices = [
+        index
+        for score, index in sorted(scored_sentences, key=lambda item: (-item[0], item[1]))
+        if score > 0
+    ][:1]
+    if not matched_indices and explanation_sentences:
+        matched_indices = [0]
+    selected_rules = [explanation_sentences[index] for index in sorted(matched_indices)]
+    rule_text = " ".join(selected_rules).strip()
+    rule_label = "these installed rules" if len(selected_rules) > 1 else "this installed rule"
+
+    if (
+        "percent profit" in normalized
+        and "cost price" in normalized
+        and any(word in normalized for word in ("selling price", "sells", "sold"))
+    ):
+        next_step = (
+            "Express the selling price as (100 + profit rate) percent of CP, substitute the "
+            "given selling price, isolate CP symbolically, and stop before evaluating the final result."
+        )
+    elif re.search(r"\d|[+×÷=₹%]", question):
+        next_step = (
+            "Apply the quantities and condition from the question to the rule, keep the unknown "
+            "as a symbol, and stop before evaluating the final result."
+        )
+    elif normalized.startswith(("construct ", "draw ")):
+        next_step = (
+            "Use the rule to choose the first construction step, then check each stated condition "
+            "before continuing; do not complete the final construction yet."
+        )
+    elif normalized.startswith(("compare ", "distinguish ")) or "difference" in normalized:
+        next_step = (
+            "Apply the rule to each item separately, then write only the comparison structure "
+            "without completing the final response."
+        )
+    elif normalized.startswith(("why ", "how ", "explain ")):
+        next_step = (
+            "Use the rule as the reason for your first sentence and add one relevant detail from "
+            "the question; do not write the complete response yet."
+        )
+    else:
+        next_step = (
+            "Apply the rule to the exact details in the question and write only your first reasoning "
+            "step, not the final answer."
+        )
+
+    first = (
+        f"Use {rule_label}: {rule_text} {next_step}"
+        if rule_text
+        else next_step
+    )
+
+    objective = topic.learning_objectives[0] if topic.learning_objectives else topic.title
+    return [
+        first,
+        f"Use this learning goal as your boundary: {objective}",
+        "Before finishing, check that every claim has a relevant reason, detail or example.",
+        "Write down what the question gives you and what it asks you to produce before continuing.",
+        "Break the task into two smaller steps and complete only the first step initially.",
+        "Try a simple original example to test whether your reasoning follows the topic rule.",
+        "Circle the task word and make sure each part of your response directly serves it.",
+        "Check every condition in the question; do not rely on a detail the question never gives.",
+        "Explain your first step aloud in one sentence; revise it if the reason is unclear.",
+        "Before submitting, remove unrelated details and verify that the response answers the exact question.",
+    ]
+
+
+def _source_description(match: SyllabusTopicMatch) -> str:
+    origin_label = {
+        "official": "Official source content",
+        "teacher_authored": "Teacher-authored content",
+        "ai_generated": "AI-generated practice content",
+    }.get(match.topic.content_origin, "Validated local content")
+    return (
+        f"Source type: {origin_label}. "
+        f"{match.syllabus.textbook}; edition {match.syllabus.source.edition}."
+    )
+
+
+def render_syllabus_grounding(match: SyllabusTopicMatch) -> str:
+    """Build private provider grounding while preserving source provenance."""
+
+    topic = match.topic
+    lines = [
+        f"Board: {match.syllabus.board}",
+        f"Medium: {match.syllabus.medium}",
+        f"Standard: {match.syllabus.standard}",
+        f"Subject: {match.syllabus.subject}",
+        f"Chapter: {match.chapter.number}. {match.chapter.title}",
+        f"Topic: {topic.title}",
+        f"Content origin: {topic.content_origin}",
+    ]
+    if topic.learning_objectives:
+        lines.append("Learning objectives: " + "; ".join(topic.learning_objectives))
+    if topic.explanation:
+        lines.append("Explanation: " + topic.explanation)
+    if topic.examples:
+        lines.append("Examples: " + " | ".join(topic.examples))
+    if topic.exercises:
+        lines.append("Exercises: " + " | ".join(topic.exercises))
+    if topic.solutions:
+        lines.append("Solution logic: " + " | ".join(topic.solutions))
+    if topic.practice_questions:
+        lines.append("Practice templates: " + " | ".join(topic.practice_questions))
+    if topic.practice_solutions:
+        lines.append("Practice answer logic: " + " | ".join(topic.practice_solutions))
+    return "\n".join(lines)
+
+
 def render_syllabus_match(
     match: SyllabusTopicMatch,
     *,
     context: StudentLearningContext,
     message: str,
+    teaching_guidance: Mapping[str, Any] | None = None,
 ) -> str:
     # Render validated local syllabus content without changing its origin claim.
     syllabus = match.syllabus
@@ -776,49 +1464,199 @@ def render_syllabus_match(
             "I will not invent textbook content or label an AI-generated answer as official."
         )
 
-    requested = _normalize_syllabus_lookup_text(message)
-    sections: list[str] = [topic.title]
+    request = classify_syllabus_tutor_request(message)
+    chapter_level = match.matched_by in {"message-chapter", "context-chapter-fallback"}
+    sections: list[str] = []
 
-    if context.learning_mode == LearningMode.REVISION.value and topic.learning_objectives:
+    if request.intent == "test":
+        bank = _chapter_question_bank(
+            match.chapter,
+            # Practice questions have explicit one-to-one model answers and are
+            # self-contained.  Use the same balanced bank with or without an
+            # answer guide so requesting answers cannot silently swap in
+            # exercise prompts that depend on missing source material.
+            prefer_solved=False,
+        )
+        selected = bank[: request.requested_count]
+        sections.append(f"{match.chapter.title} — Chapter test")
         sections.append(
-            "Key objectives: " + "; ".join(topic.learning_objectives[:3])
+            "Answer each question in your own words. I will evaluate your answers after you submit them."
         )
-
-    if topic.explanation:
-        sections.append(topic.explanation)
-
-    wants_solution = any(
-        token in requested
-        for token in ("solution", "solve", "answer", "ઉકેલ", "हल")
-    )
-    wants_practice = any(
-        token in requested
-        for token in ("practice", "quiz", "mcq", "exercise", "પ્રેક્ટિસ", "अभ्यास")
-    )
-
-    if wants_solution and topic.solutions:
-        sections.append("Validated solution: " + topic.solutions[0])
-    elif wants_practice and topic.practice_questions:
-        questions = "\n".join(
-            f"{index}. {question}"
-            for index, question in enumerate(topic.practice_questions[:3], start=1)
+        sections.append(
+            "Questions:\n"
+            + _numbered_lines(
+                [f"[{topic_title}] {question}" for topic_title, question, _ in selected]
+            )
         )
-        sections.append("Practice:\n" + questions)
-    elif topic.examples:
-        sections.append("Example: " + topic.examples[0])
+        if request.include_answers:
+            guides = [
+                guide or "Use the topic explanation and support the response with relevant evidence."
+                for _, _, guide in selected
+            ]
+            sections.append("Answer guide:\n" + _numbered_lines(guides))
+    elif request.intent in {"practice", "homework"}:
+        bank = _topic_question_bank(
+            topic,
+            prefer_solved=request.include_answers,
+        )
+        selected = bank[: request.requested_count]
+        heading = "Homework" if request.intent == "homework" else "Practice"
+        sections.extend((topic.title, f"{heading}:\n" + _numbered_lines([q for q, _ in selected])))
+        if request.include_answers:
+            guides = [
+                guide or "Use the topic explanation and justify the response with evidence."
+                for _, guide in selected
+            ]
+            sections.append("Answer guide:\n" + _numbered_lines(guides))
+    elif request.intent == "example":
+        selected = list(topic.examples[: request.requested_count])
+        sections.append(topic.title)
+        if len(selected) == 1:
+            sections.append("Example: " + selected[0])
+        else:
+            sections.append("Examples:\n" + _numbered_lines(selected))
+        if request.explicit_count and request.requested_count > len(selected):
+            sections.append(
+                f"Only {len(selected)} validated example(s) are installed for this topic."
+            )
+    elif request.intent == "hint":
+        bank = _topic_question_bank(topic, prefer_solved=True)
+        selected_index = _requested_question_index(bank, message)
+        sections.append(topic.title)
+        if 0 <= selected_index < len(bank):
+            question, guide = bank[selected_index]
+            hints = _local_question_hints(topic, question, guide)[: request.requested_count]
+            sections.append("Question: " + question)
+            if len(hints) == 1:
+                sections.append("Hint: " + hints[0])
+            else:
+                sections.append("Hints:\n" + _numbered_lines(hints))
+        else:
+            sections.append(
+                "Paste the exact homework question or give its question number. "
+                "I will give a hint without revealing the final answer."
+            )
+    elif request.intent == "solution":
+        bank = _topic_question_bank(topic, prefer_solved=True)
+        selected_index = _requested_question_index(bank, message)
+        sections.append(topic.title)
+        if 0 <= selected_index < len(bank):
+            question, guide = bank[selected_index]
+            sections.append("Question: " + question)
+            sections.append(
+                "Validated solution: "
+                + (guide or "Use the topic explanation and show the supporting evidence.")
+            )
+        else:
+            sections.append(
+                "Tell me the question number or paste the exact homework question. "
+                "I will explain the method before giving the final answer."
+            )
+    elif request.intent == "evaluate":
+        bank = _topic_question_bank(topic, prefer_solved=True)
+        selected_index = _requested_question_index(bank, message)
+        sections.append(topic.title)
+        if 0 <= selected_index < len(bank):
+            question, guide = bank[selected_index]
+            student_answer = _student_review_answer(message)
+            sections.append("Question: " + question)
+            if student_answer:
+                sections.append("Your answer: " + student_answer)
+
+            result: bool | None = None
+            student_decision = re.match(r"^(yes|no)\b", student_answer, flags=re.IGNORECASE)
+            expected_decision = re.match(r"^(yes|no)\b", guide, flags=re.IGNORECASE)
+            if student_decision and expected_decision:
+                result = student_decision.group(1).casefold() == expected_decision.group(1).casefold()
+            else:
+                student_numeric = _short_numeric_review_value(student_answer)
+                expected_numeric = _final_numeric_solution_value(guide)
+                if (
+                    student_numeric
+                    and expected_numeric
+                    and _question_supports_short_numeric_review(question)
+                ):
+                    result = student_numeric == expected_numeric
+
+            if result is True:
+                sections.append("Result: Correct.")
+                sections.append("Reason: Your short answer matches the installed solution result.")
+            elif result is False:
+                sections.append("Result: Incorrect.")
+                sections.append("Reason: Your short answer does not match the installed solution result.")
+            else:
+                sections.append("Result: Needs grounded review.")
+                sections.append(
+                    "This answer is not a safely comparable short numeric or yes/no response, "
+                    "so the offline renderer will not guess."
+                )
+            if guide:
+                heading = "Correct method: " if result is False else "Installed solution logic: "
+                sections.append(heading + guide)
+        else:
+            sections.append(
+                "Paste the exact stored question and your complete answer. "
+                "I will bind the review to its one-to-one installed solution before judging it."
+            )
+    elif request.intent == "summary":
+        sections.append(topic.title)
+        objectives = list(topic.learning_objectives[: request.requested_count])
+        if objectives:
+            sections.append("Key points:\n" + _numbered_lines(objectives))
+        if topic.explanation:
+            sections.append(topic.explanation)
+    elif chapter_level:
+        sections.append(f"{match.chapter.title} — Chapter overview")
+        sections.append(
+            "Main learning areas:\n"
+            + _numbered_lines([item.title for item in match.chapter.topics])
+        )
+        normalized_message = _normalize_syllabus_lookup_text(message)
+        if re.search(r"\bexamples?\b", normalized_message):
+            chapter_examples: list[str] = []
+            max_example_depth = max(
+                (len(chapter_topic.examples) for chapter_topic in match.chapter.topics),
+                default=0,
+            )
+            for example_index in range(max_example_depth):
+                for chapter_topic in match.chapter.topics:
+                    if example_index >= len(chapter_topic.examples):
+                        continue
+                    example = chapter_topic.examples[example_index]
+                    chapter_examples.append(f"[{chapter_topic.title}] {example}")
+                    if len(chapter_examples) >= request.requested_count:
+                        break
+                if len(chapter_examples) >= request.requested_count:
+                    break
+            if chapter_examples:
+                sections.append("Examples:\n" + _numbered_lines(chapter_examples))
+            if request.explicit_count and request.requested_count > len(chapter_examples):
+                sections.append(
+                    f"Only {len(chapter_examples)} validated example(s) are installed for this chapter."
+                )
+    else:
+        sections.append(topic.title)
+        if context.learning_mode == LearningMode.REVISION.value and topic.learning_objectives:
+            sections.append("Key objectives: " + "; ".join(topic.learning_objectives[:3]))
+        if topic.explanation:
+            if teaching_guidance and teaching_guidance.get("step_size") in {"very_small", "small"}:
+                sections.append("Key idea: " + topic.explanation)
+            else:
+                sections.append(topic.explanation)
+        selected = list(topic.examples[: request.requested_count])
+        if len(selected) == 1:
+            sections.append("Example: " + selected[0])
+        elif selected:
+            sections.append("Examples:\n" + _numbered_lines(selected))
+        if request.explicit_count and request.requested_count > len(selected):
+            sections.append(
+                f"Only {len(selected)} validated example(s) are installed for this topic."
+            )
 
     if context.learning_mode == LearningMode.EXAM.value and topic.marks_pattern:
         sections.append("Marks pattern: " + topic.marks_pattern)
 
-    origin_label = {
-        "official": "Official source content",
-        "teacher_authored": "Teacher-authored content",
-        "ai_generated": "AI-generated practice content",
-    }.get(topic.content_origin, "Validated local content")
-    sections.append(
-        f"Source type: {origin_label}. "
-        f"{syllabus.textbook}; edition {syllabus.source.edition}."
-    )
+    sections.append(_source_description(match))
 
     return "\n\n".join(section for section in sections if section).strip()
 
@@ -827,19 +1665,14 @@ SUBJECT_ALIASES = {
     "math": "Mathematics",
     "maths": "Mathematics",
     "mathematics": "Mathematics",
-    "vedic mathematics": "Vedic Mathematics",
-    "vedic maths": "Vedic Mathematics",
-    "vedic math": "Vedic Mathematics",
-    "વૈદિક ગણિત": "Vedic Mathematics",
     "ganit": "Mathematics",
     "ગણિત": "Mathematics",
     "science": "Science",
+    "science and technology": "Science & Technology",
+    "science & technology": "Science & Technology",
     "vigyan": "Science",
     "વિજ્ઞાન": "Science",
     "english": "English",
-    "gujarati": "Gujarati",
-    "ગુજરાતી": "Gujarati",
-    "hindi": "Hindi",
     "social science": "Social Science",
     "social studies": "Social Science",
     "sst": "Social Science",
@@ -849,7 +1682,9 @@ SUBJECT_ALIASES = {
 
 
 def detect_context_from_message(
-    text: str, current: StudentLearningContext
+    text: str,
+    current: StudentLearningContext,
+    syllabus_repository: SyllabusRepository | None = None,
 ) -> tuple[StudentLearningContext, dict[str, str]]:
     """Conservative context extraction; only updates fields found explicitly."""
 
@@ -865,6 +1700,25 @@ def detect_context_from_message(
 
     if subject_matches:
         _, _, canonical = max(subject_matches, key=lambda item: item[0])
+        # "Science" is a common short form for the official subject title
+        # "Science & Technology" in older GSEB semester books.  Prefer the
+        # exact installed package for this learner, while preserving newer
+        # packages whose canonical subject is simply "Science".
+        if canonical == "Science" and syllabus_repository is not None:
+            installed_science = syllabus_repository.find(
+                board=current.board,
+                medium=current.medium,
+                standard=current.standard,
+                subject="Science",
+            )
+            installed_science_technology = syllabus_repository.find(
+                board=current.board,
+                medium=current.medium,
+                standard=current.standard,
+                subject="Science & Technology",
+            )
+            if installed_science is None and installed_science_technology is not None:
+                canonical = "Science & Technology"
         changes["current_subject"] = canonical
         detected["subject"] = canonical
 
@@ -877,6 +1731,8 @@ def detect_context_from_message(
         chapter = f"Chapter {chapter_match.group(1)}"
         changes["current_chapter"] = chapter
         detected["chapter"] = chapter
+
+    semester_chapter_reference = _semester_chapter_reference(normalized)
 
     standard_match = re.search(
         r"(?:std|standard|class|ધોરણ)\s*[:#-]?\s*(1[0-2]|[1-9])\b",
@@ -892,6 +1748,71 @@ def detect_context_from_message(
             changes["preferred_language"] = language
             detected["language"] = language
             break
+
+    # A phrase such as "Chapter 1 test" must resolve to the installed canonical
+    # chapter title instead of replacing "Exploring Symbols" with the synthetic
+    # label "Chapter 1".  If no installed match exists, preserve the saved chapter.
+    if (chapter_match or semester_chapter_reference) and syllabus_repository is not None:
+        provisional = replace(current, **changes)
+        syllabus = syllabus_repository.find(
+            board=provisional.board,
+            medium=provisional.medium,
+            standard=provisional.standard,
+            subject=provisional.current_subject,
+        )
+        chapter_token = (
+            semester_chapter_reference
+            if semester_chapter_reference
+            else chapter_match.group(1).strip().casefold()
+        )
+        chapter_token_normalized = _normalize_syllabus_lookup_text(chapter_token)
+        canonical_chapter = next(
+            (
+                item.title
+                for item in (syllabus.chapters if syllabus is not None else ())
+                if chapter_token_normalized
+                in {
+                    _normalize_syllabus_lookup_text(item.number),
+                    _normalize_syllabus_lookup_text(item.title),
+                    _normalize_syllabus_lookup_text(f"chapter {item.number}"),
+                }
+            ),
+            "",
+        )
+        if canonical_chapter:
+            changes["current_chapter"] = canonical_chapter
+            detected["chapter"] = canonical_chapter
+            if canonical_chapter != current.current_chapter:
+                changes["current_topic"] = ""
+        else:
+            changes.pop("current_chapter", None)
+            detected.pop("chapter", None)
+
+    # When the message explicitly names an installed topic, synchronize the
+    # saved profile with that topic's canonical chapter.  Context-only fallback
+    # matches are intentionally ignored so generic follow-ups cannot silently
+    # switch chapters or revive stale topics.
+    if syllabus_repository is not None:
+        provisional = replace(current, **changes).validate()
+        topic_match = syllabus_repository.lookup_topic(
+            message=normalized,
+            context=provisional,
+        )
+        if topic_match is not None and topic_match.matched_by in {
+            "message-topic-specific",
+            "message-topic-alias",
+            "message-exercise-template",
+            "message-practice-template",
+        }:
+            explicit_chapter = clean_student_text(
+                changes.get("current_chapter"),
+                max_length=200,
+            )
+            if not explicit_chapter or explicit_chapter == topic_match.chapter.title:
+                changes["current_chapter"] = topic_match.chapter.title
+                changes["current_topic"] = topic_match.topic.title
+                detected["chapter"] = topic_match.chapter.title
+                detected["topic"] = topic_match.topic.title
 
     if not changes:
         return current, detected
@@ -1137,7 +2058,7 @@ def format_tutor_response(
     )
 
     text = text.replace("**", "")
-    text = text.replace("__", "")
+    text = re.sub(r"__(?=\S)(.+?)(?<=\S)__", r"\1", text)
     text = text.replace("```", "")
 
     lines = [line.rstrip() for line in text.split("\n")]

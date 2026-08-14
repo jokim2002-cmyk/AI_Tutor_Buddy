@@ -1,0 +1,2497 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 7,
+  "subject": "Social Science",
+  "textbook": "Standard 7 Social Science — Semesters 1 and 2",
+  "source": {
+    "title": "Social Science Standard 7 — Semesters I and II",
+    "publisher": "Gujarat State Board of School Textbooks / GCERT",
+    "edition": "First Edition 2013–14",
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-14",
+    "official": true,
+    "notes": "The official English-medium inventory and 2013–14 semester-book identity were verified. The 9-chapter Semester I and 12-chapter Semester II indexes were cross-checked against English-medium book scans and chapter references. All explanations, examples, questions and solution logic are original teacher-authored material; textbook and guide prose is not reproduced."
+  },
+  "chapters": [
+    {
+      "chapter_id": "s1-c1",
+      "number": "S1-1",
+      "title": "Semester 1 — Two Big States",
+      "topics": [
+        {
+          "title": "Harshavardhana and the kingdom of Kanauj",
+          "aliases": [
+            "Harshavardhana",
+            "Harsha",
+            "Kanauj kingdom",
+            "Thanesar"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Harshavardhana and the kingdom of Kanauj.",
+            "Use evidence or an example to apply Harshavardhana and the kingdom of Kanauj."
+          ],
+          "explanation": "Harshavardhana ruled a large north Indian kingdom in the seventh century CE. He inherited responsibility at Thanesar and later ruled from Kanauj, using alliances, administration and public works to strengthen his state. His expansion southward was checked near the Narmada by Pulakeshin II.",
+          "examples": [
+            "Kanauj became an important political centre under Harshavardhana.",
+            "Harsha supported rest houses, learning centres and religious assemblies as public activities."
+          ],
+          "exercises": [
+            "Why did Kanauj become important during Harshavardhana's reign?",
+            "Which ruler stopped Harshavardhana's expansion towards the Deccan?"
+          ],
+          "solutions": [
+            "It became the centre of Harshavardhana's large north Indian kingdom and an important seat of political power.",
+            "Pulakeshin II of the Chalukya dynasty stopped Harshavardhana near the Narmada."
+          ],
+          "practice_questions": [
+            "Give one example of public welfare associated with Harshavardhana.",
+            "Why are alliances important when studying Harshavardhana's expansion?"
+          ],
+          "practice_solutions": [
+            "He supported works such as rest houses, wells, learning centres and religious assemblies; any one is acceptable.",
+            "Alliances helped rulers combine political and military support against rivals and extend their influence."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t1"
+        },
+        {
+          "title": "Pulakeshin II and the Chalukyas of Vatapi",
+          "aliases": [
+            "Pulakeshin II",
+            "Chalukya dynasty",
+            "Vatapi",
+            "Badami"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Pulakeshin II and the Chalukyas of Vatapi.",
+            "Use evidence or an example to apply Pulakeshin II and the Chalukyas of Vatapi."
+          ],
+          "explanation": "The Chalukyas ruled a major Deccan state from Vatapi, now called Badami. Pulakeshin II expanded his influence across much of the Deccan and resisted Harshavardhana near the Narmada. His reign also supported architecture, painting and contacts recorded by travellers.",
+          "examples": [
+            "Vatapi served as the Chalukya capital in the Deccan.",
+            "The Narmada region marked the meeting point of Harsha's and Pulakeshin II's political ambitions."
+          ],
+          "exercises": [
+            "What was the capital of the Chalukyas discussed with Pulakeshin II?",
+            "Why is the Narmada important in the account of Harsha and Pulakeshin II?"
+          ],
+          "solutions": [
+            "Their capital was Vatapi, the place now known as Badami in Karnataka.",
+            "Pulakeshin II checked Harsha's southward expansion near the Narmada, making it an important political boundary."
+          ],
+          "practice_questions": [
+            "Name one cultural achievement linked with the Chalukya period.",
+            "How did Pulakeshin II strengthen the Chalukya state?"
+          ],
+          "practice_solutions": [
+            "Rock-cut caves, temples, sculpture and painting developed during the period; any one suitable example is acceptable.",
+            "He expanded territory, defended the Deccan and maintained an influential capital and administration."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t2"
+        },
+        {
+          "title": "Travellers, Nalanda and historical evidence",
+          "aliases": [
+            "Xuanzang",
+            "Hiuen Tsang",
+            "Nalanda",
+            "historical sources"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Travellers, Nalanda and historical evidence.",
+            "Use evidence or an example to apply Travellers, Nalanda and historical evidence."
+          ],
+          "explanation": "Historians compare inscriptions, coins, buildings and written accounts to understand early medieval states. The Chinese pilgrim Xuanzang, also written Hiuen Tsang, visited India during Harsha's time and studied at Nalanda. Such accounts are valuable evidence but should be compared with other sources because every observer writes from a particular viewpoint.",
+          "examples": [
+            "Xuanzang's travel account describes aspects of society, learning and government in seventh-century India.",
+            "Coins and inscriptions can confirm names, titles, dates and political claims found in written accounts."
+          ],
+          "exercises": [
+            "Why is Xuanzang's account useful to historians?",
+            "Why should a travel account be compared with inscriptions or coins?"
+          ],
+          "solutions": [
+            "It provides an eyewitness description of places, learning, society and political conditions during his travels in India.",
+            "Comparison can confirm details and reduce the risk of relying on one observer's limited viewpoint."
+          ],
+          "practice_questions": [
+            "What made Nalanda an important learning centre?",
+            "Name two kinds of evidence used to study early medieval kingdoms."
+          ],
+          "practice_solutions": [
+            "It attracted teachers and students, maintained a large collection of texts and supported advanced study in several fields.",
+            "Written accounts, inscriptions, coins, monuments and archaeological remains are examples; any two are acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c2",
+      "number": "S1-2",
+      "title": "Semester 1 — Motions of the Earth",
+      "topics": [
+        {
+          "title": "Rotation, day and night",
+          "aliases": [
+            "Earth rotation",
+            "day and night",
+            "axis",
+            "circle of illumination"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rotation, day and night.",
+            "Use evidence or an example to apply Rotation, day and night."
+          ],
+          "explanation": "Earth rotates from west to east around an imaginary axis through the poles. One rotation takes about 24 hours and produces the daily pattern of day and night as different parts face the Sun. The boundary between the illuminated and dark halves is called the circle of illumination.",
+          "examples": [
+            "India turns into sunlight and later away from it as Earth rotates.",
+            "A globe lit by a fixed lamp models day on the bright half and night on the dark half."
+          ],
+          "exercises": [
+            "About how long does Earth take to complete one rotation?",
+            "Why do day and night occur?"
+          ],
+          "solutions": [
+            "Earth takes about 24 hours to complete one rotation.",
+            "Earth's rotation brings each place alternately into the sunlit half and the dark half."
+          ],
+          "practice_questions": [
+            "In which general direction does Earth rotate?",
+            "What is the circle of illumination?"
+          ],
+          "practice_solutions": [
+            "Earth rotates from west to east.",
+            "It is the boundary separating Earth's sunlit half from its dark half."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t1"
+        },
+        {
+          "title": "Revolution, axial tilt and seasons",
+          "aliases": [
+            "Earth revolution",
+            "seasons",
+            "axial tilt",
+            "orbit"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Revolution, axial tilt and seasons.",
+            "Use evidence or an example to apply Revolution, axial tilt and seasons."
+          ],
+          "explanation": "Earth revolves around the Sun in an elliptical orbit while its axis remains tilted by about 23.5 degrees. One revolution takes about 365¼ days. The combination of revolution and axial tilt changes the angle and duration of sunlight during the year, producing opposite seasons in the northern and southern hemispheres.",
+          "examples": [
+            "When the Northern Hemisphere tilts more toward the Sun, it receives longer days and more direct sunlight.",
+            "Australia experiences winter during much of the period when India experiences summer."
+          ],
+          "exercises": [
+            "About how long does Earth take to complete one revolution around the Sun?",
+            "Why are seasons opposite in the northern and southern hemispheres?"
+          ],
+          "solutions": [
+            "Earth takes about 365¼ days, which is approximately one year.",
+            "When one hemisphere tilts toward the Sun and receives more direct sunlight, the other tilts away and receives less."
+          ],
+          "practice_questions": [
+            "Is Earth's orbit a perfect circle?",
+            "What two Earth movements and conditions work together to produce seasons?"
+          ],
+          "practice_solutions": [
+            "No. Earth's orbit is slightly elliptical, or oval-shaped.",
+            "Earth's revolution around the Sun and the tilt of its axis work together to produce seasons."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t2"
+        },
+        {
+          "title": "Sunlight, shadows and local time",
+          "aliases": [
+            "shadow length",
+            "local time",
+            "sunlight angle",
+            "longitude time"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Sunlight, shadows and local time.",
+            "Use evidence or an example to apply Sunlight, shadows and local time."
+          ],
+          "explanation": "Earth's rotation makes the Sun appear to move across the sky, so a vertical object's shadow changes direction and length through the day. Local solar time differs with longitude because places turn toward the Sun at different moments. Standard time gives a country or region one agreed clock time for coordination.",
+          "examples": [
+            "A pole usually casts a long shadow in the morning and a shorter one near midday.",
+            "Two cities far apart in longitude can have different local solar times even when their clocks use one standard time."
+          ],
+          "exercises": [
+            "Why is a noon shadow usually shorter than a morning shadow?",
+            "Why does local solar time differ from one longitude to another?"
+          ],
+          "solutions": [
+            "Near noon the Sun is higher in the sky, so its rays strike more steeply and form a shorter shadow.",
+            "Different longitudes face the Sun at different moments as Earth rotates."
+          ],
+          "practice_questions": [
+            "Does every longitude have the same local solar time?",
+            "Why do countries adopt a standard time?"
+          ],
+          "practice_solutions": [
+            "No. Local solar time changes with longitude because Earth rotates.",
+            "A standard time gives people one agreed clock time for travel, communication, administration and daily activities."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c3",
+      "number": "S1-3",
+      "title": "Semester 1 — Government",
+      "topics": [
+        {
+          "title": "Purpose and functions of government",
+          "aliases": [
+            "government functions",
+            "public welfare",
+            "law and order",
+            "government purpose"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Purpose and functions of government.",
+            "Use evidence or an example to apply Purpose and functions of government."
+          ],
+          "explanation": "Government makes and implements laws, maintains public order, protects rights and provides shared services. It also plans responses to economic, social and environmental problems. In a democracy, public authority is limited by the Constitution and must be used for the welfare of all people.",
+          "examples": [
+            "A government builds and maintains public roads that many citizens use.",
+            "Disaster-response agencies coordinate rescue, relief and rehabilitation after a flood."
+          ],
+          "exercises": [
+            "Name two basic functions of a government.",
+            "Why is government needed for public services?"
+          ],
+          "solutions": [
+            "Making and implementing laws, maintaining order, protecting rights and providing public services are examples; any two are acceptable.",
+            "Many services such as roads, schools and sanitation require common planning, funding and rules across a large population."
+          ],
+          "practice_questions": [
+            "How does a Constitution limit government?",
+            "Give one government response to a natural disaster."
+          ],
+          "practice_solutions": [
+            "It defines powers, institutions, procedures and protected rights that government must respect.",
+            "It may organize warnings, evacuation, rescue, relief supplies, medical help or rebuilding; any one is acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t1"
+        },
+        {
+          "title": "Levels and organs of government",
+          "aliases": [
+            "local state union government",
+            "legislature executive judiciary",
+            "levels of government",
+            "organs of government"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Levels and organs of government.",
+            "Use evidence or an example to apply Levels and organs of government."
+          ],
+          "explanation": "India has local, state and Union levels of government, each with assigned responsibilities. The legislature makes laws, the executive implements laws and policies, and the judiciary interprets laws and settles disputes. These divisions help distribute work and create checks on public power.",
+          "examples": [
+            "A municipal body manages many local services, while a state government manages subjects across the state.",
+            "A legislature debates a bill before it can become law through the required process."
+          ],
+          "exercises": [
+            "Which organ of government primarily makes laws?",
+            "What is the main role of the executive?"
+          ],
+          "solutions": [
+            "The legislature primarily makes laws.",
+            "The executive implements laws, administers programmes and carries out public policy."
+          ],
+          "practice_questions": [
+            "Why are there different levels of government?",
+            "What role does the judiciary perform?"
+          ],
+          "practice_solutions": [
+            "Different levels handle local, state-wide and national matters at the scale where they can be managed effectively.",
+            "It interprets laws, resolves disputes and protects legality and rights through court decisions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t2"
+        },
+        {
+          "title": "Democracy, elections and accountability",
+          "aliases": [
+            "democracy",
+            "elections",
+            "accountability",
+            "citizen participation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Democracy, elections and accountability.",
+            "Use evidence or an example to apply Democracy, elections and accountability."
+          ],
+          "explanation": "Democracy gives citizens a role in choosing representatives and questioning public decisions. Regular elections, open debate, access to information and lawful criticism help make representatives accountable. Citizens also participate through community meetings, petitions and peaceful civic action.",
+          "examples": [
+            "Voters compare candidates and policies before choosing a representative.",
+            "Residents raise a sanitation problem at a lawful local public meeting."
+          ],
+          "exercises": [
+            "How do elections support accountability?",
+            "Name one way a citizen can participate between elections."
+          ],
+          "solutions": [
+            "Citizens can evaluate representatives and choose whether to return them to office.",
+            "A citizen can attend public meetings, submit petitions, seek information or raise issues peacefully through lawful channels."
+          ],
+          "practice_questions": [
+            "Why is access to reliable information important in a democracy?",
+            "Does democracy mean that elected leaders can ignore the Constitution?"
+          ],
+          "practice_solutions": [
+            "People need evidence about policies and performance to form opinions and hold public authorities accountable.",
+            "No. Elected leaders remain bound by constitutional limits, laws and protected rights."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c4",
+      "number": "S1-4",
+      "title": "Semester 1 — Rajput Age",
+      "topics": [
+        {
+          "title": "Rajput kingdoms and regional power",
+          "aliases": [
+            "Rajput kingdoms",
+            "Rajput dynasties",
+            "regional states",
+            "early medieval India"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rajput kingdoms and regional power.",
+            "Use evidence or an example to apply Rajput kingdoms and regional power."
+          ],
+          "explanation": "Between the eighth and twelfth centuries, several Rajput clans established regional kingdoms in northern and western India. Important dynasties included the Gurjara-Pratiharas, Chauhans, Paramaras and Solankis. Their power was often regional, and alliances and rivalries changed over time.",
+          "examples": [
+            "The Chauhans developed centres of power in parts of Rajasthan and around Delhi-Ajmer.",
+            "The Solankis ruled important parts of Gujarat from Anahilapataka, or Patan."
+          ],
+          "exercises": [
+            "Name two dynasties associated with the Rajput age.",
+            "Why is the Rajput age described as a period of regional kingdoms?"
+          ],
+          "solutions": [
+            "The Gurjara-Pratiharas, Chauhans, Paramaras and Solankis are examples; any two are acceptable.",
+            "Power was divided among several dynasties controlling different regions rather than one state ruling the entire area."
+          ],
+          "practice_questions": [
+            "Which Rajput dynasty is strongly associated with medieval Gujarat?",
+            "How could alliances affect a regional kingdom?"
+          ],
+          "practice_solutions": [
+            "The Solanki, or Chaulukya, dynasty is strongly associated with medieval Gujarat.",
+            "Alliances could provide military or political support, while broken alliances could leave a kingdom more vulnerable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t1"
+        },
+        {
+          "title": "Rajput administration and society",
+          "aliases": [
+            "Rajput administration",
+            "samanta",
+            "land grants",
+            "Rajput society"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rajput administration and society.",
+            "Use evidence or an example to apply Rajput administration and society."
+          ],
+          "explanation": "Rajput rulers depended on forts, local chiefs and land-based revenue to govern. Samantas or subordinate chiefs could provide troops and collect revenue, but strong local power could also weaken central control. Agriculture, crafts and trade supported towns, courts and temples.",
+          "examples": [
+            "A local chief might collect revenue and supply soldiers to a regional ruler.",
+            "Fortified towns protected political centres and routes in times of conflict."
+          ],
+          "exercises": [
+            "Who were samantas in many early medieval kingdoms?",
+            "Why could powerful local chiefs weaken a king?"
+          ],
+          "solutions": [
+            "They were subordinate chiefs or landholders who owed service, revenue or military support to a ruler.",
+            "They controlled local resources and troops and might resist orders or become independent when central power declined."
+          ],
+          "practice_questions": [
+            "Name one economic activity that supported Rajput-era towns.",
+            "Why were forts important to regional rulers?"
+          ],
+          "practice_solutions": [
+            "Agriculture, craft production and regional trade supported towns; any one is acceptable.",
+            "Forts protected capitals, routes, supplies and people and served as centres of political control."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t2"
+        },
+        {
+          "title": "Rajput culture, literature and architecture",
+          "aliases": [
+            "Rajput culture",
+            "temple architecture",
+            "forts and stepwells",
+            "Rajput literature"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rajput culture, literature and architecture.",
+            "Use evidence or an example to apply Rajput culture, literature and architecture."
+          ],
+          "explanation": "Rajput courts supported regional languages, poetry, sculpture, temples, forts, lakes and stepwells. Architecture combined practical needs with religious and artistic expression. These remains are historical evidence and shared heritage that should be studied and preserved.",
+          "examples": [
+            "A stepwell stored water while also displaying skilled stone carving.",
+            "Temple inscriptions can record patrons, donations, dates and social activity."
+          ],
+          "exercises": [
+            "Give two kinds of structures associated with Rajput patronage.",
+            "How can an inscription help a historian?"
+          ],
+          "solutions": [
+            "Temples, forts, lakes and stepwells are examples; any two are acceptable.",
+            "It can provide names, dates, donations, titles, events or information about institutions."
+          ],
+          "practice_questions": [
+            "Why should medieval monuments be preserved?",
+            "How did court patronage support culture?"
+          ],
+          "practice_solutions": [
+            "They are evidence of history, architecture, technology and culture and form part of shared heritage.",
+            "Rulers and elites provided resources to writers, artists, builders and religious or learning institutions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c5",
+      "number": "S1-5",
+      "title": "Semester 1 — Location and Time",
+      "topics": [
+        {
+          "title": "Latitude, longitude and coordinates",
+          "aliases": [
+            "latitude longitude",
+            "geographic coordinates",
+            "equator",
+            "prime meridian"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Latitude, longitude and coordinates.",
+            "Use evidence or an example to apply Latitude, longitude and coordinates."
+          ],
+          "explanation": "Latitude measures angular distance north or south of the Equator, while longitude measures angular distance east or west of the Prime Meridian. Together they form a coordinate system for locating places on Earth. Parallels of latitude do not meet, while meridians meet at the poles.",
+          "examples": [
+            "A location at 20 degrees north lies north of the Equator.",
+            "A map grid can identify a place by stating its latitude first and longitude second."
+          ],
+          "exercises": [
+            "What does latitude measure?",
+            "What does longitude measure?"
+          ],
+          "solutions": [
+            "Latitude measures angular distance north or south of the Equator.",
+            "Longitude measures angular distance east or west of the Prime Meridian."
+          ],
+          "practice_questions": [
+            "Why are both latitude and longitude needed to locate a place precisely?",
+            "Where do meridians of longitude meet?"
+          ],
+          "practice_solutions": [
+            "Latitude fixes its north-south position and longitude fixes its east-west position, giving one coordinate intersection.",
+            "They meet at the North Pole and the South Pole."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t1"
+        },
+        {
+          "title": "Longitude, local time and standard time",
+          "aliases": [
+            "longitude and time",
+            "local time",
+            "Indian Standard Time",
+            "time zones"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Longitude, local time and standard time.",
+            "Use evidence or an example to apply Longitude, local time and standard time."
+          ],
+          "explanation": "Earth completes 360 degrees of rotation in about 24 hours, so it turns roughly 15 degrees per hour. Places eastward generally experience local noon earlier than places westward. India uses Indian Standard Time based on the standard meridian of 82.5 degrees east to coordinate clocks across the country.",
+          "examples": [
+            "A place 15 degrees farther east has local solar time about one hour ahead.",
+            "IST lets trains and offices use one clock time across India despite differences in local solar time."
+          ],
+          "exercises": [
+            "How many degrees does Earth rotate in about one hour?",
+            "What longitude is used as the standard meridian for Indian Standard Time?"
+          ],
+          "solutions": [
+            "Earth rotates about 15 degrees in one hour.",
+            "Indian Standard Time is based on 82.5 degrees east longitude."
+          ],
+          "practice_questions": [
+            "Which place generally has earlier local time, one farther east or one farther west?",
+            "Why does India use one standard time?"
+          ],
+          "practice_solutions": [
+            "The place farther east generally has earlier local solar time.",
+            "One standard time avoids confusion and coordinates transport, communication, administration and daily schedules."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t2"
+        },
+        {
+          "title": "Map location and directional reasoning",
+          "aliases": [
+            "map grid",
+            "direction",
+            "hemisphere",
+            "location skills"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Map location and directional reasoning.",
+            "Use evidence or an example to apply Map location and directional reasoning."
+          ],
+          "explanation": "Maps use direction, scale, symbols and coordinate grids to describe relative and absolute location. The Equator divides northern and southern hemispheres, and the Prime Meridian helps divide eastern and western hemispheres. A good location statement identifies both position and a clear reference system.",
+          "examples": [
+            "India lies north of the Equator and east of the Prime Meridian.",
+            "A map scale converts a measured map distance into an estimated ground distance."
+          ],
+          "exercises": [
+            "In which two hemispheres is India mainly located?",
+            "What does a map scale show?"
+          ],
+          "solutions": [
+            "India is in the Northern Hemisphere and the Eastern Hemisphere.",
+            "It shows the relationship between distance on the map and corresponding distance on the ground."
+          ],
+          "practice_questions": [
+            "Why must map symbols be explained in a legend?",
+            "Distinguish absolute location from relative location."
+          ],
+          "practice_solutions": [
+            "A legend tells the reader what each symbol or colour represents.",
+            "Absolute location uses coordinates, while relative location describes a place in relation to another place or feature."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c6",
+      "number": "S1-6",
+      "title": "Semester 1 — Administrative System and Architecture During the Medieval Age",
+      "topics": [
+        {
+          "title": "Delhi Sultanate administration",
+          "aliases": [
+            "Sultanate administration",
+            "iqta system",
+            "sultan ministers",
+            "medieval administration"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Delhi Sultanate administration.",
+            "Use evidence or an example to apply Delhi Sultanate administration."
+          ],
+          "explanation": "Delhi Sultanate rulers governed through the Sultan, ministers, military officers, provincial authorities and local officials. Revenue assignments called iqtas supported administration and troops, though arrangements changed under different rulers. Effective control depended on communication, revenue collection and supervision of powerful officials.",
+          "examples": [
+            "An iqta-holder collected assigned revenue and maintained responsibilities for the state.",
+            "Provincial officials connected the central court with districts and local communities."
+          ],
+          "exercises": [
+            "What was an iqta in the Delhi Sultanate system?",
+            "Why did the Sultan need provincial and local officials?"
+          ],
+          "solutions": [
+            "It was an assigned revenue area whose income supported an official's administrative or military responsibilities.",
+            "A large territory could not be governed directly from Delhi, so officials carried out revenue, order and administration in different regions."
+          ],
+          "practice_questions": [
+            "Name one factor needed for effective medieval administration.",
+            "Why could an overly powerful provincial governor challenge the centre?"
+          ],
+          "practice_solutions": [
+            "Reliable revenue, communication, records, military organization and supervision were important; any one is acceptable.",
+            "Control of local revenue and troops could allow a governor to resist central authority or seek independence."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t1"
+        },
+        {
+          "title": "Medieval towns, trade and society",
+          "aliases": [
+            "medieval towns",
+            "trade routes",
+            "craft guilds",
+            "medieval society"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Medieval towns, trade and society.",
+            "Use evidence or an example to apply Medieval towns, trade and society."
+          ],
+          "explanation": "Medieval towns grew around capitals, forts, ports, temples and markets. Farmers, artisans, merchants, officials and religious communities were linked through taxes, production and exchange. Inland routes and ports connected Indian regions with wider commercial networks.",
+          "examples": [
+            "A port town connected inland cotton producers with merchants using sea routes.",
+            "A capital attracted officials, soldiers, builders, traders and service workers."
+          ],
+          "exercises": [
+            "Name two places around which medieval towns often developed.",
+            "How did trade routes help a town grow?"
+          ],
+          "solutions": [
+            "Capitals, forts, ports, temples and markets are examples; any two are acceptable.",
+            "They brought merchants, goods, transport work, taxes and demand for local services and crafts."
+          ],
+          "practice_questions": [
+            "Why were artisans important to medieval cities?",
+            "How were villages and towns economically connected?"
+          ],
+          "practice_solutions": [
+            "They produced textiles, metalwork, building materials and other goods needed by residents, courts and traders.",
+            "Villages supplied food and raw materials, while towns provided markets, services and manufactured goods."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t2"
+        },
+        {
+          "title": "Sultanate architecture and building methods",
+          "aliases": [
+            "Sultanate architecture",
+            "arches domes minarets",
+            "medieval buildings",
+            "Indo-Islamic architecture"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Sultanate architecture and building methods.",
+            "Use evidence or an example to apply Sultanate architecture and building methods."
+          ],
+          "explanation": "Sultanate architecture used arches, domes, minarets, courtyards, carved stone and geometric or calligraphic decoration. Builders combined ideas arriving through new ruling traditions with skilled Indian materials and craftsmanship. Buildings reveal technology, patronage and cultural interaction, not just the names of rulers.",
+          "examples": [
+            "An arch transfers weight toward its supports and can span an opening.",
+            "A mosque courtyard and minaret show both functional planning and architectural style."
+          ],
+          "exercises": [
+            "Name two common features of Sultanate architecture.",
+            "Why does medieval architecture show cultural interaction?"
+          ],
+          "solutions": [
+            "Arches, domes, minarets, courtyards and geometric or calligraphic decoration are examples; any two are acceptable.",
+            "Design traditions from different regions were adapted by Indian builders using local skills, materials and artistic forms."
+          ],
+          "practice_questions": [
+            "What can a building reveal besides the ruler who commissioned it?",
+            "Why is an arch useful in construction?"
+          ],
+          "practice_solutions": [
+            "It can reveal technology, labour, materials, artistic taste, religious use and social priorities.",
+            "It spans an opening and directs the load toward supporting sides or pillars."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c7",
+      "number": "S1-7",
+      "title": "Semester 1 — India: Location, Border, Area and Physiography",
+      "topics": [
+        {
+          "title": "India's location, extent and neighbours",
+          "aliases": [
+            "India location",
+            "India extent",
+            "India neighbours",
+            "Indian subcontinent"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of India's location, extent and neighbours.",
+            "Use evidence or an example to apply India's location, extent and neighbours."
+          ],
+          "explanation": "India lies in South Asia, mainly in the Northern and Eastern hemispheres. The Himalayas form a major northern boundary, while the Arabian Sea, Bay of Bengal and Indian Ocean surround the peninsula. India's land and maritime position links South Asia with routes toward West Asia, Africa and Southeast Asia.",
+          "examples": [
+            "The Arabian Sea lies west of India and the Bay of Bengal lies east.",
+            "India shares land boundaries with several South Asian countries and sea routes with the wider Indian Ocean region."
+          ],
+          "exercises": [
+            "In which part of Asia is India located?",
+            "Name the water body west of India and the one east of India."
+          ],
+          "solutions": [
+            "India is located in South Asia.",
+            "The Arabian Sea is to the west and the Bay of Bengal is to the east."
+          ],
+          "practice_questions": [
+            "How does India's location support overseas connections?",
+            "Which major mountain system forms a natural boundary in the north?"
+          ],
+          "practice_solutions": [
+            "Its long coastline and central position in the northern Indian Ocean connect sea routes toward Africa, West Asia and Southeast Asia.",
+            "The Himalayas form the major northern mountain boundary."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t1"
+        },
+        {
+          "title": "Major physiographic divisions of India",
+          "aliases": [
+            "physiographic divisions",
+            "Himalayas plains plateau desert coast islands",
+            "physical India",
+            "landforms of India"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Major physiographic divisions of India.",
+            "Use evidence or an example to apply Major physiographic divisions of India."
+          ],
+          "explanation": "India's major physiographic divisions include the Himalayan Mountains, Northern Plains, Peninsular Plateau, Indian Desert, Coastal Plains and Islands. Each division differs in relief, rocks, soils, water and human use. These landforms influence settlement, farming, transport and natural hazards.",
+          "examples": [
+            "The Northern Plains contain extensive alluvial deposits brought by river systems.",
+            "The Peninsular Plateau contains old rocks and important mineral regions."
+          ],
+          "exercises": [
+            "Name four major physiographic divisions of India.",
+            "Why are the Northern Plains important for agriculture?"
+          ],
+          "solutions": [
+            "The Himalayas, Northern Plains, Peninsular Plateau, Indian Desert, Coastal Plains and Islands are the main divisions; any four are acceptable.",
+            "River-deposited alluvial soils, level land and water availability support extensive farming."
+          ],
+          "practice_questions": [
+            "How can mountain relief affect transport?",
+            "Which division contains many of India's old rocks and mineral areas?"
+          ],
+          "practice_solutions": [
+            "Steep slopes and high passes make routes more difficult and concentrate transport in valleys and passes.",
+            "The Peninsular Plateau contains many old rocks and major mineral regions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t2"
+        },
+        {
+          "title": "Relief, rivers and human activity",
+          "aliases": [
+            "relief and people",
+            "rivers and settlement",
+            "landform use",
+            "physiography effects"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Relief, rivers and human activity.",
+            "Use evidence or an example to apply Relief, rivers and human activity."
+          ],
+          "explanation": "Relief affects climate, drainage, soils, vegetation and where people build settlements. Rivers provide water, fertile sediment, transport possibilities and energy, but floods can also create risk. Responsible planning matches land use with local physical conditions instead of treating every region alike.",
+          "examples": [
+            "Dense settlement often develops on accessible plains with water and fertile soil.",
+            "Building carelessly on a floodplain can increase damage during high river flow."
+          ],
+          "exercises": [
+            "Give two ways rivers support human activity.",
+            "Why can floodplains be both useful and risky?"
+          ],
+          "solutions": [
+            "Rivers provide water, fertile soil, irrigation, transport, fisheries and energy; any two are acceptable.",
+            "They often have fertile soil and water access, but they can be inundated during floods."
+          ],
+          "practice_questions": [
+            "How does relief influence settlement patterns?",
+            "Why should land-use planning consider physical geography?"
+          ],
+          "practice_solutions": [
+            "Level, accessible land usually supports denser settlement, while steep or difficult terrain often supports more scattered settlement.",
+            "It helps match farming, buildings and transport with local slopes, water, soils and natural hazards."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c8",
+      "number": "S1-8",
+      "title": "Semester 1 — Delhi during the Medieval Period",
+      "topics": [
+        {
+          "title": "Founding dynasties of the Delhi Sultanate",
+          "aliases": [
+            "Delhi Sultanate dynasties",
+            "Mamluk dynasty",
+            "Qutbuddin Aibak",
+            "Iltutmish Razia"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Founding dynasties of the Delhi Sultanate.",
+            "Use evidence or an example to apply Founding dynasties of the Delhi Sultanate."
+          ],
+          "explanation": "The Delhi Sultanate began in the early thirteenth century and was ruled successively by the Mamluk, Khalji, Tughlaq, Sayyid and Lodi dynasties. Early rulers such as Qutbuddin Aibak and Iltutmish established institutions and control around Delhi. Razia is remembered as a woman who ruled despite strong political opposition.",
+          "examples": [
+            "Iltutmish consolidated authority and strengthened Delhi as a political centre.",
+            "Razia's reign shows how court politics and gender expectations affected succession."
+          ],
+          "exercises": [
+            "Name the five main dynasties of the Delhi Sultanate in order.",
+            "Why is Iltutmish important in the early Delhi Sultanate?"
+          ],
+          "solutions": [
+            "They were the Mamluk, Khalji, Tughlaq, Sayyid and Lodi dynasties.",
+            "He consolidated the new state, strengthened Delhi and developed administrative institutions."
+          ],
+          "practice_questions": [
+            "What challenge did Razia face as ruler?",
+            "Which dynasty ruled the Delhi Sultanate immediately before the Khaljis?"
+          ],
+          "practice_solutions": [
+            "She faced opposition from powerful nobles and social expectations that resisted a woman exercising sovereign authority.",
+            "The Mamluk, or Slave, dynasty ruled immediately before the Khaljis."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t1"
+        },
+        {
+          "title": "Khalji and Tughlaq policies",
+          "aliases": [
+            "Alauddin Khalji",
+            "Muhammad bin Tughlaq",
+            "market reforms",
+            "Tughlaq policies"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Khalji and Tughlaq policies.",
+            "Use evidence or an example to apply Khalji and Tughlaq policies."
+          ],
+          "explanation": "Alauddin Khalji expanded the Sultanate and used market controls and revenue measures to support a large army. Muhammad bin Tughlaq attempted ambitious policies such as transferring the capital and issuing token currency, but weak planning and enforcement caused serious problems. These cases show that policy goals and practical implementation must both be studied.",
+          "examples": [
+            "Price controls helped Alauddin Khalji try to maintain a large army at controlled cost.",
+            "Token currency failed when counterfeit coins spread and trust in the system collapsed."
+          ],
+          "exercises": [
+            "Why did Alauddin Khalji introduce market controls?",
+            "Why did Muhammad bin Tughlaq's token currency face difficulty?"
+          ],
+          "solutions": [
+            "He wanted to regulate prices and supplies so a large army could be maintained at manageable cost.",
+            "Counterfeiting and weak control reduced trust, so the tokens could not function reliably as money."
+          ],
+          "practice_questions": [
+            "What lesson can be learned from the attempted capital transfer?",
+            "How should historians evaluate an ambitious policy?"
+          ],
+          "practice_solutions": [
+            "A major policy needs realistic planning for distance, people, resources and administration before implementation.",
+            "They should compare its goal, method, implementation, effects and evidence rather than judging only the ruler's intention."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t2"
+        },
+        {
+          "title": "Delhi as a medieval political and cultural centre",
+          "aliases": [
+            "medieval Delhi",
+            "Delhi monuments",
+            "urban centre",
+            "Sultanate legacy"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Delhi as a medieval political and cultural centre.",
+            "Use evidence or an example to apply Delhi as a medieval political and cultural centre."
+          ],
+          "explanation": "Delhi grew through a series of fortified settlements, courts, markets, water systems and religious buildings created by different dynasties. Its location connected routes across northern India. Surviving monuments and archaeological layers show both political change and continuity in urban life.",
+          "examples": [
+            "The Qutb complex preserves structures from different phases of early Sultanate building.",
+            "Reservoirs and canals were essential infrastructure for a large inland city."
+          ],
+          "exercises": [
+            "Why was Delhi well placed to become a major political centre?",
+            "What do Delhi's multiple fortified settlements indicate?"
+          ],
+          "solutions": [
+            "It connected important routes across northern India and could control access between regions.",
+            "They show that successive rulers expanded, shifted or rebuilt political centres over time."
+          ],
+          "practice_questions": [
+            "Why were water systems important to medieval Delhi?",
+            "How do monuments help explain urban continuity?"
+          ],
+          "practice_solutions": [
+            "Reservoirs, wells and canals supplied residents, animals, gardens and construction in a large city.",
+            "Structures from different periods show how later communities reused, altered and expanded the city."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c9",
+      "number": "S1-9",
+      "title": "Semester 1 — Administration of the State",
+      "topics": [
+        {
+          "title": "State legislature and law-making",
+          "aliases": [
+            "state legislature",
+            "legislative assembly",
+            "MLA",
+            "state laws"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of State legislature and law-making.",
+            "Use evidence or an example to apply State legislature and law-making."
+          ],
+          "explanation": "The State Legislature debates and makes laws on subjects assigned to the state. Members of the Legislative Assembly are elected from constituencies and question the government, discuss public issues and examine spending. A bill follows constitutional steps before becoming a state law.",
+          "examples": [
+            "An MLA raises a constituency's water-supply concern during legislative proceedings.",
+            "The Assembly debates a proposed state law before voting on it."
+          ],
+          "exercises": [
+            "What does MLA stand for?",
+            "Name two functions of a State Legislative Assembly."
+          ],
+          "solutions": [
+            "MLA stands for Member of the Legislative Assembly.",
+            "It makes state laws, debates public issues, questions the executive and examines budgets; any two are acceptable."
+          ],
+          "practice_questions": [
+            "What is a constituency?",
+            "Why is debate important before a bill is passed?"
+          ],
+          "practice_solutions": [
+            "It is a defined electoral area whose voters elect a representative.",
+            "Debate allows representatives to examine purpose, effects, costs and possible changes before deciding."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t1"
+        },
+        {
+          "title": "Governor, Chief Minister and Council of Ministers",
+          "aliases": [
+            "governor chief minister",
+            "state executive",
+            "council of ministers",
+            "state administration"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Governor, Chief Minister and Council of Ministers.",
+            "Use evidence or an example to apply Governor, Chief Minister and Council of Ministers."
+          ],
+          "explanation": "The Governor is the constitutional head of a state, while the Chief Minister leads the elected government and Council of Ministers. Ministers direct departments, and permanent public officials carry out administration under law. The Council is collectively responsible to the Legislative Assembly.",
+          "examples": [
+            "The education minister directs policy priorities while the department implements approved programmes.",
+            "A ministry must answer questions about its work in the Legislative Assembly."
+          ],
+          "exercises": [
+            "Who leads the elected state government?",
+            "What does collective responsibility mean for the Council of Ministers?"
+          ],
+          "solutions": [
+            "The Chief Minister leads the elected state government and its Council of Ministers.",
+            "The Council acts together and remains accountable to the Legislative Assembly for government decisions."
+          ],
+          "practice_questions": [
+            "Distinguish a minister from a permanent public official.",
+            "What is the Governor's general position in state administration?"
+          ],
+          "practice_solutions": [
+            "A minister is a political executive responsible for policy, while a public official provides continuing administration under lawful direction.",
+            "The Governor is the constitutional head and performs functions according to the Constitution."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t2"
+        },
+        {
+          "title": "District, local administration and public accountability",
+          "aliases": [
+            "district administration",
+            "local government",
+            "public grievance",
+            "state accountability"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of District, local administration and public accountability.",
+            "Use evidence or an example to apply District, local administration and public accountability."
+          ],
+          "explanation": "District and local bodies deliver many services close to citizens, including records, sanitation, local roads and emergency coordination. Responsibilities are divided among district administration, municipalities and panchayats. Complaints, public records, audits and representative meetings help citizens seek accountability.",
+          "examples": [
+            "A municipality organizes waste collection and maintains local streets.",
+            "A district administration coordinates departments during a flood warning."
+          ],
+          "exercises": [
+            "Name one service commonly handled by a local body.",
+            "Why is district coordination important during an emergency?"
+          ],
+          "solutions": [
+            "Sanitation, local roads, street lighting, water supply and local records are examples; any one is acceptable.",
+            "It brings departments, local bodies, health services and responders together for warnings, relief and recovery."
+          ],
+          "practice_questions": [
+            "Give one lawful way citizens can raise a public-service complaint.",
+            "How do audits support accountability?"
+          ],
+          "practice_solutions": [
+            "They can use a grievance office, written complaint, public meeting, helpline or information request as available.",
+            "Audits compare records and spending with rules and approved purposes, helping identify errors or misuse."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c1",
+      "number": "S2-1",
+      "title": "Semester 2 — Medieval Gujarat",
+      "topics": [
+        {
+          "title": "Solanki and Vaghela Gujarat",
+          "aliases": [
+            "Solanki Gujarat",
+            "Vaghela dynasty",
+            "Anhilwad Patan",
+            "medieval Gujarat kingdoms"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Solanki and Vaghela Gujarat.",
+            "Use evidence or an example to apply Solanki and Vaghela Gujarat."
+          ],
+          "explanation": "The Solanki, or Chaulukya, dynasty made Anahilapataka-Patan a major centre of medieval Gujarat. Rulers and ministers supported temples, stepwells, lakes, learning and trade. The Vaghelas followed as an important regional dynasty before new political powers gained control.",
+          "examples": [
+            "Patan became known for political importance, craft production and monumental building.",
+            "Stepwells combined water storage with architecture suited to Gujarat's climate."
+          ],
+          "exercises": [
+            "What was the major Solanki capital in Gujarat?",
+            "Why were stepwells important in medieval Gujarat?"
+          ],
+          "solutions": [
+            "Anahilapataka, now Patan, was the major Solanki capital.",
+            "They stored and provided access to water while also serving as carefully designed public and architectural spaces."
+          ],
+          "practice_questions": [
+            "Which dynasty followed the Solankis as an important regional power?",
+            "Name two fields supported by Solanki-era patronage."
+          ],
+          "practice_solutions": [
+            "The Vaghela dynasty followed the Solankis as an important regional power.",
+            "Architecture, water works, learning, religion, crafts and trade are examples; any two are acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t1"
+        },
+        {
+          "title": "Gujarat Sultanate and Ahmedabad",
+          "aliases": [
+            "Gujarat Sultanate",
+            "Ahmad Shah",
+            "Ahmedabad foundation",
+            "Sultanate Gujarat"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Gujarat Sultanate and Ahmedabad.",
+            "Use evidence or an example to apply Gujarat Sultanate and Ahmedabad."
+          ],
+          "explanation": "An independent Gujarat Sultanate emerged in the fifteenth century. Sultan Ahmad Shah founded Ahmedabad in 1411 and developed it as a political and commercial centre. The state drew strength from fertile regions, skilled producers, inland markets and active ports.",
+          "examples": [
+            "Ahmedabad's location supported administration, textile production and trade.",
+            "Ports such as Khambhat connected Gujarat's merchants with Indian Ocean networks."
+          ],
+          "exercises": [
+            "Who founded Ahmedabad, and in which year?",
+            "Why were ports important to the Gujarat Sultanate?"
+          ],
+          "solutions": [
+            "Sultan Ahmad Shah founded Ahmedabad in 1411.",
+            "They connected local producers and merchants with overseas trade across the Indian Ocean."
+          ],
+          "practice_questions": [
+            "Name one factor that helped Ahmedabad grow.",
+            "How did inland production and sea trade support each other?"
+          ],
+          "practice_solutions": [
+            "Its political role, skilled crafts, textile production, markets and route connections all supported growth; any one is acceptable.",
+            "Inland farms and workshops supplied goods to ports, while maritime trade brought demand, revenue and imported products."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t2"
+        },
+        {
+          "title": "Trade, culture and heritage of medieval Gujarat",
+          "aliases": [
+            "Gujarat trade",
+            "medieval Gujarat culture",
+            "ports and crafts",
+            "Gujarat heritage"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Trade, culture and heritage of medieval Gujarat.",
+            "Use evidence or an example to apply Trade, culture and heritage of medieval Gujarat."
+          ],
+          "explanation": "Medieval Gujarat linked farming regions, textile and craft centres, pilgrimage places and ports. Gujarati, Persian, Sanskrit and other traditions contributed to literature, records and art. Temples, mosques, stepwells, lakes and urban remains show a layered heritage shaped by many communities.",
+          "examples": [
+            "Fine cotton textiles moved from production centres through merchants to ports and distant markets.",
+            "A historic mosque may combine local stone carving with arches, domes and courtyard planning."
+          ],
+          "exercises": [
+            "Name two goods or crafts associated with medieval Gujarat's trade.",
+            "Why is Gujarat's medieval heritage described as layered?"
+          ],
+          "solutions": [
+            "Cotton textiles, dyes, beads, metal goods and agricultural products are examples; any two are acceptable.",
+            "Successive communities and rulers added buildings, languages, institutions and artistic styles over time."
+          ],
+          "practice_questions": [
+            "How can a port influence inland craft production?",
+            "Why should both temples and mosques be studied as historical evidence?"
+          ],
+          "practice_solutions": [
+            "Overseas demand encourages merchants to order goods from inland artisans and organize transport and finance.",
+            "Both reveal patronage, craftsmanship, technology, community life and cultural interaction in the same region."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c2",
+      "number": "S2-2",
+      "title": "Semester 2 — India: Climate and Natural Resources",
+      "topics": [
+        {
+          "title": "Climate controls, monsoon and seasons",
+          "aliases": [
+            "India climate",
+            "monsoon",
+            "climate controls",
+            "Indian seasons"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Climate controls, monsoon and seasons.",
+            "Use evidence or an example to apply Climate controls, monsoon and seasons."
+          ],
+          "explanation": "India's climate is influenced by latitude, altitude, relief, distance from the sea and seasonal winds. The monsoon brings much of the annual rainfall, but mountains and location make rainfall uneven. Long-term climate patterns shape crops, water availability, housing and daily life.",
+          "examples": [
+            "The Western Ghats force moisture-laden winds upward, producing heavy rain on the windward side.",
+            "Coastal places usually have a smaller annual temperature range than places far inland."
+          ],
+          "exercises": [
+            "Name three factors that influence India's climate.",
+            "Why do coastal places often have more moderate temperatures?"
+          ],
+          "solutions": [
+            "Latitude, altitude, relief, distance from the sea, winds and ocean conditions are factors; any three are acceptable.",
+            "The sea heats and cools slowly, reducing temperature extremes near the coast."
+          ],
+          "practice_questions": [
+            "How can mountains affect rainfall?",
+            "Why is the monsoon important to India?"
+          ],
+          "practice_solutions": [
+            "Mountains force moist air to rise and cool, increasing rain on one side and sometimes creating a rain-shadow region on the other.",
+            "It supplies much of the rainfall needed for farming, water storage, rivers and ecosystems."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t1"
+        },
+        {
+          "title": "Water, soils and mineral resources",
+          "aliases": [
+            "natural resources India",
+            "water soil minerals",
+            "resource classification",
+            "resource conservation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Water, soils and mineral resources.",
+            "Use evidence or an example to apply Water, soils and mineral resources."
+          ],
+          "explanation": "Water, soil and minerals support life and economic activity, but their distribution is uneven. Soil forms slowly and can lose fertility through erosion or misuse. Minerals are non-renewable on a human timescale, so efficient use, recycling and careful extraction are important.",
+          "examples": [
+            "Contour planting can slow runoff and reduce soil erosion on a slope.",
+            "Recycling metal reduces the need to extract the same amount of new ore."
+          ],
+          "exercises": [
+            "Why is soil considered a slowly renewable resource?",
+            "Why are mineral resources called non-renewable?"
+          ],
+          "solutions": [
+            "Soil can form and recover, but the process is much slower than the rate at which severe erosion can remove it.",
+            "Useful mineral deposits form over geological time and cannot be replaced quickly after extraction."
+          ],
+          "practice_questions": [
+            "Give one method of conserving water.",
+            "How does recycling help conserve minerals?"
+          ],
+          "practice_solutions": [
+            "Rainwater harvesting, repairing leaks, efficient irrigation and protecting catchments are suitable methods; any one is acceptable.",
+            "It recovers usable material from products and reduces demand for fresh mining and processing."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t2"
+        },
+        {
+          "title": "Forests, wildlife and sustainable use",
+          "aliases": [
+            "forest resources",
+            "wildlife conservation",
+            "biodiversity",
+            "sustainable use"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Forests, wildlife and sustainable use.",
+            "Use evidence or an example to apply Forests, wildlife and sustainable use."
+          ],
+          "explanation": "Forests protect soil and water, store carbon and provide habitat and useful products. Wildlife conservation protects species and the ecological relationships that support them. Sustainable use combines present needs with regeneration, habitat protection and fair community participation.",
+          "examples": [
+            "Protecting vegetation in a river catchment reduces erosion and helps regulate water flow.",
+            "A wildlife corridor lets animals move between separated habitat areas."
+          ],
+          "exercises": [
+            "Give two environmental functions of forests.",
+            "What is a wildlife corridor?"
+          ],
+          "solutions": [
+            "Forests protect soil, regulate water, store carbon, influence climate and provide habitat; any two are acceptable.",
+            "It is a connected strip or network of habitat that allows animals to move between larger habitat areas."
+          ],
+          "practice_questions": [
+            "Distinguish conservation from uncontrolled exploitation.",
+            "Why is local community participation useful in conservation?"
+          ],
+          "practice_solutions": [
+            "Conservation manages use so resources and ecosystems persist, while uncontrolled exploitation removes resources without protecting renewal or ecological limits.",
+            "Local people hold practical knowledge, depend on resources and can help design and monitor rules that are workable and fair."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c3",
+      "number": "S2-3",
+      "title": "Semester 2 — Courts and their Importance",
+      "topics": [
+        {
+          "title": "Rule of law and judicial independence",
+          "aliases": [
+            "rule of law",
+            "judiciary",
+            "judicial independence",
+            "courts importance"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rule of law and judicial independence.",
+            "Use evidence or an example to apply Rule of law and judicial independence."
+          ],
+          "explanation": "Courts apply law, resolve disputes and protect legal rights. Rule of law means that public authorities and citizens are subject to law rather than personal command. Judicial independence helps judges decide cases on evidence and law without improper pressure.",
+          "examples": [
+            "A court examines evidence from both sides before reaching a reasoned decision.",
+            "A citizen may challenge an unlawful government action through the judicial process."
+          ],
+          "exercises": [
+            "Why are courts necessary?",
+            "What does rule of law mean?"
+          ],
+          "solutions": [
+            "Courts resolve disputes, apply laws, protect rights and provide lawful remedies when rules are broken.",
+            "It means everyone, including government authorities, is subject to publicly known laws and legal procedures."
+          ],
+          "practice_questions": [
+            "Why should judges be independent?",
+            "Why must both sides receive a fair hearing?"
+          ],
+          "practice_solutions": [
+            "They must decide according to law and evidence without improper political, financial or personal pressure.",
+            "A fair hearing lets each side present evidence and arguments before an impartial decision is made."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t1"
+        },
+        {
+          "title": "Court hierarchy, civil cases and criminal cases",
+          "aliases": [
+            "court hierarchy",
+            "civil criminal cases",
+            "district high supreme court",
+            "appeal"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Court hierarchy, civil cases and criminal cases.",
+            "Use evidence or an example to apply Court hierarchy, civil cases and criminal cases."
+          ],
+          "explanation": "India's court system has lower or trial courts, District Courts, High Courts and the Supreme Court. Civil cases generally concern disputes over rights, property, contracts or family matters, while criminal cases concern alleged offences against law. Appeals allow a higher court to review a lower court's decision according to legal rules.",
+          "examples": [
+            "A property-boundary dispute is generally civil, while a prosecution for theft is criminal.",
+            "A party dissatisfied on valid legal grounds may appeal through the proper court hierarchy."
+          ],
+          "exercises": [
+            "Distinguish a civil case from a criminal case.",
+            "Which court is the highest court in India?"
+          ],
+          "solutions": [
+            "A civil case usually concerns a dispute between parties over rights or obligations, while a criminal case concerns an alleged offence prosecuted under criminal law.",
+            "The Supreme Court of India is the highest court."
+          ],
+          "practice_questions": [
+            "What is an appeal?",
+            "Why is a court hierarchy useful?"
+          ],
+          "practice_solutions": [
+            "It is a request for a higher court to review a lower court's decision according to law.",
+            "It distributes cases by level and provides structured review of decisions through appeals."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t2"
+        },
+        {
+          "title": "Access to justice and alternative resolution",
+          "aliases": [
+            "access to justice",
+            "Lok Adalat",
+            "legal aid",
+            "dispute resolution"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Access to justice and alternative resolution.",
+            "Use evidence or an example to apply Access to justice and alternative resolution."
+          ],
+          "explanation": "Access to justice requires understandable procedures, timely hearings and the ability to seek help regardless of wealth. Legal aid can assist eligible people who cannot afford representation. Lok Adalats and mediation can settle suitable disputes through lawful agreement, but serious or unsuitable matters still require regular courts.",
+          "examples": [
+            "A Lok Adalat may help parties settle a suitable dispute quickly by agreement.",
+            "Legal-aid services can help an eligible person understand and present a case."
+          ],
+          "exercises": [
+            "Why were Lok Adalats developed?",
+            "What is the purpose of legal aid?"
+          ],
+          "solutions": [
+            "They help resolve suitable disputes more quickly and inexpensively through settlement and reconciliation.",
+            "It helps eligible people access legal advice or representation even when they cannot afford it."
+          ],
+          "practice_questions": [
+            "Can every dispute be settled through informal agreement?",
+            "Name one barrier to access to justice."
+          ],
+          "practice_solutions": [
+            "No. Some matters require formal investigation, trial and a binding court decision.",
+            "High cost, delay, distance, lack of information or language difficulty can be barriers; any one is acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c4",
+      "number": "S2-4",
+      "title": "Semester 2 — Mughal Empire: Establishment and Extension",
+      "topics": [
+        {
+          "title": "Babur, Humayun and the early Mughal state",
+          "aliases": [
+            "Babur",
+            "Humayun",
+            "Panipat 1526",
+            "early Mughals"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Babur, Humayun and the early Mughal state.",
+            "Use evidence or an example to apply Babur, Humayun and the early Mughal state."
+          ],
+          "explanation": "Babur defeated Ibrahim Lodi at the First Battle of Panipat in 1526 and established Mughal rule in north India. His successor Humayun temporarily lost power to Sher Shah Suri but later recovered Delhi. The early empire remained unstable until institutions and alliances were strengthened under Akbar.",
+          "examples": [
+            "Field artillery and disciplined tactics contributed to Babur's victory at Panipat.",
+            "Humayun's exile shows that winning a throne did not automatically secure lasting control."
+          ],
+          "exercises": [
+            "Which battle established Babur's rule in north India in 1526?",
+            "Who displaced Humayun from power for a period?"
+          ],
+          "solutions": [
+            "The First Battle of Panipat established Babur's rule in 1526.",
+            "Sher Shah Suri displaced Humayun from power for a period."
+          ],
+          "practice_questions": [
+            "Why was the early Mughal state unstable?",
+            "What does Humayun's return show about political power?"
+          ],
+          "practice_solutions": [
+            "It faced rival powers, contested succession, limited institutions and difficulty controlling a large territory.",
+            "Political control could be lost and regained as alliances, military strength and rival states changed."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t1"
+        },
+        {
+          "title": "Sher Shah Suri's reforms",
+          "aliases": [
+            "Sher Shah Suri",
+            "Sur administration",
+            "roads currency revenue",
+            "administrative reforms"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Sher Shah Suri's reforms.",
+            "Use evidence or an example to apply Sher Shah Suri's reforms."
+          ],
+          "explanation": "Sher Shah Suri ruled for a short period but introduced influential measures in revenue assessment, roads, communication and currency. Sarais along major routes supported travellers, officials and trade. His reforms show how administration and infrastructure can strengthen a state beyond battlefield success.",
+          "examples": [
+            "Roadside sarais provided resting places and supported communication along major routes.",
+            "A standard silver currency made exchange more predictable across markets."
+          ],
+          "exercises": [
+            "Name two reforms associated with Sher Shah Suri.",
+            "How did sarais support administration and trade?"
+          ],
+          "solutions": [
+            "Revenue assessment, roads, postal communication, sarais and standardized currency are examples; any two are acceptable.",
+            "They offered stopping points for travellers, officials, messengers and merchants along major roads."
+          ],
+          "practice_questions": [
+            "Why is standardized currency useful?",
+            "What broader lesson comes from Sher Shah's short reign?"
+          ],
+          "practice_solutions": [
+            "It makes value more predictable and supports taxation and exchange across different markets.",
+            "Durable administrative systems and infrastructure can have influence beyond the length of one ruler's reign."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t2"
+        },
+        {
+          "title": "Akbar's expansion, alliances and administration",
+          "aliases": [
+            "Akbar",
+            "Mansabdari",
+            "Akbar alliances",
+            "Mughal expansion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Akbar's expansion, alliances and administration.",
+            "Use evidence or an example to apply Akbar's expansion, alliances and administration."
+          ],
+          "explanation": "Akbar expanded the Mughal Empire through campaigns, diplomacy and alliances with several regional rulers. The mansabdari system ranked officials and linked status with service and military responsibility. Revenue administration, consultation and accommodation of diverse elites helped integrate a large empire, although conflict and resistance continued.",
+          "examples": [
+            "A mansab indicated an official's rank and service obligations within the imperial system.",
+            "Political alliances with some Rajput houses brought regional elites into Mughal administration."
+          ],
+          "exercises": [
+            "What was a mansab?",
+            "Name two methods Akbar used to expand or integrate the empire."
+          ],
+          "solutions": [
+            "A mansab was an official rank that indicated status and service or military obligations in the Mughal system.",
+            "Military campaigns, diplomacy, alliances, appointments and administrative accommodation are examples; any two are acceptable."
+          ],
+          "practice_questions": [
+            "Why were regional alliances useful to Akbar?",
+            "Did Mughal expansion remove all regional resistance?"
+          ],
+          "practice_solutions": [
+            "They reduced some opposition and brought local knowledge, leaders and resources into imperial administration.",
+            "No. Several rulers and communities continued to resist or negotiate Mughal authority."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c5",
+      "number": "S2-5",
+      "title": "Semester 2 — India: Agriculture, Industry and Transportation",
+      "topics": [
+        {
+          "title": "Crops, seasons and farming conditions",
+          "aliases": [
+            "Indian agriculture",
+            "kharif rabi crops",
+            "crop conditions",
+            "farming"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Crops, seasons and farming conditions.",
+            "Use evidence or an example to apply Crops, seasons and farming conditions."
+          ],
+          "explanation": "Crop choice depends on temperature, rainfall, soil, water, labour and market access. Kharif crops are generally sown with the monsoon, while rabi crops are generally sown in the cooler season. Irrigation and improved methods can reduce risk, but sustainable farming must protect soil and water.",
+          "examples": [
+            "Rice usually needs more water than millet and is suited to wetter conditions.",
+            "Wheat is commonly grown as a rabi crop in cooler-season conditions."
+          ],
+          "exercises": [
+            "Distinguish kharif crops from rabi crops.",
+            "Why is millet suited to many dry regions?"
+          ],
+          "solutions": [
+            "Kharif crops are generally sown with the monsoon, while rabi crops are generally sown in the cooler season after the monsoon.",
+            "Millet can grow with less rainfall and tolerate relatively dry conditions better than water-demanding crops."
+          ],
+          "practice_questions": [
+            "Name three factors that influence crop choice.",
+            "Give one sustainable soil-protection practice."
+          ],
+          "practice_solutions": [
+            "Temperature, rainfall, soil, irrigation, labour and market access are factors; any three are acceptable.",
+            "Crop rotation, cover crops, contour farming, compost use and reduced erosion are suitable examples; any one is acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t1"
+        },
+        {
+          "title": "Industries, raw materials and location",
+          "aliases": [
+            "Indian industries",
+            "raw materials",
+            "industry location",
+            "cottage small large industry"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Industries, raw materials and location.",
+            "Use evidence or an example to apply Industries, raw materials and location."
+          ],
+          "explanation": "Industries transform raw materials into goods and services. Location depends on inputs such as raw materials, power, labour, capital, transport, water and markets. Cottage, small-scale and large-scale industries differ in investment, organization and output, but they can be linked through supply chains.",
+          "examples": [
+            "Cotton-textile mills often developed near cotton-growing regions, labour, markets and transport.",
+            "A small workshop may supply parts to a larger manufacturing company."
+          ],
+          "exercises": [
+            "Name four factors that influence industrial location.",
+            "How does an industry add value to a raw material?"
+          ],
+          "solutions": [
+            "Raw materials, power, labour, capital, water, transport and markets are factors; any four are acceptable.",
+            "It processes or combines the material into a product with greater usefulness or market value."
+          ],
+          "practice_questions": [
+            "Distinguish cottage industry from large-scale industry.",
+            "Why is transport important to industry?"
+          ],
+          "practice_solutions": [
+            "Cottage industry usually uses small investment and household-scale labour, while large-scale industry uses larger capital, machinery, workforce and output.",
+            "It brings inputs to production sites and carries finished goods to markets."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t2"
+        },
+        {
+          "title": "Transport networks and economic connection",
+          "aliases": [
+            "transport India",
+            "roads railways waterways airways",
+            "transport network",
+            "economic connectivity"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Transport networks and economic connection.",
+            "Use evidence or an example to apply Transport networks and economic connection."
+          ],
+          "explanation": "Roads, railways, waterways, airways, pipelines and ropeways serve different kinds of movement. A transport network connects farms, factories, markets and ports and can reduce time and cost. The best mode depends on distance, terrain, urgency, volume and the type of goods or passengers.",
+          "examples": [
+            "Rail is efficient for moving large quantities of bulk goods over long land distances.",
+            "A ropeway can serve steep terrain where building a conventional road is difficult."
+          ],
+          "exercises": [
+            "Why are pipelines useful for some products?",
+            "Which factors should be considered when choosing a transport mode?"
+          ],
+          "solutions": [
+            "They can move liquids or gases continuously over long distances with limited handling.",
+            "Distance, terrain, cost, speed, volume, urgency and the nature of the load should be considered."
+          ],
+          "practice_questions": [
+            "How does transport connect agriculture with industry?",
+            "Why are ports important to the national economy?"
+          ],
+          "practice_solutions": [
+            "It carries farm inputs and produce, and moves agricultural raw materials to processing industries and markets.",
+            "Ports connect domestic transport networks with international movement of goods and passengers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c6",
+      "number": "S2-6",
+      "title": "Semester 2 — Mughal Empire: Golden Age and Downfall",
+      "topics": [
+        {
+          "title": "Jahangir, Shah Jahan and imperial culture",
+          "aliases": [
+            "Jahangir",
+            "Shah Jahan",
+            "Mughal culture",
+            "Mughal court"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Jahangir, Shah Jahan and imperial culture.",
+            "Use evidence or an example to apply Jahangir, Shah Jahan and imperial culture."
+          ],
+          "explanation": "Under Jahangir and Shah Jahan, Mughal authority remained extensive and the court supported painting, literature, gardens and monumental architecture. Trade and skilled production connected cities with regional and overseas markets. The term golden age describes major achievements, but historians also examine taxation, inequality and the labour behind imperial splendour.",
+          "examples": [
+            "Mughal miniature paintings recorded court scenes, nature and literary themes.",
+            "The Taj Mahal reflects skilled planning, stonework, calligraphy and garden design under Shah Jahan."
+          ],
+          "exercises": [
+            "Name two cultural fields supported by the Mughal court under Jahangir or Shah Jahan.",
+            "Why should the phrase golden age be examined critically?"
+          ],
+          "solutions": [
+            "Painting, literature, gardens, architecture and fine crafts are examples; any two are acceptable.",
+            "Achievements should be studied alongside taxation, inequality, conflict and the labour and resources that supported them."
+          ],
+          "practice_questions": [
+            "Which emperor commissioned the Taj Mahal?",
+            "How can court painting serve as historical evidence?"
+          ],
+          "practice_solutions": [
+            "Shah Jahan commissioned the Taj Mahal.",
+            "It can show clothing, ceremonies, objects, landscapes and the image that rulers wished to present, though it must be compared with other sources."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t1"
+        },
+        {
+          "title": "Aurangzeb, expansion and imperial strain",
+          "aliases": [
+            "Aurangzeb",
+            "Deccan campaigns",
+            "Mughal strain",
+            "imperial expansion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Aurangzeb, expansion and imperial strain.",
+            "Use evidence or an example to apply Aurangzeb, expansion and imperial strain."
+          ],
+          "explanation": "Aurangzeb expanded Mughal activity deep into the Deccan, but long campaigns consumed money, troops and administrative attention. Relations with regional powers and communities became more difficult in several areas. Expansion increased territory while also stretching the empire's ability to govern effectively.",
+          "examples": [
+            "A distant campaign required long supply lines and continuing revenue.",
+            "Regional resistance could force the empire to spend resources without securing stable local control."
+          ],
+          "exercises": [
+            "Why did long Deccan campaigns strain the Mughal Empire?",
+            "How can expansion weaken an empire even when territory grows?"
+          ],
+          "solutions": [
+            "They consumed large amounts of money, troops and administrative attention over long distances.",
+            "The state may struggle to supply armies, supervise officials, collect revenue and respond to local resistance across a larger area."
+          ],
+          "practice_questions": [
+            "Name one regional power that challenged Mughal control in the Deccan.",
+            "Why are supply lines important in a distant campaign?"
+          ],
+          "practice_solutions": [
+            "The Marathas were a major regional power that challenged Mughal control.",
+            "They deliver food, equipment, money and reinforcements needed to maintain forces far from the political centre."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t2"
+        },
+        {
+          "title": "Decline, regional states and the Marathas",
+          "aliases": [
+            "Mughal decline",
+            "regional states",
+            "Marathas",
+            "Shivaji"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Decline, regional states and the Marathas.",
+            "Use evidence or an example to apply Decline, regional states and the Marathas."
+          ],
+          "explanation": "After Aurangzeb, succession struggles, fiscal strain, powerful regional governors and external attacks weakened central Mughal authority. Regional states gained greater independence. Shivaji had earlier built a Maratha state using forts, mobile forces, local administration and revenue systems, creating a power that expanded under later leaders.",
+          "examples": [
+            "A provincial governor could become nearly independent when the centre could no longer enforce orders.",
+            "Hill forts helped the Marathas protect routes and operate in difficult terrain."
+          ],
+          "exercises": [
+            "Name three causes of Mughal decline.",
+            "How did regional states emerge as Mughal authority weakened?"
+          ],
+          "solutions": [
+            "Succession struggles, financial strain, regional resistance, powerful governors, administrative weakness and external attacks are causes; any three are acceptable.",
+            "Governors and local powers kept more revenue, controlled armies and made decisions with less obedience to the centre."
+          ],
+          "practice_questions": [
+            "Name two features that helped Shivaji build the Maratha state.",
+            "Does imperial decline usually have only one cause?"
+          ],
+          "practice_solutions": [
+            "Forts, mobile forces, local support, administration and organized revenue were important; any two are acceptable.",
+            "No. Decline usually results from several interacting political, military, economic and administrative pressures."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c7",
+      "number": "S2-7",
+      "title": "Semester 2 — Consumer in the Market",
+      "topics": [
+        {
+          "title": "Informed choice, labels and bills",
+          "aliases": [
+            "consumer awareness",
+            "product labels",
+            "bill receipt",
+            "quality marks"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Informed choice, labels and bills.",
+            "Use evidence or an example to apply Informed choice, labels and bills."
+          ],
+          "explanation": "An informed consumer compares price, quantity, quality, safety information, warranty and seller claims. Labels and recognized quality marks can provide useful evidence, while a bill records the transaction. Advertisements should be checked against written product information instead of accepted automatically.",
+          "examples": [
+            "A buyer checks the net quantity and expiry date before purchasing packaged food.",
+            "A receipt helps prove where, when and for what price a product was purchased."
+          ],
+          "exercises": [
+            "Why should a consumer ask for a bill?",
+            "Name four details to check on a packaged product."
+          ],
+          "solutions": [
+            "A bill records the seller, item, date and price and can support warranty, return, tax and complaint claims.",
+            "Price, net quantity, ingredients, dates, safety instructions, manufacturer details and quality marks are examples; any four are acceptable."
+          ],
+          "practice_questions": [
+            "Why should an advertisement not be the only basis for a purchase?",
+            "What should a buyer do if a safety seal is broken?"
+          ],
+          "practice_solutions": [
+            "Advertising is designed to persuade and may omit limits, so claims should be checked against labels, evidence and actual need.",
+            "The buyer should not accept the product and should ask the seller for a properly sealed item."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t1"
+        },
+        {
+          "title": "Consumer rights and responsibilities",
+          "aliases": [
+            "consumer rights",
+            "consumer responsibilities",
+            "right to safety information",
+            "consumer protection"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Consumer rights and responsibilities.",
+            "Use evidence or an example to apply Consumer rights and responsibilities."
+          ],
+          "explanation": "Consumer protection includes rights to safety, information, choice, representation and redress. Consumers also have responsibilities: read information, use products correctly, keep records and report genuine problems honestly. Rights work best when buyers remain alert and sellers follow fair practices.",
+          "examples": [
+            "Clear ingredient and warning information supports the consumer's right to information.",
+            "Following operating instructions helps a consumer use an electrical product safely and fairly assess a defect."
+          ],
+          "exercises": [
+            "Name three consumer rights.",
+            "Give two responsibilities of a consumer."
+          ],
+          "solutions": [
+            "Rights to safety, information, choice, representation and redress are examples; any three are acceptable.",
+            "Reading labels, keeping bills, using products as directed and making honest complaints are examples; any two are acceptable."
+          ],
+          "practice_questions": [
+            "How does the right to information help a buyer?",
+            "Does a low price remove the seller's duty to avoid misleading claims?"
+          ],
+          "practice_solutions": [
+            "It provides facts about price, quantity, contents, risks and terms needed for an informed decision.",
+            "No. Sellers should provide truthful information and follow applicable consumer-protection rules regardless of price."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t2"
+        },
+        {
+          "title": "Complaints, evidence and consumer redress",
+          "aliases": [
+            "consumer complaint",
+            "consumer redress",
+            "warranty",
+            "consumer commission"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Complaints, evidence and consumer redress.",
+            "Use evidence or an example to apply Complaints, evidence and consumer redress."
+          ],
+          "explanation": "When a product or service fails, the consumer should record the problem, keep the bill and warranty, and first seek a clear remedy from the seller or provider. If the issue remains unresolved, formal consumer-redress channels may be used according to current rules. Evidence and a specific requested remedy make a complaint stronger.",
+          "examples": [
+            "A buyer photographs a damaged product and keeps the invoice before contacting the seller.",
+            "A written complaint states the defect, purchase details and whether repair, replacement or refund is requested."
+          ],
+          "exercises": [
+            "What evidence should be kept for a consumer complaint?",
+            "What should a clear complaint include?"
+          ],
+          "solutions": [
+            "Bills, warranty documents, labels, photographs, messages and service records can support the complaint.",
+            "It should include purchase details, the problem, supporting evidence, previous contact and the remedy requested."
+          ],
+          "practice_questions": [
+            "Why should a consumer first contact the seller or provider?",
+            "What does consumer redress mean?"
+          ],
+          "practice_solutions": [
+            "The seller may be able to verify and resolve the problem quickly before formal escalation is needed.",
+            "It means a remedy for a valid complaint, such as repair, replacement, refund, compensation or correction as allowed by applicable rules."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c8",
+      "number": "S2-8",
+      "title": "Semester 2 — Medieval Architecture",
+      "topics": [
+        {
+          "title": "Temple, fort and water architecture",
+          "aliases": [
+            "medieval temples",
+            "fort architecture",
+            "stepwell architecture",
+            "water structures"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Temple, fort and water architecture.",
+            "Use evidence or an example to apply Temple, fort and water architecture."
+          ],
+          "explanation": "Medieval builders designed temples, forts, stepwells, tanks and gateways for religious, political and practical needs. Site, stone, climate and available skills shaped each structure. Carvings and inscriptions add cultural evidence, while walls, drainage and water systems reveal engineering choices.",
+          "examples": [
+            "A hill fort uses elevation and strong gateways to control access.",
+            "A stepwell provides descending access to water as the water level changes."
+          ],
+          "exercises": [
+            "Why were stepwells useful in regions with seasonal water levels?",
+            "Name two practical features of a fort."
+          ],
+          "solutions": [
+            "Their descending steps allowed people to reach water at different depths through the year.",
+            "Defensive walls, controlled gateways, watch points, storage and water systems are examples; any two are acceptable."
+          ],
+          "practice_questions": [
+            "How does building material affect architecture?",
+            "What can carvings reveal to historians?"
+          ],
+          "practice_solutions": [
+            "Local stone, brick, timber and mortar influence strength, carving, span, maintenance and appearance.",
+            "They can reveal beliefs, clothing, occupations, artistic styles, patrons and stories valued by society."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t1"
+        },
+        {
+          "title": "Sultanate and Mughal architectural forms",
+          "aliases": [
+            "Mughal architecture",
+            "Sultanate monuments",
+            "domes arches gardens",
+            "Islamic architecture India"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Sultanate and Mughal architectural forms.",
+            "Use evidence or an example to apply Sultanate and Mughal architectural forms."
+          ],
+          "explanation": "Sultanate and Mughal buildings often used arches, domes, minarets, large gateways, courtyards and geometric planning. Mughal design developed formal gardens, balanced layouts and refined stone or inlay work. Local craftsmen and regional traditions shaped how these forms appeared in different places.",
+          "examples": [
+            "A charbagh divides a formal garden into planned sections using paths and water channels.",
+            "The Red Fort combines defensive walls with palaces and administrative spaces."
+          ],
+          "exercises": [
+            "What is a charbagh?",
+            "Name three features common in Sultanate or Mughal architecture."
+          ],
+          "solutions": [
+            "It is a formal garden divided into four main sections, usually organized with paths and water channels.",
+            "Arches, domes, minarets, gateways, courtyards, gardens and geometric decoration are examples; any three are acceptable."
+          ],
+          "practice_questions": [
+            "Why did the same architectural tradition look different across regions?",
+            "How can a palace-fort serve more than one purpose?"
+          ],
+          "practice_solutions": [
+            "Builders adapted designs to local materials, climate, craftsmanship and earlier regional forms.",
+            "It can provide defense while also housing rulers, officials, ceremonies and administration."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t2"
+        },
+        {
+          "title": "Gujarat monuments and heritage conservation",
+          "aliases": [
+            "Gujarat monuments",
+            "Sidi Saiyyed Jali",
+            "heritage conservation",
+            "historic Ahmedabad"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Gujarat monuments and heritage conservation.",
+            "Use evidence or an example to apply Gujarat monuments and heritage conservation."
+          ],
+          "explanation": "Gujarat's medieval heritage includes temples, mosques, tombs, forts, stepwells, lakes and carved gateways. Structures such as the Sidi Saiyyed Mosque's stone screens show exceptional craftsmanship. Conservation requires documentation, careful repair, controlled use and protection from vandalism, pollution and unsuitable construction.",
+          "examples": [
+            "A carved stone screen filters light while forming a detailed decorative pattern.",
+            "Repair using incompatible cement can trap moisture and damage historic stone."
+          ],
+          "exercises": [
+            "What is the Sidi Saiyyed Mosque especially known for?",
+            "Name two threats to historic monuments."
+          ],
+          "solutions": [
+            "It is especially known for its finely carved stone lattice screens, or jalis.",
+            "Vandalism, pollution, water damage, neglect, crowd pressure and unsuitable repair are threats; any two are acceptable."
+          ],
+          "practice_questions": [
+            "Why should conservation begin with documentation?",
+            "Why must repair materials be compatible with an old structure?"
+          ],
+          "practice_solutions": [
+            "Records of condition, materials and earlier changes help experts plan repairs and monitor damage accurately.",
+            "Incompatible materials can change moisture movement, weight or chemical conditions and cause further damage."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c9",
+      "number": "S2-9",
+      "title": "Semester 2 — India: Social Life",
+      "topics": [
+        {
+          "title": "Regional languages, clothing and food",
+          "aliases": [
+            "India regional diversity",
+            "languages clothing food",
+            "social life India",
+            "regional culture"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Regional languages, clothing and food.",
+            "Use evidence or an example to apply Regional languages, clothing and food."
+          ],
+          "explanation": "India's social life varies with language, climate, crops, occupations, history and contact between communities. Clothing and food reflect both local conditions and cultural choice. Regional patterns are useful for study, but individuals should not be stereotyped because every region contains internal diversity.",
+          "examples": [
+            "Rice-based dishes are common in many high-rainfall and coastal regions, but diets still vary within those regions.",
+            "Light cotton clothing is practical in hot conditions, while local traditions influence style and design."
+          ],
+          "exercises": [
+            "Name three factors that influence regional food or clothing.",
+            "Why should regional descriptions not become stereotypes?"
+          ],
+          "solutions": [
+            "Climate, crops, occupations, history, trade, religion and cultural tradition are factors; any three are acceptable.",
+            "People within the same region have different identities, choices, occupations and family traditions."
+          ],
+          "practice_questions": [
+            "How can climate influence clothing?",
+            "How does agriculture influence cuisine?"
+          ],
+          "practice_solutions": [
+            "Temperature, rainfall and humidity affect the materials and designs people find practical.",
+            "Locally grown grains, pulses, vegetables, oils and spices become common ingredients in regional food traditions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t1"
+        },
+        {
+          "title": "Festivals, arts and shared traditions",
+          "aliases": [
+            "Indian festivals",
+            "folk arts",
+            "dance music crafts",
+            "shared traditions"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Festivals, arts and shared traditions.",
+            "Use evidence or an example to apply Festivals, arts and shared traditions."
+          ],
+          "explanation": "Festivals, music, dance, theatre and crafts express community memory and creativity. Traditions change as people migrate, exchange ideas and use new materials or media. Many celebrations are shared across communities or have regional variations, showing both diversity and connection.",
+          "examples": [
+            "A harvest festival may have different names and customs in different states while marking a similar seasonal event.",
+            "A folk dance can preserve local stories while adapting its performance for new audiences."
+          ],
+          "exercises": [
+            "How can one festival show both unity and diversity?",
+            "Why do cultural traditions change over time?"
+          ],
+          "solutions": [
+            "People may share the same seasonal or cultural purpose while using different regional names, foods, music and rituals.",
+            "Migration, technology, trade, new audiences and contact among communities introduce new forms and meanings."
+          ],
+          "practice_questions": [
+            "Name two forms of cultural expression.",
+            "How can a local art form support community identity?"
+          ],
+          "practice_solutions": [
+            "Music, dance, theatre, painting, storytelling, textiles and crafts are examples; any two are acceptable.",
+            "It carries shared stories, skills, symbols and memories across generations."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t2"
+        },
+        {
+          "title": "Unity in diversity and respectful citizenship",
+          "aliases": [
+            "unity in diversity",
+            "respect diversity",
+            "equal citizenship",
+            "social inclusion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Unity in diversity and respectful citizenship.",
+            "Use evidence or an example to apply Unity in diversity and respectful citizenship."
+          ],
+          "explanation": "Unity in diversity means building common citizenship while respecting differences of language, region, religion and culture. The Constitution promises equality and rejects discrimination. Respectful citizenship involves listening, checking stereotypes and ensuring that public spaces and opportunities include everyone.",
+          "examples": [
+            "Classmates explain different home languages without treating one language as superior.",
+            "A public event provides information in forms that more community members can understand."
+          ],
+          "exercises": [
+            "What does unity in diversity mean?",
+            "Why are stereotypes harmful?"
+          ],
+          "solutions": [
+            "It means sharing equal citizenship and common institutions while respecting cultural, linguistic, regional and religious differences.",
+            "They replace evidence about individuals with oversimplified assumptions and can lead to unfair treatment."
+          ],
+          "practice_questions": [
+            "Give one way a school can support inclusion.",
+            "Does respecting diversity require accepting discrimination as a tradition?"
+          ],
+          "practice_solutions": [
+            "It can use fair rules, accessible activities, respectful language and opportunities for different students to participate; any one is acceptable.",
+            "No. Cultural respect must remain consistent with equality, dignity and constitutional rights."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c10",
+      "number": "S2-10",
+      "title": "Semester 2 — Public Property",
+      "topics": [
+        {
+          "title": "Public property, private property and common use",
+          "aliases": [
+            "public property",
+            "private property",
+            "common property",
+            "public facilities"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Public property, private property and common use.",
+            "Use evidence or an example to apply Public property, private property and common use."
+          ],
+          "explanation": "Private property is owned or lawfully controlled by a person or organization, while public property is provided or maintained for community use through public institutions. Schools, parks, roads and buses may be public facilities. Public access does not mean there are no rules; shared use requires lawful and responsible behaviour.",
+          "examples": [
+            "A personal school bag is private property, while a municipal park is public property.",
+            "A public bus is shared infrastructure that users must not damage."
+          ],
+          "exercises": [
+            "Distinguish public property from private property.",
+            "Give three examples of public property."
+          ],
+          "solutions": [
+            "Public property is maintained for community or governmental use, while private property is owned or controlled by a particular person or organization.",
+            "Public roads, parks, schools, libraries, buses and government hospitals are examples; any three are acceptable."
+          ],
+          "practice_questions": [
+            "Does public property mean anyone may use it in any way?",
+            "Why is a public library considered a shared facility?"
+          ],
+          "practice_solutions": [
+            "No. Its use is governed by laws and rules so it remains safe and available for everyone.",
+            "It is maintained for community access and its books, space and services are used by many people under common rules."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t1"
+        },
+        {
+          "title": "Care, maintenance and civic responsibility",
+          "aliases": [
+            "protect public property",
+            "civic responsibility",
+            "maintenance",
+            "shared resources"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Care, maintenance and civic responsibility.",
+            "Use evidence or an example to apply Care, maintenance and civic responsibility."
+          ],
+          "explanation": "Public property is funded and maintained from shared resources, so damage imposes costs on the whole community. Responsible users avoid littering, vandalism and waste, follow safety rules and report faults. Peaceful protest and lawful complaint never justify damaging shared facilities.",
+          "examples": [
+            "Reporting a leaking public tap prevents water loss and repair costs from growing.",
+            "Writing on a monument damages evidence and enjoyment that belong to everyone."
+          ],
+          "exercises": [
+            "Why does damage to public property affect everyone?",
+            "What should a student do after noticing a leaking school tap?"
+          ],
+          "solutions": [
+            "Repair uses shared funds and the damage can reduce or interrupt services used by the community.",
+            "The student should close it if safe and report the fault promptly to a responsible adult or maintenance authority."
+          ],
+          "practice_questions": [
+            "Is damaging a bus an acceptable form of protest?",
+            "Give two responsible behaviours in a public park."
+          ],
+          "practice_solutions": [
+            "No. It harms shared property, risks safety and breaks the law; concerns should be expressed peacefully through lawful methods.",
+            "Using bins, protecting plants, following rules, conserving water and reporting damage are examples; any two are acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t2"
+        },
+        {
+          "title": "Community action and resource conservation",
+          "aliases": [
+            "community action",
+            "save public resources",
+            "water conservation",
+            "civic participation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Community action and resource conservation.",
+            "Use evidence or an example to apply Community action and resource conservation."
+          ],
+          "explanation": "Communities can improve shared facilities by identifying a problem, gathering evidence, contacting the responsible authority and following up. Conservation reduces waste of water, electricity and materials in public places. Constructive participation focuses on solutions rather than blame or unsafe confrontation.",
+          "examples": [
+            "Students record when a tap leaks and submit the evidence to the school office for repair.",
+            "A neighbourhood group requests labelled waste bins and organizes an approved awareness activity."
+          ],
+          "exercises": [
+            "List four steps in a constructive community action.",
+            "How can a school conserve electricity?"
+          ],
+          "solutions": [
+            "Identify the issue, gather evidence, contact the responsible authority and follow up on the response.",
+            "It can switch off unused lights and equipment, use efficient devices and monitor unnecessary use."
+          ],
+          "practice_questions": [
+            "Why is evidence useful in a public-service complaint?",
+            "What is the safest response if someone is damaging public property?"
+          ],
+          "practice_solutions": [
+            "Dates, locations and photographs make the problem clear and help the authority verify and solve it.",
+            "Do not confront them dangerously; inform a responsible adult, staff member or appropriate authority and provide accurate details."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c11",
+      "number": "S2-11",
+      "title": "Semester 2 — Devotion towards the Almighty",
+      "topics": [
+        {
+          "title": "Bhakti traditions and vernacular devotion",
+          "aliases": [
+            "Bhakti movement",
+            "Alvars Nayanars",
+            "vernacular devotion",
+            "devotional traditions"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Bhakti traditions and vernacular devotion.",
+            "Use evidence or an example to apply Bhakti traditions and vernacular devotion."
+          ],
+          "explanation": "Bhakti traditions emphasized personal devotion and expressed religious ideas through songs and poetry in regional languages. Earlier Alvar and Nayanar poet-saints in South India influenced later devotional movements. Bhakti teachers differed in belief and practice, so the movement should be understood as many related traditions rather than one uniform organization.",
+          "examples": [
+            "A devotional poem in a regional language could reach people beyond a small learned elite.",
+            "Some Bhakti teachers emphasized loving devotion, while others criticized empty ritual or social exclusion."
+          ],
+          "exercises": [
+            "Why were regional languages important to Bhakti traditions?",
+            "Who were the Alvars and Nayanars?"
+          ],
+          "solutions": [
+            "They allowed devotional ideas and songs to reach wider local audiences in familiar speech.",
+            "They were early South Indian poet-saints devoted mainly to Vishnu and Shiva respectively."
+          ],
+          "practice_questions": [
+            "Why should Bhakti not be treated as one uniform movement?",
+            "Name one social message found in some Bhakti teachings."
+          ],
+          "practice_solutions": [
+            "Different teachers followed different deities, philosophies, regions, languages and practices.",
+            "Some teachers emphasized human equality, dignity, devotion over status or criticism of social exclusion; any one is acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t1"
+        },
+        {
+          "title": "Sufi traditions, teachers and communities",
+          "aliases": [
+            "Sufi traditions",
+            "khanqah",
+            "Sufi saints",
+            "spiritual devotion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Sufi traditions, teachers and communities.",
+            "Use evidence or an example to apply Sufi traditions, teachers and communities."
+          ],
+          "explanation": "Sufi traditions developed within Islam and emphasized disciplined spiritual practice, remembrance of God, ethical conduct and guidance from teachers. Khanqahs could serve as centres of teaching, hospitality and community contact. Different Sufi orders had distinct practices and relationships with rulers and society.",
+          "examples": [
+            "A khanqah could welcome travellers and provide a place for teaching and service.",
+            "Poetry and music were used in some Sufi traditions, while other orders followed different devotional practices."
+          ],
+          "exercises": [
+            "What was a khanqah?",
+            "Name two values emphasized in many Sufi traditions."
+          ],
+          "solutions": [
+            "It was a Sufi centre or lodge used for spiritual teaching, community life, hospitality and service.",
+            "Devotion, remembrance of God, ethical conduct, humility, service and compassion are examples; any two are acceptable."
+          ],
+          "practice_questions": [
+            "Did all Sufi orders follow exactly the same practices?",
+            "How could a Sufi centre connect with the wider community?"
+          ],
+          "practice_solutions": [
+            "No. Orders differed in discipline, teaching, devotional expression and relationships with political authority.",
+            "It could provide teaching, hospitality, charity, counselling and a shared place for visitors."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t2"
+        },
+        {
+          "title": "Saint-poets, equality and cultural exchange",
+          "aliases": [
+            "Kabir Guru Nanak Narsinh Mehta",
+            "saint poets",
+            "equality devotion",
+            "cultural exchange"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Saint-poets, equality and cultural exchange.",
+            "Use evidence or an example to apply Saint-poets, equality and cultural exchange."
+          ],
+          "explanation": "Saint-poets such as Kabir, Guru Nanak, Narsinh Mehta, Mirabai and Tukaram used memorable language to express devotion and ethical teaching. Their messages were not identical, but many questioned pride, social exclusion or conflict based on identity. Their compositions influenced regional literature, music and shared cultural memory.",
+          "examples": [
+            "Kabir's verses often challenge narrow labels and emphasize sincere spiritual understanding.",
+            "Narsinh Mehta's Gujarati devotional poetry links devotion with compassion and regard for others."
+          ],
+          "exercises": [
+            "Name three saint-poets associated with medieval devotional traditions.",
+            "What broad social concern appears in many saint-poets' teachings?"
+          ],
+          "solutions": [
+            "Kabir, Guru Nanak, Narsinh Mehta, Mirabai, Tukaram and others are examples; any three are acceptable.",
+            "Many criticized pride, exclusion, discrimination or conflict and emphasized dignity, devotion and ethical conduct."
+          ],
+          "practice_questions": [
+            "How did saint-poets influence regional culture?",
+            "Did Kabir, Guru Nanak and Mirabai teach exactly the same doctrine?"
+          ],
+          "practice_solutions": [
+            "Their poems and songs shaped languages, music, public memory and religious or ethical discussion.",
+            "No. They had distinct beliefs and contexts, though some of their teachings shared themes such as devotion and criticism of social barriers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c12",
+      "number": "S2-12",
+      "title": "Semester 2 — Continents: North and South America and Europe",
+      "topics": [
+        {
+          "title": "North America: landforms, climate and economy",
+          "aliases": [
+            "North America",
+            "Rockies Great Plains",
+            "North America climate",
+            "North America resources"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of North America: landforms, climate and economy.",
+            "Use evidence or an example to apply North America: landforms, climate and economy."
+          ],
+          "explanation": "North America extends from the Arctic to tropical latitudes. Major features include western mountain systems, central plains, eastern highlands, large lakes and major river basins. Its varied climate and resources support farming, forestry, mining, manufacturing and service economies, while environmental impacts differ by region.",
+          "examples": [
+            "The Rocky Mountains form a major western mountain system.",
+            "The Great Plains support extensive agriculture across parts of Canada and the United States."
+          ],
+          "exercises": [
+            "Name three major physical features of North America.",
+            "Why does North America have varied climates?"
+          ],
+          "solutions": [
+            "The Rocky Mountains, Great Plains, Appalachian Highlands, Great Lakes and Mississippi-Missouri basin are examples; any three are acceptable.",
+            "It spans many latitudes and has major differences in altitude, relief, ocean influence and air movement."
+          ],
+          "practice_questions": [
+            "How do the Great Plains support economic activity?",
+            "Name one environmental challenge linked with resource use in North America."
+          ],
+          "practice_solutions": [
+            "Their broad land and suitable soils support large-scale farming, grazing, transport and settlement.",
+            "Habitat loss, water stress, pollution, soil degradation and high energy use are examples; any one is acceptable."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t1"
+        },
+        {
+          "title": "South America: Andes, Amazon and regional diversity",
+          "aliases": [
+            "South America",
+            "Andes Amazon",
+            "South America climate",
+            "South America economy"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of South America: Andes, Amazon and regional diversity.",
+            "Use evidence or an example to apply South America: Andes, Amazon and regional diversity."
+          ],
+          "explanation": "South America's major features include the Andes along the west, the Amazon basin, eastern highlands and southern plains. Equatorial, tropical, highland, desert and temperate climates occur across the continent. Farming, mining, forestry, industry and services support economies, while conservation of forests and water is a major concern.",
+          "examples": [
+            "The Andes influence settlement, transport, climate and river systems along western South America.",
+            "The Amazon basin contains an immense river network and tropical forest ecosystem."
+          ],
+          "exercises": [
+            "Where are the Andes located within South America?",
+            "Why is the Amazon basin globally important?"
+          ],
+          "solutions": [
+            "The Andes extend along the western side of South America.",
+            "It contains vast tropical forests, biodiversity, freshwater systems and major carbon and climate relationships."
+          ],
+          "practice_questions": [
+            "Name two contrasting climate regions in South America.",
+            "Why can deforestation in the Amazon affect more than the cleared site?"
+          ],
+          "practice_solutions": [
+            "Equatorial rainforest, highland, desert, tropical grassland and temperate regions are examples; any two are acceptable.",
+            "It can alter habitats, carbon storage, water cycling, soil protection and downstream river conditions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t2"
+        },
+        {
+          "title": "Europe: peninsulas, rivers and human development",
+          "aliases": [
+            "Europe",
+            "European peninsulas rivers",
+            "Europe geography",
+            "Europe industry"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Europe: peninsulas, rivers and human development.",
+            "Use evidence or an example to apply Europe: peninsulas, rivers and human development."
+          ],
+          "explanation": "Europe has an irregular coastline, many peninsulas, navigable rivers, plains and mountain systems such as the Alps. Its temperate location, waterways, resources and dense transport links supported urbanization and industrial development. Europe contains many countries and languages, so geographic patterns should not be mistaken for cultural uniformity.",
+          "examples": [
+            "The Rhine links inland industrial and urban regions with the North Sea.",
+            "The Alps affect transport routes, tourism, water sources and local climate."
+          ],
+          "exercises": [
+            "Name two major physical features of Europe.",
+            "How have navigable rivers supported European development?"
+          ],
+          "solutions": [
+            "The Alps, North European Plain, Rhine, Danube, Scandinavian Peninsula and Mediterranean peninsulas are examples; any two are acceptable.",
+            "They provided transport routes, water, trade connections and sites for cities and industry."
+          ],
+          "practice_questions": [
+            "Why is Europe's coastline useful for maritime connections?",
+            "Does Europe have one uniform culture or language?"
+          ],
+          "practice_solutions": [
+            "Its many seas, bays and peninsulas create numerous ports and relatively short routes to the sea.",
+            "No. Europe contains many countries, languages, histories and cultural traditions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t3"
+        }
+      ]
+    }
+  ]
+}

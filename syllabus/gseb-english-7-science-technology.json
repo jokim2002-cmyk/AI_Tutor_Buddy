@@ -1,0 +1,2615 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 7,
+  "subject": "Science & Technology",
+  "textbook": "Standard 7 Science and Technology — Semesters 1 and 2",
+  "source": {
+    "title": "Science and Technology Standard 7 — Semesters I and II",
+    "publisher": "Gujarat State Board of School Textbooks / GCERT",
+    "edition": "First Edition 2013",
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-14",
+    "official": true,
+    "notes": "Official English-medium inventory and the July 2013 Semester I and II student-edition publication records were verified. The 9-chapter Semester I and 13-chapter Semester II structure was cross-checked against chapter-indexed English-medium references. All explanations, examples, questions and solution logic are original teacher-authored material; textbook and guide prose is not reproduced."
+  },
+  "chapters": [
+    {
+      "chapter_id": "s1-c1",
+      "number": "S1-1",
+      "title": "Semester 1 — Properties of Magnet",
+      "topics": [
+        {
+          "title": "Magnetic materials and poles",
+          "aliases": [
+            "magnetic material",
+            "magnet poles",
+            "north and south poles",
+            "magnetism"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Magnetic materials and poles.",
+            "Apply Magnetic materials and poles to a familiar scientific situation."
+          ],
+          "explanation": "A magnet attracts magnetic materials such as iron, nickel and cobalt. Every magnet has a north pole and a south pole, and magnetic force is strongest near these poles. Breaking a magnet does not isolate one pole; each piece forms a new north-south pair.",
+          "examples": [
+            "An iron pin is attracted to a bar magnet, while a wooden bead is not.",
+            "Iron filings gather most densely near the two ends of a bar magnet."
+          ],
+          "exercises": [
+            "Classify an iron nail, an aluminium spoon and a wooden ruler by whether a common magnet attracts them strongly.",
+            "Where is the magnetic force of a bar magnet usually strongest?"
+          ],
+          "solutions": [
+            "The iron nail is magnetic and is attracted strongly. The aluminium spoon and wooden ruler are not strongly attracted by a common classroom magnet.",
+            "It is usually strongest near the north and south poles at the two ends of the bar magnet."
+          ],
+          "practice_questions": [
+            "A bar magnet breaks into two pieces. Does either piece become a single isolated pole? Explain.",
+            "Why do iron filings form denser clusters near the ends of a bar magnet?"
+          ],
+          "practice_solutions": [
+            "No. Each piece behaves as a smaller magnet with its own north pole and south pole.",
+            "The magnetic field is strongest near the poles, so the force on the filings is greater near the ends."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t1"
+        },
+        {
+          "title": "Attraction, repulsion and magnetic field",
+          "aliases": [
+            "like poles",
+            "unlike poles",
+            "magnetic field",
+            "attraction and repulsion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Attraction, repulsion and magnetic field.",
+            "Apply Attraction, repulsion and magnetic field to a familiar scientific situation."
+          ],
+          "explanation": "Unlike magnetic poles attract, while like poles repel. The region around a magnet where magnetic force can act is its magnetic field. Field lines are a model used to show direction and relative strength; closer lines represent a stronger field.",
+          "examples": [
+            "A north pole brought near a south pole moves toward it.",
+            "Two north poles brought close push away from each other."
+          ],
+          "exercises": [
+            "What happens when the north pole of one magnet is brought near the south pole of another?",
+            "What happens when two south poles are brought close together?"
+          ],
+          "solutions": [
+            "The unlike poles attract each other.",
+            "The like poles repel each other."
+          ],
+          "practice_questions": [
+            "What does the term magnetic field mean?",
+            "In a field-line diagram, what does a region of closely spaced lines represent?"
+          ],
+          "practice_solutions": [
+            "It is the region around a magnet in which another magnet or magnetic material experiences magnetic force.",
+            "It represents a stronger magnetic field in that region."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t2"
+        },
+        {
+          "title": "Compass and Earth's magnetism",
+          "aliases": [
+            "magnetic compass",
+            "Earth as a magnet",
+            "north south direction",
+            "compass needle"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Compass and Earth's magnetism.",
+            "Apply Compass and Earth's magnetism to a familiar scientific situation."
+          ],
+          "explanation": "A freely suspended magnet settles approximately along the north-south direction because Earth behaves like a large magnet. A compass contains a small magnetized needle that turns freely. Its marked north-seeking end helps identify directions, but nearby magnets or iron objects can disturb the reading.",
+          "examples": [
+            "A suspended bar magnet turns until one end points roughly north.",
+            "A compass reading changes when a strong magnet is placed beside it."
+          ],
+          "exercises": [
+            "Why does a freely suspended bar magnet settle approximately north-south?",
+            "Which part of a compass responds to Earth's magnetic field?"
+          ],
+          "solutions": [
+            "Earth's magnetic field exerts a turning effect on the magnet until it aligns approximately with the field.",
+            "The freely turning magnetized needle responds to Earth's magnetic field."
+          ],
+          "practice_questions": [
+            "Why should a compass be kept away from a large iron object while taking a direction reading?",
+            "A compass north end points toward a classroom wall. What can be concluded?"
+          ],
+          "practice_solutions": [
+            "The iron object can alter the local magnetic field and make the compass reading inaccurate.",
+            "That wall lies approximately in the north direction from the compass, provided no nearby object is disturbing the needle."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c1-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c2",
+      "number": "S1-2",
+      "title": "Semester 1 — Constituents of Diet",
+      "topics": [
+        {
+          "title": "Nutrients and their functions",
+          "aliases": [
+            "nutrients",
+            "carbohydrates proteins fats",
+            "vitamins and minerals",
+            "diet constituents"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Nutrients and their functions.",
+            "Apply Nutrients and their functions to a familiar scientific situation."
+          ],
+          "explanation": "Food supplies carbohydrates, fats, proteins, vitamins, minerals, fibre and water. Carbohydrates and fats mainly provide energy, proteins support growth and repair, and vitamins and minerals help regulate body processes. Fibre supports bowel movement, while water transports substances and helps control temperature.",
+          "examples": [
+            "Rice is mainly an energy-giving carbohydrate food.",
+            "Pulses provide protein that supports growth and tissue repair."
+          ],
+          "exercises": [
+            "State one main function of carbohydrates in the diet.",
+            "Why are proteins called body-building nutrients?"
+          ],
+          "solutions": [
+            "Carbohydrates are a major source of energy for the body.",
+            "They provide materials needed for growth and for repairing worn or damaged tissues."
+          ],
+          "practice_questions": [
+            "Give one role of dietary fibre.",
+            "Why is water an essential part of the diet even though it does not provide energy?"
+          ],
+          "practice_solutions": [
+            "Dietary fibre adds bulk to food and supports regular movement of waste through the intestine.",
+            "It helps transport substances, supports chemical reactions and helps regulate body temperature."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t1"
+        },
+        {
+          "title": "Simple food tests",
+          "aliases": [
+            "food test",
+            "iodine starch test",
+            "fat test",
+            "protein test"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Simple food tests.",
+            "Apply Simple food tests to a familiar scientific situation."
+          ],
+          "explanation": "Simple observations can indicate certain nutrients in food. Iodine solution turns blue-black when starch is present, and a persistent translucent mark on plain paper can indicate fat. Chemical food tests should be performed only with teacher supervision and never tasted.",
+          "examples": [
+            "Iodine placed on cooked rice changes to blue-black because rice contains starch.",
+            "A crushed groundnut can leave a translucent oily mark on paper because it contains fat."
+          ],
+          "exercises": [
+            "What colour change indicates starch in the iodine test?",
+            "What observation on plain paper can indicate fat in a food sample?"
+          ],
+          "solutions": [
+            "A blue-black colour indicates the presence of starch.",
+            "A translucent oily mark that remains after drying can indicate fat."
+          ],
+          "practice_questions": [
+            "A potato sample turns blue-black with iodine. What is the conclusion?",
+            "Why must food-test chemicals never be tasted?"
+          ],
+          "practice_solutions": [
+            "The potato sample contains starch.",
+            "They are laboratory substances intended for testing and may be unsafe to consume."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t2"
+        },
+        {
+          "title": "Balanced diet and deficiency",
+          "aliases": [
+            "balanced diet",
+            "deficiency disease",
+            "malnutrition",
+            "healthy diet"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Balanced diet and deficiency.",
+            "Apply Balanced diet and deficiency to a familiar scientific situation."
+          ],
+          "explanation": "A balanced diet supplies all needed nutrients, fibre and water in suitable amounts for a person's age and activity. A long-term shortage of a nutrient can cause a deficiency condition. Variety matters because no single ordinary food supplies every nutrient in the required amount.",
+          "examples": [
+            "A meal with grains, pulses, vegetables, fruit and curd offers more variety than only fried snacks.",
+            "A prolonged lack of vitamin C can lead to poor gum health and slow healing."
+          ],
+          "exercises": [
+            "What makes a diet balanced?",
+            "Why is eating a variety of foods helpful?"
+          ],
+          "solutions": [
+            "It contains all essential nutrients, fibre and water in suitable proportions for the person's needs.",
+            "Different foods supply different nutrients, so variety reduces the chance of a nutrient shortage."
+          ],
+          "practice_questions": [
+            "Explain the difference between hunger and nutrient deficiency.",
+            "Suggest one balanced addition to a meal consisting only of plain rice."
+          ],
+          "practice_solutions": [
+            "Hunger is the immediate need for food, while a deficiency is a longer-term shortage of a particular nutrient even if some food is available.",
+            "Adding pulses and vegetables would supply protein, vitamins, minerals and fibre; curd or another suitable food can add further variety."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c2-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c3",
+      "number": "S1-3",
+      "title": "Semester 1 — Parts of Plants",
+      "topics": [
+        {
+          "title": "Roots and root modifications",
+          "aliases": [
+            "root system",
+            "tap root",
+            "fibrous root",
+            "modified roots"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Roots and root modifications.",
+            "Apply Roots and root modifications to a familiar scientific situation."
+          ],
+          "explanation": "Roots anchor a plant, absorb water and minerals, and often store food. A tap-root system has one main root with branches, while a fibrous system has many similarly sized roots. Some roots are modified for storage, support or breathing in special habitats.",
+          "examples": [
+            "Mustard has a tap-root system, while wheat has a fibrous root system.",
+            "Carrot stores food in a modified root."
+          ],
+          "exercises": [
+            "Distinguish a tap-root system from a fibrous root system.",
+            "State two basic functions of roots."
+          ],
+          "solutions": [
+            "A tap-root system has one prominent main root with branches, while a fibrous system has many thin roots of similar size arising near the stem base.",
+            "Roots anchor the plant and absorb water and minerals from the soil."
+          ],
+          "practice_questions": [
+            "Why is carrot described as a storage root?",
+            "How do supporting roots help a tall or weak-stemmed plant?"
+          ],
+          "practice_solutions": [
+            "Its root is enlarged and stores food for the plant.",
+            "They provide extra anchorage and brace the plant against bending or falling."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t1"
+        },
+        {
+          "title": "Stems, leaves and modifications",
+          "aliases": [
+            "stem function",
+            "leaf function",
+            "modified stem",
+            "transpiration"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Stems, leaves and modifications.",
+            "Apply Stems, leaves and modifications to a familiar scientific situation."
+          ],
+          "explanation": "The stem supports leaves and flowers and transports water, minerals and prepared food. Leaves usually make food by photosynthesis and exchange gases through tiny openings called stomata. Stems or leaves may be modified for storage, climbing, protection or vegetative growth.",
+          "examples": [
+            "Potato is an underground stem tuber because its eyes are buds.",
+            "A pea tendril helps the plant climb by coiling around a support."
+          ],
+          "exercises": [
+            "Give two transport functions of a stem.",
+            "What is the main food-making process in green leaves?"
+          ],
+          "solutions": [
+            "The stem carries water and minerals upward from roots and distributes food made by leaves to other plant parts.",
+            "Photosynthesis is the process by which green leaves use light energy to make food from carbon dioxide and water."
+          ],
+          "practice_questions": [
+            "What evidence shows that a potato is a modified stem rather than a root?",
+            "How do stomata help a leaf?"
+          ],
+          "practice_solutions": [
+            "Its eyes are buds that can grow into shoots, a characteristic of stems.",
+            "They allow gas exchange and also permit water vapour to leave during transpiration."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t2"
+        },
+        {
+          "title": "Flowers, fruits and seeds",
+          "aliases": [
+            "flower parts",
+            "pollination",
+            "fruit and seed",
+            "plant reproduction"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Flowers, fruits and seeds.",
+            "Apply Flowers, fruits and seeds to a familiar scientific situation."
+          ],
+          "explanation": "A flower is the reproductive part of many plants. Pollen transfer to the stigma is pollination; after fertilization, an ovule can develop into a seed and the ovary can develop into a fruit. Seeds contain an embryo and stored food protected by a seed coat.",
+          "examples": [
+            "A bee carrying pollen from an anther to a stigma helps pollination.",
+            "A bean seed contains an embryo between food-storing cotyledons."
+          ],
+          "exercises": [
+            "What is pollination?",
+            "Which flower parts commonly develop into the seed and fruit after fertilization?"
+          ],
+          "solutions": [
+            "Pollination is the transfer of pollen grains from an anther to the stigma of a flower of the same species.",
+            "The ovule commonly develops into a seed and the ovary commonly develops into a fruit."
+          ],
+          "practice_questions": [
+            "State two functions of a seed coat.",
+            "Why is stored food important during germination?"
+          ],
+          "practice_solutions": [
+            "It protects the embryo from injury and reduces harmful water loss or entry of organisms.",
+            "It supplies energy and materials to the young plant until its leaves can make enough food."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c3-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c4",
+      "number": "S1-4",
+      "title": "Semester 1 — Properties of Water",
+      "topics": [
+        {
+          "title": "Physical properties and states of water",
+          "aliases": [
+            "water properties",
+            "states of water",
+            "ice floats",
+            "freezing and boiling"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Physical properties and states of water.",
+            "Apply Physical properties and states of water to a familiar scientific situation."
+          ],
+          "explanation": "Pure water is colourless, nearly odourless and tasteless. It exists as solid ice, liquid water and water vapour, and changes state when heat is gained or lost. Ice is less dense than liquid water, so it floats.",
+          "examples": [
+            "Liquid water freezes to ice when enough heat is removed.",
+            "An ice cube floats because its density is lower than that of liquid water."
+          ],
+          "exercises": [
+            "Name the three common physical states of water.",
+            "Why does an ice cube float in liquid water?"
+          ],
+          "solutions": [
+            "They are solid ice, liquid water and gaseous water vapour.",
+            "Ice has a lower density than liquid water, so the upward buoyant effect can support it."
+          ],
+          "practice_questions": [
+            "What state change occurs when water vapour forms droplets on a cool surface?",
+            "Does boiling change water into a new substance? Explain."
+          ],
+          "practice_solutions": [
+            "Condensation occurs: gaseous water vapour changes into liquid water.",
+            "No. Boiling is a physical change from liquid water to water vapour; the substance remains water."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t1"
+        },
+        {
+          "title": "Water as a solvent and solutions",
+          "aliases": [
+            "water solvent",
+            "solution",
+            "soluble insoluble",
+            "dissolving"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Water as a solvent and solutions.",
+            "Apply Water as a solvent and solutions to a familiar scientific situation."
+          ],
+          "explanation": "Water dissolves many substances and is often called a common solvent. In a solution, the substance dissolved is the solute and the dissolving medium is the solvent. A substance may be soluble or insoluble, and stirring or warming can change the rate of dissolving without changing the amount that can always dissolve.",
+          "examples": [
+            "Salt is the solute and water is the solvent in salt solution.",
+            "Sand remains visible in water because it is insoluble under ordinary conditions."
+          ],
+          "exercises": [
+            "Identify the solute and solvent in sugar water.",
+            "Distinguish soluble and insoluble substances."
+          ],
+          "solutions": [
+            "Sugar is the solute and water is the solvent.",
+            "A soluble substance dissolves appreciably in the chosen solvent, while an insoluble substance does not."
+          ],
+          "practice_questions": [
+            "Why does stirring usually make sugar dissolve faster?",
+            "A mixture of sand and water is left still. What observation is expected?"
+          ],
+          "practice_solutions": [
+            "Stirring continually brings fresh solvent into contact with the sugar crystals, increasing the rate of dissolving.",
+            "The insoluble sand particles settle at the bottom over time."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t2"
+        },
+        {
+          "title": "Composition of water and the water cycle",
+          "aliases": [
+            "composition of water",
+            "electrolysis of water",
+            "water cycle",
+            "evaporation condensation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Composition of water and the water cycle.",
+            "Apply Composition of water and the water cycle to a familiar scientific situation."
+          ],
+          "explanation": "Water is a compound made of hydrogen and oxygen in a fixed chemical composition. Electrolysis can separate water into these gases under controlled laboratory conditions. In nature, evaporation, condensation, precipitation and collection continually move water through the water cycle.",
+          "examples": [
+            "Evaporation moves liquid water from a pond into the atmosphere as vapour.",
+            "Cloud droplets form when water vapour cools and condenses."
+          ],
+          "exercises": [
+            "Which two elements form water?",
+            "List the main water-cycle processes in a logical sequence beginning with surface water."
+          ],
+          "solutions": [
+            "Water is formed from the elements hydrogen and oxygen.",
+            "Surface water evaporates, vapour condenses into clouds, precipitation falls, and water collects or flows back to water bodies."
+          ],
+          "practice_questions": [
+            "Why is the water cycle driven mainly by the Sun?",
+            "What change forms cloud droplets from water vapour?"
+          ],
+          "practice_solutions": [
+            "Solar energy heats surface water and supplies the energy needed for evaporation.",
+            "Cooling causes condensation, changing water vapour into tiny liquid droplets."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c4-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c5",
+      "number": "S1-5",
+      "title": "Semester 1 — Fertility of the Soil",
+      "topics": [
+        {
+          "title": "Soil composition, texture and pH",
+          "aliases": [
+            "soil composition",
+            "soil texture",
+            "soil pH",
+            "sand silt clay"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Soil composition, texture and pH.",
+            "Apply Soil composition, texture and pH to a familiar scientific situation."
+          ],
+          "explanation": "Soil contains mineral particles, organic matter, water, air and living organisms. Texture depends mainly on the relative amounts of sand, silt and clay and influences drainage and water retention. Soil pH describes how acidic or alkaline the soil is and affects nutrient availability.",
+          "examples": [
+            "Sandy soil drains quickly because it has relatively large particles and spaces.",
+            "Clay-rich soil holds more water because its particles and pores are very small."
+          ],
+          "exercises": [
+            "Name four components commonly present in healthy soil.",
+            "How does sandy soil differ from clay-rich soil in water retention?"
+          ],
+          "solutions": [
+            "Healthy soil commonly contains mineral particles, organic matter, water and air; it also supports many living organisms.",
+            "Sandy soil generally drains quickly and holds less water, while clay-rich soil generally drains slowly and holds more water."
+          ],
+          "practice_questions": [
+            "What does soil pH describe?",
+            "Why does soil texture matter for plant growth?"
+          ],
+          "practice_solutions": [
+            "It describes how acidic, neutral or alkaline the soil is.",
+            "Texture affects how much water and air reach roots and how well nutrients are retained."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t1"
+        },
+        {
+          "title": "Soil testing and plant nutrients",
+          "aliases": [
+            "soil test",
+            "plant nutrients",
+            "nitrogen phosphorus potassium",
+            "NPK"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Soil testing and plant nutrients.",
+            "Apply Soil testing and plant nutrients to a familiar scientific situation."
+          ],
+          "explanation": "Soil testing estimates properties such as pH and available nutrients. Plants need major nutrients including nitrogen, phosphorus and potassium, along with smaller amounts of other elements. A test helps select a suitable soil treatment instead of adding fertilizer blindly.",
+          "examples": [
+            "A soil test showing low nitrogen can guide a farmer to an appropriate nitrogen source.",
+            "A pH result can show whether a crop is suited to the field or whether careful correction is needed."
+          ],
+          "exercises": [
+            "Why is a soil test useful before adding fertilizer?",
+            "Name the three major nutrients represented by N, P and K."
+          ],
+          "solutions": [
+            "It identifies likely nutrient or pH needs, helping avoid unnecessary or excessive fertilizer use.",
+            "They are nitrogen, phosphorus and potassium."
+          ],
+          "practice_questions": [
+            "What plant function is strongly supported by adequate nitrogen?",
+            "A field receives fertilizer without any test and plants grow poorly. Give one scientific reason this can happen."
+          ],
+          "practice_solutions": [
+            "Nitrogen strongly supports leafy vegetative growth and the formation of proteins.",
+            "The fertilizer may not supply the nutrient actually lacking, or excessive application may upset soil conditions."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t2"
+        },
+        {
+          "title": "Maintaining soil fertility",
+          "aliases": [
+            "soil fertility",
+            "manure compost",
+            "crop rotation",
+            "erosion control"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Maintaining soil fertility.",
+            "Apply Maintaining soil fertility to a familiar scientific situation."
+          ],
+          "explanation": "Soil fertility is the ability of soil to support healthy plant growth by supplying water, air and nutrients. Compost and manure add organic matter, crop rotation can reduce repeated nutrient depletion, and erosion control protects fertile topsoil. Balanced use of inputs maintains productivity better than excessive chemical treatment.",
+          "examples": [
+            "Compost improves soil structure while returning decomposed organic matter.",
+            "Growing a legume in rotation can help replenish usable nitrogen through associated bacteria."
+          ],
+          "exercises": [
+            "How does compost help maintain soil fertility?",
+            "Why is topsoil especially important to protect from erosion?"
+          ],
+          "solutions": [
+            "It adds organic matter and nutrients and can improve soil structure, aeration and water-holding ability.",
+            "Topsoil usually contains much of the soil's organic matter, nutrients and biological activity needed for plants."
+          ],
+          "practice_questions": [
+            "Explain one benefit of crop rotation.",
+            "Suggest one way to reduce soil erosion on a sloping field."
+          ],
+          "practice_solutions": [
+            "It reduces repeated removal of the same nutrients and can interrupt some pest and disease cycles.",
+            "Contour farming, terracing or maintaining plant cover can slow runoff and reduce loss of topsoil."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c5-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c6",
+      "number": "S1-6",
+      "title": "Semester 1 — Unit of Living — Cell",
+      "topics": [
+        {
+          "title": "Cells and levels of organization",
+          "aliases": [
+            "cell basic unit",
+            "cell tissue organ",
+            "levels of organization",
+            "unit of living"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Cells and levels of organization.",
+            "Apply Cells and levels of organization to a familiar scientific situation."
+          ],
+          "explanation": "The cell is the basic structural and functional unit of life. Similar cells can work together as a tissue, several tissues form an organ, and organs cooperate in an organ system. Multicellular organisms depend on coordination among these levels.",
+          "examples": [
+            "Muscle cells form muscle tissue that helps an organ move.",
+            "The heart is an organ made of several tissues working together."
+          ],
+          "exercises": [
+            "Why is the cell called the basic unit of life?",
+            "Arrange cell, tissue, organ and organ system from simplest to most complex."
+          ],
+          "solutions": [
+            "All organisms are made of cells, and the essential activities of life occur within cells.",
+            "Cell, tissue, organ, organ system."
+          ],
+          "practice_questions": [
+            "Give one example of an organ system and one organ in it.",
+            "How is a tissue different from an organ?"
+          ],
+          "practice_solutions": [
+            "The digestive system is an organ system, and the stomach is one of its organs.",
+            "A tissue is a group of similar cells performing a related function, while an organ contains different tissues working together."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t1"
+        },
+        {
+          "title": "Cell structures and functions",
+          "aliases": [
+            "cell membrane",
+            "cytoplasm nucleus",
+            "cell organelles",
+            "cell parts"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Cell structures and functions.",
+            "Apply Cell structures and functions to a familiar scientific situation."
+          ],
+          "explanation": "The cell membrane controls movement of substances into and out of the cell. Cytoplasm is the material where many cell reactions occur, and the nucleus contains genetic information and helps control cell activities. Specialized structures perform particular jobs within a cell.",
+          "examples": [
+            "The cell membrane allows needed substances to enter while helping regulate waste leaving.",
+            "The nucleus acts as a control centre because it contains genetic instructions."
+          ],
+          "exercises": [
+            "State one function of the cell membrane.",
+            "What is one important function of the nucleus?"
+          ],
+          "solutions": [
+            "It forms a boundary and regulates movement of substances into and out of the cell.",
+            "It contains genetic material and helps control the cell's activities."
+          ],
+          "practice_questions": [
+            "Where do many chemical reactions of a cell take place?",
+            "Why do cells have specialized internal structures?"
+          ],
+          "practice_solutions": [
+            "Many occur in the cytoplasm.",
+            "Different structures carry out different tasks efficiently, allowing the cell to function as an organized system."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t2"
+        },
+        {
+          "title": "Plant and animal cells",
+          "aliases": [
+            "plant cell",
+            "animal cell",
+            "cell wall chloroplast",
+            "plant animal comparison"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Plant and animal cells.",
+            "Apply Plant and animal cells to a familiar scientific situation."
+          ],
+          "explanation": "Plant and animal cells both have a cell membrane, cytoplasm and nucleus. Plant cells additionally have a rigid cell wall and often chloroplasts and a large central vacuole. These differences support plant functions such as photosynthesis and structural support.",
+          "examples": [
+            "An onion epidermal cell has a cell wall outside its cell membrane.",
+            "A cheek cell has a membrane, cytoplasm and nucleus but no cell wall."
+          ],
+          "exercises": [
+            "Name three structures found in both typical plant and animal cells.",
+            "Which structure gives a plant cell extra rigidity outside the cell membrane?"
+          ],
+          "solutions": [
+            "Both typically have a cell membrane, cytoplasm and nucleus.",
+            "The cell wall gives extra rigidity and support."
+          ],
+          "practice_questions": [
+            "Why are chloroplasts common in green leaf cells?",
+            "Give one difference between a typical plant-cell vacuole and animal-cell vacuoles."
+          ],
+          "practice_solutions": [
+            "They contain chlorophyll and are sites of photosynthesis.",
+            "A mature plant cell often has one large central vacuole, while animal cells usually have smaller vacuoles if present."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c6-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c7",
+      "number": "S1-7",
+      "title": "Semester 1 — Motion, Force and Speed",
+      "topics": [
+        {
+          "title": "Motion and reference point",
+          "aliases": [
+            "motion",
+            "reference point",
+            "types of motion",
+            "linear circular oscillatory"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Motion and reference point.",
+            "Apply Motion and reference point to a familiar scientific situation."
+          ],
+          "explanation": "An object is in motion when its position changes with time relative to a chosen reference point. Motion can be straight-line, circular, rotational, oscillatory or irregular. The same object can appear at rest to one observer and moving to another because reference points differ.",
+          "examples": [
+            "A passenger is at rest relative to a seat but moving relative to a tree beside the road.",
+            "A swing shows oscillatory motion as it moves to and fro."
+          ],
+          "exercises": [
+            "What is meant by motion relative to a reference point?",
+            "Classify the motion of the tip of a rotating fan blade."
+          ],
+          "solutions": [
+            "Motion means a change in an object's position with time compared with the selected reference point.",
+            "The tip follows circular motion around the fan's axis."
+          ],
+          "practice_questions": [
+            "Why can a seated bus passenger be both at rest and in motion?",
+            "Give one example of oscillatory motion."
+          ],
+          "practice_solutions": [
+            "The passenger is at rest relative to the bus seat but moving relative to the road and nearby buildings.",
+            "A playground swing or a simple pendulum moving to and fro shows oscillatory motion."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t1"
+        },
+        {
+          "title": "Force and its effects",
+          "aliases": [
+            "force",
+            "push and pull",
+            "contact force",
+            "non contact force"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Force and its effects.",
+            "Apply Force and its effects to a familiar scientific situation."
+          ],
+          "explanation": "A force is a push or pull that can change an object's speed, direction or shape. Contact forces require touching, while gravitational, magnetic and electrostatic forces can act at a distance. Balanced forces do not change an object's motion, whereas an unbalanced force can accelerate it.",
+          "examples": [
+            "Kicking a stationary ball applies a contact force and starts its motion.",
+            "Earth's gravity pulls a dropped object downward without direct contact."
+          ],
+          "exercises": [
+            "State three possible effects of a force on an object.",
+            "Classify friction and gravity as contact or non-contact forces."
+          ],
+          "solutions": [
+            "A force can change the object's speed, change its direction or change its shape.",
+            "Friction is a contact force, while gravity is a non-contact force."
+          ],
+          "practice_questions": [
+            "What is the effect of balanced forces on an object's state of motion?",
+            "A moving ball turns after being struck sideways. Which effect of force is shown?"
+          ],
+          "practice_solutions": [
+            "Balanced forces have zero net force, so they do not change the object's velocity.",
+            "The force changes the direction of the ball's motion."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t2"
+        },
+        {
+          "title": "Speed and its measurement",
+          "aliases": [
+            "speed formula",
+            "distance time",
+            "average speed",
+            "metres per second"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Speed and its measurement.",
+            "Apply Speed and its measurement to a familiar scientific situation."
+          ],
+          "explanation": "Speed tells how quickly distance is covered and is calculated as distance divided by time. Common units are metres per second and kilometres per hour. Average speed uses total distance divided by total time, even when the speed changes during the journey.",
+          "examples": [
+            "A cyclist covering 60 metres in 12 seconds has speed 60 ÷ 12 = 5 m/s.",
+            "A car travelling 120 kilometres in 3 hours has average speed 40 km/h."
+          ],
+          "exercises": [
+            "Find the speed of a runner who covers 100 metres in 20 seconds.",
+            "A bus travels 150 kilometres in 3 hours. Find its average speed."
+          ],
+          "solutions": [
+            "Speed = distance ÷ time = 100 ÷ 20 = 5 m/s.",
+            "Average speed = 150 ÷ 3 = 50 km/h."
+          ],
+          "practice_questions": [
+            "How far does an object moving at 4 m/s travel in 15 seconds?",
+            "A toy car covers 24 metres at 3 m/s. Find the time taken."
+          ],
+          "practice_solutions": [
+            "Distance = speed × time = 4 × 15 = 60 m.",
+            "Time = distance ÷ speed = 24 ÷ 3 = 8 seconds."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c7-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c8",
+      "number": "S1-8",
+      "title": "Semester 1 — Digestive, Respiratory and Circulatory Systems",
+      "topics": [
+        {
+          "title": "Digestion and absorption",
+          "aliases": [
+            "digestive system",
+            "digestion",
+            "alimentary canal",
+            "absorption"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Digestion and absorption.",
+            "Apply Digestion and absorption to a familiar scientific situation."
+          ],
+          "explanation": "Digestion breaks large food molecules into small soluble substances the body can absorb. Food passes through the mouth, oesophagus, stomach, small intestine and large intestine. Most nutrient absorption occurs through the inner surface of the small intestine, while the large intestine mainly absorbs water.",
+          "examples": [
+            "Chewing breaks food into smaller pieces and saliva begins digestion of starch.",
+            "Villi increase the surface area of the small intestine for absorption."
+          ],
+          "exercises": [
+            "What is the purpose of digestion?",
+            "List the main path of food from the mouth to the large intestine."
+          ],
+          "solutions": [
+            "Digestion converts large, often insoluble food molecules into small soluble substances that can be absorbed and used by the body.",
+            "Mouth, oesophagus, stomach, small intestine, large intestine."
+          ],
+          "practice_questions": [
+            "Why does the small intestine have many villi?",
+            "State one main role of the large intestine."
+          ],
+          "practice_solutions": [
+            "Villi greatly increase surface area, making absorption of digested nutrients more efficient.",
+            "It absorbs much of the remaining water and helps form solid waste."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t1"
+        },
+        {
+          "title": "Respiration and gas exchange",
+          "aliases": [
+            "respiratory system",
+            "breathing",
+            "gas exchange",
+            "lungs alveoli"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Respiration and gas exchange.",
+            "Apply Respiration and gas exchange to a familiar scientific situation."
+          ],
+          "explanation": "Breathing moves air into and out of the lungs, while cellular respiration releases usable energy from food in cells. Air travels through the nose, trachea and bronchi to the lungs. At tiny air sacs called alveoli, oxygen enters the blood and carbon dioxide leaves it.",
+          "examples": [
+            "Nasal hair and mucus help trap dust before air reaches the lungs.",
+            "Thin alveolar walls allow rapid exchange of oxygen and carbon dioxide."
+          ],
+          "exercises": [
+            "Distinguish breathing from cellular respiration.",
+            "Where does most gas exchange occur in the lungs?"
+          ],
+          "solutions": [
+            "Breathing is the physical movement of air into and out of the lungs, while cellular respiration is the chemical release of energy from food in cells.",
+            "It occurs across the thin walls of the alveoli and nearby blood capillaries."
+          ],
+          "practice_questions": [
+            "Trace inhaled air from the nose to the main gas-exchange surface.",
+            "Why are alveoli present in very large numbers?"
+          ],
+          "practice_solutions": [
+            "Nose, trachea, bronchi, smaller air passages and alveoli.",
+            "Their large total surface area allows efficient gas exchange."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t2"
+        },
+        {
+          "title": "Blood circulation, heart and pulse",
+          "aliases": [
+            "circulatory system",
+            "heart blood vessels",
+            "pulse",
+            "blood circulation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Blood circulation, heart and pulse.",
+            "Apply Blood circulation, heart and pulse to a familiar scientific situation."
+          ],
+          "explanation": "The circulatory system transports oxygen, nutrients, hormones and wastes. The heart pumps blood through arteries, capillaries and veins. A pulse is the rhythmic expansion of an artery caused by each heartbeat, so pulse rate can indicate heart rate under ordinary resting conditions.",
+          "examples": [
+            "Arteries carry blood away from the heart, while veins return blood toward it.",
+            "Capillaries have very thin walls that allow exchange with tissues."
+          ],
+          "exercises": [
+            "What is the main pumping organ of the circulatory system?",
+            "Distinguish arteries from veins by direction of blood flow."
+          ],
+          "solutions": [
+            "The heart is the main pumping organ.",
+            "Arteries carry blood away from the heart, while veins carry blood toward the heart."
+          ],
+          "practice_questions": [
+            "What causes the pulse felt at the wrist?",
+            "Why are capillary walls very thin?"
+          ],
+          "practice_solutions": [
+            "Each heartbeat creates a pressure wave that rhythmically expands an artery.",
+            "Thin walls allow oxygen, nutrients and wastes to exchange between blood and body tissues."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c8-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c9",
+      "number": "S1-9",
+      "title": "Semester 1 — Sources of Energy",
+      "topics": [
+        {
+          "title": "Forms and transformations of energy",
+          "aliases": [
+            "forms of energy",
+            "energy transformation",
+            "kinetic potential",
+            "energy conversion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Forms and transformations of energy.",
+            "Apply Forms and transformations of energy to a familiar scientific situation."
+          ],
+          "explanation": "Energy is the ability to cause change or do work and appears in forms such as kinetic, potential, thermal, light, sound, chemical and electrical energy. Devices usually transform energy from one form to another. Energy is conserved overall, though some often spreads into the surroundings as heat.",
+          "examples": [
+            "A torch changes chemical energy in its cell into electrical energy and then light and heat.",
+            "A falling object changes gravitational potential energy into kinetic energy."
+          ],
+          "exercises": [
+            "Describe the main energy changes in an electric fan.",
+            "What energy change occurs as a raised ball falls?"
+          ],
+          "solutions": [
+            "Electrical energy is transformed mainly into kinetic energy of the rotating blades, with some sound and heat.",
+            "Gravitational potential energy decreases while kinetic energy increases."
+          ],
+          "practice_questions": [
+            "State the law of conservation of energy in simple words.",
+            "Why is an energy conversion device rarely 100 percent useful?"
+          ],
+          "practice_solutions": [
+            "Energy cannot be created or destroyed; it can only be transferred or transformed.",
+            "Some energy usually spreads to the surroundings in less useful forms such as heat or sound."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t1"
+        },
+        {
+          "title": "Renewable and non-renewable sources",
+          "aliases": [
+            "renewable energy",
+            "non renewable energy",
+            "solar wind hydro",
+            "fossil fuels"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Renewable and non-renewable sources.",
+            "Apply Renewable and non-renewable sources to a familiar scientific situation."
+          ],
+          "explanation": "Renewable sources are naturally replenished on a human timescale, such as sunlight, wind, flowing water and sustainably managed biomass. Non-renewable sources such as coal, petroleum and natural gas form far more slowly than they are used. The choice of source depends on availability, reliability, cost and environmental effects.",
+          "examples": [
+            "A solar panel uses a renewable flow of energy from sunlight.",
+            "Diesel is non-renewable because it is made from limited petroleum reserves."
+          ],
+          "exercises": [
+            "Classify sunlight, coal, wind and petroleum as renewable or non-renewable.",
+            "Why is coal called a non-renewable source?"
+          ],
+          "solutions": [
+            "Sunlight and wind are renewable; coal and petroleum are non-renewable.",
+            "It forms over geological timescales and is consumed much faster than natural processes replace it."
+          ],
+          "practice_questions": [
+            "Give one limitation of solar energy.",
+            "Give one advantage of wind energy compared with burning coal."
+          ],
+          "practice_solutions": [
+            "Its supply varies with time of day and weather, so storage or another source may be needed.",
+            "Wind energy does not require fuel combustion during operation and therefore produces far less direct air pollution."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t2"
+        },
+        {
+          "title": "Energy conservation and responsible use",
+          "aliases": [
+            "energy conservation",
+            "save electricity",
+            "energy efficiency",
+            "responsible energy use"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Energy conservation and responsible use.",
+            "Apply Energy conservation and responsible use to a familiar scientific situation."
+          ],
+          "explanation": "Energy conservation means avoiding unnecessary use, while energy efficiency means obtaining the same useful result with less energy. Turning devices off, reducing heat loss and choosing efficient equipment can save fuel and electricity. Responsible choices also consider pollution and long-term resource availability.",
+          "examples": [
+            "Switching off an unused light prevents avoidable electrical-energy use.",
+            "A well-insulated container slows heat transfer and keeps water warm longer."
+          ],
+          "exercises": [
+            "Distinguish energy conservation from energy efficiency.",
+            "Why should an unused electrical appliance be switched off?"
+          ],
+          "solutions": [
+            "Conservation avoids unnecessary energy use, while efficiency provides the same useful output with less input energy.",
+            "It prevents wasted electricity and reduces the demand for energy generation."
+          ],
+          "practice_questions": [
+            "Give one way to reduce energy used for cooling a room.",
+            "How can public transport reduce energy use per passenger?"
+          ],
+          "practice_solutions": [
+            "Shade windows, close gaps, use ventilation appropriately or choose an efficient fan or cooler.",
+            "Many passengers share one vehicle, so the fuel or electricity used can be divided among more people."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s1-c9-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c1",
+      "number": "S2-1",
+      "title": "Semester 2 — Electricity",
+      "topics": [
+        {
+          "title": "Electric cells, circuits and current",
+          "aliases": [
+            "electric circuit",
+            "electric cell",
+            "current",
+            "open closed circuit"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Electric cells, circuits and current.",
+            "Apply Electric cells, circuits and current to a familiar scientific situation."
+          ],
+          "explanation": "An electric cell provides energy that can drive charge through a closed conducting path called a circuit. A simple circuit needs a source, connecting conductors and a device such as a bulb. A break makes an open circuit and stops current; classroom investigations must use only low-voltage cells, never household mains wiring.",
+          "examples": [
+            "A bulb glows when both its terminals are connected to opposite cell terminals in a closed circuit.",
+            "Opening a switch breaks the path and the bulb stops glowing."
+          ],
+          "exercises": [
+            "Why does a bulb not glow in an open circuit?",
+            "Name the minimum functional parts of a simple torch-bulb circuit."
+          ],
+          "solutions": [
+            "The conducting path is broken, so electric current cannot flow through the bulb.",
+            "It needs a low-voltage cell, conducting connections and a bulb arranged in a closed path; a switch may control the path."
+          ],
+          "practice_questions": [
+            "What is the function of an electric cell in a simple circuit?",
+            "Why must a cell's two terminals not be connected directly by a wire for long?"
+          ],
+          "practice_solutions": [
+            "It provides electrical energy and a potential difference that can drive current through a closed circuit.",
+            "That creates a short circuit with a large current, wasting energy and possibly heating the cell or wire."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t1"
+        },
+        {
+          "title": "Conductors, insulators and switches",
+          "aliases": [
+            "conductor insulator",
+            "electric switch",
+            "circuit tester",
+            "conducting material"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Conductors, insulators and switches.",
+            "Apply Conductors, insulators and switches to a familiar scientific situation."
+          ],
+          "explanation": "Conductors allow electric charge to move easily, while insulators strongly resist that movement. Metals are common conductors; dry plastic, rubber and glass are common insulators. A switch deliberately opens or closes a circuit, and a low-voltage tester can compare materials safely under supervision.",
+          "examples": [
+            "A metal paper clip can complete a low-voltage test circuit.",
+            "A dry plastic strip does not complete the same test circuit."
+          ],
+          "exercises": [
+            "Classify copper wire and dry rubber as conductor or insulator.",
+            "What does a switch do in a circuit?"
+          ],
+          "solutions": [
+            "Copper wire is a conductor, while dry rubber is an insulator.",
+            "It opens the circuit to stop current or closes the circuit to allow current."
+          ],
+          "practice_questions": [
+            "Why are metal wires covered with plastic insulation?",
+            "A low-voltage tester bulb glows when a key is inserted in the gap. What does this indicate?"
+          ],
+          "practice_solutions": [
+            "The metal carries current, while the plastic helps prevent unintended contact and current paths.",
+            "It indicates that the key conducts electricity well enough to complete the circuit."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t2"
+        },
+        {
+          "title": "Electrical effects, safety and conservation",
+          "aliases": [
+            "heating effect",
+            "magnetic effect electricity",
+            "electrical safety",
+            "save electricity"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Electrical effects, safety and conservation.",
+            "Apply Electrical effects, safety and conservation to a familiar scientific situation."
+          ],
+          "explanation": "Electric current can produce heating, magnetic and light effects. Fuses and circuit breakers interrupt excessive current, and insulation reduces accidental contact. Students should never open appliances or handle mains connections; safe study uses diagrams or low-voltage classroom circuits supervised by an adult.",
+          "examples": [
+            "A fuse wire melts when excessive current heats it beyond its safe limit.",
+            "A current-carrying coil can act as an electromagnet around an iron core."
+          ],
+          "exercises": [
+            "Name two effects of electric current.",
+            "How does a fuse protect a circuit?"
+          ],
+          "solutions": [
+            "Electric current can produce heating, magnetic and light effects; any two are acceptable.",
+            "Excessive current heats and melts the fuse element, opening the circuit before greater damage occurs."
+          ],
+          "practice_questions": [
+            "Why should a damaged power cord be reported rather than handled?",
+            "Give one simple action that conserves electrical energy."
+          ],
+          "practice_solutions": [
+            "Exposed or damaged mains wiring can cause severe electric shock or fire and must be dealt with by a responsible adult or qualified person.",
+            "Switch off lights, fans or devices when they are not needed."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c1-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c2",
+      "number": "S2-2",
+      "title": "Semester 2 — Lever",
+      "topics": [
+        {
+          "title": "Lever parts and mechanical advantage",
+          "aliases": [
+            "lever",
+            "fulcrum effort load",
+            "mechanical advantage",
+            "simple machine"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Lever parts and mechanical advantage.",
+            "Apply Lever parts and mechanical advantage to a familiar scientific situation."
+          ],
+          "explanation": "A lever is a rigid bar that turns about a fixed point called the fulcrum. The effort is the applied force and the load is the resistance moved. A longer effort arm can reduce the effort needed, and mechanical advantage is load divided by effort when forces are measured consistently.",
+          "examples": [
+            "A crowbar pivots on a support to lift a stone with less effort.",
+            "If a lever lifts a 60 N load with 20 N effort, its mechanical advantage is 3."
+          ],
+          "exercises": [
+            "Name the three main parts used to describe a lever.",
+            "Find the mechanical advantage when a lever lifts a 90 N load using 30 N effort."
+          ],
+          "solutions": [
+            "They are the fulcrum, effort and load.",
+            "Mechanical advantage = load ÷ effort = 90 ÷ 30 = 3."
+          ],
+          "practice_questions": [
+            "How can moving the effort farther from the fulcrum reduce the effort needed?",
+            "A lever has mechanical advantage 4 and effort 25 N. Find the load."
+          ],
+          "practice_solutions": [
+            "It increases the effort arm and therefore increases the turning effect produced by the same force.",
+            "Load = mechanical advantage × effort = 4 × 25 = 100 N."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t1"
+        },
+        {
+          "title": "Classes of levers",
+          "aliases": [
+            "first class lever",
+            "second class lever",
+            "third class lever",
+            "lever classes"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Classes of levers.",
+            "Apply Classes of levers to a familiar scientific situation."
+          ],
+          "explanation": "Lever classes depend on the relative positions of fulcrum, load and effort. In a first-class lever the fulcrum is between effort and load; in a second-class lever the load is between them; in a third-class lever the effort is between fulcrum and load.",
+          "examples": [
+            "A seesaw is a first-class lever because the fulcrum lies between effort and load.",
+            "A wheelbarrow is a second-class lever because its load lies between the wheel fulcrum and the effort at the handles."
+          ],
+          "exercises": [
+            "Which part lies in the middle in a first-class lever?",
+            "Classify a wheelbarrow and give the positional reason."
+          ],
+          "solutions": [
+            "The fulcrum lies between the effort and the load.",
+            "It is a second-class lever because the load lies between the wheel acting as fulcrum and the effort at the handles."
+          ],
+          "practice_questions": [
+            "Which part lies in the middle in a third-class lever?",
+            "Classify a human forearm lifting a load in the hand when the elbow is the fulcrum."
+          ],
+          "practice_solutions": [
+            "The effort lies between the fulcrum and the load.",
+            "It is a third-class lever because the muscle effort acts between the elbow fulcrum and the load in the hand."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t2"
+        },
+        {
+          "title": "Moments, balance and applications",
+          "aliases": [
+            "turning effect",
+            "moment of force",
+            "balanced lever",
+            "lever application"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Moments, balance and applications.",
+            "Apply Moments, balance and applications to a familiar scientific situation."
+          ],
+          "explanation": "The turning effect of a force about a fulcrum depends on force multiplied by perpendicular distance from the fulcrum. A lever balances when clockwise and anticlockwise moments are equal. This explains why a smaller force can balance a larger force when it acts farther from the fulcrum.",
+          "examples": [
+            "A 10 N force at 0.4 m produces a moment of 4 N m.",
+            "On a balanced seesaw, a lighter child sits farther from the fulcrum than a heavier child."
+          ],
+          "exercises": [
+            "Find the moment of a 15 N force acting 0.2 m from a fulcrum at right angles.",
+            "State the balance condition for a lever."
+          ],
+          "solutions": [
+            "Moment = force × distance = 15 × 0.2 = 3 N m.",
+            "The total clockwise moment about the fulcrum equals the total anticlockwise moment."
+          ],
+          "practice_questions": [
+            "A 20 N load is 0.3 m from a fulcrum. What moment must balance it?",
+            "Why is a door handle placed far from the hinges?"
+          ],
+          "practice_solutions": [
+            "The load moment is 20 × 0.3 = 6 N m, so an opposite moment of 6 N m is required.",
+            "The larger distance from the hinge gives a greater turning effect for the same applied force."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c2-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c3",
+      "number": "S2-3",
+      "title": "Semester 2 — Separation of Substances",
+      "topics": [
+        {
+          "title": "Mixtures and separation choices",
+          "aliases": [
+            "mixture",
+            "separation method",
+            "components of mixture",
+            "pure substance"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Mixtures and separation choices.",
+            "Apply Mixtures and separation choices to a familiar scientific situation."
+          ],
+          "explanation": "A mixture contains two or more substances physically combined, so its components usually keep their individual properties. A separation method is chosen by comparing properties such as particle size, density, solubility, magnetism and boiling point. The goal may be to obtain a useful component or remove an unwanted one.",
+          "examples": [
+            "Iron filings can be removed from sand with a magnet because only the iron is strongly magnetic.",
+            "Stones can be hand-picked from rice when the pieces are large and easily visible."
+          ],
+          "exercises": [
+            "Why can the components of many mixtures be separated physically?",
+            "Choose a property that allows iron filings to be separated from sand."
+          ],
+          "solutions": [
+            "They are not chemically joined and usually retain different physical properties that a method can use.",
+            "Iron is magnetic while sand is not strongly magnetic, so a magnet can separate them."
+          ],
+          "practice_questions": [
+            "When is hand-picking a suitable separation method?",
+            "Why must a separation method be matched to the mixture?"
+          ],
+          "practice_solutions": [
+            "It is suitable when the unwanted pieces are few, large enough to see and easily removed by hand.",
+            "Different mixtures have different component properties, so a method useful for one mixture may not separate another."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t1"
+        },
+        {
+          "title": "Separating insoluble solids",
+          "aliases": [
+            "filtration",
+            "sedimentation decantation",
+            "sieving",
+            "winnowing"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Separating insoluble solids.",
+            "Apply Separating insoluble solids to a familiar scientific situation."
+          ],
+          "explanation": "Insoluble solids can be separated using differences in size or density. Sieving separates particles of different size, winnowing uses moving air, sedimentation lets heavier particles settle, decantation pours off the clearer liquid, and filtration traps solid particles in a porous barrier.",
+          "examples": [
+            "A sieve separates coarse bran from finer flour.",
+            "Muddy water can be allowed to settle and then filtered for a clearer sample, though this does not make unsafe water drinkable."
+          ],
+          "exercises": [
+            "Which method separates an insoluble solid from a liquid using filter paper?",
+            "Distinguish sedimentation from decantation."
+          ],
+          "solutions": [
+            "Filtration separates the insoluble solid as residue while the liquid passes through as filtrate.",
+            "Sedimentation is the settling of heavier particles; decantation is carefully pouring off the upper liquid afterward."
+          ],
+          "practice_questions": [
+            "Why can winnowing separate husk from grain?",
+            "Choose a method to separate gravel from sand and explain why."
+          ],
+          "practice_solutions": [
+            "The lighter husk is carried farther by moving air while the heavier grain falls nearer.",
+            "Sieving is suitable because gravel and sand have noticeably different particle sizes."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t2"
+        },
+        {
+          "title": "Separating solutions and miscible liquids",
+          "aliases": [
+            "evaporation",
+            "crystallization",
+            "distillation",
+            "solution separation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Separating solutions and miscible liquids.",
+            "Apply Separating solutions and miscible liquids to a familiar scientific situation."
+          ],
+          "explanation": "A dissolved solid passes through ordinary filter paper, so other methods are needed. Evaporation removes solvent, crystallization forms purer solid crystals, and distillation boils and then condenses a liquid to collect it. These methods depend on volatility, solubility and boiling behaviour.",
+          "examples": [
+            "Salt can be recovered from salt solution by evaporating water.",
+            "Pure water can be collected from salt solution by simple distillation."
+          ],
+          "exercises": [
+            "Why cannot dissolved salt be removed from water by ordinary filtration?",
+            "Which method can collect both pure water and leave salt behind from salt solution?"
+          ],
+          "solutions": [
+            "Dissolved salt particles pass through the filter pores with the water.",
+            "Simple distillation collects condensed water and leaves most salt in the flask."
+          ],
+          "practice_questions": [
+            "What is the purpose of crystallization?",
+            "Why does evaporation recover salt but not collect the water?"
+          ],
+          "practice_solutions": [
+            "It obtains a dissolved solid as relatively pure crystals by carefully reducing solvent or cooling a concentrated solution.",
+            "The water vapour is allowed to escape rather than being cooled and condensed into a separate container."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c3-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c4",
+      "number": "S2-4",
+      "title": "Semester 2 — Measurements",
+      "topics": [
+        {
+          "title": "Standard units and measurement quality",
+          "aliases": [
+            "standard units",
+            "SI units",
+            "accuracy",
+            "measurement error"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Standard units and measurement quality.",
+            "Apply Standard units and measurement quality to a familiar scientific situation."
+          ],
+          "explanation": "Measurement compares a quantity with an agreed standard unit. Standard units make results understandable and comparable; common SI units include metre, kilogram and second. Good measurement uses a suitable instrument, reads the scale at eye level and records a sensible unit and precision.",
+          "examples": [
+            "The length of a desk is more clearly reported as 1.2 m than as six handspans.",
+            "Reading a liquid scale at eye level reduces parallax error."
+          ],
+          "exercises": [
+            "Why are standard units needed?",
+            "Name the SI base units commonly used for length, mass and time."
+          ],
+          "solutions": [
+            "They let different people communicate and compare measurements consistently.",
+            "They are metre for length, kilogram for mass and second for time."
+          ],
+          "practice_questions": [
+            "Why should a scale be read at eye level?",
+            "Which is a more suitable unit for classroom length: millimetre or metre? Explain."
+          ],
+          "practice_solutions": [
+            "It reduces parallax error caused by viewing the mark from an angle.",
+            "Metre is more suitable because classroom length is several metres; millimetres would give an unnecessarily large number."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t1"
+        },
+        {
+          "title": "Mass, volume and density",
+          "aliases": [
+            "mass",
+            "volume",
+            "density formula",
+            "measuring cylinder"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Mass, volume and density.",
+            "Apply Mass, volume and density to a familiar scientific situation."
+          ],
+          "explanation": "Mass measures the amount of matter, while volume measures the space occupied. Density compares mass with volume and is calculated as mass divided by volume. A balance measures mass, and a measuring cylinder can measure liquid volume or the displacement volume of a small irregular solid.",
+          "examples": [
+            "An object of mass 120 g and volume 40 cm³ has density 3 g/cm³.",
+            "A stone raising water from 50 mL to 68 mL has volume 18 cm³."
+          ],
+          "exercises": [
+            "Find the density of a 200 g object with volume 50 cm³.",
+            "Water in a cylinder rises from 35 mL to 57 mL when a stone is immersed. Find the stone's volume."
+          ],
+          "solutions": [
+            "Density = mass ÷ volume = 200 ÷ 50 = 4 g/cm³.",
+            "Volume = 57 − 35 = 22 mL, equal to 22 cm³."
+          ],
+          "practice_questions": [
+            "Find the mass of a liquid with density 0.8 g/mL and volume 50 mL.",
+            "Why can two equal-volume objects have different masses?"
+          ],
+          "practice_solutions": [
+            "Mass = density × volume = 0.8 × 50 = 40 g.",
+            "They can be made of materials with different densities."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t2"
+        },
+        {
+          "title": "Measuring time and temperature",
+          "aliases": [
+            "time measurement",
+            "temperature measurement",
+            "thermometer",
+            "stopwatch"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Measuring time and temperature.",
+            "Apply Measuring time and temperature to a familiar scientific situation."
+          ],
+          "explanation": "Time intervals are measured with clocks or stopwatches, and temperature is measured with a suitable thermometer. The instrument range and smallest division should fit the task. A thermometer reading is taken only after it stabilizes, without touching the sensing end unnecessarily.",
+          "examples": [
+            "A stopwatch is suitable for timing a short race.",
+            "A laboratory thermometer is selected according to the expected temperature range of the experiment."
+          ],
+          "exercises": [
+            "Which instrument is suitable for timing a 100-metre race?",
+            "What does the smallest division on an instrument scale indicate?"
+          ],
+          "solutions": [
+            "A stopwatch is suitable because it measures short time intervals.",
+            "It indicates the least change that can be read directly from that scale."
+          ],
+          "practice_questions": [
+            "Why should a thermometer reading be allowed to stabilize?",
+            "Convert 2 minutes 30 seconds into seconds."
+          ],
+          "practice_solutions": [
+            "The thermometer needs time to reach thermal equilibrium with the object or substance being measured.",
+            "2 minutes = 120 seconds, so the total is 120 + 30 = 150 seconds."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c4-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c5",
+      "number": "S2-5",
+      "title": "Semester 2 — Mirrors and Reflections",
+      "topics": [
+        {
+          "title": "Light, visibility and reflection",
+          "aliases": [
+            "light reflection",
+            "luminous object",
+            "non luminous object",
+            "seeing objects"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Light, visibility and reflection.",
+            "Apply Light, visibility and reflection to a familiar scientific situation."
+          ],
+          "explanation": "Luminous objects produce their own light, while non-luminous objects are seen when light from another source reflects from them into our eyes. Reflection is the return of light from a surface. Light generally travels in straight lines through a uniform transparent medium.",
+          "examples": [
+            "The Sun is luminous, while the Moon is seen mainly by reflected sunlight.",
+            "A book is visible when light from a lamp reflects from its pages into the eyes."
+          ],
+          "exercises": [
+            "Distinguish a luminous object from a non-luminous object.",
+            "Why can a book be seen in a lit room?"
+          ],
+          "solutions": [
+            "A luminous object emits its own light, while a non-luminous object is seen by light it reflects.",
+            "Light from a source reflects from the book and enters the observer's eyes."
+          ],
+          "practice_questions": [
+            "Is the Moon usually considered luminous? Explain.",
+            "What is reflection of light?"
+          ],
+          "practice_solutions": [
+            "No. It is normally seen because it reflects sunlight rather than producing visible light of its own.",
+            "It is the change in direction when light strikes a surface and returns into the same general medium."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t1"
+        },
+        {
+          "title": "Laws of reflection",
+          "aliases": [
+            "law of reflection",
+            "angle of incidence",
+            "angle of reflection",
+            "normal ray"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Laws of reflection.",
+            "Apply Laws of reflection to a familiar scientific situation."
+          ],
+          "explanation": "At the point where a ray meets a mirror, the normal is drawn perpendicular to the surface. The angle of incidence is measured between the incident ray and the normal, and the angle of reflection is measured between the reflected ray and the normal. These angles are equal, and the incident ray, normal and reflected ray lie in one plane.",
+          "examples": [
+            "A ray incident at 35° to the normal reflects at 35° to the normal.",
+            "A ray travelling along the normal has incidence angle 0° and returns along the same path."
+          ],
+          "exercises": [
+            "A light ray strikes a plane mirror at 28° to the normal. Find its angle of reflection.",
+            "From which line are angles of incidence and reflection measured?"
+          ],
+          "solutions": [
+            "By the law of reflection, the angle of reflection is 28°.",
+            "They are measured from the normal drawn perpendicular to the mirror at the point of incidence."
+          ],
+          "practice_questions": [
+            "A ray makes 60° with the mirror surface. Find its angle of incidence.",
+            "State the two laws of reflection."
+          ],
+          "practice_solutions": [
+            "The normal is 90° to the surface, so the angle of incidence is 90° − 60° = 30°.",
+            "The angle of incidence equals the angle of reflection, and the incident ray, reflected ray and normal lie in the same plane."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t2"
+        },
+        {
+          "title": "Plane-mirror images and types of reflection",
+          "aliases": [
+            "plane mirror image",
+            "regular reflection",
+            "diffuse reflection",
+            "lateral inversion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Plane-mirror images and types of reflection.",
+            "Apply Plane-mirror images and types of reflection to a familiar scientific situation."
+          ],
+          "explanation": "A plane mirror forms a virtual, upright image of the same size at the same distance behind the mirror as the object is in front. The image is laterally inverted. A smooth surface gives regular reflection, while a rough surface sends reflected rays in many directions and gives diffuse reflection.",
+          "examples": [
+            "An object 2 m in front of a plane mirror has an image 2 m behind it.",
+            "Polished metal can give a clear regular reflection, while rough paper gives diffuse reflection."
+          ],
+          "exercises": [
+            "State four properties of an image formed by a plane mirror.",
+            "An object is 1.5 m in front of a plane mirror. How far is the image behind the mirror?"
+          ],
+          "solutions": [
+            "It is virtual, upright, the same size as the object and as far behind the mirror as the object is in front; it is also laterally inverted.",
+            "The image is 1.5 m behind the mirror."
+          ],
+          "practice_questions": [
+            "Distinguish regular and diffuse reflection.",
+            "What is lateral inversion?"
+          ],
+          "practice_solutions": [
+            "Regular reflection from a smooth surface keeps parallel rays orderly, while diffuse reflection from a rough surface scatters them in many directions.",
+            "It is the apparent left-right reversal in a plane-mirror image."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c5-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c6",
+      "number": "S2-6",
+      "title": "Semester 2 — Curved Mirrors",
+      "topics": [
+        {
+          "title": "Concave and convex mirrors",
+          "aliases": [
+            "concave mirror",
+            "convex mirror",
+            "curved mirror",
+            "reflecting surface"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Concave and convex mirrors.",
+            "Apply Concave and convex mirrors to a familiar scientific situation."
+          ],
+          "explanation": "A concave mirror reflects from an inward-curving surface and tends to converge parallel rays. A convex mirror reflects from an outward-curving surface and diverges reflected rays. The pole is the centre of the mirror surface, and the principal axis passes through the pole and centre of curvature.",
+          "examples": [
+            "The inner polished surface of a spoon behaves approximately like a concave mirror.",
+            "The outer polished surface of a spoon behaves approximately like a convex mirror."
+          ],
+          "exercises": [
+            "How do concave and convex mirrors differ in the shape of their reflecting surfaces?",
+            "What happens to parallel rays after reflection from a concave mirror?"
+          ],
+          "solutions": [
+            "A concave mirror curves inward, while a convex mirror bulges outward toward the object.",
+            "They converge toward the principal focus when they are close to the principal axis."
+          ],
+          "practice_questions": [
+            "What happens to parallel rays after reflection from a convex mirror?",
+            "Define the principal axis of a spherical mirror."
+          ],
+          "practice_solutions": [
+            "They diverge and appear to come from a focus behind the mirror.",
+            "It is the straight line passing through the pole and the centre of curvature."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t1"
+        },
+        {
+          "title": "Images and uses of curved mirrors",
+          "aliases": [
+            "curved mirror image",
+            "concave mirror uses",
+            "convex mirror uses",
+            "mirror applications"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Images and uses of curved mirrors.",
+            "Apply Images and uses of curved mirrors to a familiar scientific situation."
+          ],
+          "explanation": "A concave mirror can form enlarged upright images for nearby objects and real inverted images for suitable distant objects. A convex mirror always gives a virtual, upright, diminished image and a wide field of view. These image properties determine practical uses.",
+          "examples": [
+            "A dentist can use a concave mirror to view an enlarged upright image of a nearby tooth.",
+            "A vehicle rear-view mirror is convex to show a wider area behind."
+          ],
+          "exercises": [
+            "Why is a convex mirror useful as a vehicle rear-view mirror?",
+            "Why can a concave mirror be used for a close-up view?"
+          ],
+          "solutions": [
+            "It provides a wide field of view and forms upright diminished images of traffic behind.",
+            "When the object is within the focal length, it forms a virtual, upright and enlarged image."
+          ],
+          "practice_questions": [
+            "Which curved mirror can form a real image on a screen?",
+            "State the usual image properties of a convex mirror."
+          ],
+          "practice_solutions": [
+            "A concave mirror can form a real image on a screen for suitable object positions.",
+            "Its image is virtual, upright and diminished and appears behind the mirror."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t2"
+        },
+        {
+          "title": "Focus, focal length and ray behaviour",
+          "aliases": [
+            "principal focus",
+            "focal length",
+            "radius of curvature",
+            "mirror rays"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Focus, focal length and ray behaviour.",
+            "Apply Focus, focal length and ray behaviour to a familiar scientific situation."
+          ],
+          "explanation": "The principal focus is the point where paraxial reflected rays meet or appear to meet. Focal length is the distance from pole to focus. For a spherical mirror of small aperture, the radius of curvature is approximately twice the focal length: R = 2f. Never focus sunlight with a mirror because concentrated light can injure eyes or start a fire.",
+          "examples": [
+            "A concave mirror with focal length 12 cm has radius of curvature about 24 cm.",
+            "A ray parallel to the principal axis reflects through the focus of a concave mirror."
+          ],
+          "exercises": [
+            "A spherical mirror has focal length 15 cm. Find its radius of curvature.",
+            "Define focal length of a spherical mirror."
+          ],
+          "solutions": [
+            "R = 2f = 2 × 15 = 30 cm.",
+            "It is the distance from the mirror's pole to its principal focus."
+          ],
+          "practice_questions": [
+            "How does a ray parallel to the principal axis reflect from a concave mirror?",
+            "Why must sunlight never be focused with a concave mirror?"
+          ],
+          "practice_solutions": [
+            "It reflects through the principal focus, for rays close to the axis.",
+            "Concentrated sunlight can damage eyes, burn skin or ignite material."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c6-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c7",
+      "number": "S2-7",
+      "title": "Semester 2 — Elements, Compounds and Mixtures",
+      "topics": [
+        {
+          "title": "Elements and atoms",
+          "aliases": [
+            "element",
+            "atom",
+            "chemical symbol",
+            "pure substance"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Elements and atoms.",
+            "Apply Elements and atoms to a familiar scientific situation."
+          ],
+          "explanation": "An element is a pure substance made of only one kind of atom and cannot be broken into simpler substances by ordinary chemical methods. Each element has a chemical symbol, such as O for oxygen or Fe for iron. Atoms of different elements differ in their internal structure and properties.",
+          "examples": [
+            "A piece of pure copper contains copper atoms and is an element.",
+            "O is the symbol for oxygen, while Fe is the symbol for iron."
+          ],
+          "exercises": [
+            "What is an element?",
+            "Give the chemical symbols for oxygen and iron."
+          ],
+          "solutions": [
+            "It is a pure substance made of one kind of atom that cannot be chemically broken into simpler substances by ordinary methods.",
+            "O represents oxygen and Fe represents iron."
+          ],
+          "practice_questions": [
+            "Classify gold as an element, compound or mixture.",
+            "Why is a chemical symbol useful?"
+          ],
+          "practice_solutions": [
+            "Gold is an element because pure gold contains only gold atoms.",
+            "It gives a short, internationally recognized way to represent an element in formulas and equations."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t1"
+        },
+        {
+          "title": "Compounds and chemical combination",
+          "aliases": [
+            "compound",
+            "chemical formula",
+            "chemical change",
+            "fixed composition"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Compounds and chemical combination.",
+            "Apply Compounds and chemical combination to a familiar scientific situation."
+          ],
+          "explanation": "A compound is a pure substance formed when atoms of two or more elements combine chemically in a fixed ratio. Its properties can differ greatly from those of its elements. A chemical formula shows the kinds and relative numbers of atoms, and separating a compound requires a chemical change.",
+          "examples": [
+            "Water, H₂O, contains hydrogen and oxygen chemically combined in a fixed ratio.",
+            "Sodium chloride has properties different from the reactive sodium and chlorine from which it is formed."
+          ],
+          "exercises": [
+            "What distinguishes a compound from a simple physical mixture of elements?",
+            "What information does the formula H₂O give?"
+          ],
+          "solutions": [
+            "A compound has elements chemically joined in a fixed ratio and has its own properties; a mixture has variable composition and retains component properties.",
+            "It shows that each water molecule contains two hydrogen atoms for every one oxygen atom."
+          ],
+          "practice_questions": [
+            "Can a compound usually be separated by filtration? Explain.",
+            "Classify carbon dioxide as an element, compound or mixture and give a reason."
+          ],
+          "practice_solutions": [
+            "No. Its components are chemically bonded, so a chemical change rather than ordinary filtration is required.",
+            "It is a compound because carbon and oxygen are chemically combined in a fixed ratio."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t2"
+        },
+        {
+          "title": "Mixtures and classification",
+          "aliases": [
+            "mixture",
+            "homogeneous mixture",
+            "heterogeneous mixture",
+            "element compound mixture"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Mixtures and classification.",
+            "Apply Mixtures and classification to a familiar scientific situation."
+          ],
+          "explanation": "A mixture contains substances physically combined in variable proportions. A homogeneous mixture is uniform throughout, while a heterogeneous mixture has visibly or measurably different regions. Components retain their properties and can often be separated by physical methods.",
+          "examples": [
+            "Clear salt solution is homogeneous because its composition is uniform at the visible scale.",
+            "Soil is heterogeneous because different particles and materials can be distinguished."
+          ],
+          "exercises": [
+            "Classify air as a mixture and explain why.",
+            "Distinguish homogeneous and heterogeneous mixtures."
+          ],
+          "solutions": [
+            "Air is a mixture because several gases are physically combined in variable proportions and retain their identities.",
+            "A homogeneous mixture is uniform throughout, while a heterogeneous mixture has non-uniform composition or distinguishable parts."
+          ],
+          "practice_questions": [
+            "Classify each as element, compound or mixture: oxygen, water, soil.",
+            "Why can iron filings be recovered from an iron-and-sand mixture with a magnet?"
+          ],
+          "practice_solutions": [
+            "Oxygen is an element, water is a compound, and soil is a mixture.",
+            "The iron retains its magnetic property in the mixture, while sand is not strongly magnetic."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c7-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c8",
+      "number": "S2-8",
+      "title": "Semester 2 — Musculoskeletal System",
+      "topics": [
+        {
+          "title": "Skeleton, bones and support",
+          "aliases": [
+            "skeleton",
+            "bones",
+            "skeletal system",
+            "musculo skeleton system"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Skeleton, bones and support.",
+            "Apply Skeleton, bones and support to a familiar scientific situation."
+          ],
+          "explanation": "The skeleton supports the body, gives shape, protects organs and provides attachment points for muscles. Bones are living tissues that can grow and repair, and they store minerals. The skull protects the brain, the vertebral column protects the spinal cord and the rib cage helps protect the heart and lungs.",
+          "examples": [
+            "The vertebral column supports the trunk and surrounds the spinal cord.",
+            "The thigh bone is adapted to bear large loads during standing and movement."
+          ],
+          "exercises": [
+            "State four functions of the skeleton.",
+            "Which skeletal structure protects the spinal cord?"
+          ],
+          "solutions": [
+            "It supports and shapes the body, protects organs, provides attachment for muscles and helps movement; it also stores minerals and forms some blood cells.",
+            "The vertebral column surrounds and protects the spinal cord."
+          ],
+          "practice_questions": [
+            "Why are bones described as living tissue?",
+            "Name one organ protected by the skull and two organs protected by the rib cage."
+          ],
+          "practice_solutions": [
+            "They contain living cells and blood vessels and can grow, remodel and repair.",
+            "The skull protects the brain; the rib cage helps protect the heart and lungs."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t1"
+        },
+        {
+          "title": "Joints and their movement",
+          "aliases": [
+            "joint",
+            "hinge joint",
+            "ball and socket",
+            "pivot fixed joint"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Joints and their movement.",
+            "Apply Joints and their movement to a familiar scientific situation."
+          ],
+          "explanation": "A joint is where two or more bones meet. Fixed joints allow little or no movement, hinge joints mainly move in one plane, ball-and-socket joints move in many directions, and pivot joints allow rotation. Cartilage reduces friction and ligaments help hold bones together at movable joints.",
+          "examples": [
+            "The elbow is mainly a hinge joint.",
+            "The shoulder is a ball-and-socket joint with movement in many directions."
+          ],
+          "exercises": [
+            "Classify the elbow and shoulder joints.",
+            "What is the role of ligaments at a joint?"
+          ],
+          "solutions": [
+            "The elbow is mainly a hinge joint, while the shoulder is a ball-and-socket joint.",
+            "Ligaments connect bone to bone and help stabilize the joint."
+          ],
+          "practice_questions": [
+            "Why is cartilage useful at the ends of bones in a movable joint?",
+            "Which type of joint allows the head to turn from side to side at the neck?"
+          ],
+          "practice_solutions": [
+            "It provides a smooth, cushioning surface that reduces friction and absorbs some shock.",
+            "A pivot joint allows this rotational movement."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t2"
+        },
+        {
+          "title": "Muscles, tendons and movement",
+          "aliases": [
+            "muscle",
+            "tendon",
+            "antagonistic muscles",
+            "movement"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Muscles, tendons and movement.",
+            "Apply Muscles, tendons and movement to a familiar scientific situation."
+          ],
+          "explanation": "Skeletal muscles move bones by contracting and pulling; they cannot actively push. Tendons connect muscle to bone. Many movements use antagonistic pairs, in which one muscle contracts while its partner relaxes, and the roles reverse for the opposite movement.",
+          "examples": [
+            "When the forearm bends, the biceps contracts while the triceps relaxes.",
+            "A tendon transfers the pulling force of a contracting muscle to a bone."
+          ],
+          "exercises": [
+            "What connects a skeletal muscle to a bone?",
+            "Why do many joints need antagonistic muscle pairs?"
+          ],
+          "solutions": [
+            "A tendon connects muscle to bone.",
+            "Muscles pull only when they contract, so opposing muscles are needed to move a joint in opposite directions."
+          ],
+          "practice_questions": [
+            "Describe the biceps and triceps action when the elbow bends.",
+            "Distinguish a tendon from a ligament."
+          ],
+          "practice_solutions": [
+            "The biceps contracts and shortens while the triceps relaxes.",
+            "A tendon connects muscle to bone, while a ligament connects bone to bone at a joint."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c8-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c9",
+      "number": "S2-9",
+      "title": "Semester 2 — Heat and Temperature",
+      "topics": [
+        {
+          "title": "Heat, temperature and thermometers",
+          "aliases": [
+            "heat and temperature",
+            "thermometer",
+            "degree celsius",
+            "thermal energy"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Heat, temperature and thermometers.",
+            "Apply Heat, temperature and thermometers to a familiar scientific situation."
+          ],
+          "explanation": "Temperature describes how hot or cold an object is, while heat is energy transferred because of a temperature difference. Heat flows spontaneously from a higher-temperature object to a lower-temperature object. Thermometers measure temperature, commonly in degrees Celsius, and must be used within their designed range.",
+          "examples": [
+            "A hot spoon transfers heat to cooler water until their temperatures move closer.",
+            "A thermometer reading of 35 °C is higher than a reading of 20 °C."
+          ],
+          "exercises": [
+            "Distinguish heat from temperature.",
+            "In which direction does heat flow between objects at 70 °C and 25 °C?"
+          ],
+          "solutions": [
+            "Temperature measures how hot or cold an object is, while heat is energy transferred between objects because their temperatures differ.",
+            "Heat flows from the 70 °C object to the 25 °C object."
+          ],
+          "practice_questions": [
+            "What unit is commonly used for temperature in school science?",
+            "Why should a thermometer be chosen to match the expected temperature range?"
+          ],
+          "practice_solutions": [
+            "Degree Celsius, written °C, is commonly used.",
+            "A thermometer outside its designed range may give no useful reading and can be damaged or unsafe."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t1"
+        },
+        {
+          "title": "Conduction, convection and radiation",
+          "aliases": [
+            "heat transfer",
+            "conduction",
+            "convection",
+            "radiation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Conduction, convection and radiation.",
+            "Apply Conduction, convection and radiation to a familiar scientific situation."
+          ],
+          "explanation": "Conduction transfers thermal energy through direct particle interactions and is important in solids. Convection transfers energy by the bulk movement of liquids or gases. Radiation transfers energy by electromagnetic waves and can travel through empty space.",
+          "examples": [
+            "A metal spoon becomes warm by conduction from hot soup.",
+            "Sunlight warms Earth by radiation across space."
+          ],
+          "exercises": [
+            "Which heat-transfer method warms the handle of a metal spoon placed in hot soup?",
+            "Why does warmer fluid often rise during convection?"
+          ],
+          "solutions": [
+            "Conduction transfers heat along the metal spoon.",
+            "Heating usually makes the fluid expand and become less dense than the surrounding cooler fluid."
+          ],
+          "practice_questions": [
+            "Which mode transfers energy from the Sun to Earth?",
+            "Distinguish convection from conduction."
+          ],
+          "practice_solutions": [
+            "Radiation transfers energy through space.",
+            "Convection transfers heat by bulk movement of a fluid, while conduction transfers heat through interactions without bulk movement of matter."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t2"
+        },
+        {
+          "title": "Thermal equilibrium and everyday applications",
+          "aliases": [
+            "thermal equilibrium",
+            "expansion",
+            "insulation",
+            "cooling"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Thermal equilibrium and everyday applications.",
+            "Apply Thermal equilibrium and everyday applications to a familiar scientific situation."
+          ],
+          "explanation": "Objects in thermal contact exchange heat until they reach the same temperature, called thermal equilibrium. Most materials expand when heated and contract when cooled. Insulators slow heat transfer, while evaporation can cool a surface because faster particles escape with energy.",
+          "examples": [
+            "A hot drink cools as heat moves to the cup, air and surroundings.",
+            "Small gaps in bridge sections allow safe thermal expansion."
+          ],
+          "exercises": [
+            "What is thermal equilibrium?",
+            "Why are expansion gaps provided in long bridges or rails?"
+          ],
+          "solutions": [
+            "It is the condition in which objects in thermal contact have the same temperature and no net heat flows between them.",
+            "They allow materials to expand when heated without producing damaging stress or buckling."
+          ],
+          "practice_questions": [
+            "How does a woollen layer help keep a person warm?",
+            "Why does evaporation cool a wet surface?"
+          ],
+          "practice_solutions": [
+            "It traps air and slows heat transfer from the body to the surroundings.",
+            "Higher-energy liquid particles escape as vapour, lowering the average energy and temperature of the liquid left behind."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c9-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c10",
+      "number": "S2-10",
+      "title": "Semester 2 — Air Pollution",
+      "topics": [
+        {
+          "title": "Air pollutants and their sources",
+          "aliases": [
+            "air pollutant",
+            "air pollution sources",
+            "particulate matter",
+            "harmful gases"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Air pollutants and their sources.",
+            "Apply Air pollutants and their sources to a familiar scientific situation."
+          ],
+          "explanation": "Air pollution occurs when harmful solids, liquids or gases enter the atmosphere in amounts that damage health or the environment. Major sources include vehicle exhaust, fuel burning, industrial emissions, construction dust and open waste burning. Pollutants include particulate matter, carbon monoxide, nitrogen oxides and sulfur dioxide.",
+          "examples": [
+            "Incomplete fuel burning can release poisonous carbon monoxide.",
+            "Construction activity can add fine dust particles to the air."
+          ],
+          "exercises": [
+            "What is an air pollutant?",
+            "Name two human activities that can increase particulate pollution."
+          ],
+          "solutions": [
+            "It is a solid, liquid droplet or gas present in air at a concentration that can harm health, organisms, materials or the environment.",
+            "Vehicle exhaust, construction, industrial processes and open burning are examples; any two are acceptable."
+          ],
+          "practice_questions": [
+            "Why can incomplete combustion be dangerous?",
+            "Distinguish a pollution source from a pollutant."
+          ],
+          "practice_solutions": [
+            "It can produce carbon monoxide, a poisonous gas, along with soot and other pollutants.",
+            "A source is the activity or place releasing contamination, while a pollutant is the harmful substance released."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t1"
+        },
+        {
+          "title": "Effects of polluted air",
+          "aliases": [
+            "effects of air pollution",
+            "smog",
+            "acid rain",
+            "respiratory health"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Effects of polluted air.",
+            "Apply Effects of polluted air to a familiar scientific situation."
+          ],
+          "explanation": "Polluted air can irritate eyes and airways, worsen breathing problems and reduce visibility. Some gases contribute to acid rain, ground-level ozone or climate change. Particles can settle on leaves and buildings, while long exposure can damage ecosystems and materials.",
+          "examples": [
+            "Fine particles can travel deep into the respiratory system and make breathing difficult.",
+            "Sulfur dioxide and nitrogen oxides can form acids in the atmosphere and contribute to acid rain."
+          ],
+          "exercises": [
+            "Give two possible health effects of air pollution.",
+            "How can acid rain form from air pollution?"
+          ],
+          "solutions": [
+            "It can irritate eyes and airways, cause coughing and worsen breathing conditions; any two supported effects are acceptable.",
+            "Sulfur dioxide and nitrogen oxides react in the atmosphere to form acids that return with rain or other deposition."
+          ],
+          "practice_questions": [
+            "Why can particulate matter reduce visibility?",
+            "How can air pollution harm plant leaves?"
+          ],
+          "practice_solutions": [
+            "Suspended particles scatter and absorb light, producing haze.",
+            "Particles can coat leaf surfaces and pollutants can damage tissues, reducing gas exchange or photosynthesis."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t2"
+        },
+        {
+          "title": "Prevention and air-quality action",
+          "aliases": [
+            "control air pollution",
+            "clean air",
+            "emission reduction",
+            "air quality"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Prevention and air-quality action.",
+            "Apply Prevention and air-quality action to a familiar scientific situation."
+          ],
+          "explanation": "Air pollution is reduced by preventing emissions at the source and limiting exposure. Cleaner transport, efficient energy use, dust control, proper waste management and emission filters can help. Air-quality monitoring identifies polluted periods, while trees support local environments but cannot replace emission control.",
+          "examples": [
+            "Using public transport can reduce emissions per passenger when many people share a trip.",
+            "Covering dusty construction material can reduce particles becoming airborne."
+          ],
+          "exercises": [
+            "Give two practical ways a city can reduce vehicle-related air pollution.",
+            "Why is preventing emissions usually better than only planting trees afterward?"
+          ],
+          "solutions": [
+            "It can improve public transport, encourage walking and cycling where safe, maintain vehicles and use cleaner fuels or technologies; any two are acceptable.",
+            "Prevention stops pollutants from entering the air, while trees can absorb only limited amounts and do not remove every pollutant."
+          ],
+          "practice_questions": [
+            "What is one purpose of air-quality monitoring?",
+            "How does avoiding open waste burning improve air quality?"
+          ],
+          "practice_solutions": [
+            "It measures pollutant levels so authorities and the public can identify risks and evaluate control measures.",
+            "It prevents smoke, fine particles and harmful gases from being released directly into the air."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c10-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c11",
+      "number": "S2-11",
+      "title": "Semester 2 — Our Solar System",
+      "topics": [
+        {
+          "title": "The Sun and planets",
+          "aliases": [
+            "solar system",
+            "planets order",
+            "Sun",
+            "inner outer planets"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of The Sun and planets.",
+            "Apply The Sun and planets to a familiar scientific situation."
+          ],
+          "explanation": "The solar system contains the Sun and the objects held in orbit by its gravity. From the Sun outward, the eight planets are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. The four inner planets are smaller and rocky, while the outer planets are much larger and made mainly of gases or ices.",
+          "examples": [
+            "Earth is the third planet from the Sun.",
+            "Jupiter is the largest planet in the solar system."
+          ],
+          "exercises": [
+            "List the eight planets in order from the Sun.",
+            "Which planet is third from the Sun and which is the largest?"
+          ],
+          "solutions": [
+            "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.",
+            "Earth is third from the Sun, and Jupiter is the largest planet."
+          ],
+          "practice_questions": [
+            "Distinguish the inner planets from the outer planets in general composition.",
+            "What force keeps planets in orbit around the Sun?"
+          ],
+          "practice_solutions": [
+            "The inner planets are relatively small and rocky, while the outer planets are much larger and composed mainly of gases or ices.",
+            "The Sun's gravitational force keeps the planets in orbit."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t1"
+        },
+        {
+          "title": "Rotation, revolution and satellites",
+          "aliases": [
+            "rotation revolution",
+            "day and year",
+            "natural satellite",
+            "Moon"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Rotation, revolution and satellites.",
+            "Apply Rotation, revolution and satellites to a familiar scientific situation."
+          ],
+          "explanation": "Rotation is the spinning of an object on its axis, while revolution is motion around another object. Earth's rotation produces the day-night cycle, and its revolution around the Sun defines a year. A natural satellite orbits a planet; the Moon is Earth's natural satellite.",
+          "examples": [
+            "Earth completes one rotation in about 24 hours.",
+            "Earth completes one revolution around the Sun in about 365¼ days."
+          ],
+          "exercises": [
+            "Distinguish rotation from revolution.",
+            "Which motion of Earth causes day and night?"
+          ],
+          "solutions": [
+            "Rotation is spinning on an axis, while revolution is orbital motion around another body.",
+            "Earth's rotation on its axis causes day and night."
+          ],
+          "practice_questions": [
+            "Approximately how long does Earth take to revolve around the Sun?",
+            "What is a natural satellite? Give one example."
+          ],
+          "practice_solutions": [
+            "It takes about 365¼ days, or one year.",
+            "It is a naturally occurring body that orbits a planet; the Moon orbiting Earth is an example."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t2"
+        },
+        {
+          "title": "Smaller bodies and conditions for life",
+          "aliases": [
+            "asteroid comet meteoroid",
+            "dwarf planet",
+            "life on Earth",
+            "habitable conditions"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Smaller bodies and conditions for life.",
+            "Apply Smaller bodies and conditions for life to a familiar scientific situation."
+          ],
+          "explanation": "The solar system also contains dwarf planets, asteroids, comets and smaller rocky or icy bodies. A meteoroid is a small object in space; its bright passage through an atmosphere is a meteor, and a surviving piece reaching the ground is a meteorite. Earth's liquid water, suitable temperature range and protective atmosphere help support life.",
+          "examples": [
+            "Pluto is classified as a dwarf planet rather than one of the eight planets.",
+            "A comet can develop a bright coma and tail when it approaches the Sun."
+          ],
+          "exercises": [
+            "Distinguish meteoroid, meteor and meteorite.",
+            "Why can a comet develop a tail near the Sun?"
+          ],
+          "solutions": [
+            "A meteoroid is in space, a meteor is the visible streak during atmospheric entry, and a meteorite is a piece that reaches the ground.",
+            "Solar heating releases gas and dust from the comet, and sunlight and the solar wind push material into a tail."
+          ],
+          "practice_questions": [
+            "Name three conditions on Earth that help support life.",
+            "Is Pluto one of the eight planets? State its present classification."
+          ],
+          "practice_solutions": [
+            "Liquid water, a suitable temperature range and a protective atmosphere are three important conditions.",
+            "No. Pluto is classified as a dwarf planet."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c11-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c12",
+      "number": "S2-12",
+      "title": "Semester 2 — Food Chain",
+      "topics": [
+        {
+          "title": "Producers, consumers and decomposers",
+          "aliases": [
+            "producer consumer decomposer",
+            "trophic level",
+            "ecosystem roles",
+            "food chain roles"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Producers, consumers and decomposers.",
+            "Apply Producers, consumers and decomposers to a familiar scientific situation."
+          ],
+          "explanation": "Producers such as green plants capture light energy and make food. Consumers obtain energy by eating producers or other consumers. Decomposers break down dead matter and wastes, returning nutrients to the environment for reuse.",
+          "examples": [
+            "Grass is a producer, a grasshopper is a primary consumer and a frog is a secondary consumer.",
+            "Fungi and bacteria can act as decomposers in soil."
+          ],
+          "exercises": [
+            "Classify grass, deer and decomposing fungi as producer, consumer or decomposer.",
+            "Why are green plants called producers?"
+          ],
+          "solutions": [
+            "Grass is a producer, deer is a consumer, and the fungi are decomposers.",
+            "They make organic food using light energy through photosynthesis."
+          ],
+          "practice_questions": [
+            "What ecological role do decomposers perform?",
+            "What is a primary consumer?"
+          ],
+          "practice_solutions": [
+            "They break down dead material and wastes and return nutrients to the environment.",
+            "It is a consumer that feeds directly on producers."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t1"
+        },
+        {
+          "title": "Food chains, food webs and energy flow",
+          "aliases": [
+            "food chain",
+            "food web",
+            "energy flow",
+            "trophic level"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Food chains, food webs and energy flow.",
+            "Apply Food chains, food webs and energy flow to a familiar scientific situation."
+          ],
+          "explanation": "A food chain shows one pathway of feeding and energy transfer, while a food web connects many pathways. Arrows point from the food to the eater, showing the direction of energy transfer. Less usable energy is available at each higher trophic level, so food chains are usually limited in length.",
+          "examples": [
+            "In grass → grasshopper → frog, the arrow from grass to grasshopper shows energy entering the grasshopper.",
+            "A bird eating both insects and seeds belongs to several linked food chains in a food web."
+          ],
+          "exercises": [
+            "In which direction do arrows point in a food chain?",
+            "Distinguish a food chain from a food web."
+          ],
+          "solutions": [
+            "They point from the organism being eaten toward the organism that eats it, showing energy transfer.",
+            "A food chain shows one feeding pathway, while a food web shows interconnected feeding relationships."
+          ],
+          "practice_questions": [
+            "Identify the primary consumer in grass → rabbit → fox.",
+            "Why are food chains usually not very long?"
+          ],
+          "practice_solutions": [
+            "The rabbit is the primary consumer because it eats the producer grass.",
+            "Only a fraction of energy is transferred to each higher trophic level, so too little remains to support many additional levels."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t2"
+        },
+        {
+          "title": "Population changes and ecosystem balance",
+          "aliases": [
+            "population balance",
+            "predator prey",
+            "food chain disturbance",
+            "ecosystem change"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Population changes and ecosystem balance.",
+            "Apply Population changes and ecosystem balance to a familiar scientific situation."
+          ],
+          "explanation": "Populations in a food web influence one another through feeding, competition and resource limits. Removing one species can cause increases or decreases elsewhere, though the exact result depends on the whole web. Stable ecosystems still change over time but maintain functioning relationships within natural ranges.",
+          "examples": [
+            "A sharp decline in frogs can allow some insect prey populations to rise.",
+            "Loss of a plant food source can reduce the herbivores and predators that depend on it."
+          ],
+          "exercises": [
+            "Predict one likely effect if most grass disappears from grass → rabbit → fox.",
+            "Why can removing a top predator change several populations?"
+          ],
+          "solutions": [
+            "Rabbit numbers would likely fall because of reduced food, and fox numbers may later fall because rabbits become scarce.",
+            "Its prey may increase and consume more organisms or resources, causing effects through the food web."
+          ],
+          "practice_questions": [
+            "Does ecosystem balance mean populations never change? Explain.",
+            "How can decomposers support long-term food-chain productivity?"
+          ],
+          "practice_solutions": [
+            "No. Populations naturally vary, but interactions and resource limits keep the ecosystem functioning within ranges over time.",
+            "They recycle nutrients from dead material into soil or water, making nutrients available to producers again."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c12-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c13",
+      "number": "S2-13",
+      "title": "Semester 2 — Environmental Equilibrium",
+      "topics": [
+        {
+          "title": "Biotic and abiotic ecosystem components",
+          "aliases": [
+            "biotic abiotic",
+            "ecosystem components",
+            "living nonliving",
+            "environmental factors"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Biotic and abiotic ecosystem components.",
+            "Apply Biotic and abiotic ecosystem components to a familiar scientific situation."
+          ],
+          "explanation": "An ecosystem includes living biotic components and non-living abiotic components interacting in an area. Plants, animals and microorganisms are biotic; light, air, water, soil and temperature are abiotic. A change in an abiotic factor can affect many organisms and their interactions.",
+          "examples": [
+            "Sunlight is an abiotic energy input used by plant producers.",
+            "A pond's fish, algae and bacteria are biotic components interacting with water and temperature."
+          ],
+          "exercises": [
+            "Classify sunlight, soil, grass and bacteria as biotic or abiotic.",
+            "What is an ecosystem?"
+          ],
+          "solutions": [
+            "Sunlight and soil are abiotic; grass and bacteria are biotic.",
+            "It is a system formed by living organisms and non-living environmental components interacting in an area."
+          ],
+          "practice_questions": [
+            "Give one way reduced rainfall can affect an ecosystem.",
+            "Why are producers linked to both biotic and abiotic components?"
+          ],
+          "practice_solutions": [
+            "It can reduce available water and plant growth, which then affects consumers and other organisms.",
+            "Producers are living organisms that depend on abiotic light, water, carbon dioxide and minerals to make food."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c13-t1"
+        },
+        {
+          "title": "Disturbance, biodiversity and resilience",
+          "aliases": [
+            "environmental disturbance",
+            "biodiversity",
+            "ecosystem resilience",
+            "invasive species"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Disturbance, biodiversity and resilience.",
+            "Apply Disturbance, biodiversity and resilience to a familiar scientific situation."
+          ],
+          "explanation": "Environmental equilibrium can be disturbed by natural events or human actions such as habitat loss, pollution, overuse of resources or introduction of invasive species. Biodiversity provides different species and roles, which can improve an ecosystem's ability to continue functioning after change. Recovery capacity is called resilience.",
+          "examples": [
+            "Removing forest cover can increase erosion and remove habitat for many species.",
+            "An invasive species can spread rapidly when local controls are weak and compete with native organisms."
+          ],
+          "exercises": [
+            "Name two human activities that can disturb environmental equilibrium.",
+            "What is biodiversity?"
+          ],
+          "solutions": [
+            "Habitat destruction, pollution, overharvesting and introducing invasive species are examples; any two are acceptable.",
+            "It is the variety of living organisms, their genetic variation and the ecosystems they form."
+          ],
+          "practice_questions": [
+            "How can high biodiversity support ecosystem resilience?",
+            "Why can an invasive species disturb a food web?"
+          ],
+          "practice_solutions": [
+            "Several species may perform overlapping roles, so the system can sometimes continue functioning when one species declines.",
+            "It may outcompete, prey on or bring disease to native species that have few effective defenses."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c13-t2"
+        },
+        {
+          "title": "Conservation and sustainable action",
+          "aliases": [
+            "conservation",
+            "sustainable use",
+            "habitat protection",
+            "environmental responsibility"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas of Conservation and sustainable action.",
+            "Apply Conservation and sustainable action to a familiar scientific situation."
+          ],
+          "explanation": "Conservation protects species, habitats and ecological processes. Sustainable use meets present needs while keeping resources and ecosystem functions available for the future. Effective action can include habitat restoration, pollution prevention, careful resource use, protected areas and community participation.",
+          "examples": [
+            "Restoring native plants along a river can reduce erosion and rebuild habitat.",
+            "Reducing waste and reusing materials lowers demand for raw resources and disposal space."
+          ],
+          "exercises": [
+            "Distinguish conservation from complete non-use of nature.",
+            "Give one benefit of protecting natural habitat."
+          ],
+          "solutions": [
+            "Conservation manages and protects nature so ecological systems persist; it can include carefully controlled sustainable use rather than banning every use.",
+            "It preserves food, shelter and breeding areas for many species and maintains ecosystem processes."
+          ],
+          "practice_questions": [
+            "How does reducing waste support environmental equilibrium?",
+            "Suggest one community action that supports local biodiversity."
+          ],
+          "practice_solutions": [
+            "It reduces extraction of raw materials, energy use, pollution and pressure on disposal sites.",
+            "Protecting or restoring native habitat, controlling litter and pollution, or monitoring local species are suitable actions."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored",
+          "topic_id": "s2-c13-t3"
+        }
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, PropertyMock, patch
 
 from phase11_ai import GyanVerseAIService
 from phase11_core import LearningMode, StudentLearningContext, SyllabusRepository
@@ -45,7 +45,7 @@ def syllabus_payload(
                         "learning_objectives": ["Understand the topic"],
                         "explanation": explanation,
                         "examples": ["Example from the validated package."],
-                        "exercises": [],
+                        "exercises": ["Exercise question from the package?"],
                         "solutions": ["Validated solution from the package."],
                         "practice_questions": ["Practice question from the package?"],
                         "marks_pattern": "2 marks",
@@ -161,6 +161,7 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         payload = syllabus_payload(explanation="", origin="metadata_only")
         topic = payload["chapters"][0]["topics"][0]
         topic["examples"] = []
+        topic["exercises"] = []
         topic["solutions"] = []
         topic["practice_questions"] = []
         self.repo.install_payload(payload)
@@ -208,6 +209,125 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         self.assertEqual(len(first_visible), 1)
         self.assertEqual(service.last_metrics.route, "local-syllabus")
         service._client.models.generate_content_stream.assert_not_called()
+
+    def test_online_exact_yes_no_review_stays_deterministic_local(self) -> None:
+        payload = syllabus_payload(
+            topic="Perseverance and response to failure",
+            explanation="Difficulty can be met with courage and continued effort.",
+        )
+        topic = payload["chapters"][0]["topics"][0]
+        topic["exercises"] = [
+            "Does the poem promise that every task will be easy? Explain."
+        ]
+        topic["solutions"] = [
+            "No. It recognises difficulty and encourages continued effort."
+        ]
+        topic["practice_questions"] = []
+        self.repo.install_payload(payload)
+        service = self.service()
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            wrong = service.ask_stream(
+                message=(
+                    "Question: Does the poem promise that every task will be easy? Explain. "
+                    "My answer: Yes. Is my answer correct?"
+                ),
+                context=self.context(topic="Perseverance and response to failure"),
+            )
+            self.assertIn("Result: Incorrect.", wrong)
+            self.assertIn("Correct method: No.", wrong)
+            self.assertIn("Source type:", wrong)
+            self.assertEqual(service.last_metrics.route, "local-syllabus")
+
+            correct = service.ask_stream(
+                message=(
+                    "Question: Does the poem promise that every task will be easy? Explain. "
+                    "My answer: No. Is my answer correct?"
+                ),
+                context=self.context(topic="Perseverance and response to failure"),
+            )
+            self.assertIn("Result: Correct.", correct)
+            self.assertIn("Installed solution logic: No.", correct)
+            self.assertIn("Source type:", correct)
+            self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
+    def test_online_open_ended_review_still_uses_provider(self) -> None:
+        self.repo.install_payload(syllabus_payload())
+        service = self.service()
+        service._client.models.generate_content_stream.return_value = [
+            MagicMock(text="Grounded provider review.")
+        ]
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            answer = service.ask_stream(
+                message=(
+                    "Question: Exercise question from the package? "
+                    "My answer: I am not sure. Is my answer correct?"
+                ),
+                context=self.context(topic="Addition"),
+            )
+        self.assertEqual(answer, "Grounded provider review.")
+        self.assertEqual(service.last_metrics.route, "gemini-single-chunk")
+        service._client.models.generate_content_stream.assert_called_once()
+
+    def test_pasted_homework_template_routes_solution_and_preserves_blank(self) -> None:
+        payload = syllabus_payload(
+            topic="Adjectives and degrees of comparison",
+            explanation="Adjectives describe nouns.",
+        )
+        topic = payload["chapters"][0]["topics"][0]
+        topic["exercises"] = [
+            "Complete: This design is ___ than that one. (clear)",
+            "Complete a teacher-generated mixed test based on the stored unit skills.",
+        ]
+        topic["solutions"] = [
+            "clearer",
+            "Evaluate the response against the stored skill rubrics.",
+        ]
+        topic["practice_questions"] = []
+        self.repo.install_payload(payload)
+        service = GyanVerseAIService(
+            api_key="",
+            syllabus_repository=self.repo,
+            tts_cache_dir=self.root / "tts",
+        )
+
+        blank_answer = service.ask(
+            message=(
+                "Solve this homework question: "
+                "Complete: This design is ___ than that one. (clear)"
+            ),
+            context=self.context(topic="Addition"),
+        )
+        self.assertIn(
+            "Question: Complete: This design is ___ than that one. (clear)",
+            blank_answer,
+        )
+        self.assertIn("Validated solution: clearer", blank_answer)
+
+        mixed_test_answer = service.ask(
+            message=(
+                "Solve this homework question: "
+                "Complete a teacher-generated mixed test based on the stored unit skills."
+            ),
+            context=self.context(topic="Addition"),
+        )
+        self.assertIn(
+            "Validated solution: Evaluate the response against the stored skill rubrics.",
+            mixed_test_answer,
+        )
+        self.assertNotIn("Chapter test", mixed_test_answer)
 
     def test_ui_passes_repository_into_ai_service(self) -> None:
         ui = (Path(__file__).resolve().parents[1] / "gyanverse_ui.py").read_text(

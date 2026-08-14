@@ -34,6 +34,7 @@ from phase11_core import (
     Phase11Error,
     StudentLearningContext,
     VoiceState,
+    canonicalize_installed_syllabus_context,
     detect_context_from_message,
 )
 from tutor_engine import TutorEngine
@@ -109,6 +110,10 @@ def main(page: ft.Page) -> None:
 
     context_store = LearningContextStore(DATA_DIR / "student_context.json")
     context = context_store.load()
+    syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
+    canonical_context = canonicalize_installed_syllabus_context(context, syllabus_repo)
+    if canonical_context != context:
+        context = context_store.save(canonical_context)
     device_identity = DeviceIdentityStore(DATA_DIR / "device_identity.json").load_or_create()
     local_owner_id = device_identity.local_owner_id
     current_owner_id = local_owner_id
@@ -124,7 +129,6 @@ def main(page: ft.Page) -> None:
         chapter=context.current_chapter,
     )
     attachment_store = HomeworkAttachmentStore(DATA_DIR / "homework_attachments")
-    syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
     engine = TutorEngine(db_path=DATA_DIR / "ai_tutor.db")
     ai_service = GyanVerseAIService(syllabus_repository=syllabus_repo)
     session_id = active_conversation.conversation_id
@@ -163,6 +167,7 @@ def main(page: ft.Page) -> None:
 
     title_text = ft.Text("Tutor", size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
     context_text = ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1)
+    lesson_context_text: ft.Text | None = None
     status_text = ft.Text("Ready", size=11, color=COLOR_MUTED)
     cloud_status_text = ft.Text("Cloud: signed out", size=10, color=COLOR_MUTED)
     account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
@@ -341,6 +346,7 @@ def main(page: ft.Page) -> None:
                 "student_id",
                 "name",
                 "board",
+                "medium",
                 "standard",
                 "preferred_language",
             )
@@ -355,6 +361,8 @@ def main(page: ft.Page) -> None:
                 preferred_language=context.preferred_language,
             )
         context_text.value = context.context_label
+        if lesson_context_text is not None:
+            lesson_context_text.value = context.context_label
 
     def notify(message: str, *, error: bool = False) -> None:
         status_text.value = message
@@ -436,6 +444,13 @@ def main(page: ft.Page) -> None:
         )
 
     def open_profile_dialog(_: object = None, *, first_use: bool = False) -> None:
+        allowed_subjects = {
+            "English",
+            "Mathematics",
+            "Science",
+            "Science & Technology",
+            "Social Science",
+        }
         name_field = ft.TextField(label="Student name", value=context.name)
         board_field = ft.Dropdown(
             label="Board",
@@ -458,8 +473,95 @@ def main(page: ft.Page) -> None:
             options=[ft.dropdown.Option(item) for item in ("Gujarati", "Hindi", "English")],
         )
 
+        subject_field = ft.Dropdown(label="Subject")
+        chapter_field = ft.Dropdown(label="Chapter")
+        topic_field = ft.Dropdown(label="Topic")
+        package_status = ft.Text(size=10, color=COLOR_MUTED)
+
+        def matching_syllabi() -> list[object]:
+            board = board_field.value or "GSEB"
+            medium = medium_field.value or "Gujarati"
+            standard = int(standard_field.value or 7)
+            return [
+                item
+                for item in syllabus_repo.all(board=board)
+                if item.medium.casefold() == medium.casefold()
+                and item.standard == standard
+                and item.subject in allowed_subjects
+            ]
+
+        def selected_syllabus() -> object | None:
+            selected = subject_field.value or ""
+            return next(
+                (item for item in matching_syllabi() if item.subject == selected),
+                None,
+            )
+
+        def refresh_topics(*, preserve: bool = True) -> None:
+            syllabus = selected_syllabus()
+            chapter = next(
+                (
+                    item
+                    for item in (syllabus.chapters if syllabus is not None else ())
+                    if item.title == (chapter_field.value or "")
+                ),
+                None,
+            )
+            old_value = topic_field.value if preserve else ""
+            topic_titles = [item.title for item in (chapter.topics if chapter is not None else ())]
+            topic_field.options = [ft.dropdown.Option(item) for item in topic_titles]
+            topic_field.value = old_value if old_value in topic_titles else (topic_titles[0] if topic_titles else None)
+
+        def refresh_chapters(*, preserve: bool = True) -> None:
+            syllabus = selected_syllabus()
+            old_value = chapter_field.value if preserve else ""
+            chapter_titles = [item.title for item in (syllabus.chapters if syllabus is not None else ())]
+            chapter_field.options = [ft.dropdown.Option(item) for item in chapter_titles]
+            chapter_field.value = old_value if old_value in chapter_titles else (chapter_titles[0] if chapter_titles else None)
+            refresh_topics(preserve=preserve)
+
+        def refresh_subjects(*, preserve: bool = True) -> None:
+            installed = matching_syllabi()
+            subjects = sorted({item.subject for item in installed})
+            old_value = subject_field.value if preserve else ""
+            subject_field.options = [ft.dropdown.Option(item) for item in subjects]
+            subject_field.value = old_value if old_value in subjects else (subjects[0] if subjects else None)
+            package_status.value = (
+                f"{len(subjects)} installed subject package(s) available for this selection."
+                if subjects
+                else "No installed syllabus package is available for this board, medium and standard."
+            )
+            package_status.color = COLOR_MUTED if subjects else COLOR_ERROR
+            refresh_chapters(preserve=preserve)
+
+        def profile_scope_changed(_: object = None) -> None:
+            refresh_subjects(preserve=False)
+            page.update()
+
+        def subject_changed(_: object = None) -> None:
+            refresh_chapters(preserve=False)
+            page.update()
+
+        def chapter_changed(_: object = None) -> None:
+            refresh_topics(preserve=False)
+            page.update()
+
+        board_field.on_select = profile_scope_changed
+        medium_field.on_select = profile_scope_changed
+        standard_field.on_select = profile_scope_changed
+        subject_field.on_select = subject_changed
+        chapter_field.on_select = chapter_changed
+        subject_field.value = context.current_subject
+        chapter_field.value = context.current_chapter
+        topic_field.value = context.current_topic
+        refresh_subjects(preserve=True)
+
         def save_profile(_: object = None) -> None:
             try:
+                if not subject_field.value or not chapter_field.value or not topic_field.value:
+                    raise Phase11Error(
+                        "Select an installed subject, chapter and topic before continuing."
+                    )
                 update_context(
                     replace(
                         context,
@@ -468,9 +570,13 @@ def main(page: ft.Page) -> None:
                         medium=medium_field.value or "Gujarati",
                         standard=int(standard_field.value or 7),
                         preferred_language=language_field.value or "Gujarati",
+                        current_subject=subject_field.value,
+                        current_chapter=chapter_field.value,
+                        current_topic=topic_field.value,
                         onboarding_complete=True,
                     )
                 )
+                activate_owner(current_owner_id)
                 page.pop_dialog()
                 show_view(current_view)
                 notify("Student profile saved")
@@ -481,9 +587,23 @@ def main(page: ft.Page) -> None:
             modal=first_use,
             title=ft.Text("Set up your personal tutor"),
             content=ft.Column(
-                [name_field, board_field, medium_field, standard_field, language_field],
+                [
+                    name_field,
+                    board_field,
+                    medium_field,
+                    standard_field,
+                    language_field,
+                    ft.Divider(height=8),
+                    ft.Text("Current school lesson", weight=ft.FontWeight.BOLD),
+                    package_status,
+                    subject_field,
+                    chapter_field,
+                    topic_field,
+                ],
                 tight=True,
                 scroll=ft.ScrollMode.AUTO,
+                height=500,
+                width=420,
             ),
             actions=[
                 ft.TextButton("Cancel", on_click=lambda _: page.pop_dialog())
@@ -907,7 +1027,7 @@ def main(page: ft.Page) -> None:
         )
 
     def build_tutor() -> ft.Control:
-        nonlocal selected_attachments, latest_tutor_answer
+        nonlocal selected_attachments, latest_tutor_answer, lesson_context_text
         # Stable desktop layout: use a fixed-height scrollable Column.
         # The earlier ListView clipped dynamic-height chat bubbles at its
         # viewport edge on Windows. A non-expanded Column avoids that render
@@ -1372,7 +1492,11 @@ def main(page: ft.Page) -> None:
                 requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
                 if requested_mode != context.learning_mode:
                     update_context(replace(context, learning_mode=requested_mode))
-                detected_context, detected = detect_context_from_message(text, context)
+                detected_context, detected = detect_context_from_message(
+                    text,
+                    context,
+                    syllabus_repository=syllabus_repo,
+                )
                 if detected:
                     update_context(detected_context)
                 if not is_retry:
@@ -1779,12 +1903,18 @@ def main(page: ft.Page) -> None:
             shadow=ft.BoxShadow(blur_radius=8, spread_radius=0, color="#22000000", offset=ft.Offset(0, 2)),
         )
 
+        lesson_context_text = ft.Text(
+            context.context_label,
+            size=11,
+            color=COLOR_MUTED,
+            max_lines=1,
+        )
         context_banner = ft.Container(
             content=ft.Row(
                 [
                     ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
                     ft.Container(
-                        content=ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1),
+                        content=lesson_context_text,
                         expand=True,
                     ),
                     mode_dropdown,

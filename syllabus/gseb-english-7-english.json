@@ -1,0 +1,1860 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 7,
+  "subject": "English",
+  "textbook": "Poorvi - Textbook of English for Grade 7",
+  "source": {
+    "title": "Poorvi - Textbook of English for Grade 7",
+    "publisher": "National Council of Educational Research and Training",
+    "edition": "First Edition March 2025; Reprint 2026-27",
+    "isbn": "978-93-5729-759-2",
+    "book_code": "0773",
+    "archive_sha256": "4b92722c2495361c0509dc13006a20c1b43c0ba5d93f0f711541c021e1048f8a",
+    "pdf_sha256": {
+      "gepr1ps.pdf": "5b6cb1c3f32fff05153c1f1e36cf7afd6e0c5823d09eb68144588f887da5db16",
+      "gepr101.pdf": "3e8ea91a79cdde47f3da0cb4cd87e10675c28f3d901f740f0aa8384c0b9656c0",
+      "gepr102.pdf": "c2ca48089bc2b3c65bc9b79ff04750c120be10cc6080654a2dc4a977517a3477",
+      "gepr103.pdf": "173f4029ef9b911a0ba3114e35a0cb8e969da079102c3c376dc2a66b40945a78",
+      "gepr104.pdf": "510a25e15c35222fb3840d9b9579d80316ef7a716cb9ecfeb2308bf762816d5a",
+      "gepr105.pdf": "000f001705207ccc74b987dfe157d4b539a134e5ffc29032296441d6f36d86a0"
+    },
+    "source_url": "https://ncert.nic.in/textbook.php?gepr1=0-5",
+    "acquired_on": "2026-08-14",
+    "official": true,
+    "notes": "The complete official NCERT archive (prelims plus Units 1-5) was supplied by the user and verified against the NCERT PDF identity. The user confirmed Poorvi as the final new Class 7 English course. All explanations, examples, questions and solution logic are original teacher-authored material; textbook passages and exercise wording are not reproduced."
+  },
+  "chapters": [
+    {
+      "chapter_id": "poorvi-01",
+      "number": "1",
+      "title": "Chapter 1 - The Day the River Spoke",
+      "aliases": [
+        "The Day the River Spoke",
+        "Day the River Spoke",
+        "Jahnavi and the river",
+        "Unit 1 - Learning Together The Day the River Spoke"
+      ],
+      "unit": "Unit 1 - Learning Together",
+      "topics": [
+        {
+          "title": "Jahnavi's conflict and decision",
+          "aliases": [
+            "Jahnavi",
+            "education and courage",
+            "character change"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Jahnavi's conflict and decision.",
+            "Apply Jahnavi's conflict and decision in an original response."
+          ],
+          "explanation": "Jahnavi lives in a coastal village and wants the opportunity to continue learning. Doubt and social expectations make her hesitate, but an imagined conversation with the river helps her recognise her courage and decide to speak for her goal.",
+          "examples": [
+            "Jahnavi's hesitation shows that a person may need confidence as well as opportunity.",
+            "Her final resolve changes the story from quiet wishing to purposeful action."
+          ],
+          "exercises": [
+            "What inner conflict does Jahnavi face in The Day the River Spoke?",
+            "How does Jahnavi change by the end of The Day the River Spoke?"
+          ],
+          "solutions": [
+            "She wants to pursue education but fears that her circumstances and other people's expectations may prevent her from doing so.",
+            "She moves from uncertainty to determination and becomes ready to express her wish to continue learning."
+          ],
+          "practice_questions": [
+            "Why is education central to Jahnavi's dream?",
+            "Give one detail that makes Jahnavi's problem believable."
+          ],
+          "practice_solutions": [
+            "Education represents personal growth, wider choices and the chance to shape her own future.",
+            "Her village setting, family responsibilities and uncertainty about being allowed to study make the conflict realistic."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c01-t1"
+        },
+        {
+          "title": "Personification, nature and encouragement",
+          "aliases": [
+            "personification",
+            "river as symbol",
+            "nature imagery"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Personification, nature and encouragement.",
+            "Apply Personification, nature and encouragement in an original response."
+          ],
+          "explanation": "The river is personified so that nature can speak like a wise companion. Its steady movement becomes a symbol of persistence, while the dialogue allows Jahnavi to examine her fear and discover an encouraging voice within herself.",
+          "examples": [
+            "A river that gives advice is personification because a natural feature receives a human ability.",
+            "Continuous flowing can symbolise continuing towards a goal despite obstacles."
+          ],
+          "exercises": [
+            "Why is the river personified in The Day the River Spoke?",
+            "What may the flowing river symbolise in the story?"
+          ],
+          "solutions": [
+            "Personification turns Jahnavi's thoughts into a supportive dialogue and connects her courage with the river's continuing movement.",
+            "It may symbolise persistence, change and the need to keep moving towards a worthwhile goal."
+          ],
+          "practice_questions": [
+            "How does nature influence Jahnavi without making the decision for her?",
+            "Write one original personification connected with courage."
+          ],
+          "practice_solutions": [
+            "The river encourages reflection, but Jahnavi herself must choose to speak and act.",
+            "Example: The morning sun invited Meera to begin again. Any clear non-human object given a human action is acceptable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c01-t2"
+        },
+        {
+          "title": "Prepositions, adverbs and descriptive paragraphs",
+          "aliases": [
+            "prepositions",
+            "adverbs",
+            "descriptive writing"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Prepositions, adverbs and descriptive paragraphs.",
+            "Apply Prepositions, adverbs and descriptive paragraphs in an original response."
+          ],
+          "explanation": "A preposition is followed by an object and shows a relationship such as place, direction or time. An adverb adds information about an action, description or another adverb. A descriptive paragraph organises precise sensory details around one clear impression.",
+          "examples": [
+            "The boat moved across the river: across is a preposition followed by the river.",
+            "The water moved quietly: quietly is an adverb describing how it moved."
+          ],
+          "exercises": [
+            "Identify the preposition in: Jahnavi stood beside the river.",
+            "Complete with an adverb: The river flowed ___."
+          ],
+          "solutions": [
+            "The preposition is beside; its object is the river.",
+            "Example: The river flowed steadily. Other suitable adverbs are acceptable."
+          ],
+          "practice_questions": [
+            "What should the opening sentence of a descriptive river paragraph do?",
+            "Write one sentence containing both a preposition and an adverb."
+          ],
+          "practice_solutions": [
+            "It should establish the main impression or focus that the supporting sensory details will develop.",
+            "Example: The kingfisher flew swiftly over the water. Over is the preposition and swiftly is the adverb."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c01-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-02",
+      "number": "2",
+      "title": "Chapter 2 - Try Again",
+      "aliases": [
+        "Try Again",
+        "Try Again poem",
+        "perseverance poem",
+        "Unit 1 - Learning Together Try Again"
+      ],
+      "unit": "Unit 1 - Learning Together",
+      "topics": [
+        {
+          "title": "Perseverance and response to failure",
+          "aliases": [
+            "perseverance",
+            "failure and effort",
+            "central message"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Perseverance and response to failure.",
+            "Apply Perseverance and response to failure in an original response."
+          ],
+          "explanation": "Try Again presents failure as a temporary stage rather than a final judgement. The speaker encourages repeated effort, learning from difficulty and maintaining courage until improvement becomes possible.",
+          "examples": [
+            "A learner who changes strategy after an unsuccessful attempt is practising perseverance.",
+            "The poem's advice focuses on effort and recovery, not pretending that failure never hurts."
+          ],
+          "exercises": [
+            "What is the central message of Try Again?",
+            "Does Try Again promise that every task will be easy? Explain."
+          ],
+          "solutions": [
+            "The poem teaches that a person should respond to failure with courage, renewed effort and a willingness to keep learning.",
+            "No. It recognises difficulty but argues that continued effort gives a person another chance to improve."
+          ],
+          "practice_questions": [
+            "How can a student apply the poem's message after a weak test result?",
+            "Why is perseverance more than repeating the identical action?"
+          ],
+          "practice_solutions": [
+            "The student can identify mistakes, seek help, practise differently and attempt the work again.",
+            "Useful perseverance includes reflection and adjustment, so the next attempt is better informed than the previous one."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c02-t1"
+        },
+        {
+          "title": "Repetition, rhythm and figurative comparison",
+          "aliases": [
+            "repetition",
+            "rhythm",
+            "metaphor and simile"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Repetition, rhythm and figurative comparison.",
+            "Apply Repetition, rhythm and figurative comparison in an original response."
+          ],
+          "explanation": "The poem uses repeated encouragement, regular sound patterns and direct address to create an energetic, supportive voice. Metaphor and simile can connect an abstract struggle with a concrete image, but a metaphor compares directly while a simile signals the comparison with words such as like or as.",
+          "examples": [
+            "Repeating an encouraging command can make advice memorable and urgent.",
+            "Failure is a teacher is a metaphor; failure is like a teacher is a simile."
+          ],
+          "exercises": [
+            "What effect does repetition create in Try Again?",
+            "How does rhythm support the message of perseverance?"
+          ],
+          "solutions": [
+            "It emphasises the main advice, strengthens the rhythm and makes the speaker sound persistent and encouraging.",
+            "A steady rhythm suggests continued forward movement and makes the motivational message easier to remember."
+          ],
+          "practice_questions": [
+            "Classify this comparison: A challenge is like a steep path.",
+            "Turn the simile 'Hope is like a lamp' into a metaphor."
+          ],
+          "practice_solutions": [
+            "It is a simile because the comparison uses the word like.",
+            "Hope is a lamp. The comparison becomes direct when like is removed."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c02-t2"
+        },
+        {
+          "title": "Imperatives and motivational writing",
+          "aliases": [
+            "imperatives",
+            "motivational paragraph",
+            "advice writing"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Imperatives and motivational writing.",
+            "Apply Imperatives and motivational writing in an original response."
+          ],
+          "explanation": "An imperative sentence gives advice, a direction or a request, usually beginning with the base form of a verb. Effective motivational writing uses realistic encouragement, a clear action and respectful language instead of empty praise.",
+          "examples": [
+            "Review your method and try one more time is an imperative offering practical advice.",
+            "A short motivational paragraph can acknowledge difficulty before suggesting the next step."
+          ],
+          "exercises": [
+            "Identify the imperative verb in: Examine the mistake before trying again.",
+            "Rewrite as encouraging advice: You failed, so stop."
+          ],
+          "solutions": [
+            "The imperative verb is Examine.",
+            "Example: The attempt did not work; study what went wrong and try a better method."
+          ],
+          "practice_questions": [
+            "Why should motivational writing acknowledge difficulty?",
+            "Write one imperative sentence that promotes perseverance."
+          ],
+          "practice_solutions": [
+            "Acknowledging difficulty makes the encouragement honest and helps the reader feel understood.",
+            "Example: Break the difficult task into smaller steps and continue patiently."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c02-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-03",
+      "number": "3",
+      "title": "Chapter 3 - Three Days to See",
+      "aliases": [
+        "Three Days to See",
+        "Helen Keller Three Days to See",
+        "Three Days to See essay",
+        "Unit 1 - Learning Together Three Days to See"
+      ],
+      "unit": "Unit 1 - Learning Together",
+      "topics": [
+        {
+          "title": "Helen Keller's imagined three-day plan",
+          "aliases": [
+            "Helen Keller",
+            "imagined sight",
+            "three-day plan"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Helen Keller's imagined three-day plan.",
+            "Apply Helen Keller's imagined three-day plan in an original response."
+          ],
+          "explanation": "Helen Keller imagines how she would use sight if it were available for only three days. Her plan moves from people and familiar surroundings to nature, culture and ordinary public life, showing how limited time can sharpen attention and gratitude.",
+          "examples": [
+            "The imagined deadline makes everyday sights appear valuable rather than ordinary.",
+            "Her plan includes human faces, natural beauty and shared cultural life."
+          ],
+          "exercises": [
+            "Why does Helen Keller imagine only three days of sight?",
+            "What broad kinds of experiences does Keller value in her plan?"
+          ],
+          "solutions": [
+            "The limited period creates urgency and helps readers consider what they overlook in everyday life.",
+            "She values close relationships, nature, art, history and the activity of ordinary human life."
+          ],
+          "practice_questions": [
+            "How does the plan reveal curiosity as well as gratitude?",
+            "What lesson can a sighted reader take from the essay?"
+          ],
+          "practice_solutions": [
+            "She wants not only to appreciate familiar people and places but also to explore museums, streets and the wider world.",
+            "A reader can use the senses attentively and appreciate people, places and experiences before they are taken for granted."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c03-t1"
+        },
+        {
+          "title": "Sensory imagery and reflective viewpoint",
+          "aliases": [
+            "sensory imagery",
+            "first-person reflection",
+            "descriptive detail"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Sensory imagery and reflective viewpoint.",
+            "Apply Sensory imagery and reflective viewpoint in an original response."
+          ],
+          "explanation": "Sensory imagery helps a reader imagine sight, sound, touch, smell or taste. Keller's first-person reflective viewpoint is especially powerful because she describes the value of sight while drawing on attentive use of other senses.",
+          "examples": [
+            "Describing cool bark, birdsong and scented soil combines touch, sound and smell.",
+            "A first-person reflection can connect a specific imagined experience with a wider lesson."
+          ],
+          "exercises": [
+            "Why is sensory imagery important in Three Days to See?",
+            "What is gained by using a first-person viewpoint?"
+          ],
+          "solutions": [
+            "It makes the imagined experiences vivid and reminds readers that careful observation involves several senses.",
+            "The reader encounters Keller's personal reasoning directly, which gives the reflection emotional and intellectual force."
+          ],
+          "practice_questions": [
+            "Write one original sentence using two senses.",
+            "How is reflection different from a simple list of sights?"
+          ],
+          "practice_solutions": [
+            "Example: The rough stone felt cool while temple bells sounded across the courtyard.",
+            "Reflection explains why an experience matters, while a list merely names what is present."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c03-t2"
+        },
+        {
+          "title": "Modal verbs and descriptive place writing",
+          "aliases": [
+            "modal verbs",
+            "would and might",
+            "descriptive paragraph"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Modal verbs and descriptive place writing.",
+            "Apply Modal verbs and descriptive place writing in an original response."
+          ],
+          "explanation": "Modal verbs such as can, could, may, might, should and would express ability, possibility, advice or imagined situations. A descriptive place paragraph combines a controlling impression with selected sensory details and logical order.",
+          "examples": [
+            "I would visit the museum expresses an imagined choice.",
+            "Visitors should pause quietly expresses advice."
+          ],
+          "exercises": [
+            "What does the modal express in: I might explore the market?",
+            "Choose a modal for strong advice: We ___ notice the needs of others."
+          ],
+          "solutions": [
+            "Might expresses possibility.",
+            "Should is suitable: We should notice the needs of others."
+          ],
+          "practice_questions": [
+            "How should details be ordered in a descriptive place paragraph?",
+            "Write an imagined sentence with would and one sensory detail."
+          ],
+          "practice_solutions": [
+            "They may move from near to far, left to right, or general to specific, but the chosen order should be easy to follow.",
+            "Example: I would walk through the garden and listen to the soft rustle of leaves."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c03-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-04",
+      "number": "4",
+      "title": "Chapter 4 - Animals, Birds, and Dr. Dolittle",
+      "aliases": [
+        "Animals, Birds, and Dr. Dolittle",
+        "Dr Dolittle",
+        "Animals Birds Dr Dolittle",
+        "Unit 2 - Wit and Humour Animals, Birds, and Dr. Dolittle"
+      ],
+      "unit": "Unit 2 - Wit and Humour",
+      "topics": [
+        {
+          "title": "Dr. Dolittle's change of profession",
+          "aliases": [
+            "Dr Dolittle",
+            "Polynesia",
+            "animal doctor"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Dr. Dolittle's change of profession.",
+            "Apply Dr. Dolittle's change of profession in an original response."
+          ],
+          "explanation": "Dr. Dolittle cares deeply for animals, but keeping many of them affects his work with human patients. Polynesia, the parrot, teaches him how animals communicate, and this new understanding leads him to become a doctor for animals.",
+          "examples": [
+            "The doctor's love of animals first creates a problem and later guides his new career.",
+            "Learning animal language changes observation into meaningful communication."
+          ],
+          "exercises": [
+            "Why does Dr. Dolittle change the kind of patients he treats?",
+            "What role does Polynesia play in Dr. Dolittle's development?"
+          ],
+          "solutions": [
+            "His ability to understand animals allows him to use his medical knowledge where his unusual skill is most valuable.",
+            "Polynesia teaches him to recognise animal language and opens the path to his work as an animal doctor."
+          ],
+          "practice_questions": [
+            "How does the story connect empathy with communication?",
+            "Give one cause-and-effect link from Dr. Dolittle's story."
+          ],
+          "practice_solutions": [
+            "The doctor listens carefully to animals and treats their needs seriously, showing that empathy requires attention and understanding.",
+            "Because he learns animal language, he can diagnose and treat animals more effectively."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c04-t1"
+        },
+        {
+          "title": "Humour, fable and careful observation",
+          "aliases": [
+            "humour",
+            "fable",
+            "animal communication"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Humour, fable and careful observation.",
+            "Apply Humour, fable and careful observation in an original response."
+          ],
+          "explanation": "The story creates humour by treating an impossible idea - fluent conversation with animals - as a practical skill. Its fable-like world entertains readers while encouraging kindness, close observation and respect for living creatures.",
+          "examples": [
+            "A serious medical discussion with a parrot creates comic contrast.",
+            "Observing posture, movement and sound can reveal an animal's condition without imagining that real animals speak human language."
+          ],
+          "exercises": [
+            "Why is animal language humorous in the Dr. Dolittle story?",
+            "What value lies beneath the story's fantasy?"
+          ],
+          "solutions": [
+            "The impossible situation is presented with practical seriousness, creating a playful contrast.",
+            "It promotes empathy, responsible animal care and attention to forms of communication beyond words."
+          ],
+          "practice_questions": [
+            "How is a fable-like story different from a factual animal-care guide?",
+            "Why must readers separate fantasy from real animal care?"
+          ],
+          "practice_solutions": [
+            "A fable-like story uses imagination and characters to suggest values, while a guide gives evidence-based instructions.",
+            "Real animals need observation and qualified care; the fictional language device should not replace safe, evidence-based treatment."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c04-t2"
+        },
+        {
+          "title": "Compound words, present perfect and notice writing",
+          "aliases": [
+            "compound words",
+            "present perfect",
+            "notice writing"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Compound words, present perfect and notice writing.",
+            "Apply Compound words, present perfect and notice writing in an original response."
+          ],
+          "explanation": "Compound words combine two words into one idea and may be open, hyphenated or closed. The present perfect links a completed or continuing action with the present. A notice communicates essential information to a defined group using a heading, date, purpose and clear practical details.",
+          "examples": [
+            "Animal care is an open compound, well-being is hyphenated, and classroom is closed.",
+            "The doctor has learned a new skill uses the present perfect."
+          ],
+          "exercises": [
+            "Form a closed compound from class and room.",
+            "Complete in the present perfect: She ___ the injured bird. (help)"
+          ],
+          "solutions": [
+            "The closed compound is classroom.",
+            "She has helped the injured bird."
+          ],
+          "practice_questions": [
+            "What four details should a school health notice make easy to find?",
+            "Write a suitable heading for a notice about an animal-care awareness talk."
+          ],
+          "practice_solutions": [
+            "It should clearly state the event, date, time and place, along with any required action or contact.",
+            "ANIMAL-CARE AWARENESS TALK is a clear, relevant heading."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c04-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-05",
+      "number": "5",
+      "title": "Chapter 5 - A Funny Man",
+      "aliases": [
+        "A Funny Man",
+        "Funny Man poem",
+        "nonsense poem",
+        "Unit 2 - Wit and Humour A Funny Man"
+      ],
+      "unit": "Unit 2 - Wit and Humour",
+      "topics": [
+        {
+          "title": "Nonsense actions and comic surprise",
+          "aliases": [
+            "nonsense",
+            "comic surprise",
+            "funny visitor"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Nonsense actions and comic surprise.",
+            "Apply Nonsense actions and comic surprise in an original response."
+          ],
+          "explanation": "A Funny Man builds a playful encounter from reversed clothing, mixed-up objects and impossible actions. The speaker reacts with surprise while the visitor remains polite, and this contrast makes the scene more amusing.",
+          "examples": [
+            "Wearing ordinary items in unexpected places turns familiarity into nonsense.",
+            "Polite behaviour beside impossible movement creates comic contrast."
+          ],
+          "exercises": [
+            "What mainly makes the visitor funny in A Funny Man?",
+            "How does the speaker respond to the visitor?"
+          ],
+          "solutions": [
+            "His objects, movements and descriptions are deliberately mismatched with ordinary expectations.",
+            "The speaker reacts with surprise and curiosity while continuing the strange conversation."
+          ],
+          "practice_questions": [
+            "Why does politeness add to the humour?",
+            "Invent one harmless nonsense action suitable for the poem's world."
+          ],
+          "practice_solutions": [
+            "Calm good manners contrast with the visitor's absurd appearance and actions.",
+            "Example: He opened an umbrella indoors to keep the moonlight away. Any safe, clearly impossible comic action is acceptable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c05-t1"
+        },
+        {
+          "title": "Imagery, alliteration and inversion",
+          "aliases": [
+            "imagery",
+            "alliteration",
+            "inversion"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Imagery, alliteration and inversion.",
+            "Apply Imagery, alliteration and inversion in an original response."
+          ],
+          "explanation": "The poem uses visual and sound imagery to make its absurd scene vivid. Alliteration repeats an opening consonant sound, while inversion changes normal word order to maintain rhythm, rhyme or comic emphasis.",
+          "examples": [
+            "Silly socks slid is alliteration because the initial s sound repeats.",
+            "Down the lane danced he is inverted; the ordinary order is He danced down the lane."
+          ],
+          "exercises": [
+            "How does imagery strengthen the humour in A Funny Man?",
+            "Identify the device in: Bright buttons bounced."
+          ],
+          "solutions": [
+            "It helps readers picture the impossible clothing and movement, making the absurdity immediate.",
+            "It is alliteration because the initial b sound repeats."
+          ],
+          "practice_questions": [
+            "Restore normal word order: Never had I watched such a dance.",
+            "Why might a poet use inversion?"
+          ],
+          "practice_solutions": [
+            "I had never watched such a dance.",
+            "A poet may alter word order to preserve rhythm or rhyme and to place emphasis on a particular word or image."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c05-t2"
+        },
+        {
+          "title": "Phrasal verbs and limerick structure",
+          "aliases": [
+            "phrasal verbs",
+            "limerick",
+            "AABBA"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Phrasal verbs and limerick structure.",
+            "Apply Phrasal verbs and limerick structure in an original response."
+          ],
+          "explanation": "A phrasal verb combines a verb with an adverb or preposition to create a meaning that may differ from the verb alone. A limerick is a five-line humorous poem with an AABBA rhyme pattern and a strong rhythmic shape.",
+          "examples": [
+            "Turn around means change direction, while turn down can mean reject.",
+            "In AABBA, lines one, two and five rhyme together, while lines three and four share a second rhyme."
+          ],
+          "exercises": [
+            "What does the phrasal verb mean in: The audience broke into laughter?",
+            "Complete with a phrasal verb: The performer ___ an unusual hat."
+          ],
+          "solutions": [
+            "Broke into means suddenly began.",
+            "Example: The performer put on an unusual hat."
+          ],
+          "practice_questions": [
+            "How many lines and what rhyme pattern define a limerick?",
+            "Why is a limerick suitable for a comic subject?"
+          ],
+          "practice_solutions": [
+            "A limerick has five lines and normally follows the rhyme pattern AABBA.",
+            "Its compact form, strong rhythm and quick final rhyme support surprise and playful humour."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c05-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-06",
+      "number": "6",
+      "title": "Chapter 6 - Say the Right Thing",
+      "aliases": [
+        "Say the Right Thing",
+        "Say the Right Thing play",
+        "Mary Shaw",
+        "Unit 2 - Wit and Humour Say the Right Thing"
+      ],
+      "unit": "Unit 2 - Wit and Humour",
+      "topics": [
+        {
+          "title": "Mary's social mistakes and their consequences",
+          "aliases": [
+            "Mary Shaw",
+            "social mistakes",
+            "guest conversation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Mary's social mistakes and their consequences.",
+            "Apply Mary's social mistakes and their consequences in an original response."
+          ],
+          "explanation": "In this humorous play, Mrs. Shaw asks Mary to be kind and tactful when guests visit. Mary tries to keep conversation going but speaks without considering context, so her remarks embarrass the visitors and frustrate her mother.",
+          "examples": [
+            "A sentence can be grammatically correct yet socially unsuitable.",
+            "Mary's eagerness to speak creates problems because she does not listen and think first."
+          ],
+          "exercises": [
+            "Why does Mary fail to follow her mother's advice successfully?",
+            "What creates the main humour in Say the Right Thing?"
+          ],
+          "solutions": [
+            "She remembers that she should speak but does not judge whether her remarks are accurate, kind or appropriate to the situation.",
+            "The audience understands the social problem in Mary's remarks while she confidently believes she is helping."
+          ],
+          "practice_questions": [
+            "How could Mary repair an embarrassing comment?",
+            "What does Mary's experience teach about conversation?"
+          ],
+          "practice_solutions": [
+            "She could apologise briefly, correct the misunderstanding and let the guest choose whether to continue the topic.",
+            "Good conversation requires listening, awareness of context and consideration for other people's feelings."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c06-t1"
+        },
+        {
+          "title": "Dialogue, dramatic irony and respectful speech",
+          "aliases": [
+            "dialogue",
+            "dramatic irony",
+            "tactful communication"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Dialogue, dramatic irony and respectful speech.",
+            "Apply Dialogue, dramatic irony and respectful speech in an original response."
+          ],
+          "explanation": "A play reveals character through spoken dialogue and stage action. Dramatic irony occurs when the audience recognises a problem that a character does not yet understand. Respectful speech is truthful and considerate; it is not simply saying whatever may please someone.",
+          "examples": [
+            "A pause before a reply can show discomfort even without a narrator's explanation.",
+            "The audience may anticipate Mary's next mistake before Mary notices any danger."
+          ],
+          "exercises": [
+            "How does dialogue reveal Mary's character?",
+            "Why is audience awareness important to the play's humour?"
+          ],
+          "solutions": [
+            "Her quick, confident remarks show enthusiasm but also limited awareness of how her words affect others.",
+            "The audience can predict embarrassment and understands more about the situation than Mary does."
+          ],
+          "practice_questions": [
+            "Is respectful speech the same as dishonest flattery? Explain.",
+            "Write a tactful response when a guest corrects a mistake."
+          ],
+          "practice_solutions": [
+            "No. Respectful speech remains truthful while choosing considerate wording and an appropriate time.",
+            "Example: Thank you for correcting me; I misunderstood the situation."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c06-t2"
+        },
+        {
+          "title": "Suffixes, tense control and story punctuation",
+          "aliases": [
+            "suffixes",
+            "story tenses",
+            "dialogue punctuation"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Suffixes, tense control and story punctuation.",
+            "Apply Suffixes, tense control and story punctuation in an original response."
+          ],
+          "explanation": "A suffix is added to the end of a root to change meaning or word class. Consistent tense helps a story's time sequence remain clear, while quotation marks, commas and paragraph breaks help readers follow dialogue.",
+          "examples": [
+            "Care plus ful forms careful; careful plus ly forms carefully.",
+            "Mary opened the door and greeted the guests keeps both actions in the simple past."
+          ],
+          "exercises": [
+            "Separate the root and suffix in thoughtless.",
+            "Correct the tense shift: Mary welcomed the guests and offers tea."
+          ],
+          "solutions": [
+            "The root is thought and the suffix is -less.",
+            "Mary welcomed the guests and offered tea."
+          ],
+          "practice_questions": [
+            "How should a new speaker be shown in written dialogue?",
+            "Punctuate: mary said i am sorry"
+          ],
+          "practice_solutions": [
+            "Begin a new paragraph whenever the speaker changes.",
+            "Mary said, \"I am sorry.\""
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c06-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-07",
+      "number": "7",
+      "title": "Chapter 7 - My Brother's Great Invention",
+      "aliases": [
+        "My Brother's Great Invention",
+        "My Brothers Great Invention",
+        "brother's invention",
+        "Unit 3 - Dreams and Discoveries My Brother's Great Invention"
+      ],
+      "unit": "Unit 3 - Dreams and Discoveries",
+      "topics": [
+        {
+          "title": "Experiment, mistake and unexpected success",
+          "aliases": [
+            "invention",
+            "trial and error",
+            "unexpected success"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Experiment, mistake and unexpected success.",
+            "Apply Experiment, mistake and unexpected success in an original response."
+          ],
+          "explanation": "The story follows a young inventor whose home-made security idea creates confusion before becoming unexpectedly useful. The comic events show that invention involves curiosity, testing, mistakes and attention to what an experiment actually reveals.",
+          "examples": [
+            "An invention may fail at its intended task yet still produce a useful observation.",
+            "Comic disorder becomes meaningful when the characters understand what caused it."
+          ],
+          "exercises": [
+            "What makes the invention story more than a simple success tale?",
+            "Why is testing important before declaring an invention successful?"
+          ],
+          "solutions": [
+            "The device causes mistakes and confusion, so progress comes through trial, observation and an unexpected result.",
+            "Testing shows whether the device works safely and reliably under the conditions for which it was designed."
+          ],
+          "practice_questions": [
+            "How does an unexpected event affect the invention's value?",
+            "What responsible habit should follow a failed experiment?"
+          ],
+          "practice_solutions": [
+            "It reveals a practical effect that the inventor did not fully predict and helps the family reassess the experiment.",
+            "The inventor should stop, identify the cause, improve safety and change one factor before testing again."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c07-t1"
+        },
+        {
+          "title": "Humorous narration and cause-effect sequence",
+          "aliases": [
+            "humorous narration",
+            "cause and effect",
+            "plot sequence"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Humorous narration and cause-effect sequence.",
+            "Apply Humorous narration and cause-effect sequence in an original response."
+          ],
+          "explanation": "Humorous narration can present escalating mistakes through a clear chain of causes and effects. A narrator's selection of surprising details, timing and reactions helps the reader understand both the experiment and the comedy.",
+          "examples": [
+            "One loose connection can trigger several increasingly inconvenient results.",
+            "A calm explanation after chaos can create contrast and humour."
+          ],
+          "exercises": [
+            "How does cause and effect organise My Brother's Great Invention?",
+            "Why is escalation useful in a humorous story?"
+          ],
+          "solutions": [
+            "Each action changes the situation and produces the next problem, allowing readers to follow the experiment through its consequences.",
+            "A series of increasingly surprising consequences builds anticipation and makes the final outcome more comic."
+          ],
+          "practice_questions": [
+            "What should a narrator include when explaining an experiment?",
+            "Write one cause-effect sentence about a harmless invention."
+          ],
+          "practice_solutions": [
+            "The narrator should identify the aim, important steps, unexpected result and what the characters learned.",
+            "Example: Because the timer was set too early, the automatic curtain opened before sunrise."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c07-t2"
+        },
+        {
+          "title": "Conjunctions, idioms and past perfect",
+          "aliases": [
+            "conjunctions",
+            "idioms",
+            "past perfect"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Conjunctions, idioms and past perfect.",
+            "Apply Conjunctions, idioms and past perfect in an original response."
+          ],
+          "explanation": "Conjunctions join words or clauses and clarify relationships such as addition, contrast and reason. An idiom has a conventional meaning beyond its individual words. The past perfect marks an action completed before another past action.",
+          "examples": [
+            "The device was simple, but its effect was surprising uses a contrasting conjunction.",
+            "The alarm had sounded before the family entered uses the past perfect for the earlier event."
+          ],
+          "exercises": [
+            "Choose a conjunction: The experiment failed, ___ the inventor learned from it.",
+            "What does the idiom 'back to the drawing board' mean?"
+          ],
+          "solutions": [
+            "But is suitable: The experiment failed, but the inventor learned from it.",
+            "It means returning to the planning stage after an attempt does not work."
+          ],
+          "practice_questions": [
+            "Combine using the past perfect: The alarm rang. Then the neighbours arrived.",
+            "Why is the past perfect useful in a flashback?"
+          ],
+          "practice_solutions": [
+            "The alarm had rung before the neighbours arrived.",
+            "It distinguishes the earlier completed event from the later past event being narrated."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c07-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-08",
+      "number": "8",
+      "title": "Chapter 8 - Paper Boats",
+      "aliases": [
+        "Paper Boats",
+        "Paper Boats poem",
+        "Tagore Paper Boats",
+        "Unit 3 - Dreams and Discoveries Paper Boats"
+      ],
+      "unit": "Unit 3 - Dreams and Discoveries",
+      "topics": [
+        {
+          "title": "Childhood imagination and messages across distance",
+          "aliases": [
+            "paper boats",
+            "childhood imagination",
+            "connection"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Childhood imagination and messages across distance.",
+            "Apply Childhood imagination and messages across distance in an original response."
+          ],
+          "explanation": "In Paper Boats, a child sends small boats along flowing water and imagines them carrying identity, flowers and dreams towards unknown people. The simple activity becomes a hopeful attempt to connect the child's familiar world with a wider one.",
+          "examples": [
+            "Writing a name on a boat turns play into a message for an unknown receiver.",
+            "The boats link the child's daytime activity with an imaginative dream world."
+          ],
+          "exercises": [
+            "What do the paper boats represent beyond a child's toy?",
+            "Why does the child place signs of identity on the boats?"
+          ],
+          "solutions": [
+            "They represent hope, imagination and a wish to communicate with people beyond the child's immediate world.",
+            "The child hopes an unknown finder will know who sent them and where they began their journey."
+          ],
+          "practice_questions": [
+            "How does flowing water support the poem's idea?",
+            "What feeling is created by linking play with distant places?"
+          ],
+          "practice_solutions": [
+            "The water carries the boats into the unknown, making connection and discovery possible in the child's imagination.",
+            "It creates wonder and hopeful curiosity about people and worlds beyond what the child can see."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c08-t1"
+        },
+        {
+          "title": "Symbol, imagery and movement",
+          "aliases": [
+            "symbolism",
+            "imagery",
+            "movement in poetry"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Symbol, imagery and movement.",
+            "Apply Symbol, imagery and movement in an original response."
+          ],
+          "explanation": "The boats function as symbols because they carry ideas of dreams, identity and possibility. Visual imagery of water, sky and small floating objects creates gentle movement, while repeated daily actions suggest patience and continuity.",
+          "examples": [
+            "A fragile boat can symbolise a hopeful idea beginning an uncertain journey.",
+            "Moving clouds and moving boats can connect the sky above with the water below."
+          ],
+          "exercises": [
+            "Why can the paper boat be called a symbol?",
+            "How does movement contribute to Paper Boats?"
+          ],
+          "solutions": [
+            "It is a physical object that also represents the child's hope, message and imaginative journey.",
+            "The continuing movement of water, boats and sky expands the poem from one place towards distant possibilities."
+          ],
+          "practice_questions": [
+            "Write one original image of a small object travelling.",
+            "What mood is supported by the poem's gentle natural imagery?"
+          ],
+          "practice_solutions": [
+            "Example: A yellow leaf spun through the stream like a tiny wheel.",
+            "It supports a mood of wonder, calmness and hopeful expectation."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c08-t2"
+        },
+        {
+          "title": "Alliteration and personal diary writing",
+          "aliases": [
+            "alliteration",
+            "diary entry",
+            "first person"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Alliteration and personal diary writing.",
+            "Apply Alliteration and personal diary writing in an original response."
+          ],
+          "explanation": "Alliteration repeats an initial consonant sound in nearby words and can add musical emphasis. A diary entry records a personal experience in the first person, usually with a date, a clear sequence and honest reflection.",
+          "examples": [
+            "Bright boats bobbed repeats the initial b sound.",
+            "A diary entry about a rainy afternoon should include both events and the writer's response to them."
+          ],
+          "exercises": [
+            "Identify the alliteration in: Silver streams slipped silently.",
+            "Why should a diary entry include reflection?"
+          ],
+          "solutions": [
+            "The repeated initial s sound creates the alliteration.",
+            "Reflection explains what the experience meant or how it affected the writer, not merely what happened."
+          ],
+          "practice_questions": [
+            "Which viewpoint is normally used in a personal diary entry?",
+            "Write a suitable closing thought for a diary entry about floating a paper boat."
+          ],
+          "practice_solutions": [
+            "The first-person viewpoint, using I and me, is normally used.",
+            "Example: I do not know where it will go, but imagining its journey made the rainy evening memorable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c08-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-09",
+      "number": "9",
+      "title": "Chapter 9 - North, South, East, West",
+      "aliases": [
+        "North, South, East, West",
+        "North South East West",
+        "postcards across India",
+        "Unit 3 - Dreams and Discoveries North, South, East, West"
+      ],
+      "unit": "Unit 3 - Dreams and Discoveries",
+      "topics": [
+        {
+          "title": "A journey through India's regional diversity",
+          "aliases": [
+            "India's diversity",
+            "regional travel",
+            "postcards"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in A journey through India's regional diversity.",
+            "Apply A journey through India's regional diversity in an original response."
+          ],
+          "explanation": "North, South, East, West presents travel through messages from different parts of India. Changes in landscape, food, clothing, language and local activity reveal diversity, while the traveller's curiosity creates a shared thread across the journey.",
+          "examples": [
+            "A mountain town and a coastal settlement may offer very different weather and daily routines.",
+            "Careful travel writing notices local detail without treating a whole region as one stereotype."
+          ],
+          "exercises": [
+            "What main idea connects the different places in North, South, East, West?",
+            "Why are local details important in a travel message?"
+          ],
+          "solutions": [
+            "India contains rich regional diversity, and respectful travel helps a learner recognise both differences and shared belonging.",
+            "They make a place specific and help the reader understand how geography and culture shape everyday life."
+          ],
+          "practice_questions": [
+            "How should a traveller describe a community responsibly?",
+            "Name two categories a travel writer can compare across regions."
+          ],
+          "practice_solutions": [
+            "The traveller should use accurate observations, avoid stereotypes and recognise that one experience cannot represent every person.",
+            "Landscape, climate, food, language, clothing, work and transport are suitable categories; any two are acceptable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c09-t1"
+        },
+        {
+          "title": "Postcard viewpoint and spatial organisation",
+          "aliases": [
+            "postcard writing",
+            "direction words",
+            "travel viewpoint"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Postcard viewpoint and spatial organisation.",
+            "Apply Postcard viewpoint and spatial organisation in an original response."
+          ],
+          "explanation": "A postcard is brief, selective and addressed to a known reader. Spatial organisation helps travel writing move clearly through a route or scene, while direction words connect places without turning the response into an unstructured list.",
+          "examples": [
+            "A postcard may combine one striking observation with one personal reaction.",
+            "A route can be organised from north to south or from the starting point to the destination."
+          ],
+          "exercises": [
+            "Why must a postcard select only a few details?",
+            "How can direction words improve a travel account?"
+          ],
+          "solutions": [
+            "Its limited space requires the writer to choose the most informative or memorable details for the reader.",
+            "They show relationships between places and help readers follow movement across a route."
+          ],
+          "practice_questions": [
+            "What is the difference between a fact and a personal response in travel writing?",
+            "Draft one original postcard opening from a coastal town."
+          ],
+          "practice_solutions": [
+            "A fact describes the place, while a personal response explains what the writer noticed, felt or thought about it.",
+            "Example: Dear Asha, this morning the fishing boats returned as the market beside the harbour began to fill."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c09-t2"
+        },
+        {
+          "title": "Subject-verb agreement and paragraph unity",
+          "aliases": [
+            "subject verb agreement",
+            "paragraph unity",
+            "travel paragraph"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Subject-verb agreement and paragraph unity.",
+            "Apply Subject-verb agreement and paragraph unity in an original response."
+          ],
+          "explanation": "A verb must agree with its subject in number and person. Words between the subject and verb do not change that agreement. Paragraph unity means every sentence develops one controlling idea in a logical order.",
+          "examples": [
+            "The group of travellers is ready: group is the singular subject.",
+            "The mountains and rivers shape the route: the compound subject is plural."
+          ],
+          "exercises": [
+            "Choose the correct verb: Each of the postcards ___ a new place. (describe/describes)",
+            "Correct the agreement: The colours of the market attracts visitors."
+          ],
+          "solutions": [
+            "Describes is correct because each is singular.",
+            "The colours of the market attract visitors."
+          ],
+          "practice_questions": [
+            "What makes a travel paragraph unified?",
+            "Which sentence is unrelated in a paragraph about desert travel: The air was dry; dunes filled the horizon; my bicycle has a blue bell?"
+          ],
+          "practice_solutions": [
+            "Every sentence should support the same main idea about the selected place, route or experience.",
+            "My bicycle has a blue bell is unrelated unless the paragraph explains how that bicycle is part of the desert journey."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c09-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-10",
+      "number": "10",
+      "title": "Chapter 10 - The Tunnel",
+      "aliases": [
+        "The Tunnel",
+        "The Tunnel Ruskin Bond",
+        "Suraj and the tunnel",
+        "Unit 4 - Travel and Adventure The Tunnel"
+      ],
+      "unit": "Unit 4 - Travel and Adventure",
+      "topics": [
+        {
+          "title": "Suraj's curiosity and the tunnel watchman",
+          "aliases": [
+            "Suraj",
+            "tunnel watchman",
+            "railway setting"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Suraj's curiosity and the tunnel watchman.",
+            "Apply Suraj's curiosity and the tunnel watchman in an original response."
+          ],
+          "explanation": "The Tunnel follows Suraj as curiosity draws him towards a railway tunnel in a forested setting. His meeting with the watchman adds practical knowledge and human companionship, while the passing train and surrounding wildlife make the place both ordinary and adventurous.",
+          "examples": [
+            "Suraj's interest turns a railway structure into a place of discovery.",
+            "The watchman's familiarity with the forest balances Suraj's excitement with experience."
+          ],
+          "exercises": [
+            "What motivates Suraj to explore the tunnel area?",
+            "Why is the watchman important to Suraj's experience?"
+          ],
+          "solutions": [
+            "Curiosity about the railway, forest and hidden space encourages him to observe the place closely.",
+            "He explains the tunnel environment, models calm observation and gives Suraj a trustworthy human connection there."
+          ],
+          "practice_questions": [
+            "How does the setting combine routine and adventure?",
+            "What responsible behaviour should accompany curiosity near a railway?"
+          ],
+          "practice_solutions": [
+            "The railway operates as part of daily work, but the isolated tunnel, forest sounds and wildlife make it exciting for Suraj.",
+            "A visitor must stay away from tracks and moving trains, follow authorised guidance and never enter restricted railway areas."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c10-t1"
+        },
+        {
+          "title": "Atmosphere, suspense and contrast",
+          "aliases": [
+            "atmosphere",
+            "suspense",
+            "setting contrast"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Atmosphere, suspense and contrast.",
+            "Apply Atmosphere, suspense and contrast in an original response."
+          ],
+          "explanation": "The story creates atmosphere through changing light, sound and distance. Suspense grows when the reader anticipates a train or an animal before seeing it, while contrast between the dark tunnel and open forest sharpens the experience.",
+          "examples": [
+            "A distant vibration can create anticipation before a train appears.",
+            "Moving from bright forest into shadow changes both visibility and mood."
+          ],
+          "exercises": [
+            "How can sound create suspense in The Tunnel?",
+            "What effect does the tunnel-forest contrast create?"
+          ],
+          "solutions": [
+            "A sound may announce movement before its source is visible, making the reader wait and predict what is approaching.",
+            "It highlights changes in light, space and mood and makes the passage between the two settings more vivid."
+          ],
+          "practice_questions": [
+            "Why is atmosphere more than a list of objects?",
+            "Write one safe suspense sentence set near a station platform."
+          ],
+          "practice_solutions": [
+            "Atmosphere combines selected details to create an overall feeling such as calm, mystery or tension.",
+            "Example: The signal changed, and a low hum grew louder beyond the bend."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c10-t2"
+        },
+        {
+          "title": "Would, colons, semicolons and journey description",
+          "aliases": [
+            "would",
+            "colons and semicolons",
+            "train journey paragraph"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Would, colons, semicolons and journey description.",
+            "Apply Would, colons, semicolons and journey description in an original response."
+          ],
+          "explanation": "Would can describe a repeated past action, an imagined result or a polite request. A colon introduces an explanation or list, while a semicolon joins closely related independent clauses. Journey description should rely on safe observation rather than risky behaviour.",
+          "examples": [
+            "The watchman would inspect the line each evening describes a repeated past action.",
+            "The platform became quiet; the train had departed joins two related complete ideas."
+          ],
+          "exercises": [
+            "What does would express in: Every week, Suraj would visit the watchman?",
+            "Add a colon correctly: I noticed three things the signal the bridge and the trees."
+          ],
+          "solutions": [
+            "It expresses a repeated action in the past.",
+            "I noticed three things: the signal, the bridge and the trees."
+          ],
+          "practice_questions": [
+            "Join with a semicolon: The whistle sounded. Everyone stepped back.",
+            "What details can safely support a train-journey description?"
+          ],
+          "practice_solutions": [
+            "The whistle sounded; everyone stepped back.",
+            "The writer can describe views from the carriage, station sounds, weather, fellow passengers and changing landscapes."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c10-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-11",
+      "number": "11",
+      "title": "Chapter 11 - Travel",
+      "aliases": [
+        "Travel",
+        "Travel poem",
+        "Edna St Vincent Millay Travel",
+        "Unit 4 - Travel and Adventure Travel"
+      ],
+      "unit": "Unit 4 - Travel and Adventure",
+      "topics": [
+        {
+          "title": "Longing to travel and the call of the train",
+          "aliases": [
+            "travel longing",
+            "train symbol",
+            "speaker's desire"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Longing to travel and the call of the train.",
+            "Apply Longing to travel and the call of the train in an original response."
+          ],
+          "explanation": "Travel presents a speaker whose imagination is repeatedly drawn towards distant journeys. The train becomes a powerful call from beyond the familiar place, expressing curiosity, movement and the desire to experience an unknown world.",
+          "examples": [
+            "A distant train can represent opportunities beyond the speaker's present surroundings.",
+            "The speaker's attention returns to travel even when the immediate setting is quiet."
+          ],
+          "exercises": [
+            "What central desire shapes the poem Travel?",
+            "Why is the train important in the poem?"
+          ],
+          "solutions": [
+            "The speaker strongly wishes to leave familiar surroundings and explore distant places.",
+            "Its sound and movement embody the possibility of journey, change and contact with the wider world."
+          ],
+          "practice_questions": [
+            "Does the poem describe a completed journey? Explain.",
+            "How can longing create movement in a poem even when the speaker stays still?"
+          ],
+          "practice_solutions": [
+            "No. Its main focus is the speaker's continuing longing and imaginative response to the possibility of travel.",
+            "Repeated attention to distant sounds and imagined destinations moves the reader mentally beyond the present place."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c11-t1"
+        },
+        {
+          "title": "Sound imagery, visual imagery and symbol",
+          "aliases": [
+            "sound imagery",
+            "visual imagery",
+            "train symbolism"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Sound imagery, visual imagery and symbol.",
+            "Apply Sound imagery, visual imagery and symbol in an original response."
+          ],
+          "explanation": "Sound imagery lets readers imagine what the speaker hears, while visual imagery builds pictures of landscape and distance. The train works symbolically because it is both a real vehicle and an idea of freedom, change and exploration.",
+          "examples": [
+            "A fading whistle across dark fields is sound imagery connected with distance.",
+            "Parallel rails narrowing towards the horizon create a visual image of departure."
+          ],
+          "exercises": [
+            "How does sound imagery support Travel?",
+            "Why can the train be read as a symbol?"
+          ],
+          "solutions": [
+            "The recurring sound of the train reaches the speaker from afar and renews the desire to journey.",
+            "Beyond transport, it represents the speaker's wish for movement, discovery and a life beyond familiar limits."
+          ],
+          "practice_questions": [
+            "Write one original visual image of departure.",
+            "What is the difference between imagery and symbol?"
+          ],
+          "practice_solutions": [
+            "Example: The last carriage became a red dot beneath the evening sky.",
+            "Imagery creates a sensory impression, while a symbol carries an additional idea beyond its literal identity."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c11-t2"
+        },
+        {
+          "title": "Rhyme, pronunciation and cinquain writing",
+          "aliases": [
+            "rhyme",
+            "soft and hard c",
+            "cinquain"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Rhyme, pronunciation and cinquain writing.",
+            "Apply Rhyme, pronunciation and cinquain writing in an original response."
+          ],
+          "explanation": "Rhyme links similar ending sounds and can support a poem's musical structure. The letter c usually has a soft sound before e, i or y and a hard sound in many other positions. A cinquain is a compact five-line poem shaped by a planned pattern of words or syllables.",
+          "examples": [
+            "City begins with a soft c sound, while carriage begins with a hard c sound.",
+            "A cinquain can move from one noun to descriptive words, actions, a phrase and a concluding word."
+          ],
+          "exercises": [
+            "Classify the c sound in journey-related word cycle.",
+            "Classify the c sound in the word cabin."
+          ],
+          "solutions": [
+            "Cycle begins with the soft c sound because c comes before y.",
+            "Cabin begins with the hard c sound."
+          ],
+          "practice_questions": [
+            "How many lines does a cinquain contain?",
+            "Suggest a one-word subject and two adjectives for a travel cinquain."
+          ],
+          "practice_solutions": [
+            "A cinquain contains five lines.",
+            "Example: Train; distant, restless. Other suitable combinations are acceptable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c11-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-12",
+      "number": "12",
+      "title": "Chapter 12 - Conquering the Summit",
+      "aliases": [
+        "Conquering the Summit",
+        "Arunima Sinha",
+        "Conquering Summit",
+        "Unit 4 - Travel and Adventure Conquering the Summit"
+      ],
+      "unit": "Unit 4 - Travel and Adventure",
+      "topics": [
+        {
+          "title": "Arunima Sinha's preparation and achievement",
+          "aliases": [
+            "Arunima Sinha",
+            "Everest",
+            "mountaineering achievement"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Arunima Sinha's preparation and achievement.",
+            "Apply Arunima Sinha's preparation and achievement in an original response."
+          ],
+          "explanation": "Conquering the Summit presents Arunima Sinha's journey from a life-changing injury to demanding mountaineering training and the summit of Mount Everest. Her achievement results from a clear goal, disciplined preparation, expert guidance and sustained effort.",
+          "examples": [
+            "A difficult goal becomes manageable when training is broken into progressive stages.",
+            "Determination matters, but safe mountaineering also depends on skill, equipment, weather and teamwork."
+          ],
+          "exercises": [
+            "What makes Arunima Sinha's achievement especially significant?",
+            "Why should her success not be explained by courage alone?"
+          ],
+          "solutions": [
+            "She rebuilt her strength after a major injury, completed demanding training and became the first female amputee to climb Mount Everest.",
+            "The climb also required structured training, technical skill, planning, support and careful decisions in dangerous conditions."
+          ],
+          "practice_questions": [
+            "What role does a clear goal play in Arunima's journey?",
+            "What is one responsible lesson from her training?"
+          ],
+          "practice_solutions": [
+            "It gives direction to daily preparation and helps her persist through long periods of difficulty.",
+            "Ambitious physical challenges require qualified supervision, gradual preparation and proper safety systems."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c12-t1"
+        },
+        {
+          "title": "Biography, resilience and evidence",
+          "aliases": [
+            "biography",
+            "resilience",
+            "evidence-based response"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Biography, resilience and evidence.",
+            "Apply Biography, resilience and evidence in an original response."
+          ],
+          "explanation": "A biographical account selects real events to explain a person's development and achievement. Resilience is shown through concrete decisions and repeated effort, so a strong response supports admiration with evidence rather than using praise alone.",
+          "examples": [
+            "Returning to training after a setback is evidence of resilience.",
+            "Naming the goal, preparation and result creates a clearer biography than calling someone inspiring without explanation."
+          ],
+          "exercises": [
+            "How does a biography demonstrate resilience?",
+            "Why is evidence necessary in an answer about Arunima's determination?"
+          ],
+          "solutions": [
+            "It traces the obstacles, choices, preparation and repeated actions through which a person continues towards a goal.",
+            "Specific actions such as rehabilitation, training and completing the climb explain why the judgement is justified."
+          ],
+          "practice_questions": [
+            "What is the difference between resilience and ignoring danger?",
+            "Write a topic sentence for a paragraph about Arunima's preparation."
+          ],
+          "practice_solutions": [
+            "Resilience continues responsibly with preparation and support; ignoring danger rejects necessary safety and judgement.",
+            "Example: Arunima Sinha transformed determination into achievement through disciplined and carefully guided preparation."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c12-t2"
+        },
+        {
+          "title": "Word families, adverbs and formal letters",
+          "aliases": [
+            "word families",
+            "adverbs",
+            "formal letter"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Word families, adverbs and formal letters.",
+            "Apply Word families, adverbs and formal letters in an original response."
+          ],
+          "explanation": "A word family contains forms built from a shared root, such as courage, courageous and courageously. Adverbs often explain how an action happens. A formal letter uses a clear subject, respectful tone, organised paragraphs and a specific request or purpose.",
+          "examples": [
+            "Determination, determined and determinedly belong to one word family.",
+            "The climber prepared carefully uses an adverb to explain how she prepared."
+          ],
+          "exercises": [
+            "Give the adjective form of courage.",
+            "Identify the adverb in: The team advanced cautiously."
+          ],
+          "solutions": [
+            "The adjective form is courageous.",
+            "The adverb is cautiously."
+          ],
+          "practice_questions": [
+            "What should the first paragraph of a formal request letter state?",
+            "Write a formal subject line requesting a school adventure-safety workshop."
+          ],
+          "practice_solutions": [
+            "It should state the purpose of the letter clearly and identify the request or issue.",
+            "Subject: Request for an Adventure-Safety Workshop"
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c12-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-13",
+      "number": "13",
+      "title": "Chapter 13 - A Homage to Our Brave Soldiers",
+      "aliases": [
+        "A Homage to Our Brave Soldiers",
+        "Homage to Our Brave Soldiers",
+        "National War Memorial",
+        "Unit 5 - Bravehearts A Homage to Our Brave Soldiers"
+      ],
+      "unit": "Unit 5 - Bravehearts",
+      "topics": [
+        {
+          "title": "National War Memorial and remembrance",
+          "aliases": [
+            "National War Memorial",
+            "remembrance",
+            "homage"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in National War Memorial and remembrance.",
+            "Apply National War Memorial and remembrance in an original response."
+          ],
+          "explanation": "A Homage to Our Brave Soldiers presents remembrance through a visit and written exchange connected with the National War Memorial. The account explains how a public memorial preserves names, stories and collective gratitude while encouraging informed reflection rather than celebration of conflict.",
+          "examples": [
+            "A memorial gives public form to memory through names, design and shared ceremony.",
+            "Learning the story behind a name turns a monument into a place of historical understanding."
+          ],
+          "exercises": [
+            "What is the main purpose of the National War Memorial in the lesson?",
+            "How can a memorial educate visitors?"
+          ],
+          "solutions": [
+            "It honours members of the armed forces who served the country and preserves public memory of their courage and sacrifice.",
+            "Its names, structure and stories connect individual service with historical events and national remembrance."
+          ],
+          "practice_questions": [
+            "Why should remembrance include reflection rather than glorifying war?",
+            "What respectful action can a student take at a memorial?"
+          ],
+          "practice_solutions": [
+            "Reflection respects service and loss while helping visitors value peace, responsibility and the human cost of conflict.",
+            "A student can observe quietly, read verified information, follow site rules and respond thoughtfully."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c13-t1"
+        },
+        {
+          "title": "Informational description and reflective response",
+          "aliases": [
+            "informational description",
+            "reflective writing",
+            "tribute"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Informational description and reflective response.",
+            "Apply Informational description and reflective response in an original response."
+          ],
+          "explanation": "The lesson combines factual description of a place with personal response. Informational details establish what the visitor sees and learns, while reflection explains why those details matter to citizenship, gratitude and memory.",
+          "examples": [
+            "Naming a feature is factual description; explaining its effect on the visitor is reflection.",
+            "A strong response separates verified information from personal feeling without treating either as unimportant."
+          ],
+          "exercises": [
+            "How is reflection different from factual description in the memorial lesson?",
+            "Why should a response about a memorial use verified facts?"
+          ],
+          "solutions": [
+            "Description identifies features or information, while reflection explains their meaning and the visitor's considered response.",
+            "Accurate names, dates and purposes protect historical understanding and show respect for the people remembered."
+          ],
+          "practice_questions": [
+            "Write one reflective sentence after visiting a public memorial.",
+            "What makes a tribute specific rather than generic?"
+          ],
+          "practice_solutions": [
+            "Example: Reading individual names reminded me that national history is made from many personal lives and choices.",
+            "It identifies the person, action or value being honoured and explains why it deserves remembrance."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c13-t2"
+        },
+        {
+          "title": "Prefixes, subordinating conjunctions and email structure",
+          "aliases": [
+            "prefixes",
+            "subordinating conjunctions",
+            "email writing"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Prefixes, subordinating conjunctions and email structure.",
+            "Apply Prefixes, subordinating conjunctions and email structure in an original response."
+          ],
+          "explanation": "A prefix is added before a root to change meaning, as in rebuild or misunderstand. A subordinating conjunction connects a dependent idea to a main clause and shows time, reason, contrast or condition. A clear email uses a subject line, greeting, focused message and suitable closing.",
+          "examples": [
+            "Rebuild means build again; misunderstand means understand incorrectly.",
+            "Although the visit was brief, it was memorable begins with a contrasting dependent clause."
+          ],
+          "exercises": [
+            "What does the prefix re- mean in revisit?",
+            "Choose a conjunction: ___ the rain began, the ceremony continued indoors."
+          ],
+          "solutions": [
+            "It means again; revisit means visit again.",
+            "When is suitable for time; although is suitable if the intended relationship is contrast."
+          ],
+          "practice_questions": [
+            "What should an email subject line communicate?",
+            "Write a concise subject line for thanking a museum guide."
+          ],
+          "practice_solutions": [
+            "It should identify the message's purpose briefly and specifically.",
+            "Subject: Thank You for the Memorial Tour"
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c13-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-14",
+      "number": "14",
+      "title": "Chapter 14 - My Dear Soldiers",
+      "aliases": [
+        "My Dear Soldiers",
+        "My Dear Soldiers poem",
+        "APJ Abdul Kalam soldiers poem",
+        "Unit 5 - Bravehearts My Dear Soldiers"
+      ],
+      "unit": "Unit 5 - Bravehearts",
+      "topics": [
+        {
+          "title": "Gratitude, service and the poem's address",
+          "aliases": [
+            "gratitude",
+            "direct address",
+            "soldiers"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Gratitude, service and the poem's address.",
+            "Apply Gratitude, service and the poem's address in an original response."
+          ],
+          "explanation": "My Dear Soldiers directly addresses members of the armed forces and expresses gratitude for service under difficult conditions. The speaker connects their vigilance with the safety experienced by citizens, creating a respectful public tribute.",
+          "examples": [
+            "Direct address makes the tribute sound like a message offered to its intended audience.",
+            "The contrast between difficult duty and ordinary safety explains the speaker's gratitude."
+          ],
+          "exercises": [
+            "Who is addressed in My Dear Soldiers, and why?",
+            "What central feeling shapes My Dear Soldiers?"
+          ],
+          "solutions": [
+            "The poem addresses soldiers in order to recognise their service, difficult duties and contribution to national security.",
+            "Gratitude shapes the poem, joined with respect for dedication and sacrifice."
+          ],
+          "practice_questions": [
+            "How does direct address affect the tone?",
+            "Why should a tribute avoid empty praise?"
+          ],
+          "practice_solutions": [
+            "It makes the tribute immediate and personal, as though the speaker is speaking to the soldiers rather than merely describing them.",
+            "Specific reasons and examples show genuine understanding of the service being recognised."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c14-t1"
+        },
+        {
+          "title": "Imagery, simile, metaphor and alliteration",
+          "aliases": [
+            "imagery",
+            "simile and metaphor",
+            "alliteration"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Imagery, simile, metaphor and alliteration.",
+            "Apply Imagery, simile, metaphor and alliteration in an original response."
+          ],
+          "explanation": "The poem uses imagery to evoke varied places and conditions associated with service. Simile and metaphor create comparisons, while alliteration adds sound emphasis. Each device should be explained through its effect, not merely identified.",
+          "examples": [
+            "A guard stood like a steady lighthouse is a simile of reliability.",
+            "Duty was a compass is a metaphor connecting responsibility with direction."
+          ],
+          "exercises": [
+            "Why is imagery useful in My Dear Soldiers?",
+            "Identify the device: Courage was their shield."
+          ],
+          "solutions": [
+            "It helps readers imagine the demanding environments in which service continues and strengthens appreciation of that effort.",
+            "It is a metaphor because courage is compared directly with a shield."
+          ],
+          "practice_questions": [
+            "Identify the device: Silent sentries stood.",
+            "What should follow the identification of a poetic device in a full answer?"
+          ],
+          "practice_solutions": [
+            "It is alliteration because the opening s sound repeats.",
+            "The answer should explain how the device shapes meaning, tone, sound or the reader's response."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c14-t2"
+        },
+        {
+          "title": "Collocations and appreciation writing",
+          "aliases": [
+            "collocations",
+            "appreciation paragraph",
+            "respectful tone"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Collocations and appreciation writing.",
+            "Apply Collocations and appreciation writing in an original response."
+          ],
+          "explanation": "A collocation is a pair or group of words commonly used together, such as deep respect or make a contribution. Appreciation writing identifies a clear quality, supports it with evidence and maintains a sincere, respectful tone.",
+          "examples": [
+            "Deep gratitude is a natural collocation; heavy gratitude is not standard usage.",
+            "An appreciation paragraph should explain which action or quality deserves recognition."
+          ],
+          "exercises": [
+            "Choose the natural collocation: make a sacrifice or do a sacrifice.",
+            "Complete with a natural adjective: ___ respect."
+          ],
+          "solutions": [
+            "Make a sacrifice is the natural collocation.",
+            "Deep respect or great respect is suitable."
+          ],
+          "practice_questions": [
+            "What three parts make an appreciation paragraph convincing?",
+            "Write one evidence-based appreciation sentence."
+          ],
+          "practice_solutions": [
+            "It needs a clear quality, supporting evidence and an explanation of why that quality matters.",
+            "Example: The rescue team deserves appreciation because it trained carefully and responded calmly during the emergency."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c14-t3"
+        }
+      ]
+    },
+    {
+      "chapter_id": "poorvi-15",
+      "number": "15",
+      "title": "Chapter 15 - Rani Abbakka",
+      "aliases": [
+        "Rani Abbakka",
+        "Rani Abbakka graphic story",
+        "Queen of Ullal",
+        "Unit 5 - Bravehearts Rani Abbakka"
+      ],
+      "unit": "Unit 5 - Bravehearts",
+      "topics": [
+        {
+          "title": "Rani Abbakka's leadership and resistance",
+          "aliases": [
+            "Rani Abbakka",
+            "Ullal",
+            "Portuguese resistance"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Rani Abbakka's leadership and resistance.",
+            "Apply Rani Abbakka's leadership and resistance in an original response."
+          ],
+          "explanation": "Rani Abbakka ruled Ullal on India's western coast and resisted Portuguese attempts to control the region and its trade. Her leadership depended on local knowledge, alliances, preparation and determination across repeated confrontations.",
+          "examples": [
+            "Knowledge of coastal routes can become a strategic advantage against an outside force.",
+            "Repeated resistance shows leadership sustained over time rather than one isolated action."
+          ],
+          "exercises": [
+            "Why is Rani Abbakka remembered as a strong leader?",
+            "What conflict is central to Rani Abbakka's story?"
+          ],
+          "solutions": [
+            "She defended Ullal's independence through determined resistance, strategic preparation and cooperation with local allies.",
+            "The central conflict is between Ullal's determination to remain independent and Portuguese efforts to control the coastal region and trade."
+          ],
+          "practice_questions": [
+            "How could local knowledge help Rani Abbakka's forces?",
+            "Why should historical courage be explained with context?"
+          ],
+          "practice_solutions": [
+            "Understanding the coast, routes, communities and conditions could improve movement, planning and surprise.",
+            "Context shows what was at stake, which choices were available and why the person's actions were significant."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c15-t1"
+        },
+        {
+          "title": "Graphic narrative, sequence and historical evidence",
+          "aliases": [
+            "graphic narrative",
+            "panels and captions",
+            "historical evidence"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Graphic narrative, sequence and historical evidence.",
+            "Apply Graphic narrative, sequence and historical evidence in an original response."
+          ],
+          "explanation": "A graphic narrative combines images, captions and dialogue to control sequence and viewpoint. When it represents history, readers should distinguish dramatic presentation from claims that require evidence from records, monuments or multiple historical sources.",
+          "examples": [
+            "A change in panel size can slow attention at an important decision.",
+            "A speech bubble shows a character's words, while a caption can supply time or place."
+          ],
+          "exercises": [
+            "How do images and captions share work in a graphic narrative?",
+            "Why must a historical graphic story still be checked against evidence?"
+          ],
+          "solutions": [
+            "Images show action, expression and setting, while captions can clarify sequence, time, place or background information.",
+            "Visual drama may simplify events, so evidence is needed to judge factual claims and separate interpretation from record."
+          ],
+          "practice_questions": [
+            "What can a close-up panel emphasise?",
+            "Name two types of evidence useful for studying a historical ruler."
+          ],
+          "practice_solutions": [
+            "It can focus attention on an expression, object or decision that is important to the sequence.",
+            "Contemporary records, inscriptions, letters, official documents, material remains and later scholarly studies are examples; any two are acceptable."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c15-t2"
+        },
+        {
+          "title": "Silent letters and reported speech",
+          "aliases": [
+            "silent letters",
+            "direct and indirect speech",
+            "reported speech"
+          ],
+          "learning_objectives": [
+            "Explain the main ideas in Silent letters and reported speech.",
+            "Apply Silent letters and reported speech in an original response."
+          ],
+          "explanation": "A silent letter appears in spelling but is not pronounced, so pronunciation must be learned through use and reliable reference. Reported speech conveys another speaker's meaning without quotation marks and usually changes pronouns, time expressions and verb tense to fit the reporting context.",
+          "examples": [
+            "The k is silent in know.",
+            "She said, 'We are ready' can become She said that they were ready."
+          ],
+          "exercises": [
+            "Identify the silent letter in the word write.",
+            "Identify the silent letter in the word calm."
+          ],
+          "solutions": [
+            "The letter w is silent.",
+            "The letter l is silent."
+          ],
+          "practice_questions": [
+            "Change to reported speech: The queen said, 'We will protect Ullal.'",
+            "Why may pronouns change in reported speech?"
+          ],
+          "practice_solutions": [
+            "The queen said that they would protect Ullal.",
+            "They change so that the reported sentence matches the viewpoint of the new speaker and context."
+          ],
+          "marks_pattern": "State the main idea, support it with a relevant detail, and use clear Grade 7 English.",
+          "content_origin": "teacher_authored",
+          "topic_id": "c15-t3"
+        }
+      ]
+    }
+  ]
+}
