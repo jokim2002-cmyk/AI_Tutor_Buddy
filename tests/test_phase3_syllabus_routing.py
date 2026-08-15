@@ -338,6 +338,54 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
             ui,
         )
 
+    def test_fresh_clone_loads_all_four_grade7_english_medium_subjects(self) -> None:
+        project_root = Path(__file__).resolve().parents[1]
+        syllabus_dir = project_root / "syllabus"
+        self.assertTrue(syllabus_dir.exists(), f"Syllabus directory missing: {syllabus_dir}")
+        repo = SyllabusRepository(syllabus_dir)
+
+        expected_subjects = {
+            "English",
+            "Mathematics",
+            "Science & Technology",
+            "Social Science",
+        }
+        loaded_syllabi = repo.all(board="GSEB")
+        loaded_subjects = {
+            s.subject
+            for s in loaded_syllabi
+            if s.medium.casefold() == "english" and s.standard == 7
+        }
+
+        for subject in expected_subjects:
+            self.assertIn(
+                subject,
+                loaded_subjects,
+                f"Missing committed syllabus package for GSEB English Std 7: {subject}",
+            )
+            found = repo.find(
+                board="GSEB",
+                medium="English",
+                standard=7,
+                subject=subject,
+            )
+            self.assertIsNotNone(
+                found,
+                f"SyllabusRepository.find failed to return syllabus for subject: {subject}",
+            )
+            self.assertTrue(
+                len(found.chapters) > 0,
+                f"Syllabus for {subject} has no chapters loaded",
+            )
+
+        ui_code = (project_root / "gyanverse_ui.py").read_text(encoding="utf-8")
+        self.assertIn(
+            'GSEBSyllabusRepository(APP_DIR / "syllabus")',
+            ui_code,
+            "gyanverse_ui.py must load syllabus packages from APP_DIR / 'syllabus'",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
+

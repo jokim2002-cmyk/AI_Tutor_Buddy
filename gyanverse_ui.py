@@ -110,7 +110,7 @@ def main(page: ft.Page) -> None:
 
     context_store = LearningContextStore(DATA_DIR / "student_context.json")
     context = context_store.load()
-    syllabus_repo = GSEBSyllabusRepository(DATA_DIR / "gseb_syllabus")
+    syllabus_repo = GSEBSyllabusRepository(APP_DIR / "syllabus")
     canonical_context = canonicalize_installed_syllabus_context(context, syllabus_repo)
     if canonical_context != context:
         context = context_store.save(canonical_context)
