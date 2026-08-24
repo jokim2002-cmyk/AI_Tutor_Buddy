@@ -385,7 +385,112 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
             "gyanverse_ui.py must load syllabus packages from APP_DIR / 'syllabus'",
         )
 
+    def test_grade_8_ambiguous_chapter_prompts_use_saved_context(self) -> None:
+        project_root = Path(__file__).resolve().parents[1]
+        syllabus_dir = project_root / "syllabus"
+        repo = SyllabusRepository(syllabus_dir)
+        service = GyanVerseAIService(
+            api_key="mock-key",
+            syllabus_repository=repo,
+            tts_cache_dir=self.root / "tts",
+        )
+        service._client = MagicMock()
+
+        test_cases = [
+            (
+                "Mathematics",
+                "Chapter 1 - Rational Numbers",
+                "Rational Numbers",
+                "Mathematics",
+            ),
+            (
+                "English",
+                "Semester 1 Unit 1 - Landscapes",
+                "Landscapes",
+                "English",
+            ),
+            (
+                "Science & Technology",
+                "Chapter 1 - Crop Production and Management",
+                "Crop Production and Management",
+                "Science",
+            ),
+            (
+                "Social Science",
+                "Chapter 1 - Establishment of European and British Rule in India",
+                "Establishment of European and British Rule",
+                "Social Science",
+            ),
+        ]
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            for subject, chapter, expected_title_keyword, expected_source_keyword in test_cases:
+                ctx = StudentLearningContext(
+                    board="GSEB",
+                    medium="English",
+                    standard=8,
+                    preferred_language="English",
+                    current_subject=subject,
+                    current_chapter=chapter,
+                    onboarding_complete=True,
+                ).validate()
+
+                prompt = "Explain Chapter 1 with two examples."
+                response = service.ask_stream(message=prompt, context=ctx)
+
+                self.assertIn(
+                    expected_title_keyword,
+                    response,
+                    f"Local response for {subject} must contain topic/chapter keyword '{expected_title_keyword}'",
+                )
+                self.assertIn(
+                    "Examples:",
+                    response,
+                    f"Response for {subject} must contain 'Examples:' section",
+                )
+                self.assertIn(
+                    "1.",
+                    response,
+                    f"Response for {subject} must contain first example '1.'",
+                )
+                self.assertIn(
+                    "2.",
+                    response,
+                    f"Response for {subject} must contain second example '2.'",
+                )
+                self.assertIn(
+                    "Source type:",
+                    response,
+                    f"Response for {subject} must contain source footer",
+                )
+                self.assertIn(
+                    expected_source_keyword,
+                    response,
+                    f"Source footer for {subject} must contain '{expected_source_keyword}'",
+                )
+                self.assertNotIn(
+                    "किस विषय",
+                    response,
+                    f"Response for {subject} must not contain Hindi subject clarification",
+                )
+                self.assertNotIn(
+                    "which subject",
+                    response.lower(),
+                    f"Response for {subject} must not ask which subject",
+                )
+                self.assertIn(
+                    service.last_metrics.route,
+                    {"local-syllabus", "local-syllabus-missing-content"},
+                )
+                service._client.models.generate_content_stream.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

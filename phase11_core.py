@@ -692,7 +692,11 @@ class SyllabusRepository:
     def find(
         self, *, board: str = "GSEB", medium: str, standard: int, subject: str
     ) -> BoardSyllabus | None:
-        needle = (board.casefold(), medium.casefold(), int(standard), subject.casefold())
+        if not subject:
+            return None
+        subject_clean = clean_student_text(subject, max_length=100)
+        canonical_subject = SUBJECT_ALIASES.get(subject_clean.casefold(), subject_clean)
+        needle = (board.casefold(), medium.casefold(), int(standard), canonical_subject.casefold())
         for syllabus in self.all(board=board):
             if (
                 syllabus.board.casefold(),
@@ -702,6 +706,7 @@ class SyllabusRepository:
             ) == needle:
                 return syllabus
         return None
+
 
     def lookup_topic(
         self,
@@ -944,33 +949,53 @@ def canonicalize_installed_syllabus_context(
         standard=context.standard,
         subject=context.current_subject,
     )
-    if syllabus is None or not context.current_chapter:
+    if syllabus is None and context.current_subject.casefold() in {"science", "science & technology"}:
+        syllabus = syllabus_repository.find(
+            board=context.board,
+            medium=context.medium,
+            standard=context.standard,
+            subject="Science & Technology",
+        )
+    if syllabus is None:
         return context
 
-    current_chapter = context.current_chapter.strip().casefold()
-    canonical_chapter = next(
-        (
-            item
-            for item in syllabus.chapters
-            if current_chapter
-            in {
-                item.title.strip().casefold(),
-                item.number.strip().casefold(),
-                f"chapter {item.number}".casefold(),
-            }
-        ),
-        None,
-    )
-    if canonical_chapter is None or canonical_chapter.title == context.current_chapter:
+    changes: dict[str, Any] = {}
+    if syllabus.subject != context.current_subject:
+        changes["current_subject"] = syllabus.subject
+
+    if context.current_chapter:
+        current_chapter = context.current_chapter.strip().casefold()
+        chapter_token_normalized = _normalize_syllabus_lookup_text(current_chapter)
+        canonical_chapter = next(
+            (
+                item
+                for item in syllabus.chapters
+                if current_chapter
+                in {
+                    item.title.strip().casefold(),
+                    item.number.strip().casefold(),
+                    f"chapter {item.number}".casefold(),
+                }
+                or chapter_token_normalized
+                in {
+                    _normalize_syllabus_lookup_text(item.number),
+                    _normalize_syllabus_lookup_text(item.title),
+                    _normalize_syllabus_lookup_text(f"chapter {item.number}"),
+                }
+            ),
+            None,
+        )
+        if canonical_chapter and canonical_chapter.title != context.current_chapter:
+            changes["current_chapter"] = canonical_chapter.title
+            valid_topics = {item.title for item in canonical_chapter.topics}
+            if context.current_topic not in valid_topics:
+                changes["current_topic"] = ""
+
+    if not changes:
         return context
 
-    valid_topics = {item.title for item in canonical_chapter.topics}
-    topic = context.current_topic if context.current_topic in valid_topics else ""
-    return replace(
-        context,
-        current_chapter=canonical_chapter.title,
-        current_topic=topic,
-    ).validate()
+    return replace(context, **changes).validate()
+
 
 
 _SYLLABUS_COUNT_WORDS = {

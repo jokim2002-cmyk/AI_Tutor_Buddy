@@ -324,7 +324,7 @@ def main(page: ft.Page) -> None:
 
     def update_context(new_context: StudentLearningContext, *, persist: bool = True) -> None:
         nonlocal context
-        validated = new_context.validate()
+        validated = canonicalize_installed_syllabus_context(new_context.validate(), syllabus_repo)
         meaningful_fields = (
             "student_id",
             "name",
