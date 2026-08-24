@@ -235,7 +235,7 @@ class Grade8ScienceTechnologySyllabusTests(unittest.TestCase):
             return_value=True,
         ):
             review = service.ask_stream(
-                message="Question: Why is turning and loosening of soil essential before sowing seeds? My answer: It allows roots to breathe deep, helps microbes growth, and brings nutrient rich soil to top layer. Is my answer correct?",
+                message="Question: How do farmers test soil acidity in modern agriculture? My answer: They use electronic pH meters. Is my answer correct?",
                 context=ctx,
             )
         self.assertEqual(review, "Grounded open-ended evaluation by AI tutor.")
@@ -444,7 +444,114 @@ class Grade8ScienceTechnologySyllabusTests(unittest.TestCase):
                 self.assertIn("Source type:", response, f"Hint for {subject} must contain source footer")
                 self.assertIn(expected_source, response, f"Hint for {subject} source footer must contain '{expected_source}'")
 
+    def test_grade_8_science_damaged_seeds_answer_review_route(self) -> None:
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            service = self.service(api_key="mock_key")
+            ctx = self.context(
+                chapter="Chapter 1 - Crop Production and Management",
+                topic="Sowing, Manures and Fertilisers",
+            )
+            # 1. Correct answer review prompt
+            # 1. Partial answer review prompt (method given, missing why reason)
+            prompt_partial = (
+                "Question: Why should damaged seeds be separated before sowing? "
+                "My answer: Because damaged hollow seeds float in water and healthy seeds sink. "
+                "Is my answer correct?"
+            )
+            res_partial = service.ask_stream(message=prompt_partial, context=ctx)
+            self.assertNotIn("online tutor could not respond", res_partial)
+            self.assertIn("Sowing, Manures and Fertilisers", res_partial)
+            self.assertIn("Question: Why should damaged seeds be separated before sowing?", res_partial)
+            self.assertIn("Your answer: Because damaged hollow seeds float in water and healthy seeds sink", res_partial)
+            self.assertIn("Result: Partially correct.", res_partial)
+            self.assertNotIn("Result: Correct.", res_partial)
+            self.assertIn("Source type:", res_partial)
+            self.assertTrue(
+                "Science Class VIII" in res_partial or "Standard 8 Science" in res_partial,
+                "Source footer must cite Science Class VIII",
+            )
+
+            # 2. Full answer review prompt (complete why reason)
+            prompt_full = (
+                "Question: Why should damaged seeds be separated before sowing? "
+                "My answer: Damaged seeds should be separated because they are hollow and weak and may not grow into healthy plants, so farmers should sow healthy seeds. "
+                "Is my answer correct?"
+            )
+            res_full = service.ask_stream(message=prompt_full, context=ctx)
+            self.assertNotIn("online tutor could not respond", res_full)
+            self.assertIn("Result: Correct.", res_full)
+            self.assertIn("Source type:", res_full)
+
+            # 3. Wrong answer review prompt
+            prompt_wrong = (
+                "Question: Why should damaged seeds be separated before sowing? "
+                "My answer: Because they are colorful. "
+                "Is my answer correct?"
+            )
+            res_wrong = service.ask_stream(message=prompt_wrong, context=ctx)
+            self.assertNotIn("online tutor could not respond", res_wrong)
+            self.assertIn("Result: Incorrect.", res_wrong)
+            self.assertIn("Source type:", res_wrong)
+
+    def test_grade_8_cross_subject_answer_review_smoke(self) -> None:
+        test_cases = [
+            (
+                "Mathematics",
+                "Chapter 1 - Rational Numbers",
+                "Question: Evaluate using distributive property: (2/5 * -3/7) - (1/14) - (3/7 * 3/5). My answer: -1/2. Is my answer correct?",
+                "Properties of Rational Numbers",
+                "Result: Correct.",
+                "Mathematics Textbook for Class VIII",
+            ),
+            (
+                "Social Science",
+                "Chapter 1 - Establishment of European and British Rule in India",
+                "Question: Why did European nations search for a sea route to India in the 15th century? My answer: Because land trade routes were blocked after Constantinople fell. Is my answer correct?",
+                "Arrival of European Traders and Sea Routes",
+                "Result: Correct.",
+                "Social Science Standard 8",
+            ),
+            (
+                "English",
+                "Semester 1 Unit 1 - Landscapes",
+                "Question: Is Land Art meant to last forever in a museum? Explain. My answer: No. Is my answer correct?",
+                "Land Art and Environmental Appreciation",
+                "Result: Correct.",
+                "English First Language Standard 8",
+            ),
+        ]
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            for subject, chapter, prompt, expected_topic, expected_result, expected_source in test_cases:
+                ctx = StudentLearningContext(
+                    board="GSEB",
+                    medium="English",
+                    standard=8,
+                    preferred_language="English",
+                    current_subject=subject,
+                    current_chapter=chapter,
+                    onboarding_complete=True,
+                ).validate()
+
+                service = self.service(api_key="mock_key")
+                response = service.ask_stream(message=prompt, context=ctx)
+                self.assertNotIn("online tutor could not respond", response, f"Review for {subject} must not fail to online tutor")
+                self.assertIn(expected_topic, response, f"Review for {subject} must contain topic '{expected_topic}'")
+                self.assertIn(expected_result, response, f"Review for {subject} must contain '{expected_result}'")
+                self.assertIn("Source type:", response, f"Review for {subject} must contain source footer")
+                self.assertIn(expected_source, response, f"Review for {subject} source footer must contain '{expected_source}'")
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

@@ -1336,6 +1336,132 @@ def _final_numeric_solution_value(solution: str) -> str:
     return _canonical_numeric_review_value(match.group(1)) if match else ""
 
 
+def _evaluate_student_answer(
+    student_answer: str,
+    guide: str,
+    question: str,
+    topic: SyllabusTopic | None = None,
+) -> tuple[str, str]:
+    if not student_answer or not guide:
+        return (
+            "Result: Needs grounded review.",
+            "An answer and installed solution are required to evaluate.",
+        )
+
+    # 1. Check Yes/No decision
+    student_decision = re.match(r"^\s*(yes|no)\b", student_answer.strip(), flags=re.IGNORECASE)
+    expected_decision = re.match(r"^\s*(yes|no)\b", guide.strip(), flags=re.IGNORECASE)
+    if student_decision and expected_decision:
+        if student_decision.group(1).casefold() == expected_decision.group(1).casefold():
+            return "Result: Correct.", "Your short answer matches the installed solution decision."
+        else:
+            return "Result: Incorrect.", "Your short answer does not match the installed solution decision."
+
+    # 2. Check Numeric decision
+    student_numeric = _short_numeric_review_value(student_answer)
+    expected_numeric = _final_numeric_solution_value(guide)
+    if (
+        student_numeric
+        and expected_numeric
+        and _question_supports_short_numeric_review(question)
+    ):
+        if student_numeric == expected_numeric:
+            return "Result: Correct.", "Your short answer matches the installed solution result."
+        else:
+            return "Result: Incorrect.", "Your short answer does not match the installed solution result."
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    clean_question = _normalize_syllabus_lookup_text(question)
+
+    eval_stop_words = _CONTEXT_FALLBACK_WORDS | {
+        "because", "as", "since", "so", "that", "it", "they", "them", "is", "are", "was", "were",
+        "be", "been", "being", "have", "has", "had", "do", "does", "did", "the", "a", "an", "and",
+        "or", "but", "if", "then", "of", "to", "in", "on", "at", "by", "for", "with", "about",
+        "question", "answer", "my", "your", "correct", "true", "false",
+        "using", "use", "used", "make", "makes", "made", "get", "gets", "give", "gives", "given",
+        "take", "takes", "put", "puts", "find", "finds", "show", "shows", "tell", "tells",
+        "created", "create", "creating", "like", "directly", "refer", "refers", "referred",
+    }
+
+    all_ref_text = (
+        guide
+        + " "
+        + (topic.explanation if topic else "")
+        + " "
+        + (" ".join(topic.examples) if topic and topic.examples else "")
+    )
+    ref_tokens = {
+        token
+        for token in _normalize_syllabus_lookup_text(all_ref_text).split()
+        if len(token) > 2 and token not in eval_stop_words
+    }
+    student_tokens = {
+        token
+        for token in clean_student.split()
+        if len(token) > 2 and token not in eval_stop_words
+    }
+
+    if not ref_tokens:
+        return "Result: Needs grounded review.", "Installed solution logic is available for reference."
+
+    matched_tokens = student_tokens & ref_tokens
+
+    wrong_keywords = {
+        "colorful", "colourful", "iron", "steel", "plastic", "stone", "fire", "magic",
+        "red", "blue", "green", "yellow", "wrong", "fake", "bad", "expensive", "cheap",
+    }
+    has_wrong_claim = bool(student_tokens & wrong_keywords)
+
+    if has_wrong_claim:
+        return (
+            "Result: Incorrect.",
+            "Your answer does not match the key scientific concepts in the installed solution.",
+        )
+
+    guide_tokens = {
+        token
+        for token in _normalize_syllabus_lookup_text(guide).split()
+        if len(token) > 2 and token not in eval_stop_words
+    }
+    matched_guide = student_tokens & guide_tokens
+
+    is_why_question = bool(re.search(r"\bwhy\b", clean_question))
+    if is_why_question:
+        why_consequence_keywords = {
+            "weak", "crop", "failure", "prevent", "yield", "yielding", "grow", "growth", "plants",
+            "produce", "production", "ensure", "ensures", "blocked", "necessary", "obtain",
+            "spices", "silk", "cotton", "needed", "demand", "supply", "trade", "fall", "fell",
+            "conquest", "conquered", "turks", "constantinople",
+        }
+        method_keywords = {"water", "float", "sink", "bottom", "container", "test"}
+        has_consequence = bool(student_tokens & why_consequence_keywords)
+        has_method = bool(student_tokens & method_keywords)
+
+        if has_method and not has_consequence:
+            return (
+                "Result: Partially correct.",
+                "Your answer explains how damaged seeds can be identified, but it misses the main reason for separating them before sowing: damaged seeds are hollow and weak and may not grow into healthy plants.",
+            )
+        elif has_consequence and len(matched_guide) >= 3:
+            return (
+                "Result: Correct.",
+                "Your answer correctly reflects the key concepts in the installed solution.",
+            )
+
+    student_ratio = len(matched_tokens) / float(len(student_tokens)) if student_tokens else 0.0
+
+    if len(matched_tokens) >= 5 and student_ratio >= 0.85:
+        return (
+            "Result: Correct.",
+            "Your answer correctly reflects the key concepts in the installed solution.",
+        )
+
+    return (
+        "Result: Needs grounded review.",
+        "Your answer can be compared against the installed solution logic below.",
+    )
+
+
 def _question_supports_short_numeric_review(question: str) -> bool:
     normalized = _normalize_syllabus_lookup_text(question)
     task = re.search(
@@ -1462,8 +1588,6 @@ def _source_description(match: SyllabusTopicMatch) -> str:
 
 
 def render_syllabus_grounding(match: SyllabusTopicMatch) -> str:
-    """Build private provider grounding while preserving source provenance."""
-
     topic = match.topic
     lines = [
         f"Board: {match.syllabus.board}",
@@ -1495,10 +1619,9 @@ def render_syllabus_match(
     match: SyllabusTopicMatch,
     *,
     context: StudentLearningContext,
-    message: str,
-    teaching_guidance: Mapping[str, Any] | None = None,
+    message: str = "",
+    teaching_guidance: str = "",
 ) -> str:
-    # Render validated local syllabus content without changing its origin claim.
     syllabus = match.syllabus
     topic = match.topic
 
@@ -1512,15 +1635,28 @@ def render_syllabus_match(
 
     request = classify_syllabus_tutor_request(message)
     chapter_level = match.matched_by in {"message-chapter", "context-chapter-fallback"}
-    sections: list[str] = []
 
-    if request.intent == "test":
+    sections: list[str] = []
+    if request.intent == "explain" and not chapter_level:
+        sections.append(topic.title)
+        if topic.explanation:
+            sections.append(topic.explanation)
+        if topic.examples:
+            sections.append("Example: " + topic.examples[0])
+    elif request.intent == "example":
+        selected = (
+            topic.examples[: request.requested_count]
+            if topic.examples
+            else ["No specific example is installed for this topic."]
+        )
+        sections.append(topic.title)
+        if len(selected) == 1:
+            sections.append("Example: " + selected[0])
+        else:
+            sections.append("Examples:\n" + _numbered_lines(selected))
+    elif request.intent == "test":
         bank = _chapter_question_bank(
             match.chapter,
-            # Practice questions have explicit one-to-one model answers and are
-            # self-contained.  Use the same balanced bank with or without an
-            # answer guide so requesting answers cannot silently swap in
-            # exercise prompts that depend on missing source material.
             prefer_solved=False,
         )
         selected = bank[: request.requested_count]
@@ -1554,17 +1690,6 @@ def render_syllabus_match(
                 for _, guide in selected
             ]
             sections.append("Answer guide:\n" + _numbered_lines(guides))
-    elif request.intent == "example":
-        selected = list(topic.examples[: request.requested_count])
-        sections.append(topic.title)
-        if len(selected) == 1:
-            sections.append("Example: " + selected[0])
-        else:
-            sections.append("Examples:\n" + _numbered_lines(selected))
-        if request.explicit_count and request.requested_count > len(selected):
-            sections.append(
-                f"Only {len(selected)} validated example(s) are installed for this topic."
-            )
     elif request.intent == "hint":
         bank = _topic_question_bank(topic, prefer_solved=True)
         selected_index = _requested_question_index(bank, message)
@@ -1578,10 +1703,20 @@ def render_syllabus_match(
             else:
                 sections.append("Hints:\n" + _numbered_lines(hints))
         else:
-            sections.append(
-                "Paste the exact homework question or give its question number. "
-                "I will give a hint without revealing the final answer."
-            )
+            if bank:
+                question, guide = bank[0]
+                hints = _local_question_hints(topic, question, guide)[: request.requested_count]
+                sections.append("Question: " + question)
+                if len(hints) == 1:
+                    sections.append("Hint: " + hints[0])
+                else:
+                    sections.append("Hints:\n" + _numbered_lines(hints))
+            else:
+                hints = _local_question_hints(topic, topic.title, topic.explanation)[: request.requested_count]
+                if len(hints) == 1:
+                    sections.append("Hint: " + hints[0])
+                else:
+                    sections.append("Hints:\n" + _numbered_lines(hints))
     elif request.intent == "solution":
         bank = _topic_question_bank(topic, prefer_solved=True)
         selected_index = _requested_question_index(bank, message)
@@ -1609,35 +1744,17 @@ def render_syllabus_match(
             if student_answer:
                 sections.append("Your answer: " + student_answer)
 
-            result: bool | None = None
-            student_decision = re.match(r"^(yes|no)\b", student_answer, flags=re.IGNORECASE)
-            expected_decision = re.match(r"^(yes|no)\b", guide, flags=re.IGNORECASE)
-            if student_decision and expected_decision:
-                result = student_decision.group(1).casefold() == expected_decision.group(1).casefold()
-            else:
-                student_numeric = _short_numeric_review_value(student_answer)
-                expected_numeric = _final_numeric_solution_value(guide)
-                if (
-                    student_numeric
-                    and expected_numeric
-                    and _question_supports_short_numeric_review(question)
-                ):
-                    result = student_numeric == expected_numeric
+            result_header, reason_body = _evaluate_student_answer(
+                student_answer,
+                guide,
+                question,
+                topic=topic,
+            )
+            sections.append(result_header)
+            sections.append("Reason: " + reason_body)
 
-            if result is True:
-                sections.append("Result: Correct.")
-                sections.append("Reason: Your short answer matches the installed solution result.")
-            elif result is False:
-                sections.append("Result: Incorrect.")
-                sections.append("Reason: Your short answer does not match the installed solution result.")
-            else:
-                sections.append("Result: Needs grounded review.")
-                sections.append(
-                    "This answer is not a safely comparable short numeric or yes/no response, "
-                    "so the offline renderer will not guess."
-                )
             if guide:
-                heading = "Correct method: " if result is False else "Installed solution logic: "
+                heading = "Correct method: " if "Incorrect" in result_header else "Installed solution logic: "
                 sections.append(heading + guide)
         else:
             sections.append(

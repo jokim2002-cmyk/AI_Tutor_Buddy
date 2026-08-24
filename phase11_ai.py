@@ -615,6 +615,7 @@ class GyanVerseAIService:
                 request.intent == "evaluate"
                 and (
                     "Result: Correct." in raw_answer
+                    or "Result: Partially correct." in raw_answer
                     or "Result: Incorrect." in raw_answer
                 )
             )
