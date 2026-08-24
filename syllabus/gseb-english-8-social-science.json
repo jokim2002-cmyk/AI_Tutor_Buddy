@@ -1,0 +1,2338 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 8,
+  "subject": "Social Science",
+  "textbook": "Social Science Standard 8",
+  "source": {
+    "title": "Social Science Standard 8",
+    "publisher": "Gujarat State Board of School Textbooks / GCERT",
+    "edition": "First Edition 2019; Revised Edition 2023; Reprint 2025",
+    "pdf_sha256": {
+      "Std-8_Social_Science_EnglishMedium.pdf": "5067928b1f60ee0519fe24e7c8907b768653c9ba7c6dbca80cf09a60b2211254"
+    },
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-24",
+    "official": true,
+    "notes": "Source type: Teacher-authored/adapted textbook content. Standard 8 Social Science; edition First Edition 2019; Revised Edition 2023; Reprint 2025. Verified source SHA256: 5067928b1f60ee0519fe24e7c8907b768653c9ba7c6dbca80cf09a60b2211254."
+  },
+  "chapters": [
+    {
+      "chapter_id": "soc8-c01",
+      "number": "1",
+      "title": "Chapter 1 - Establishment of European and British Rule in India",
+      "aliases": [
+        "Establishment of European and British Rule in India",
+        "Chapter 1 European Rule",
+        "Arrival of Europeans"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c01-t1",
+          "title": "Arrival of European Traders and Sea Routes",
+          "aliases": [
+            "arrival of European traders",
+            "Vasco da Gama sea route",
+            "Portuguese Dutch French traders",
+            "Establishment of European and British Rule in India"
+          ],
+          "learning_objectives": [
+            "Explain why European traders searched for sea routes to India after the fall of Constantinople in 1453 AD.",
+            "Trace the arrival of Portuguese (Vasco da Gama), Dutch, and French trading companies in India."
+          ],
+          "explanation": "When Constantinople fell to Turks in 1453 AD, overland trade routes connecting Europe to India were blocked. High demand for Indian spices (pepper, cardamom), cotton, and silk led European sailors to discover sea routes. Portuguese sailor Vasco da Gama reached Calicut in 1498 AD. Later, Dutch and French trading companies established factories along Indian coasts.",
+          "examples": [
+            "Vasco da Gama landed at Calicut port on the Malabar coast in 1498 AD under King Zamorin's rule.",
+            "French East India Company established major trading centers at Pondicherry and Chandernagore."
+          ],
+          "exercises": [
+            "Why did European nations search for a sea route to India in the 15th century?",
+            "Who was the first European sailor to reach India by sea and in which year?"
+          ],
+          "solutions": [
+            "The conquest of Constantinople by Turks in 1453 AD blocked land trade routes, making new sea routes necessary to obtain Indian spices, cotton, and silk.",
+            "Vasco da Gama of Portugal reached Calicut in 1498 AD."
+          ],
+          "practice_questions": [
+            "Name two items in high demand in Europe exported from India.",
+            "Which European power established its headquarters at Goa?"
+          ],
+          "practice_solutions": [
+            "Spices (pepper, cardamom) and cotton cloth.",
+            "The Portuguese."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c01-t2",
+          "title": "English East India Company and Anglo-French Rivalry",
+          "aliases": [
+            "English East India Company charter 1600",
+            "Jahangir farman Surat",
+            "Carnatic Wars French rivalry"
+          ],
+          "learning_objectives": [
+            "Describe the establishment of the English East India Company under Queen Elizabeth's charter in 1600 AD.",
+            "Explain Anglo-French rivalries (Carnatic Wars) resulting in British trading dominance."
+          ],
+          "explanation": "Queen Elizabeth I granted a charter to English East India Company in 1600 AD for trade monopoly with the East. Captain Hawkins and Sir Thomas Roe obtained trade permissions (farmans) from Mughal Emperor Jahangir to build factories in Surat and Madras. Rivalry between English and French companies led to three Carnatic Wars, ending in British supremacy.",
+          "examples": [
+            "Sir Thomas Roe obtained permission from Jahangir in 1615 AD to establish British factories in Mughal territory.",
+            "British victory in the Carnatic Wars eliminated French political power in India."
+          ],
+          "exercises": [
+            "Which Mughal Emperor granted permission to the British East India Company to set up a factory at Surat?",
+            "What was the main outcome of Anglo-French rivalries in South India?"
+          ],
+          "solutions": [
+            "Emperor Jahangir.",
+            "The English East India Company defeated the French, securing a political and commercial monopoly in India."
+          ],
+          "practice_questions": [
+            "In which year was the English East India Company formed?",
+            "What was Fort William?"
+          ],
+          "practice_solutions": [
+            "1600 AD.",
+            "The fortified settlement built by the British East India Company in Calcutta (Kolkata)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c01-t3",
+          "title": "Battle of Plassey (1757) and Battle of Buxar (1764)",
+          "aliases": [
+            "Battle of Plassey Sirajuddaulah Mir Jafar",
+            "Battle of Buxar Diwani rights 1765",
+            "Robert Clive Bengal conquest"
+          ],
+          "learning_objectives": [
+            "Analyze causes and consequences of Battle of Plassey (1757) and Battle of Buxar (1764).",
+            "Explain how the Company acquired Diwani (tax collection) rights over Bengal, Bihar, and Orissa."
+          ],
+          "explanation": "In 1757, Robert Clive defeated Nawab Siraj-ud-Daulah of Bengal at Plassey due to treachery by commander Mir Jafar. In 1764, British defeated combined forces of Mir Qasim, Shuja-ud-Daulah, and Shah Alam II at Buxar. Treaty of Allahabad (1765) granted Company legal Diwani rights to collect land revenues in Bengal, Bihar, and Orissa.",
+          "examples": [
+            "Battle of Plassey transformed the British East India Company from traders into political masters of Bengal.",
+            "Diwani rights gave the British control over Bengal's vast treasury, financing their trade and military expansion."
+          ],
+          "exercises": [
+            "Explain the significance of the Battle of Plassey (1757) in Indian history.",
+            "What political privilege did the Treaty of Allahabad (1765) grant to the British East India Company?"
+          ],
+          "solutions": [
+            "It marked the beginning of British territorial rule in India as the Company gained control over Bengal.",
+            "Diwani rights, allowing the British to collect revenue directly from Bengal, Bihar, and Orissa."
+          ],
+          "practice_questions": [
+            "Who led the British forces in the Battle of Plassey?",
+            "Which three rulers fought against the British in the Battle of Buxar (1764)?"
+          ],
+          "practice_solutions": [
+            "Robert Clive.",
+            "Mir Qasim (Bengal), Shuja-ud-Daulah (Awadh), and Shah Alam II (Mughal Emperor)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c02",
+      "number": "2",
+      "title": "Chapter 2 - British Rule in India (1757 AD to 1857 AD)",
+      "aliases": [
+        "British Rule in India (1757 AD to 1857 AD)",
+        "Chapter 2 British Rule",
+        "Colonial Revenue Systems"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c02-t1",
+          "title": "Revenue Systems: Permanent Settlement, Ryotwari and Mahalwari",
+          "aliases": [
+            "Permanent Settlement Lord Cornwallis",
+            "Ryotwari System Thomas Munro",
+            "Mahalwari System Holt Mackenzie",
+            "British Rule in India (1757 AD to 1857 AD)"
+          ],
+          "learning_objectives": [
+            "Compare the three British land revenue systems: Permanent Settlement (1793), Ryotwari (1820), and Mahalwari (1822).",
+            "Evaluate their oppressive impact on Indian farmers."
+          ],
+          "explanation": "To maximize revenues, British introduced three land revenue systems:\n- Permanent Settlement (Cornwallis, 1793, Bengal): Fixed revenue permanently with landlords (Zamindars).\n- Ryotwari System (Munro, 1820, Madras/Bombay): Revenue fixed directly with individual cultivators (Ryots).\n- Mahalwari System (Mackenzie, 1822, NW Provinces): Revenue collected collectively from village communities (Mahal).",
+          "examples": [
+            "Under Permanent Settlement, peasants lost land ownership if Zamindars failed to pay fixed revenue by sunset date.",
+            "Ryotwari system subjected cultivators to high direct tax demands, driving farmers into debt traps."
+          ],
+          "exercises": [
+            "Who introduced Permanent Settlement in Bengal and in which year?",
+            "Differentiate between Permanent Settlement and Ryotwari system."
+          ],
+          "solutions": [
+            "Lord Cornwallis in 1793 AD.",
+            "Permanent Settlement fixed tax permanently with Zamindars (landlords), whereas Ryotwari settled tax directly with Ryots (cultivators) periodically."
+          ],
+          "practice_questions": [
+            "What does the term 'Mahal' mean in the Mahalwari system?",
+            "Why were Indian farmers impoverished under British land revenue systems?"
+          ],
+          "practice_solutions": [
+            "A village or group of villages.",
+            "Exorbitant tax rates, rigid collection even during droughts, and exploitation by moneylenders."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c02-t2",
+          "title": "Impact on Indian Peasantry and Commercialisation of Crops",
+          "aliases": [
+            "Indigo Revolt 1859",
+            "commercialisation of agriculture",
+            "forced cash crops opium indigo tea"
+          ],
+          "learning_objectives": [
+            "Explain commercialisation of agriculture forcing farmers to grow cash crops (Indigo, Opium, Cotton).",
+            "Describe the Indigo Revolt (Nij and Ryoti cultivation systems)."
+          ],
+          "explanation": "British forced Indian farmers to grow commercial cash crops (indigo, opium, tea, cotton) for British industries instead of food grains. Indigo planters coerced farmers under oppressive advance loan contracts (Ryoti system). Severe exploitation triggered the Indigo Revolt of 1859 in Bengal.",
+          "examples": [
+            "Planters forced farmers to cultivate indigo on their most fertile land, ruining soil fertility for rice crops.",
+            "Deenabandhu Mitra wrote the play 'Nil Darpan' highlighting the plight of indigo cultivators."
+          ],
+          "exercises": [
+            "What was the Indigo Revolt of 1859?",
+            "How did commercialisation of agriculture affect food security in India?"
+          ],
+          "solutions": [
+            "A widespread peasant uprising in Bengal against European planters forcing farmers to grow indigo on oppressive terms.",
+            "Shifting land from food grains (rice/wheat) to cash crops caused artificial food shortages and severe famines."
+          ],
+          "practice_questions": [
+            "Name the play written by Deenabandhu Mitra on indigo planters.",
+            "What were the two main systems of indigo cultivation?"
+          ],
+          "practice_solutions": [
+            "Nil Darpan.",
+            "Nij cultivation (on planter's own land) and Ryoti cultivation (on farmer's land under contract)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c02-t3",
+          "title": "Economic Drain Theory and De-industrialisation",
+          "aliases": [
+            "Economic Drain Theory Dadabhai Naoroji",
+            "de-industrialisation Indian artisans",
+            "ruin of traditional handicrafts"
+          ],
+          "learning_objectives": [
+            "Explain Dadabhai Naoroji's Economic Drain Theory (Poverty and Un-British Rule in India).",
+            "Analyze de-industrialisation: collapse of Indian handicrafts and weaver livelihoods."
+          ],
+          "explanation": "Dadabhai Naoroji formulated the 'Drain of Wealth' theory, explaining how wealth (salaries, pensions, profits, home charges) was continuously siphoned from India to Britain without economic return. One-way free trade flooded Indian markets with cheap Manchester machine-made cloth, destroying traditional Indian weaver communities.",
+          "examples": [
+            "Machine-made cloth imported from England destroyed famous handloom textile centers like Dacca (Dhaka).",
+            "Dadabhai Naoroji published his findings in 'Poverty and Un-British Rule in India'."
+          ],
+          "exercises": [
+            "Who propounded the 'Drain of Wealth' theory?",
+            "What was the primary cause of de-industrialisation of Indian handicrafts in the 19th century?"
+          ],
+          "solutions": [
+            "Dadabhai Naoroji.",
+            "Inflow of cheap machine-made British goods combined with high protective tariffs imposed on Indian export goods in Britain."
+          ],
+          "practice_questions": [
+            "Name Dadabhai Naoroji's famous book on Indian economy.",
+            "Why did traditional weavers lose their livelihoods under British rule?"
+          ],
+          "practice_solutions": [
+            "Poverty and Un-British Rule in India.",
+            "They could not compete with cheap machine-made cloth imported tariff-free from Manchester factories."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c03",
+      "number": "3",
+      "title": "Chapter 3 - India's First War of Independence",
+      "aliases": [
+        "India's First War of Independence",
+        "Chapter 3 1857 Revolt",
+        "Revolt of 1857"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c03-t1",
+          "title": "Causes of the 1857 Revolt",
+          "aliases": [
+            "causes 1857 uprising",
+            "Doctrine of Lapse Lord Dalhousie",
+            "immediate cause Enfield rifle cartridges",
+            "India's First War of Independence"
+          ],
+          "learning_objectives": [
+            "Examine political, economic, socio-religious, and military causes of the 1857 Revolt.",
+            "Identify the immediate cause: introduction of greased Enfield rifle cartridges."
+          ],
+          "explanation": "Causes of 1857 War:\n- Political: Lord Dalhousie's Doctrine of Lapse (annexing Satara, Jhansi, Nagpur) and Awadh annexation.\n- Economic: Ruin of artisans and high land taxes.\n- Social/Religious: Interference in customs and fear of forced conversions.\n- Military: Pay discrimination against Indian Sepoys.\n- Immediate Cause: Greased cartridges for Enfield rifles allegedly coated with cow/pig fat, offending Hindu and Muslim sepoys.",
+          "examples": [
+            "Dalhousie annexed Jhansi using Doctrine of Lapse when Rani Laxmibai's adopted son was denied royal succession.",
+            "Sepoy Mangal Pandey refused Enfield cartridges at Barrackpore in March 1857."
+          ],
+          "exercises": [
+            "What was Lord Dalhousie's Policy of Annexation called?",
+            "What was the immediate cause of the 1857 Revolt?"
+          ],
+          "solutions": [
+            "Doctrine of Lapse.",
+            "Introduction of Enfield rifle cartridges greased with cow and pig fat, which offended religious sentiments of Hindu and Muslim soldiers."
+          ],
+          "practice_questions": [
+            "Which soldier fired the first shot of the 1857 revolt at Barrackpore?",
+            "Name two princely states annexed under the Doctrine of Lapse."
+          ],
+          "practice_solutions": [
+            "Mangal Pandey.",
+            "Jhansi and Satara (or Nagpur)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c03-t2",
+          "title": "Main Centres and Key Leaders of the Revolt",
+          "aliases": [
+            "centres 1857 revolt",
+            "Bahadur Shah Zafar Delhi",
+            "Rani Laxmibai Jhansi",
+            "Tatya Tope Nana Saheb Kunwar Singh"
+          ],
+          "learning_objectives": [
+            "Identify major centers (Delhi, Kanpur, Lucknow, Jhansi, Bihar, Gujarat) and prominent leaders of the 1857 Revolt.",
+            "Describe contributions of Rani Laxmibai, Nana Saheb, Tatya Tope, and Kunwar Singh."
+          ],
+          "explanation": "The 1857 uprising spread across Northern and Central India:\n- Delhi: Bahadur Shah Zafar declared Emperor of India.\n- Kanpur: Nana Saheb and General Tatya Tope.\n- Jhansi: Rani Laxmibai valiantly fought British troops.\n- Lucknow: Begum Hazrat Mahal.\n- Bihar: 80-year-old landlord Kunwar Singh.\n- Gujarat: Uprising in Anand (Garbad Das Patel), Patan, and Dwarka.",
+          "examples": [
+            "Rani Laxmibai of Jhansi died fighting bravely on the battlefield at Gwalior.",
+            "Garbad Das Patel led local freedom fighters in Anand, Gujarat against British forces."
+          ],
+          "exercises": [
+            "Name the prominent leaders who led the 1857 uprising in Kanpur and Jhansi.",
+            "Who was declared the nominal leader/emperor of India by revolting sepoys in Delhi?"
+          ],
+          "solutions": [
+            "Kanpur: Nana Saheb and Tatya Tope; Jhansi: Rani Laxmibai.",
+            "Mughal Emperor Bahadur Shah Zafar II."
+          ],
+          "practice_questions": [
+            "Which 80-year-old leader led the revolt in Jagdishpur, Bihar?",
+            "Mention the role of Garbad Das Patel in Gujarat during 1857."
+          ],
+          "practice_solutions": [
+            "Kunwar Singh.",
+            "He mobilized local mukhis and farmers in Anand region against British rule."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c03-t3",
+          "title": "Failure of the Revolt and End of Company Rule",
+          "aliases": [
+            "reasons for failure 1857",
+            "Queen Victoria Proclamation 1858",
+            "Government of India Act 1858",
+            "Crown Rule"
+          ],
+          "learning_objectives": [
+            "Analyze reasons for failure of the 1857 Revolt (lack of central leadership, localized outbreak, modern British weaponry).",
+            "Explain Queen Victoria's Proclamation of 1858 ending East India Company rule and establishing British Crown Rule."
+          ],
+          "explanation": "Reasons for Failure: Lack of unified central command, superior British weapons/telegraph/railways, and lack of support from certain princely states. Outcome: Government of India Act 1858 abolished East India Company rule. Power transferred directly to British Crown under Queen Victoria's Proclamation, represented by a Viceroy.",
+          "examples": [
+            "Queen Victoria's Proclamation promised non-interference in religious matters and equal legal treatment.",
+            "The title of Governor-General was changed to Viceroy of India starting with Lord Canning in 1858."
+          ],
+          "exercises": [
+            "State two major causes for the failure of the 1857 Revolt.",
+            "What major constitutional change took place in India under the Government of India Act 1858?"
+          ],
+          "solutions": [
+            "Lack of central leadership/coordination and superior military organization/weapons of the British.",
+            "Rule of East India Company ended and direct rule of the British Crown was established in India."
+          ],
+          "practice_questions": [
+            "Who became the first Viceroy of India in 1858?",
+            "What promise did Queen Victoria make regarding Indian princely territories?"
+          ],
+          "practice_solutions": [
+            "Lord Canning.",
+            "To respect treaty rights and abandon further territorial annexation."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c04",
+      "number": "4",
+      "title": "Chapter 4 - Cities, Cottage Industries and Industries of the British Period",
+      "aliases": [
+        "Cities, Cottage Industries and Industries of the British Period",
+        "Chapter 4 Colonial Industries",
+        "De-urbanization and Urbanization"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c04-t1",
+          "title": "De-urbanization of Old Cities and Rise of Colonial Ports",
+          "aliases": [
+            "de-urbanization Surat Dacca Murshidabad",
+            "presidency cities Bombay Calcutta Madras",
+            "colonial urban centers",
+            "Cities, Cottage Industries and Industries of the British Period"
+          ],
+          "learning_objectives": [
+            "Explain de-urbanization of traditional Indian court cities (Surat, Murshidabad, Dacca).",
+            "Describe growth of new British Presidency port cities (Bombay, Calcutta, Madras)."
+          ],
+          "explanation": "As regional royal courts collapsed and trade shifted, traditional trading cities like Surat, Masulipatnam, and Murshidabad declined (de-urbanization). Meanwhile, British established new Presidency urban centers around major ports: Bombay (Mumbai), Calcutta (Kolkata), and Madras (Chennai).",
+          "examples": [
+            "Surat lost its status as India's premier western trade port when British developed Bombay port.",
+            "Calcutta grew rapidly as the administrative capital of British India until 1911."
+          ],
+          "exercises": [
+            "What is de-urbanization?",
+            "Name the three British Presidency port cities that expanded during the colonial period."
+          ],
+          "solutions": [
+            "The decline and depopulation of traditional historic cities due to economic decay or loss of political court status.",
+            "Bombay (Mumbai), Calcutta (Kolkata), and Madras (Chennai)."
+          ],
+          "practice_questions": [
+            "Which major western port city declined as Bombay developed?",
+            "When was the capital of British India shifted from Calcutta to Delhi?"
+          ],
+          "practice_solutions": [
+            "Surat.",
+            "In 1911 AD."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c04-t2",
+          "title": "Decline of Indian Cottage Industries and Handloom Textiles",
+          "aliases": [
+            "decline of cottage industry",
+            "handloom weavers destruction",
+            "muslin of Dacca",
+            "industrial revolution impact"
+          ],
+          "learning_objectives": [
+            "Analyze causes for ruin of Indian handlooms, spinning wheels (charkha), and cottage handicrafts.",
+            "Describe impact of British free-trade policy on Indian artisan households."
+          ],
+          "explanation": "Before British rule, Indian textiles (Dacca Muslin, Calico, Chintz) dominated world trade. British Industrial Revolution produced cheap factory cloth. British imposed heavy import duties on Indian goods entering Britain while importing British factory cloth tariff-free into India, ruining millions of cottage weavers.",
+          "examples": [
+            "World-famous Dacca Muslin fine cotton fabric lost global markets due to British trade tariffs.",
+            "Millions of rural weavers lost employment and turned into landless agricultural labourers."
+          ],
+          "exercises": [
+            "Why did traditional Indian handloom weavers lose their livelihood during the British period?",
+            "What was Dacca famous for in textile history?"
+          ],
+          "solutions": [
+            "They could not compete with cheap machine-made cloth imported from Britain and faced heavy export taxes in Europe.",
+            "Extremely fine quality cotton fabric known as Dacca Muslin."
+          ],
+          "practice_questions": [
+            "What was 'Calico'?",
+            "How did ruin of cottage industries affect rural agriculture?"
+          ],
+          "practice_solutions": [
+            "Indian cotton cloth named after Calicut port where Portuguese first traded it.",
+            "Unemployed artisans migrated to villages, overcrowding agricultural land as daily-wage laborers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c04-t3",
+          "title": "Rise of Modern Industries: Steel and Textiles in India",
+          "aliases": [
+            "TISCO Jamshedpur Jamsetji Tata",
+            "Ahmedabad Manchester of India Ranchhodlal",
+            "first textile mill Mumbai 1854"
+          ],
+          "learning_objectives": [
+            "Trace establishment of modern cotton textile mills (Mumbai 1854, Ahmedabad 1861).",
+            "Describe growth of iron and steel industry: TISCO established by Jamsetji Tata at Jamshedpur (1907)."
+          ],
+          "explanation": "First modern cotton textile mill was established in Mumbai (1854). Ranchhodlal Chhotalal started Ahmedabad's first cotton mill in 1861, earning Ahmedabad the title 'Manchester of India'. Jamsetji Tata established Tata Iron and Steel Company (TISCO) at Sakchi (Jamshedpur) in 1907, pioneering Indian heavy industry.",
+          "examples": [
+            "Ahmedabad became a leading cotton textile hub due to proximity to black cotton soil of Gujarat.",
+            "TISCO Jamshedpur supplied steel rails for Indian Railways during World War I."
+          ],
+          "exercises": [
+            "Who founded Tata Iron and Steel Company (TISCO) and in which year?",
+            "Why was Ahmedabad called the 'Manchester of India'?"
+          ],
+          "solutions": [
+            "Jamsetji Tata in 1907 AD (at Sakchi, Jamshedpur).",
+            "Because of its rapid growth as a major cotton textile manufacturing center like Manchester in England."
+          ],
+          "practice_questions": [
+            "Who established the first cotton mill in Ahmedabad in 1861?",
+            "In which city was India's first successful cotton textile mill set up in 1854?"
+          ],
+          "practice_solutions": [
+            "Ranchhodlal Chhotalal.",
+            "Mumbai."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c05",
+      "number": "5",
+      "title": "Chapter 5 - Education and Social System During the British Rule",
+      "aliases": [
+        "Education and Social System During the British Rule",
+        "Chapter 5 Education Reform",
+        "Social Reform Movements"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c05-t1",
+          "title": "Orientalist vs Anglicist Controversy and Wood's Despatch (1854)",
+          "aliases": [
+            "Macaulay Minute 1835 English medium",
+            "Wood Despatch 1854 Magna Carta education",
+            "Orientalists vs Anglicists",
+            "Education and Social System During the British Rule"
+          ],
+          "learning_objectives": [
+            "Differentiate between Orientalists (promoting Sanskrit/Persian) and Anglicists (promoting English education).",
+            "Explain Macaulay's Minute (1835) and Wood's Despatch (1854) as foundation of modern western education."
+          ],
+          "explanation": "British debate on education pitted Orientalists (William Jones, advocating Sanskrit and Persian learning) against Anglicists (Lord Macaulay, advocating English education). Macaulay's Minute (1835) made English the official medium. Charles Wood's Despatch (1854) introduced a comprehensive education system (primary, secondary, university) called Magna Carta of English Education in India.",
+          "examples": [
+            "Wood's Despatch of 1854 led to creation of Education Departments in all provinces.",
+            "Universities of Calcutta, Bombay, and Madras were established in 1857 following Wood's Despatch."
+          ],
+          "exercises": [
+            "What was Lord Macaulay's recommendation regarding the medium of instruction in India in 1835?",
+            "Why is Wood's Despatch (1854) called the Magna Carta of modern Indian education?"
+          ],
+          "solutions": [
+            "He recommended English as the official medium of higher instruction in place of Persian and Sanskrit.",
+            "Because it laid a systematic framework for primary, secondary, and university education across India."
+          ],
+          "practice_questions": [
+            "Name three universities established in India in 1857.",
+            "Who founded the Asiatic Society of Bengal to study oriental literature?"
+          ],
+          "practice_solutions": [
+            "Universities of Calcutta, Bombay, and Madras.",
+            "Sir William Jones."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c05-t2",
+          "title": "Growth of Vernacular Education and National Institutions",
+          "aliases": [
+            "William Adam report pathshalas",
+            "Gujarat Vernacular Society Forbes",
+            "National Education Tagore Shantiniketan",
+            "Gujarat Vidyapith 1920"
+          ],
+          "learning_objectives": [
+            "Evaluate William Adam's report on indigenous village pathshalas.",
+            "Describe national education initiatives: Rabindranath Tagore's Shantiniketan and Mahatma Gandhi's Gujarat Vidyapith (1920)."
+          ],
+          "explanation": "William Adam surveyed 100,000 village pathshalas in Bengal and Bihar with flexible timetables. Later, national leaders opposed purely western colonial education and founded indigenous institutions:\n- Rabindranath Tagore established Visva-Bharati Shantiniketan (1901) combining nature and arts.\n- Mahatma Gandhi founded Gujarat Vidyapith (Ahmedabad, 1920) during Non-Cooperation Movement for self-reliant education.",
+          "examples": [
+            "Shantiniketan held classes in open air under trees to foster natural learning.",
+            "Gujarat Vernacular Society (established 1848 by Alexander Forbes and Kavi Dalpatram) promoted Gujarati language literature."
+          ],
+          "exercises": [
+            "Who established Visva-Bharati at Shantiniketan?",
+            "Why did Mahatma Gandhi found Gujarat Vidyapith at Ahmedabad in 1920?"
+          ],
+          "solutions": [
+            "Rabindranath Tagore.",
+            "To provide national self-reliant education in mother tongue outside British government control during Non-Cooperation Movement."
+          ],
+          "practice_questions": [
+            "Name the British officer who prepared a report on indigenous pathshalas in Bengal.",
+            "Who founded the Gujarat Vernacular Society in 1848?"
+          ],
+          "practice_solutions": [
+            "William Adam.",
+            "Alexander Kinloch Forbes (supported by poet Dalpatram)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c05-t3",
+          "title": "Social Reform Movements: Sati Abolition, Widow Remarriage and Caste Reform",
+          "aliases": [
+            "Raja Ram Mohan Roy Brahmo Samaj Sati 1829",
+            "Ishwar Chandra Vidyasagar Widow Remarriage 1856",
+            "Swami Dayanand Arya Samaj",
+            "Jyotirao Phule Satyashodhak Samaj"
+          ],
+          "learning_objectives": [
+            "Identify social reformers and their achievements: Raja Ram Mohan Roy (Brahmo Samaj, Sati Prohibition Act 1829), Ishwar Chandra Vidyasagar (Widow Remarriage Act 1856).",
+            "Describe caste and women empowerment reforms (Dayanand Saraswati, Jyotirao Phule, Swami Vivekananda)."
+          ],
+          "explanation": "Indian Renaissance reform movements:\n- Raja Ram Mohan Roy (Brahmo Samaj): Persuaded Lord William Bentinck to pass Sati Prohibition Act (1829).\n- Ishwar Chandra Vidyasagar: Helped pass Hindu Widow Remarriage Act (1856).\n- Swami Dayanand Saraswati (Arya Samaj): Slogan 'Go back to the Vedas' and opposed caste discrimination.\n- Jyotirao Phule (Satyashodhak Samaj): Fought for lower-caste education and women's rights.",
+          "examples": [
+            "Brahmo Samaj campaigned against female infanticide, child marriage, and Sati system.",
+            "Jyotirao Phule and his wife Savitribai Phule opened India's first girls' school in Pune in 1848."
+          ],
+          "exercises": [
+            "Who helped Lord William Bentinck enact the law banning Sati practice in 1829?",
+            "Which social reformer was instrumental in passing the Hindu Widow Remarriage Act of 1856?"
+          ],
+          "solutions": [
+            "Raja Ram Mohan Roy.",
+            "Ishwar Chandra Vidyasagar."
+          ],
+          "practice_questions": [
+            "Who founded Arya Samaj and gave the call 'Go back to Vedas'?",
+            "Name the organization founded by Jyotirao Phule for social equality."
+          ],
+          "practice_solutions": [
+            "Swami Dayanand Saraswati.",
+            "Satyashodhak Samaj."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c06",
+      "number": "6",
+      "title": "Chapter 6 - Freedom Movements (1885 AD to 1947 AD)",
+      "aliases": [
+        "Freedom Movements (1885 AD to 1947 AD)",
+        "Chapter 6 Indian Freedom Struggle",
+        "National Movement"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c06-t1",
+          "title": "Formation of INC (1885), Moderates and Extremists",
+          "aliases": [
+            "Indian National Congress 1885 AO Hume",
+            "Moderates Dadabhai Gokhale",
+            "Extremists Tilak Lal Bal Pal",
+            "Freedom Movements (1885 AD to 1947 AD)"
+          ],
+          "learning_objectives": [
+            "Explain formation of Indian National Congress (1885) under A.O. Hume and W.C. Bonnerjee.",
+            "Differentiate between Moderate leaders (Dadabhai Naoroji, Gokhale) and Extremist leaders (Lal-Bal-Pal: Tilak, Lajpat Rai, Bipin Chandra Pal)."
+          ],
+          "explanation": "Indian National Congress was founded in December 1885 at Bombay by A.O. Hume; first President was W.C. Bonnerjee. Early leaders were Moderates who used petitions and constitutional methods. By 1905, Extremist leaders led by 'Lal-Bal-Pal' demanded Swaraj (Self-rule). Lokmanya Tilak declared: 'Swaraj is my birthright and I shall have it!'",
+          "examples": [
+            "The first session of Indian National Congress was attended by 72 delegates at Gokuldas Tejpal Sanskrit College in Bombay.",
+            "Bal Gangadhar Tilak started newspapers 'Kesari' (Marathi) and 'Mahratta' (English) to awaken national consciousness."
+          ],
+          "exercises": [
+            "When and where was the Indian National Congress founded?",
+            "Who gave the famous slogan 'Swaraj is my birthright and I shall have it!'?"
+          ],
+          "solutions": [
+            "In December 1885 at Gokuldas Tejpal Sanskrit College in Bombay.",
+            "Lokmanya Bal Gangadhar Tilak."
+          ],
+          "practice_questions": [
+            "Name two Moderate leaders of early INC.",
+            "Who was the first President of the Indian National Congress?"
+          ],
+          "practice_solutions": [
+            "Dadabhai Naoroji and Gopal Krishna Gokhale.",
+            "Womesh Chandra Bonnerjee (W.C. Bonnerjee)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c06-t2",
+          "title": "Partition of Bengal, Swadeshi, Non-Cooperation and Dandi March",
+          "aliases": [
+            "Partition of Bengal 1905 Lord Curzon",
+            "Swadeshi Boycott Movement",
+            "Non-Cooperation Movement 1920",
+            "Civil Disobedience Dandi March 1930"
+          ],
+          "learning_objectives": [
+            "Examine Partition of Bengal (1905) by Lord Curzon leading to Swadeshi & Boycott Movement.",
+            "Describe Gandhi's Non-Cooperation Movement (1920) and Civil Disobedience Movement (Dandi March, 1930)."
+          ],
+          "explanation": "Lord Curzon partitioned Bengal in 1905 to divide Hindus and Muslims, provoking Banga-Bhanga agitation and Swadeshi Movement (boycotting foreign goods). Mahatma Gandhi launched Non-Cooperation Movement in 1920. In March 1930, Gandhi marched from Sabarmati Ashram to Dandi coast (385 km) to break the unjust Salt Law.",
+          "examples": [
+            "On 6th April 1930, Gandhi picked up a handful of salt at Dandi, breaking British Salt Law monopoly.",
+            "People burnt foreign cloth bonfires during Swadeshi and Non-Cooperation movements."
+          ],
+          "exercises": [
+            "Why did Lord Curzon partition Bengal in 1905?",
+            "Explain the significance of the Dandi March (1930) led by Mahatma Gandhi."
+          ],
+          "solutions": [
+            "To weaken Indian national unity under the pretext of administrative efficiency by creating religious division.",
+            "It launched the Civil Disobedience Movement as Gandhi marched to Dandi and broke the oppressive British Salt Monopoly."
+          ],
+          "practice_questions": [
+            "From where did Mahatma Gandhi start the historic Dandi March?",
+            "Why did Gandhi withdraw the Non-Cooperation Movement in 1922?"
+          ],
+          "practice_solutions": [
+            "Sabarmati Ashram, Ahmedabad.",
+            "Due to the violent Chauri Chaura incident in Uttar Pradesh where a police station was set on fire."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c06-t3",
+          "title": "Quit India Movement (1942), INA and Independence (1947)",
+          "aliases": [
+            "Quit India Movement Do or Die 1942",
+            "Subhash Chandra Bose Azad Hind Fauj INA",
+            "Mountbatten Plan Independence 1947"
+          ],
+          "learning_objectives": [
+            "Explain Quit India Movement (1942) and Gandhi's slogan 'Do or Die'.",
+            "Describe Netaji Subhash Chandra Bose, Azad Hind Fauj (INA), and Mountbatten Plan leading to Indian Independence on 15 August 1947."
+          ],
+          "explanation": "In August 1942, Congress passed Quit India resolution in Mumbai; Gandhi gave slogan 'Do or Die'. Netaji Subhash Chandra Bose formed Azad Hind Fauj (INA) in Singapore with slogans 'Jai Hind' and 'Chalo Delhi!'. Under Mountbatten Plan, British India was partitioned into India and Pakistan, gaining independence on 15 August 1947.",
+          "examples": [
+            "Netaji Subhash Chandra Bose established the Provisional Government of Free India in Singapore.",
+            "India achieved freedom at midnight on 15 August 1947, with Jawaharlal Nehru as first Prime Minister."
+          ],
+          "exercises": [
+            "What call did Mahatma Gandhi give to the nation during the Quit India Movement of 1942?",
+            "Who led the Azad Hind Fauj (Indian National Army) with the slogan 'Chalo Delhi'?"
+          ],
+          "solutions": [
+            "'Do or Die' (Karo ya Maro).",
+            "Netaji Subhash Chandra Bose."
+          ],
+          "practice_questions": [
+            "Which British plan led to the partition of India in 1947?",
+            "Who was India's first Prime Minister?"
+          ],
+          "practice_solutions": [
+            "Mountbatten Plan.",
+            "Pandit Jawaharlal Nehru."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c07",
+      "number": "7",
+      "title": "Chapter 7 - Art in Modern India",
+      "aliases": [
+        "Art in Modern India",
+        "Chapter 7 Modern Indian Art",
+        "Indian Architecture and Painting"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c07-t1",
+          "title": "Modern Indian Painting and Bengal School of Art",
+          "aliases": [
+            "Raja Ravi Varma paintings mythological",
+            "Abanindranath Tagore Bengal School Bharat Mata",
+            "Kalighat folk paintings",
+            "Art in Modern India"
+          ],
+          "learning_objectives": [
+            "Trace evolution of modern Indian painting: Raja Ravi Varma (realism, oil painting of epics).",
+            "Describe Bengal School of Art established by Abanindranath Tagore (swadeshi art, 'Bharat Mata' painting)."
+          ],
+          "explanation": "Modern Indian painting developed distinct schools:\n- Raja Ravi Varma (Kerala) blended Western oil technique with Indian mythological themes (Shakuntala, Nala-Damayanti).\n- Bengal School led by Abanindranath Tagore and Nandalal Bose rejected Western realism, drawing inspiration from Ajanta caves and Indian heritage. Abanindranath painted the famous 'Bharat Mata'.",
+          "examples": [
+            "Raja Ravi Varma set up a printing press in Mumbai to make lithograph prints of Indian gods affordable for common people.",
+            "Abanindranath Tagore depicted Bharat Mata as an ascetic woman offering food, cloth, learning, and spiritual peace."
+          ],
+          "exercises": [
+            "Why is Raja Ravi Varma considered a pioneer of modern Indian painting?",
+            "Who painted the iconic image of 'Bharat Mata' during the Bengal School movement?"
+          ],
+          "solutions": [
+            "He successfully combined Western oil technique with Indian mythological and epic themes, making art accessible to all.",
+            "Abanindranath Tagore."
+          ],
+          "practice_questions": [
+            "Which ancient cave paintings inspired the Bengal School of Art?",
+            "Where did Raja Ravi Varma establish his lithographic printing press?"
+          ],
+          "practice_solutions": [
+            "Ajanta cave paintings.",
+            "Ghatkopar in Mumbai."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c07-t2",
+          "title": "Colonial Architecture and Urban Monuments",
+          "aliases": [
+            "Indo-Saracenic architecture",
+            "Victoria Terminus CST",
+            "Gateway of India",
+            "Edwin Lutyens New Delhi"
+          ],
+          "learning_objectives": [
+            "Identify colonial architectural styles (Gothic revival, Indo-Saracenic, Neoclassical).",
+            "Describe iconic structures: Victoria Terminus (CST Mumbai), Gateway of India, and Lutyens' New Delhi (Rashtrapati Bhavan, Parliament House)."
+          ],
+          "explanation": "British constructed grand public buildings blending European and Indian elements (Indo-Saracenic architecture):\n- Gothic Revival: Chhatrapati Shivaji Maharaj Terminus (Victoria Terminus) in Mumbai.\n- Indo-Saracenic: Gateway of India in Mumbai (1911) designed by George Wittet.\n- Delhi Capital Architecture: Designed by Edwin Lutyens and Herbert Baker (Viceroy's House/Rashtrapati Bhavan, Parliament House).",
+          "examples": [
+            "Gateway of India was built to commemorate the visit of King George V and Queen Mary in 1911.",
+            "Chhatrapati Shivaji Maharaj Terminus is a UNESCO World Heritage site showcasing Gothic architecture."
+          ],
+          "exercises": [
+            "Who were the principal architects who designed the new capital city of New Delhi?",
+            "Name the architectural style that combined traditional Indian and European features in British public buildings."
+          ],
+          "solutions": [
+            "Edwin Lutyens and Herbert Baker.",
+            "Indo-Saracenic architecture."
+          ],
+          "practice_questions": [
+            "In which city is the Gateway of India located?",
+            "What is Rashtrapati Bhavan originally known as during British rule?"
+          ],
+          "practice_solutions": [
+            "Mumbai.",
+            "Viceroy's House."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c07-t3",
+          "title": "Growth of Modern Indian Literature, Theatre and Music",
+          "aliases": [
+            "Rabindranath Tagore Gitanjali Nobel Prize",
+            "Bankim Chandra Chattopadhyay Vande Mataram",
+            "Bhartendu Harishchandra Hindi theatre",
+            "Indian classical music gharanas"
+          ],
+          "learning_objectives": [
+            "Examine growth of modern Indian literature (Tagore's Gitanjali, Bankim Chandra's Anandamath).",
+            "Describe role of nationalist theatre, songs, and classical music gharanas in national awakening."
+          ],
+          "explanation": "Modern Indian literature awakened national self-respect. Bankim Chandra Chattopadhyay wrote 'Anandamath' containing national song 'Vande Mataram'. Rabindranath Tagore won the Nobel Prize in Literature (1913) for 'Gitanjali'. Street theatre and classical music gharanas preserved cultural identity.",
+          "examples": [
+            "Rabindranath Tagore was awarded the Nobel Prize in Literature in 1913 for his poetry collection Gitanjali.",
+            "'Vande Mataram' became the rallying cry of freedom fighters during the Anti-Partition movement of Bengal."
+          ],
+          "exercises": [
+            "Who composed the national song 'Vande Mataram' and in which novel was it published?",
+            "Who was the first Indian to win the Nobel Prize in Literature?"
+          ],
+          "solutions": [
+            "Bankim Chandra Chattopadhyay, in his novel 'Anandamath'.",
+            "Rabindranath Tagore (in 1913 for Gitanjali)."
+          ],
+          "practice_questions": [
+            "In which year did Tagore receive the Nobel Prize?",
+            "Name one famous Marathi or Gujarati reformist playwright."
+          ],
+          "practice_solutions": [
+            "1913 AD.",
+            "Ranchhodbhai Udayram (Gujarati theatre pioneer) or Vishnudas Bhave (Marathi theatre)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c08",
+      "number": "8",
+      "title": "Chapter 8 - India : Post Independence",
+      "aliases": [
+        "India : Post Independence",
+        "Chapter 8 Post Independence India",
+        "Integration of Princely States"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c08-t1",
+          "title": "Integration of Princely States and Sardar Patel",
+          "aliases": [
+            "Sardar Vallabhbhai Patel Iron Man",
+            "integration 562 princely states",
+            "Junagadh Hyderabad Kashmir accession",
+            "India : Post Independence"
+          ],
+          "learning_objectives": [
+            "Describe integration of 562 princely states into Indian Union under Sardar Vallabhbhai Patel (Iron Man of India).",
+            "Analyze resolution of complex accessions (Junagadh, Hyderabad, Jammu & Kashmir)."
+          ],
+          "explanation": "At independence, India contained 562 princely states. Home Minister Sardar Vallabhbhai Patel, assisted by V.P. Menon, persuaded rulers to sign the Instrument of Accession based on patriotism. Police action (Operation Polo) integrated Hyderabad, referendum integrated Junagadh, and Maharaja Hari Singh signed accession for Jammu & Kashmir.",
+          "examples": [
+            "Sardar Patel persuaded the Nawab of Junagadh and Nizam of Hyderabad to merge their states into the Indian Republic.",
+            "Statue of Unity in Gujarat honours Sardar Patel's historic role in political unification of India."
+          ],
+          "exercises": [
+            "Who is known as the 'Iron Man of India' for integrating 562 princely states?",
+            "How was the state of Junagadh integrated into the Indian Union?"
+          ],
+          "solutions": [
+            "Sardar Vallabhbhai Patel.",
+            "Through a public referendum (plebiscite) where citizens overwhelmingly voted to join India."
+          ],
+          "practice_questions": [
+            "Name the official document signed by princely state rulers to merge with India.",
+            "Which military operation integrated Hyderabad into India in 18 September 1948?"
+          ],
+          "practice_solutions": [
+            "Instrument of Accession.",
+            "Operation Polo (Police Action)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c08-t2",
+          "title": "States Reorganisation Commission and Linguistic States",
+          "aliases": [
+            "States Reorganisation Commission 1953 Fazl Ali",
+            "Potti Sreeramulu Andhra movement",
+            "Bifurcation of Bombay State Gujarat 1960",
+            "Mahagujarat Movement Indulal Yagnik"
+          ],
+          "learning_objectives": [
+            "Explain formation of States Reorganisation Commission (1953, Fazl Ali).",
+            "Describe Mahagujarat Movement led by Indulal Yagnik resulting in creation of Gujarat state on 1st May 1960."
+          ],
+          "explanation": "Demand for linguistic states led to fast-unto-death by Potti Sreeramulu for Andhra Pradesh (1952). States Reorganisation Commission (Fazl Ali) reorganized states on linguistic lines (1956). Public movement in Bombay state led by Indulal Yagnik (Mahagujarat Janta Parishad) led to bifurcation of Bombay into Gujarat and Maharashtra on 1st May 1960.",
+          "examples": [
+            "Gujarat was officially formed as a separate state on 1st May 1960, inaugurated by Ravi Shankar Maharaj at Sabarmati Ashram.",
+            "Indulal Yagnik spearheaded the Mahagujarat Movement representing aspirations of Gujarati speaking people."
+          ],
+          "exercises": [
+            "On which date was the state of Gujarat established?",
+            "Who led the Mahagujarat Movement for a separate state of Gujarat?"
+          ],
+          "solutions": [
+            "1st May 1960.",
+            "Indulal Yagnik."
+          ],
+          "practice_questions": [
+            "Who inaugurated the new state of Gujarat at Sabarmati Ashram on 1st May 1960?",
+            "Who chaired the States Reorganisation Commission of 1953?"
+          ],
+          "practice_solutions": [
+            "Pujya Ravi Shankar Maharaj.",
+            "Justice Fazl Ali."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c08-t3",
+          "title": "Non-Aligned Movement (NAM) and Economic Planning",
+          "aliases": [
+            "Non-Aligned Movement NAM Nehru Tito Nasser",
+            "Planning Commission Five Year Plans",
+            "Green and White Revolutions Amul"
+          ],
+          "learning_objectives": [
+            "Explain Foreign Policy of Non-Alignment (NAM) spearheaded by Jawaharlal Nehru.",
+            "Describe economic planning: Planning Commission, Five-Year Plans, and White Revolution (Operation Flood / AMUL)."
+          ],
+          "explanation": "India adopted Non-Aligned Movement (NAM) during Cold War, led by Nehru (India), Tito (Yugoslavia), and Nasser (Egypt) to maintain independence without joining US or Soviet military blocs. Domestically, Planning Commission formulated Five-Year Plans. Dr. Verghese Kurien led White Revolution (Operation Flood) establishing AMUL dairy cooperative in Anand, Gujarat.",
+          "examples": [
+            "AMUL dairy cooperative in Anand transformed India into the world's largest milk producer.",
+            "NAM allowed India to accept economic assistance from all friendly nations without military alliance conditions."
+          ],
+          "exercises": [
+            "What was the main principle of India's Non-Aligned Foreign Policy (NAM)?",
+            "Who is known as the 'Father of White Revolution' in India?"
+          ],
+          "solutions": [
+            "To maintain an independent foreign policy by not joining either the US or Soviet military power blocs.",
+            "Dr. Verghese Kurien."
+          ],
+          "practice_questions": [
+            "Where is the headquarters of AMUL dairy located?",
+            "Name two key founding leaders of Non-Aligned Movement along with Nehru."
+          ],
+          "practice_solutions": [
+            "Anand, Gujarat.",
+            "Josip Broz Tito (Yugoslavia) and Gamal Abdel Nasser (Egypt)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c09",
+      "number": "9",
+      "title": "Chapter 9 - Resources",
+      "aliases": [
+        "Resources",
+        "Chapter 9 Resources",
+        "Geography Resources"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c09-t1",
+          "title": "Concept and Classification of Resources",
+          "aliases": [
+            "resource definition utility value",
+            "natural human human-made resources",
+            "ubiquitous localized resources",
+            "Resources"
+          ],
+          "learning_objectives": [
+            "Define a Resource (anything satisfying human needs with utility and value).",
+            "Classify resources into Natural (air, water), Human-Made (buildings, roads), and Human Resources (skills, knowledge)."
+          ],
+          "explanation": "A resource is any material found in nature or created by humans that possesses utility (usefulness) and value to satisfy human needs. Classification:\n- Natural Resources: Derived from nature (air, sunlight, soil, minerals).\n- Human-Made Resources: Natural substances transformed by technology (bridges, machinery).\n- Human Resources: People with education, health, and skill to create value.",
+          "examples": [
+            "Water and air are ubiquitous natural resources available everywhere.",
+            "Iron ore processed into steel to build railway bridges is a human-made resource."
+          ],
+          "exercises": [
+            "Define a resource in Geography.",
+            "Classify resources based on origin with examples."
+          ],
+          "solutions": [
+            "Any substance or object that has utility and value to satisfy human needs is called a resource.",
+            "Biotic resources (derived from living organisms, e.g. plants, animals) and Abiotic resources (derived from non-living things, e.g. land, minerals)."
+          ],
+          "practice_questions": [
+            "What turns a natural substance into a resource?",
+            "Why are human beings considered the most valuable resource?"
+          ],
+          "practice_solutions": [
+            "Its utility, application of human knowledge, and technology.",
+            "Because human intelligence, knowledge, and skills create all other resources."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c09-t2",
+          "title": "Renewable vs Non-Renewable Resources and Land/Soil",
+          "aliases": [
+            "renewable vs non-renewable resources",
+            "soil formation horizon profile",
+            "land degradation conservation"
+          ],
+          "learning_objectives": [
+            "Differentiate between Renewable (solar, wind) and Non-Renewable (coal, petroleum) resources.",
+            "Describe soil formation factors and land degradation causes/conservation."
+          ],
+          "explanation": "Renewable resources get replenished naturally in short time (solar energy, wind, water); Non-renewable resources take millions of years to form and have limited stock (minerals, coal). Soil is thin top layer formed by weathering of rocks, organic humus, and climate over hundreds of years.",
+          "examples": [
+            "Solar energy is an inexhaustible renewable resource.",
+            "Soil erosion caused by deforestation can be controlled by contour ploughing and afforestation."
+          ],
+          "exercises": [
+            "Differentiate between renewable and non-renewable resources with examples.",
+            "List two methods used to conserve soil on hilly slopes."
+          ],
+          "solutions": [
+            "Renewable resources replenish quickly (e.g. solar energy); non-renewable resources have limited reserves and take millions of years to form (e.g. coal).",
+            "Terrace farming and contour bunding."
+          ],
+          "practice_questions": [
+            "What is soil weathering?",
+            "Why is soil conservation essential for agriculture?"
+          ],
+          "practice_solutions": [
+            "The breaking down and decay of exposed rocks by weather, temperature changes, and biological action.",
+            "Soil provides essential nutrients and moisture for growing food crops."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c09-t3",
+          "title": "Conservation of Resources and Sustainable Development",
+          "aliases": [
+            "sustainable development 3Rs",
+            "resource conservation principles",
+            "future generations sustainability"
+          ],
+          "learning_objectives": [
+            "Explain Sustainable Development (meeting present needs without compromising future generations' needs).",
+            "State 3Rs of resource conservation: Reduce, Reuse, Recycle."
+          ],
+          "explanation": "Resource conservation means using resources carefully without wasting them. Sustainable Development balances present resource use while preserving environment for future generations. Principles: 3Rs (Reduce consumption, Reuse materials, Recycle waste), minimize depletion of natural capital, and respect all life forms.",
+          "examples": [
+            "Rainwater harvesting conserves groundwater reserves for future dry seasons.",
+            "Recycling paper reduces tree cutting and saves water and energy."
+          ],
+          "exercises": [
+            "What is Sustainable Development?",
+            "What are the 3Rs of resource conservation?"
+          ],
+          "solutions": [
+            "Carefully utilizing resources so that present needs are met while preserving resources for future generations.",
+            "Reduce, Reuse, and Recycle."
+          ],
+          "practice_questions": [
+            "Why must non-renewable resources be conserved?",
+            "Give one example of sustainable water management."
+          ],
+          "practice_solutions": [
+            "Because their stock is finite and cannot be replenished once exhausted.",
+            "Drip irrigation or roof-top rainwater harvesting."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c10",
+      "number": "10",
+      "title": "Chapter 10 - Minerals and Power Resources",
+      "aliases": [
+        "Minerals and Power Resources",
+        "Chapter 10 Minerals",
+        "Energy Resources"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c10-t1",
+          "title": "Metallic and Non-Metallic Minerals",
+          "aliases": [
+            "metallic minerals ferrous non-ferrous",
+            "iron ore bauxite manganese copper",
+            "non-metallic minerals mica limestone",
+            "Minerals and Power Resources"
+          ],
+          "learning_objectives": [
+            "Classify minerals into Metallic (Ferrous: iron ore; Non-ferrous: bauxite, copper) and Non-Metallic (limestone, mica).",
+            "Identify major mineral distribution in India (Chota Nagpur Plateau, Gujarat)."
+          ],
+          "explanation": "A mineral is a naturally occurring inorganic substance with a definite chemical composition. Metallic minerals contain raw metals (Ferrous contain iron e.g. hematite; Non-ferrous do not contain iron e.g. bauxite, copper). Non-metallic minerals lack metals (limestone, mica, gypsum). Chota Nagpur Plateau is India's mineral heartland.",
+          "examples": [
+            "Bauxite is the primary ore used to extract aluminium metal.",
+            "Limestone is a non-metallic mineral essential for manufacturing cement."
+          ],
+          "exercises": [
+            "Differentiate between ferrous and non-ferrous metallic minerals.",
+            "Which plateau region in India is rich in iron ore, coal, and manganese deposits?"
+          ],
+          "solutions": [
+            "Ferrous minerals contain iron (e.g. iron ore, manganese); non-ferrous minerals do not contain iron (e.g. bauxite, copper).",
+            "Chota Nagpur Plateau."
+          ],
+          "practice_questions": [
+            "Name the main ore of aluminium.",
+            "Which non-metallic mineral is widely used in electrical industry due to its insulating property?"
+          ],
+          "practice_solutions": [
+            "Bauxite.",
+            "Mica."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c10-t2",
+          "title": "Conventional Energy Resources: Coal, Petroleum, Gas and Hydel",
+          "aliases": [
+            "conventional energy coal black gold",
+            "petroleum refining Mumbai High",
+            "hydel power hydroelectric dams"
+          ],
+          "learning_objectives": [
+            "Describe conventional energy sources: Coal (thermal power), Petroleum ('black gold'), Natural Gas, and Hydel Power.",
+            "Identify major petroleum fields in India (Mumbai High, Ankleshwar in Gujarat)."
+          ],
+          "explanation": "Conventional energy sources have been in traditional use for long periods. Coal is burnt for thermal electricity. Petroleum ('black gold') yields petrol, diesel, and kerosene through refining. Offshore Mumbai High and Ankleshwar (Gujarat) are major oil fields. Hydel power generates electricity from falling dam water.",
+          "examples": [
+            "Ankleshwar in Bharuch district is Gujarat's premier onshore petroleum producing region.",
+            "Sardar Sarovar Dam on Narmada River generates hydroelectric power for Gujarat and neighboring states."
+          ],
+          "exercises": [
+            "Why is petroleum called 'Black Gold'?",
+            "Name two major oil fields in India."
+          ],
+          "solutions": [
+            "Because of its high economic value and wide array of commercial by-products.",
+            "Mumbai High (offshore) and Ankleshwar in Gujarat."
+          ],
+          "practice_questions": [
+            "What is electricity generated from falling river water called?",
+            "Which type of power plant burns coal to produce electricity?"
+          ],
+          "practice_solutions": [
+            "Hydroelectricity or Hydel Power.",
+            "Thermal power plant."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c10-t3",
+          "title": "Non-Conventional Energy Resources and Conservation",
+          "aliases": [
+            "non-conventional solar wind geothermal biogas",
+            "Charanka Solar Park Gujarat",
+            "Muppandal wind farm Tamil Nadu"
+          ],
+          "learning_objectives": [
+            "Explain non-conventional renewable energy: Solar, Wind, Geothermal, Nuclear, and Biogas.",
+            "Highlight Gujarat's leadership in solar energy (Charanka Solar Park)."
+          ],
+          "explanation": "Non-conventional energy sources are clean, non-polluting, and renewable. Solar energy uses photovoltaic cells; Wind energy uses wind turbines; Biogas uses decomposed organic cattle dung. Gujarat established the Asia's largest Charanka Solar Park in Patan district and extensive solar rooftop initiatives.",
+          "examples": [
+            "Charanka Solar Park in Patan, Gujarat generates clean solar electricity.",
+            "Biogas plants in rural areas utilize cow dung (gobar) to produce clean cooking gas and organic manure."
+          ],
+          "exercises": [
+            "What are non-conventional sources of energy? List three examples.",
+            "Where is the Charanka Solar Park located in Gujarat?"
+          ],
+          "solutions": [
+            "Clean, renewable, non-polluting energy sources that replace fossil fuels (e.g. solar energy, wind energy, biogas).",
+            "In Patan district of Gujarat."
+          ],
+          "practice_questions": [
+            "What raw material is used in rural biogas plants?",
+            "State one advantage of wind energy over coal."
+          ],
+          "practice_solutions": [
+            "Cattle dung (gobar), organic farm waste, and human excreta.",
+            "Wind energy produces zero greenhouse gas emissions and never runs out."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c11",
+      "number": "11",
+      "title": "Chapter 11 - Agriculture",
+      "aliases": [
+        "Agriculture",
+        "Chapter 11 Agriculture",
+        "Farming Types"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c11-t1",
+          "title": "Types of Farming Systems",
+          "aliases": [
+            "subsistence vs commercial farming",
+            "intensive plantation shifting farming",
+            "organic farming",
+            "Agriculture"
+          ],
+          "learning_objectives": [
+            "Differentiate between Subsistence farming (Intensive, Shifting, Nomadic) and Commercial farming (Plantation, Grain).",
+            "Explain features of organic farming."
+          ],
+          "explanation": "Farming types:\n- Subsistence Farming: Done on small plots to meet family needs.\n- Shifting Cultivation (Jhumming): Forest cleared by slash-and-burn, cultivated for few years, then abandoned.\n- Commercial Farming: Crops grown on large scale for sale in markets using machines.\n- Plantation Agriculture: Single cash crop (tea, coffee, rubber) cultivated over huge estates.",
+          "examples": [
+            "Tea estates in Assam and Coffee plantations in Coorg (Karnataka) are examples of plantation farming.",
+            "Shifting cultivation is practiced by tribal communities in Northeast India."
+          ],
+          "exercises": [
+            "Differentiate between subsistence farming and commercial farming.",
+            "What is plantation agriculture? Give two examples."
+          ],
+          "solutions": [
+            "Subsistence farming produces food for family consumption on small lands; commercial farming grows crops on large scale using machinery for market profits.",
+            "Commercial growing of a single crop on large estates with capital and processing units (e.g. Tea in Assam, Rubber in Kerala)."
+          ],
+          "practice_questions": [
+            "What is another name for shifting cultivation in Northeast India?",
+            "What is organic farming?"
+          ],
+          "practice_solutions": [
+            "Jhum cultivation.",
+            "Farming using organic manures and bio-pesticides without synthetic chemical fertilizers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c11-t2",
+          "title": "Major Food and Commercial Crops",
+          "aliases": [
+            "major crops rice wheat maize",
+            "cotton jute fiber crops",
+            "tea coffee beverage crops"
+          ],
+          "learning_objectives": [
+            "Describe geographical conditions for major food crops (Rice, Wheat, Maize) and cash/fiber crops (Cotton, Jute, Tea, Coffee).",
+            "Highlight Gujarat's leading position in Cotton and Groundnut production."
+          ],
+          "explanation": "Crops require specific soil and climate:\n- Rice: High temperature, high humidity, heavy rainfall, clayey soil (staple food).\n- Wheat: Moderate temperature during growth, bright sunshine at harvest, well-drained loamy soil.\n- Cotton: High temperature, light rainfall, 210 frost-free days, black soil (Gujarat lead producer).\n- Jute: Golden fiber requiring high temperature and alluvial soil.",
+          "examples": [
+            "Black soil of Saurashtra in Gujarat is ideal for growing high-quality cotton and groundnut.",
+            "West Bengal leads India in rice and jute production."
+          ],
+          "exercises": [
+            "What geographical conditions are required for growing cotton?",
+            "Which crop is known as the 'Golden Fiber' of India?"
+          ],
+          "solutions": [
+            "High temperature, light rainfall, 210 frost-free days, bright sunshine, and black or alluvial soil.",
+            "Jute."
+          ],
+          "practice_questions": [
+            "Which state leads India in groundnut and cotton production?",
+            "What type of soil is best suited for growing tea bushes?"
+          ],
+          "practice_solutions": [
+            "Gujarat.",
+            "Well-drained loamy soil rich in organic matter on hill slopes."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c11-t3",
+          "title": "Agricultural Development: India vs USA Case Study",
+          "aliases": [
+            "agricultural development farm case study",
+            "Indian farm small landholding",
+            "USA farm large mechanized commercial"
+          ],
+          "learning_objectives": [
+            "Compare agricultural practices of a typical small Indian farm (1.5 hectares) with a large mechanized USA farm (250 hectares).",
+            "Explain measures for agricultural development and food security."
+          ],
+          "explanation": "Comparative Study:\n- Indian Farm: Small landholding (1.5 ha), intensive family labor, dependence on monsoons/bullocks, low commercial surplus.\n- USA Farm: Huge landholding (250+ ha), heavy machinery (tractors, combines, satellite soil testing), high yield exported globally, farmer operates as a businessman.",
+          "examples": [
+            "A USA farmer tests soil samples in laboratories to apply precise computer-controlled fertilizers.",
+            "Indian farmers use cooperative credit and HYV seeds to increase crop productivity."
+          ],
+          "exercises": [
+            "Compare the average size of a farm in India with that in the USA.",
+            "How does a farmer in the USA function differently from a traditional small farmer in India?"
+          ],
+          "solutions": [
+            "An average Indian farm is small (around 1.5 hectares), whereas an average USA farm is huge (around 250 to 300 hectares).",
+            "A USA farmer operates like an industrial businessman using computers, soil lab tests, and heavy machinery for export market production."
+          ],
+          "practice_questions": [
+            "What is HYV seed?",
+            "State two measures to improve agricultural development in India."
+          ],
+          "practice_solutions": [
+            "High Yielding Variety seeds that produce higher crop yield per hectare.",
+            "Expanding drip/sprinkler irrigation and providing subsidized cooperative farm credit."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c12",
+      "number": "12",
+      "title": "Chapter 12 - Industries",
+      "aliases": [
+        "Industries",
+        "Chapter 12 Industries",
+        "Secondary Sector"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c12-t1",
+          "title": "Classification of Industries",
+          "aliases": [
+            "classification of industries",
+            "agro-based mineral-based forest-based",
+            "small scale vs large scale industries",
+            "public private joint cooperative sector",
+            "Industries"
+          ],
+          "learning_objectives": [
+            "Classify industries based on Raw Materials (Agro, Mineral, Marine, Forest), Size (Small-scale, Large-scale), and Ownership (Public, Private, Joint, Cooperative)."
+          ],
+          "explanation": "Industries transform raw materials into finished products (secondary activity). Classification:\n- Raw Material: Agro-based (cotton, sugar), Mineral-based (iron & steel), Forest-based (paper, lac).\n- Size: Small-scale (cottage, basket weaving, handloom); Large-scale (automobiles, steel plants).\n- Ownership: Public (SAIL, BHEL), Private (TATA, Reliance), Joint (Maruti Udyog), Cooperative (AMUL).",
+          "examples": [
+            "AMUL dairy in Anand is a world-renowned cooperative sector industry owned by milk producers.",
+            "Bhilai Steel Plant is a public sector industry managed by the Government of India."
+          ],
+          "exercises": [
+            "Classify industries on the basis of ownership with one example each.",
+            "What are agro-based industries? Give two examples."
+          ],
+          "solutions": [
+            "Public sector (SAIL), Private sector (Tata Steel), Joint sector (Maruti Udyog), and Cooperative sector (AMUL).",
+            "Industries that use plant and animal based agricultural products as raw materials (e.g. Textile, Sugar industry)."
+          ],
+          "practice_questions": [
+            "Differentiate between small-scale and large-scale industries.",
+            "Which sector does AMUL belong to?"
+          ],
+          "practice_solutions": [
+            "Small-scale industries use lower capital and manual labor; large-scale industries use huge capital, advanced machinery, and mass production.",
+            "Cooperative sector."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c12-t2",
+          "title": "Factors Affecting Industrial Location and Industrial Regions",
+          "aliases": [
+            "industrial location factors raw material power labor transport market",
+            "industrial regions of India Mumbai-Pune Chota Nagpur Gujarat"
+          ],
+          "learning_objectives": [
+            "Identify factors influencing industrial location (availability of raw material, land, water, labor, power, capital, transport, market).",
+            "Map major industrial regions of India (Mumbai-Pune cluster, Hugli corridor, Gujarat industrial belt)."
+          ],
+          "explanation": "Industries are located where raw materials, cheap power, water, skilled labor, capital, transport, and market are easily accessible. Industrial regions emerge when several industries cluster together to share agglomeration benefits (e.g. Mumbai-Pune cluster, Ahmedabad-Vadodara belt, Chota Nagpur industrial belt).",
+          "examples": [
+            "Iron and steel plants are located near coal and iron ore mines in Chota Nagpur to minimize raw material transport cost.",
+            "Ahmedabad-Vadodara industrial belt developed due to cotton availability, port access, and chemical industries."
+          ],
+          "exercises": [
+            "List four key factors that influence the location of an industry.",
+            "Name two major industrial regions in India."
+          ],
+          "solutions": [
+            "Raw material availability, power supply, transport network, and proximity to market.",
+            "Mumbai-Pune industrial region and Ahmedabad-Vadodara industrial region."
+          ],
+          "practice_questions": [
+            "What is an industrial region?",
+            "Why are sugar mills located close to sugarcane growing fields?"
+          ],
+          "practice_solutions": [
+            "An area where several manufacturing industries cluster together to take advantage of common infrastructure and market access.",
+            "Sugarcane is heavy, perishable, and loses sucrose content rapidly during long transportation."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c13-t3",
+          "title": "Major World Industries: Iron & Steel and Cotton Textiles",
+          "aliases": [
+            "iron and steel industry Jamshedpur Pittsburgh",
+            "cotton textile industry Ahmedabad Osaka",
+            "comparative industrial study"
+          ],
+          "learning_objectives": [
+            "Compare Iron and Steel industry centers: Jamshedpur (India) vs Pittsburgh (USA).",
+            "Compare Cotton Textile hubs: Ahmedabad (India) vs Osaka (Japan)."
+          ],
+          "explanation": "Comparative Studies:\n- Iron & Steel: Jamshedpur (TISCO) benefits from nearby iron ore (Mayurbhanj), coal (Jharia), Subarnarekha river water. Pittsburgh benefits from Appalachian coal and Great Lakes iron transport.\n- Cotton Textiles: Ahmedabad benefits from local black cotton soil, humid climate, Sabarmati water. Osaka ('Manchester of Japan') relies on imported raw cotton, skilled labor, and Yodo river water.",
+          "examples": [
+            "Osaka imports raw cotton from India, USA, and Egypt because Japan has no domestic cotton fields.",
+            "Jamshedpur was chosen for TISCO because it was close to iron ore, coal, manganese deposits, and Kolkata market."
+          ],
+          "exercises": [
+            "Why is Pittsburgh a major steel manufacturing center in the USA?",
+            "Why did Osaka become a major cotton textile center despite Japan growing no cotton?"
+          ],
+          "solutions": [
+            "It has coal nearby from Appalachian coalfields, easy iron ore transport across the Great Lakes, and abundant river water.",
+            "It has a favorable humid climate for spinning, skilled labor, good port facilities to import raw cotton and export finished textiles."
+          ],
+          "practice_questions": [
+            "Which city is known as the 'Manchester of Japan'?",
+            "Name the rivers supplying water to TISCO plant at Jamshedpur."
+          ],
+          "practice_solutions": [
+            "Osaka.",
+            "Subarnarekha and Kharkai rivers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c13",
+      "number": "13",
+      "title": "Chapter 13 - Human Resource",
+      "aliases": [
+        "Human Resource",
+        "Chapter 13 Human Resource",
+        "Demographics Population"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c13-t1",
+          "title": "Concept of Human Resource, Distribution and Density",
+          "aliases": [
+            "human resource ultimate resource",
+            "population distribution unevenness",
+            "population density formula",
+            "Human Resource"
+          ],
+          "learning_objectives": [
+            "Explain why human resources are considered the ultimate resource of a nation.",
+            "Define Population Density (number of people per square kilometer) and analyze global distribution patterns."
+          ],
+          "explanation": "People are a nation's greatest asset; healthy, educated, and motivated people develop resources. Population distribution is highly uneven globally (90% of world population lives in 30% land area). Population Density = Total Population / Total Land Area (sq km). India's average density is 382 persons/sq km (2011 census).",
+          "examples": [
+            "Ganga plains in India are densely populated due to fertile land, water, and flat plains.",
+            "Himalayan mountain regions and Thar desert have sparse population density."
+          ],
+          "exercises": [
+            "What is Population Density?",
+            "Why are fertile river plains densely populated compared to desert regions?"
+          ],
+          "solutions": [
+            "The average number of people living in a unit area of the Earth's surface (usually per square kilometer).",
+            "River plains offer fertile soil for farming, flat land for building homes/roads, and abundant freshwater."
+          ],
+          "practice_questions": [
+            "What was India's average population density according to the 2011 census?",
+            "Which continent accounts for more than half of world's population?"
+          ],
+          "practice_solutions": [
+            "382 persons per square kilometer.",
+            "Asia."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c13-t2",
+          "title": "Factors Influencing Population Distribution",
+          "aliases": [
+            "geographical factors topography climate soil water minerals",
+            "economic social cultural factors",
+            "urbanization employment"
+          ],
+          "learning_objectives": [
+            "Identify Geographical factors (topography, climate, soil, water, minerals) and Economic/Cultural factors influencing population distribution."
+          ],
+          "explanation": "Factors affecting where people live:\n- Topography: People prefer flat plains over steep mountains.\n- Climate: People avoid extreme climates (Sahara desert, polar ice caps).\n- Soil & Water: Fertile river valleys attract agriculture.\n- Minerals: Mining areas attract industrial settlements (Chota Nagpur).\n- Social/Economic: Cities with jobs, schools, and hospitals (Osaka, Mumbai) attract migrants.",
+          "examples": [
+            "Topography makes Northern Plains of India densely populated, while Ladakh mountain desert is sparsely populated.",
+            "Discovery of oil in Middle East transformed desert areas into populated urban centers."
+          ],
+          "exercises": [
+            "List three geographical factors affecting population distribution.",
+            "Why do industrial centers like Mumbai and Tokyo attract high population density?"
+          ],
+          "solutions": [
+            "Topography (flatter land), Climate (moderate weather), and Water availability.",
+            "They offer employment opportunities, educational institutions, healthcare facilities, and modern transport infrastructure."
+          ],
+          "practice_questions": [
+            "Why are mountain areas like the Alps or Himalayas sparsely populated?",
+            "Give an example of a cultural city attracting pilgrims."
+          ],
+          "practice_solutions": [
+            "Steep slopes, cold climate, poor soil, and difficulty in constructing roads and railways.",
+            "Varanasi, Jerusalem, or Haridwar."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c13-t3",
+          "title": "Population Change, Migration and Age-Sex Pyramid",
+          "aliases": [
+            "birth rate death rate natural growth rate",
+            "emigration immigration",
+            "population pyramid Kenya Japan India"
+          ],
+          "learning_objectives": [
+            "Explain Population Change (Birth Rate, Death Rate, Natural Growth Rate = Births - Deaths).",
+            "Interpret Population Pyramids (Kenya: high birth/death rates; India: expanding youth base; Japan: narrow base aging population)."
+          ],
+          "explanation": "Population Change = (Births - Deaths) + Net Migration. Birth Rate is live births per 1,000 people; Death Rate is deaths per 1,000. Population Pyramid shows age-group distribution split by gender. Pyramid shape reveals demographic structure: Kenya (broad base, rapid birth), India (large youth workforce), Japan (narrow base, aging society).",
+          "examples": [
+            "India's population pyramid has a broad youth base, providing a strong demographic dividend for national growth.",
+            "Japan's population pyramid has a narrow base indicating low birth rates and a growing elderly population."
+          ],
+          "exercises": [
+            "How is Natural Growth Rate of population calculated?",
+            "What does a broad base in a population pyramid signify?"
+          ],
+          "solutions": [
+            "Natural Growth Rate = Birth Rate minus Death Rate.",
+            "A high birth rate with a large proportion of young children in the total population."
+          ],
+          "practice_questions": [
+            "Differentiate between immigration and emigration.",
+            "Which country exhibits a narrow base population pyramid due to low birth rates?"
+          ],
+          "practice_solutions": [
+            "Immigration is when people enter a new country to settle; emigration is when people leave their own country.",
+            "Japan."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c14",
+      "number": "14",
+      "title": "Chapter 14 - Disaster Management",
+      "aliases": [
+        "Disaster Management",
+        "Chapter 14 Disaster Management",
+        "Natural and Man-Made Hazards"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c14-t1",
+          "title": "Natural Disasters and Preparedness",
+          "aliases": [
+            "earthquake tsunami cyclone flood drought",
+            "natural disasters preparedness",
+            "Gujarat 2001 earthquake Bhuj",
+            "Disaster Management"
+          ],
+          "learning_objectives": [
+            "Classify Natural Disasters (Earthquake, Tsunami, Cyclone, Flood, Drought).",
+            "Describe disaster preparedness and emergency measures (Bhuj 2001 earthquake lesson)."
+          ],
+          "explanation": "Natural disasters are sudden environmental events causing loss of life and property:\n- Earthquake: Sudden ground shaking due to fault movement (e.g. 26 Jan 2001 Bhuj earthquake).\n- Cyclone: Violent rotating tropical storms hitting coastal regions (e.g. Gujarat coastal cyclones).\n- Flood & Drought: Excess rainfall overflow vs prolonged rain deficiency.\nPreparedness includes earthquake-resistant building design, early warning systems, and emergency kits.",
+          "examples": [
+            "Cyclone warning systems along Gujarat coast allow evacuation of coastal fishermen before landfall.",
+            "During an earthquake, take shelter under heavy wooden furniture or move to an open field away from tall structures."
+          ],
+          "exercises": [
+            "Classify the following into natural and man-made disasters: Cyclone, Chemical Spill, Earthquake, Industrial Fire.",
+            "State two safety precautions to take during an earthquake."
+          ],
+          "solutions": [
+            "Natural: Cyclone, Earthquake. Man-made: Chemical Spill, Industrial Fire.",
+            "Take shelter under a sturdy desk or table, and stay away from glass windows, tall trees, and electric poles."
+          ],
+          "practice_questions": [
+            "On which date did the major earthquake hit Bhuj in Gujarat?",
+            "What is a Tsunami?"
+          ],
+          "practice_solutions": [
+            "26th January 2001.",
+            "Huge sea waves caused by underwater ocean-floor earthquakes or volcanic eruptions."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c14-t2",
+          "title": "Man-Made Disasters and Industrial Safety",
+          "aliases": [
+            "man-made disasters industrial accident",
+            "Bhopal Gas Tragedy 1984 MIC gas",
+            "fire safety chemical hazards"
+          ],
+          "learning_objectives": [
+            "Identify Man-Made Disasters (Industrial chemical leaks, Fires, Nuclear accidents, Stampedes).",
+            "Analyze the Bhopal Gas Tragedy (1984) and safety regulations for hazardous industries."
+          ],
+          "explanation": "Man-made disasters arise from human negligence, technical failure, or sabotage. On 3rd December 1984, lethal Methyl Isocyanate (MIC) gas leaked from Union Carbide pesticide factory in Bhopal, killing thousands. Industrial safety requires storing toxic chemicals far from residential areas and maintaining strict safety audits.",
+          "examples": [
+            "Bhopal Gas Tragedy of 1984 was caused by toxic Methyl Isocyanate (MIC) gas leak.",
+            "Installing fire extinguishers, smoke detectors, and clear emergency exit routes reduces fire hazards in commercial buildings."
+          ],
+          "exercises": [
+            "Which poisonous gas leaked during the Bhopal Gas Tragedy in 1984?",
+            "List two precautionary measures hazardous chemical factories must follow."
+          ],
+          "solutions": [
+            "Methyl Isocyanate (MIC) gas.",
+            "Locate factories far away from residential zones and conduct regular safety maintenance audits of gas storage tanks."
+          ],
+          "practice_questions": [
+            "When did the Bhopal Gas Tragedy occur?",
+            "State one rule for fire safety in school buildings."
+          ],
+          "practice_solutions": [
+            "Night of 2-3 December 1984.",
+            "Conduct regular evacuation fire drills and keep fire extinguishers functional."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c14-t3",
+          "title": "Role of Citizens, NDRF and First Aid in Disasters",
+          "aliases": [
+            "NDRF National Disaster Response Force",
+            "community disaster response first aid",
+            "NDMA helpline civic duty"
+          ],
+          "learning_objectives": [
+            "Explain role of National Disaster Response Force (NDRF), Red Cross, and local administration.",
+            "Describe citizen responsibilities, helpline numbers, and basic First Aid during emergencies."
+          ],
+          "explanation": "Disaster management involves Rescue, Relief, and Rehabilitation. NDRF (National Disaster Response Force) provides specialized rescue during floods and earthquakes. Citizens should maintain emergency contact numbers, avoid spreading panic rumors on social media, donate relief supplies, and apply basic first aid (CPR, bandaging, burn care).",
+          "examples": [
+            "NDRF teams deploy boats and helicopters to rescue stranded citizens during heavy monsoon floods in Gujarat.",
+            "Applying cold running water immediately on minor burns reduces tissue damage before medical help arrives."
+          ],
+          "exercises": [
+            "What is NDRF and what is its role during natural disasters?",
+            "State two duties of responsible citizens during a disaster."
+          ],
+          "solutions": [
+            "National Disaster Response Force; a specialized force trained for rapid rescue, evacuation, and relief operations.",
+            "Avoid spreading unverified rumors and help vulnerable neighbors (elderly/children) move to safe shelters."
+          ],
+          "practice_questions": [
+            "What emergency helpline number can be dialed for disaster relief in India?",
+            "What is the first step in administering first aid for minor thermal burns?"
+          ],
+          "practice_solutions": [
+            "108 (or 112 emergency services / 1070 state disaster helpline).",
+            "Cool the burn with clean running tap water for at least 10 minutes."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c15",
+      "number": "15",
+      "title": "Chapter 15 - Indian Constitution",
+      "aliases": [
+        "Indian Constitution",
+        "Chapter 15 Constitution",
+        "Civics Constitution"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c15-t1",
+          "title": "Need for a Constitution and Framing of Indian Constitution",
+          "aliases": [
+            "framing of Indian Constitution Constituent Assembly",
+            "Dr BR Ambedkar Drafting Committee",
+            "Dr Rajendra Prasad President",
+            "enactment 26 Jan 1950",
+            "Indian Constitution"
+          ],
+          "learning_objectives": [
+            "Explain why a democratic nation needs a Constitution.",
+            "Describe the Constituent Assembly (Dr. Rajendra Prasad President, Dr. B.R. Ambedkar Drafting Committee Chairman) and enactment on 26 January 1950."
+          ],
+          "explanation": "A Constitution is a fundamental document of supreme law governing a country. Constituent Assembly started work on 9 Dec 1946 with Dr. Rajendra Prasad as President and Dr. B.R. Ambedkar as Chairman of the Drafting Committee. It took 2 years, 11 months, and 18 days to draft. The Constitution came into force on 26th January 1950 (Republic Day).",
+          "examples": [
+            "Dr. B.R. Ambedkar is revered as the 'Father of the Indian Constitution' for guiding its drafting.",
+            "26th January was chosen for Republic Day to honor the 1930 Poorna Swaraj declaration."
+          ],
+          "exercises": [
+            "Who was the Chairman of the Drafting Committee of the Indian Constitution?",
+            "On which date did the Constitution of India come into force?"
+          ],
+          "solutions": [
+            "Dr. Bhimrao Ramji Ambedkar.",
+            "26th January 1950."
+          ],
+          "practice_questions": [
+            "Who served as the President of the Constituent Assembly?",
+            "How long did the Constituent Assembly take to draft the Indian Constitution?"
+          ],
+          "practice_solutions": [
+            "Dr. Rajendra Prasad.",
+            "2 years, 11 months, and 18 days."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c15-t2",
+          "title": "Key Features: Preamble, Secularism, Federalism and Parliamentary System",
+          "aliases": [
+            "Preamble sovereign socialist secular democratic republic",
+            "secularism feature",
+            "federalism central state level",
+            "parliamentary democracy universal adult franchise"
+          ],
+          "learning_objectives": [
+            "Analyze Preamble values: Sovereign, Socialist, Secular, Democratic, Republic.",
+            "Explain core constitutional pillars: Federalism, Separation of Powers, and Universal Adult Franchise (18+ years voting right)."
+          ],
+          "explanation": "Core Pillars:\n- Preamble: Introduction stating goals of Justice, Liberty, Equality, Fraternity.\n- Secularism: State treats all religions equally without adopting any official state religion.\n- Federalism: Power divided between Central Government and State Governments.\n- Universal Adult Franchise: Every Indian citizen aged 18 or above has equal right to vote regardless of caste, gender, or wealth.",
+          "examples": [
+            "In India, a citizen aged 18 can vote in elections regardless of income or background.",
+            "Federal system grants State Governments jurisdiction over police and public health while Union Government handles defense and foreign affairs."
+          ],
+          "exercises": [
+            "What is meant by a 'Secular State' in the Indian Constitution?",
+            "What is Universal Adult Franchise?"
+          ],
+          "solutions": [
+            "A state that does not have any official state religion and treats all religious communities with equal respect and freedom.",
+            "The constitutional right of every citizen who has attained 18 years of age to vote in elections without discrimination."
+          ],
+          "practice_questions": [
+            "What is Federalism?",
+            "List four key values declared in the Preamble to the Indian Constitution."
+          ],
+          "practice_solutions": [
+            "A system of government where political power is divided between a central national government and state governments.",
+            "Sovereign, Secular, Democratic, and Republic."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c15-t3",
+          "title": "Fundamental Rights and Fundamental Duties",
+          "aliases": [
+            "Six Fundamental Rights Article 14-32",
+            "Right to Equality Freedom Constitutional Remedies",
+            "Fundamental Duties 51A civic responsibility"
+          ],
+          "learning_objectives": [
+            "Identify Six Fundamental Rights guaranteed under Part III (Articles 14 to 32).",
+            "Explain Fundamental Duties (Article 51A) promoting civic responsibility and peaceful constitutional observance."
+          ],
+          "explanation": "Part III guarantees Six Fundamental Rights:\n1) Right to Equality\n2) Right to Freedom\n3) Right against Exploitation\n4) Right to Freedom of Religion\n5) Cultural & Educational Rights\n6) Right to Constitutional Remedies (Dr. Ambedkar called it the 'Heart and Soul of the Constitution').\nArticle 51A outlines Fundamental Duties (respecting national flag, protecting environment, preserving heritage).",
+          "examples": [
+            "Right to Constitutional Remedies allows any citizen to approach High Court or Supreme Court if their rights are violated.",
+            "Abiding by the Constitution, honoring the National Flag, and safeguarding public property are Fundamental Duties."
+          ],
+          "exercises": [
+            "Why did Dr. B.R. Ambedkar call the Right to Constitutional Remedies the 'Heart and Soul' of the Constitution?",
+            "State two Fundamental Duties of Indian citizens under Article 51A."
+          ],
+          "solutions": [
+            "Because it allows citizens to directly move the High Court or Supreme Court to enforce their Fundamental Rights if infringed.",
+            "To respect the National Flag and National Anthem, and to protect the natural environment (forests, rivers, wildlife)."
+          ],
+          "practice_questions": [
+            "How many Fundamental Rights are guaranteed by Part III of the Indian Constitution?",
+            "Which article of the Constitution lays down Fundamental Duties?"
+          ],
+          "practice_solutions": [
+            "Six Fundamental Rights.",
+            "Article 51A."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c16",
+      "number": "16",
+      "title": "Chapter 16 - Parliament and Law",
+      "aliases": [
+        "Parliament and Law",
+        "Chapter 16 Parliament",
+        "Legislature and Lawmaking"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c16-t1",
+          "title": "Structure and Role of the Indian Parliament",
+          "aliases": [
+            "Lok Sabha House of People 543 members",
+            "Rajya Sabha Council of States 245 members",
+            "President of India parliament organ",
+            "Parliament and Law"
+          ],
+          "learning_objectives": [
+            "Describe bicameral structure of Indian Parliament: Lok Sabha (House of the People, 543 elected) and Rajya Sabha (Council of States, 245 members).",
+            "Explain role of President as part of Parliament."
+          ],
+          "explanation": "Parliament (Sansad) is the supreme law-making organ of Indian democracy consisting of President, Lok Sabha, and Rajya Sabha:\n- Lok Sabha: Lower House, 543 members directly elected by people for a 5-year term. Speaker presides.\n- Rajya Sabha: Upper House, 245 members (233 elected by state assemblies + 12 nominated by President). Vice President is ex-officio Chairman.",
+          "examples": [
+            "Voters in parliamentary constituencies elect Members of Parliament (MPs) to represent them in Lok Sabha.",
+            "Rajya Sabha is a permanent house that is never dissolved; one-third members retire every two years."
+          ],
+          "exercises": [
+            "Name the two Houses of the Indian Parliament.",
+            "What is the term of Lok Sabha and who presides over its proceedings?"
+          ],
+          "solutions": [
+            "Lok Sabha (House of the People) and Rajya Sabha (Council of States).",
+            "5 years; the Speaker presides over Lok Sabha proceedings."
+          ],
+          "practice_questions": [
+            "Who is the ex-officio Chairman of Rajya Sabha?",
+            "How many members are nominated by the President to Rajya Sabha?"
+          ],
+          "practice_solutions": [
+            "The Vice President of India.",
+            "12 members (distinguished in literature, science, art, and social service)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c16-t2",
+          "title": "How Laws are Made in Parliament",
+          "aliases": [
+            "bill to law process",
+            "first second third reading",
+            "President assent act",
+            "Ordinary Bill vs Money Bill"
+          ],
+          "learning_objectives": [
+            "Trace the step-by-step legislative process of converting a Bill into an Act of Law.",
+            "Differentiate between Ordinary Bills and Money Bills."
+          ],
+          "explanation": "Lawmaking Process:\n1) Introduction & First Reading: Bill presented in either house.\n2) Second Reading: Clause-by-clause discussion and committee review.\n3) Third Reading: Voting on final text.\n4) Other House Approval: Sent to second house for passage.\n5) Presidential Assent: Bill becomes an Act (Law) when President signs it. Money Bills can only be introduced in Lok Sabha.",
+          "examples": [
+            "RTI (Right to Information) Bill was passed by both houses of Parliament and became law after receiving Presidential assent in 2005.",
+            "Money Bills require prior recommendation of the President and can originate only in Lok Sabha."
+          ],
+          "exercises": [
+            "When does a proposed Bill officially become a Law in India?",
+            "In which House of Parliament can a Money Bill be introduced?"
+          ],
+          "solutions": [
+            "When it is passed by both Houses of Parliament and receives the formal assent of the President of India.",
+            "Only in the Lok Sabha."
+          ],
+          "practice_questions": [
+            "What happens during the Second Reading of a Bill in Parliament?",
+            "Who decides whether a Bill is a Money Bill or an Ordinary Bill?"
+          ],
+          "practice_solutions": [
+            "Detailed clause-by-clause debate, amendments, and examination by parliamentary committees.",
+            "The Speaker of the Lok Sabha."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c16-t3",
+          "title": "Rule of Law, Unpopular Laws and Peaceful Democratic Protests",
+          "aliases": [
+            "Rule of Law Article 14",
+            "unpopular unjust laws parliamentary review",
+            "peaceful protest constitutional civic duty"
+          ],
+          "learning_objectives": [
+            "Explain Rule of Law (all citizens equal before law; no one above law).",
+            "Describe peaceful democratic methods (rallies, petitions, media debate) to oppose unpopular laws (Civic Safety: peaceful participation only)."
+          ],
+          "explanation": "Rule of Law means law applies equally to all citizens regardless of position, wealth, or power. If Parliament passes an unpopular or unjust law that conflicts with public interest or Constitution, citizens have the right to express peaceful dissent through public meetings, media debate, peaceful marches, and court petitions (Judicial Review). Protests MUST remain peaceful and non-violent without damaging public property.",
+          "examples": [
+            "Citizens filing petitions in Supreme Court to challenge an unconstitutional law.",
+            "Holding peaceful public meetings and submitting memoranda to elected representatives."
+          ],
+          "exercises": [
+            "What does 'Rule of Law' signify in a democracy?",
+            "Civic Safety: How should citizens express opposition to an unpopular law in a democracy?"
+          ],
+          "solutions": [
+            "That all individuals are equal before the law, and no person—regardless of rank or wealth—is above the law.",
+            "Through peaceful, lawful democratic methods such as filing court petitions, peaceful rallies, media discussions, and writing to representatives without violence or property damage."
+          ],
+          "practice_questions": [
+            "What power allows the Supreme Court to strike down an unconstitutional law passed by Parliament?",
+            "Why is peaceful non-violent protest essential in democratic civic life?"
+          ],
+          "practice_solutions": [
+            "Judicial Review.",
+            "It allows citizens to voice genuine grievances and influence policy while upholding law, order, and public safety."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c17",
+      "number": "17",
+      "title": "Chapter 17 - The Judiciary",
+      "aliases": [
+        "The Judiciary",
+        "Chapter 17 Judiciary",
+        "Courts and Justice"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c17-t1",
+          "title": "Structure of Indian Judiciary: Integrated System",
+          "aliases": [
+            "integrated judiciary pyramid structure",
+            "Supreme Court Chief Justice New Delhi",
+            "High Courts Gujarat High Court",
+            "Subordinate District Courts Lok Adalat",
+            "The Judiciary"
+          ],
+          "learning_objectives": [
+            "Describe integrated judicial hierarchy in India: Supreme Court (apex at New Delhi), High Courts (state level), and District/Subordinate Courts.",
+            "Explain role of Lok Adalat for speedy dispute resolution."
+          ],
+          "explanation": "India has a single integrated judicial system structured like a pyramid:\n- Supreme Court: Apex court in New Delhi, headed by Chief Justice of India (CJI). Decisions binding on all Indian courts.\n- High Courts: Highest judicial authority in states (e.g. Gujarat High Court at Ahmedabad).\n- Subordinate/District Courts: District & Sessions courts at district level.\nLok Adalats (People's Courts) provide fast, inexpensive amicable settlements.",
+          "examples": [
+            "Gujarat High Court is located at Sola in Ahmedabad.",
+            "Lok Adalats resolve long-pending motor accident claims and civil disputes through mutual compromise without court fees."
+          ],
+          "exercises": [
+            "Describe the structure of the judicial system in India.",
+            "Is the decision of the Supreme Court of India binding on all lower courts in India?",
+            "What is the main objective of Lok Adalats?"
+          ],
+          "solutions": [
+            "It is an integrated pyramid system with the Supreme Court at the apex, High Courts at state level, and District/Subordinate Courts at district level.",
+            "Yes.",
+            "To provide speedy, informal, and inexpensive justice through mutual compromise without heavy litigation costs."
+          ],
+          "practice_questions": [
+            "Where is the Supreme Court of India situated?",
+            "Whose decision is final and binding on all lower courts in India?"
+          ],
+          "practice_solutions": [
+            "New Delhi.",
+            "The Supreme Court of India."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c17-t2",
+          "title": "Independence of Judiciary and Civil vs Criminal Cases",
+          "aliases": [
+            "independence of judiciary separation powers",
+            "Civil cases property contracts",
+            "Criminal cases theft murder FIR police"
+          ],
+          "learning_objectives": [
+            "Explain Independence of Judiciary (free from executive and legislative interference).",
+            "Differentiate between Civil Law (property, rent, divorce) and Criminal Law (theft, assault, murder, FIR)."
+          ],
+          "explanation": "Independence of Judiciary ensures judges decide cases without political or executive pressure (protected tenure, fixed salaries from Consolidated Fund). Branches of Law:\n- Civil Law: Deals with disputes over property, land purchase, contracts, rent, divorce. Remedy: Compensation or specific performance.\n- Criminal Law: Deals with conduct considered offenses against society (theft, robbery, dowry harassment, murder). Begins with filing First Information Report (FIR) at police station.",
+          "examples": [
+            "A dispute over property boundary between two neighbors is tried under Civil Law.",
+            "A case of armed robbery begins with an FIR filed at police station under Criminal Law."
+          ],
+          "exercises": [
+            "Why is independence of the judiciary essential in a democracy?",
+            "Differentiate between Civil Law and Criminal Law with examples."
+          ],
+          "solutions": [
+            "It ensures judges can deliver impartial justice without fear or pressure from politicians, officials, or powerful individuals.",
+            "Civil Law handles private disputes like land or contract disagreements; Criminal Law handles offenses against public order like theft or assault starting with an FIR."
+          ],
+          "practice_questions": [
+            "What is an FIR?",
+            "Which branch of law applies to a tenant eviction dispute?"
+          ],
+          "practice_solutions": [
+            "First Information Report registered at a police station to report a cognizable crime.",
+            "Civil Law."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c17-t3",
+          "title": "Public Interest Litigation (PIL) and Access to Justice",
+          "aliases": [
+            "Public Interest Litigation PIL 1980s",
+            "Justice PN Bhagwati Supreme Court",
+            "access to justice legal aid poor"
+          ],
+          "learning_objectives": [
+            "Explain Public Interest Litigation (PIL) introduced by Supreme Court in 1980s (Justice P.N. Bhagwati).",
+            "Analyze how PIL simplifies legal access for poor and marginalized citizens."
+          ],
+          "explanation": "In 1980s, Supreme Court devised Public Interest Litigation (PIL) so that any individual or organization can file a court petition on behalf of poor or disadvantaged citizens whose rights are violated. Even a postcard addressed to High Court or Supreme Court can be treated as a PIL petition. PILs led to landmark rulings on bonded labor, mid-day meals, and environmental protection.",
+          "examples": [
+            "A PIL petition filed in Supreme Court led to mandatory provision of hot cooked Mid-Day Meals in all government primary schools.",
+            "Justice P.N. Bhagwati played a pioneering role in developing PIL jurisprudence in India."
+          ],
+          "exercises": [
+            "What is a Public Interest Litigation (PIL)?",
+            "How has PIL made access to justice easier for poor and illiterate citizens?"
+          ],
+          "solutions": [
+            "A legal mechanism allowing any public-spirited person or group to file a court case on behalf of others whose rights have been infringed.",
+            "It simplified procedure so that even a letter or postcard describing rights violation can be treated as a writ petition without hiring expensive lawyers."
+          ],
+          "practice_questions": [
+            "Name one Supreme Court judge associated with introducing PILs in India.",
+            "Give one example of a social cause addressed through a PIL."
+          ],
+          "practice_solutions": [
+            "Justice P.N. Bhagwati (or Justice V.R. Krishna Iyer).",
+            "Enforcement of Mid-Day Meal Scheme in schools or release of bonded laborers."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c18",
+      "number": "18",
+      "title": "Chapter 18 - Social Justice and Social Anomaly",
+      "aliases": [
+        "Social Justice and Social Anomaly",
+        "Chapter 18 Social Justice",
+        "Marginalisation and Equality"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c18-t1",
+          "title": "Understanding Social Justice and Marginalised Groups",
+          "aliases": [
+            "social justice concept equality",
+            "marginalised communities SC ST OBC",
+            "Adivasis tribal identity land rights",
+            "Social Justice and Social Anomaly"
+          ],
+          "learning_objectives": [
+            "Define Social Justice (fair treatment, equal opportunity, and elimination of socio-economic discrimination).",
+            "Identify Marginalised groups: Scheduled Castes (SC), Scheduled Tribes (ST/Adivasis), and Other Backward Classes (OBC)."
+          ],
+          "explanation": "Social Justice means creating an egalitarian society where every individual, regardless of caste, creed, gender, or tribe, enjoys equal rights, dignity, and economic opportunity. Marginalised groups (SC, ST Adivasis, OBCs) faced historical exclusion from land, education, and political power. Promoting social justice requires targeted affirmative policies.",
+          "examples": [
+            "Adivasis (Scheduled Tribes) have deep cultural connections with forest land and minerals.",
+            "Reservation policy in educational institutions ensures seat quota for SC, ST, and OBC students."
+          ],
+          "exercises": [
+            "What is meant by Social Justice?",
+            "Who are Adivasis?"
+          ],
+          "solutions": [
+            "The principle of ensuring equal rights, opportunities, and socio-economic dignity for all citizens without discrimination.",
+            "Indigenous tribal communities who have traditionally lived in close harmony with forests and nature."
+          ],
+          "practice_questions": [
+            "Name three categories of marginalized communities recognized for affirmative protection in India.",
+            "Why do marginalized groups require constitutional safeguards?"
+          ],
+          "practice_solutions": [
+            "Scheduled Castes (SC), Scheduled Tribes (ST), and Other Backward Classes (OBC).",
+            "To overcome historical disadvantage, social discrimination, and economic inequality."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c18-t2",
+          "title": "Constitutional Provisions for Equality and Reservation",
+          "aliases": [
+            "Article 15 non-discrimination",
+            "Article 17 abolition of untouchability",
+            "POA Act 1989 Prevention of Atrocities",
+            "reservation policy quota"
+          ],
+          "learning_objectives": [
+            "Analyze Constitutional provisions: Article 15 (prohibits discrimination), Article 17 (abolishes Untouchability).",
+            "Explain Scheduled Castes and Scheduled Tribes (Prevention of Atrocities) Act 1989."
+          ],
+          "explanation": "Constitutional Guarantees:\n- Article 15: Prohibits discrimination on grounds of religion, race, caste, sex, or place of birth.\n- Article 17: Abolishes Untouchability and makes its practice a punishable crime.\n- Reservation Policy: Provides quota in government jobs and educational admissions for SC, ST, and OBCs.\n- Prevention of Atrocities Act (1989): Protects SC/ST individuals from physical assault, humiliation, or land grab.",
+          "examples": [
+            "Article 17 makes practicing untouchability in any form an illegal punishable offense under Indian law.",
+            "Prevention of Atrocities Act 1989 penalizes anyone forcing SC/ST members to eat inedible substances or illegally occupying their land."
+          ],
+          "exercises": [
+            "Which Article of the Indian Constitution abolishes the practice of Untouchability?",
+            "What is the main objective of the SC and ST (Prevention of Atrocities) Act of 1989?"
+          ],
+          "solutions": [
+            "Article 17.",
+            "To protect Scheduled Castes and Scheduled Tribes against violent atrocities, social humiliation, and land dispossession."
+          ],
+          "practice_questions": [
+            "What does Article 15 of the Constitution mandate?",
+            "Why is reservation in public employment provided to SC and ST communities?"
+          ],
+          "practice_solutions": [
+            "It prohibits state discrimination against any citizen based on religion, race, caste, sex, or place of birth.",
+            "To ensure adequate representation of historically underrepresented communities in state administration."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c18-t3",
+          "title": "Social Anomalies: Child Labour, Gender Bias and Eradication Laws",
+          "aliases": [
+            "child labour Prohibition Act 1986",
+            "gender discrimination female foeticide",
+            "Beti Bachao Beti Padhao",
+            "POCSO Act child protection"
+          ],
+          "learning_objectives": [
+            "Examine social anomalies: Child Labour and Gender Discrimination.",
+            "Explain Child Labour (Prohibition and Regulation) Act and initiatives like Beti Bachao Beti Padhao."
+          ],
+          "explanation": "Social anomalies are social evils retarding progress:\n- Child Labour: Employing children under 14 in hazardous work violates Right to Education. Child Labour Act prohibits child employment in all occupations.\n- Gender Discrimination: Bias against girl child leading to female foeticide and lower literacy. Initiatives like 'Beti Bachao Beti Padhao' promote girl education and health.",
+          "examples": [
+            "Employing children under 14 in tea stalls, firework factories, or domestic work is illegal under Child Labour Act.",
+            "'Beti Bachao Beti Padhao' scheme aims to improve child sex ratio and promote higher education for girls."
+          ],
+          "exercises": [
+            "What is the minimum age limit under Child Labour Prohibition laws below which employing children is illegal?",
+            "Name the national government initiative launched to prevent female foeticide and educate the girl child."
+          ],
+          "solutions": [
+            "14 years of age.",
+            "Beti Bachao, Beti Padhao."
+          ],
+          "practice_questions": [
+            "How does child labour affect a child's fundamental right to education?",
+            "State two measures to eliminate gender bias in rural society."
+          ],
+          "practice_solutions": [
+            "It deprives children of school attendance, physical health, and intellectual development.",
+            "Ensuring equal girl school enrollment and strictly enforcing laws against female foeticide and dowry."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "soc8-c19",
+      "number": "19",
+      "title": "Chapter 19 - The Role of the Government in Socio-Economic Sector",
+      "aliases": [
+        "The Role of the Government in Socio-Economic Sector",
+        "Chapter 19 Government Role",
+        "Public Facilities and Consumer Rights"
+      ],
+      "topics": [
+        {
+          "topic_id": "soc8-c19-t1",
+          "title": "Role of Government in Providing Public Facilities",
+          "aliases": [
+            "public facilities safe water sanitation healthcare education",
+            "government duty welfare state",
+            "water supply sanitation municipal corporation",
+            "The Role of the Government in Socio-Economic Sector"
+          ],
+          "learning_objectives": [
+            "Identify essential Public Facilities (safe drinking water, sanitation, electricity, public transport, healthcare, primary education).",
+            "Explain why the Government MUST bear primary responsibility for providing public facilities rather than private companies."
+          ],
+          "explanation": "Public facilities are essential basic needs required by every citizen (clean drinking water, public sanitation, electricity, primary health centers, government schools, public buses). Private companies operate for profit and would charge high rates affordable only to the rich. Therefore, government bears constitutional responsibility to ensure affordable universal access.",
+          "examples": [
+            "Municipal Corporations supply chlorinated tap water at nominal subsidized rates to all city households.",
+            "Government Primary Health Centers (PHCs) provide free pulse polio vaccinations and maternal healthcare."
+          ],
+          "exercises": [
+            "What are Public Facilities? Give three examples.",
+            "Why should the government, rather than private companies, be responsible for providing public facilities?"
+          ],
+          "solutions": [
+            "Basic essential services required for daily life provided to all citizens (e.g. clean drinking water, public sanitation, government schools).",
+            "Private companies seek profit and charge high prices, whereas government ensures universal affordable access as a public duty regardless of income."
+          ],
+          "practice_questions": [
+            "Which Fundamental Right under Article 21 includes the Right to Safe Drinking Water?",
+            "Name the local government body responsible for water supply and sanitation in urban cities."
+          ],
+          "practice_solutions": [
+            "Right to Life.",
+            "Municipal Corporation (or Nagarpalika)."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c19-t2",
+          "title": "Government Welfare Schemes and Economic Infrastructure",
+          "aliases": [
+            "welfare schemes PDS fair price shops",
+            "Mid-Day Meal Scheme PM-POSHAN",
+            "MNREGA 100 days employment guarantee",
+            "Ayushman Bharat PMJAY"
+          ],
+          "learning_objectives": [
+            "Explain major social welfare schemes: Public Distribution System (PDS / Fair Price Shops), Mid-Day Meal (PM-POSHAN), MNREGA, and Ayushman Bharat.",
+            "Evaluate their impact on poverty reduction and food security."
+          ],
+          "explanation": "Government runs Targeted Welfare Schemes:\n- PDS (Public Distribution System): Provides subsidized food grains (wheat, rice) through Fair Price Shops to ration card holders.\n- Mid-Day Meal Scheme: Provides free nutritious hot lunch to primary school students, improving attendance.\n- MNREGA (2005): Guarantees 100 days of wage employment per year to rural households.\n- Ayushman Bharat (PMJAY): Provides free health insurance coverage up to Rs 5 lakh per family.",
+          "examples": [
+            "Fair Price Shops in Gujarat distribute subsidized wheat and rice to BPL (Below Poverty Line) card holders.",
+            "MNREGA provides 100 days guaranteed wage labor building check dams and rural roads."
+          ],
+          "exercises": [
+            "What is the main objective of the Public Distribution System (PDS)?",
+            "How many days of guaranteed wage employment does MNREGA provide to rural households annually?"
+          ],
+          "solutions": [
+            "To ensure food security by distributing essential food grains at subsidized low rates to poor families through Fair Price Shops.",
+            "100 days per financial year."
+          ],
+          "practice_questions": [
+            "What is the full form of MNREGA?",
+            "State two benefits of the Mid-Day Meal Scheme in schools."
+          ],
+          "practice_solutions": [
+            "Mahatma Gandhi National Rural Employment Guarantee Act.",
+            "It increases school enrollment/attendance and improves nutritional health of children."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "soc8-c19-t3",
+          "title": "Consumer Awareness, Consumer Rights and Responsibilities",
+          "aliases": [
+            "Consumer Rights Jago Grahak Jago",
+            "COPRA Consumer Protection Act 2019",
+            "ISI AGMARK BIS hallmark standard marks",
+            "consumer dispute redressal commission"
+          ],
+          "learning_objectives": [
+            "Identify Consumer Rights (Right to Safety, Right to Information, Right to Choice, Right to Redressal) under Consumer Protection Act (COPRA 2019).",
+            "Recognize quality certification marks (ISI, AGMARK, BIS Hallmark) and consumer responsibilities (demanding cash memo/bill)."
+          ],
+          "explanation": "Consumers are often exploited through adulteration, false weight, or defective goods. Slogan 'Jago Grahak Jago' promotes consumer awareness. Consumer Protection Act (COPRA 2019) grants rights:\n1) Right to Safety\n2) Right to Information (expiry date, MRP)\n3) Right to Choose\n4) Right to Redressal (District, State, National Consumer Commissions).\nConsumers must check quality standard marks (ISI for electricals, AGMARK for agricultural products, BIS Hallmark for gold) and insist on a Cash Memo/Bill.",
+          "examples": [
+            "Checking ISI mark on electric irons and AGMARK seal on honey bottles ensures product safety and quality.",
+            "A consumer can file a complaint in District Consumer Forum if a shopkeeper sells an expired food product above MRP."
+          ],
+          "exercises": [
+            "What slogan is used in national awareness campaigns to make consumers vigilant?",
+            "Name two quality standard marks consumers should check before buying electrical goods and food products."
+          ],
+          "solutions": [
+            "'Jago Grahak Jago'.",
+            "ISI mark for electrical goods and AGMARK for food/agricultural products."
+          ],
+          "practice_questions": [
+            "Why should a consumer always demand a Cash Memo (bill) while buying goods?",
+            "Which certification mark guarantees the purity of gold jewelry?"
+          ],
+          "practice_solutions": [
+            "A Cash Memo serves as legal proof of purchase required for filing complaints or claiming replacement/refund.",
+            "BIS Hallmark."
+          ],
+          "marks_pattern": "State the key social-science idea, support it with relevant evidence or an example, and connect it directly to the question.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}
