@@ -25,7 +25,10 @@ from phase11_core import (
     AttachmentRecord,
     StudentLearningContext,
     SyllabusRepository,
+    SyllabusTopicMatch,
     classify_syllabus_tutor_request,
+    parse_test_paper_scope,
+    render_test_paper,
     render_syllabus_match,
     render_syllabus_grounding,
     attachment_prompt,
@@ -586,14 +589,42 @@ class GyanVerseAIService:
     ) -> str | None:
         if attachments or self.syllabus_repository is None:
             return None
+
         match = self.syllabus_repository.lookup_topic(
             message=message,
             context=context,
         )
+        request = classify_syllabus_tutor_request(message)
+        if request.intent == "test" and match is None:
+            subject = context.current_subject
+            syllabus = None
+            if subject:
+                syllabus = self.syllabus_repository.find(
+                    board=context.board,
+                    medium=context.medium,
+                    standard=context.standard,
+                    subject=subject,
+                )
+                if (
+                    syllabus is None
+                    and subject.casefold() in {"science", "science & technology"}
+                ):
+                    syllabus = self.syllabus_repository.find(
+                        board=context.board,
+                        medium=context.medium,
+                        standard=context.standard,
+                        subject="Science & Technology",
+                    )
+            if syllabus is not None and syllabus.chapters and syllabus.chapters[0].topics:
+                match = SyllabusTopicMatch(
+                    syllabus=syllabus,
+                    chapter=syllabus.chapters[0],
+                    topic=syllabus.chapters[0].topics[0],
+                    matched_by="message-chapter",
+                )
+
         if match is None:
             return None
-
-        request = classify_syllabus_tutor_request(message)
         if t_start is None:
             t_start = time.perf_counter()
         t_format_start = time.perf_counter()

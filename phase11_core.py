@@ -1056,7 +1056,19 @@ def classify_syllabus_tutor_request(message: str) -> SyllabusTutorRequest:
         "samjhao",
     )
     example_phrases = ("example", "examples", "illustration", "illustrations")
-    test_phrases = ("test", "quiz", "mcq", "question paper")
+    test_phrases = (
+        "test",
+        "quiz",
+        "mcq",
+        "question paper",
+        "test paper",
+        "exam paper",
+        "exam",
+        "paper banao",
+        "test banao",
+        "syllabus paper",
+        "final exam paper",
+    )
     practice_phrases = ("practice", "exercise", "exercises", "practice questions")
     solution_phrases = ("solution", "solutions", "solve", "final answer", "answer key")
     hint_phrases = (
@@ -1575,6 +1587,467 @@ def _local_question_hints(
     ]
 
 
+@dataclass(frozen=True)
+class TestPaperScope:
+    scope_type: str  # "single_chapter", "multi_chapter", "full_book"
+    chapters: list[SyllabusChapter]
+    total_marks: int
+    duration_minutes: int
+    include_answers: bool
+    description: str
+
+
+def format_test_paper_duration(duration_minutes: int) -> str:
+    if duration_minutes == 180:
+        return "3 Hours"
+    if duration_minutes == 120:
+        return "2 Hours"
+    if duration_minutes == 90:
+        return "90 Minutes"
+    if duration_minutes == 60:
+        return "1 Hour"
+    return f"{duration_minutes} Minutes"
+
+
+def parse_test_paper_scope(
+    message: str,
+    context: StudentLearningContext,
+    syllabus: BoardSyllabus,
+) -> TestPaperScope:
+    msg_clean = message.casefold()
+    include_answers = any(
+        phrase in msg_clean
+        for phrase in (
+            "with answer",
+            "with answers",
+            "and answer",
+            "and answers",
+            "answer key",
+            "answers included",
+            "include answer",
+            "include answers",
+            "with solution",
+            "with solutions",
+        )
+    )
+
+    marks_match = re.search(
+        r"\b(20|25|50|80|100)\s*(?:marks?|mark|m)\b",
+        message,
+        re.IGNORECASE,
+    )
+    explicit_marks = int(marks_match.group(1)) if marks_match else None
+
+    dur_match = re.search(
+        r"\b(\d+(?:\.\d+)?)\s*(hours?|hrs?|hour|hr|minutes?|mins?|min)\b",
+        message,
+        re.IGNORECASE,
+    )
+    explicit_duration: int | None = None
+    if dur_match:
+        val = float(dur_match.group(1))
+        unit = dur_match.group(2).casefold()
+        if "hour" in unit or "hr" in unit:
+            explicit_duration = int(val * 60)
+        else:
+            explicit_duration = int(val)
+
+    full_book_phrases = (
+        "full book",
+        "pure book",
+        "full syllabus",
+        "final exam",
+        "entire book",
+        "all chapters",
+        "full syllabus paper",
+        "annual exam",
+        "board exam",
+    )
+    is_full_book = any(phrase in msg_clean for phrase in full_book_phrases)
+
+    if is_full_book:
+        total_marks = explicit_marks if explicit_marks is not None else 100
+        duration = (
+            explicit_duration
+            if explicit_duration is not None
+            else (
+                180
+                if total_marks == 100
+                else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 180)
+            )
+        )
+        return TestPaperScope(
+            scope_type="full_book",
+            chapters=list(syllabus.chapters),
+            total_marks=total_marks,
+            duration_minutes=duration,
+            include_answers=include_answers,
+            description=f"Full Syllabus — Full book test ({len(syllabus.chapters)} Chapters / Full Book)",
+        )
+
+    # Multi-chapter range
+    range_match = re.search(
+        r"\bchapter[s]?\s*(\d{1,2})\s*(?:to|-|through|till|se)\s*(\d{1,2})\b",
+        message,
+        re.IGNORECASE,
+    )
+    if range_match:
+        start_c, end_c = int(range_match.group(1)), int(range_match.group(2))
+        matched = [
+            c
+            for c in syllabus.chapters
+            if start_c <= int(re.sub(r"\D", "", c.number) or 0) <= end_c
+        ]
+        if len(matched) > 1:
+            total_marks = explicit_marks if explicit_marks is not None else 50
+            duration = (
+                explicit_duration
+                if explicit_duration is not None
+                else (
+                    90
+                    if total_marks == 50
+                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                )
+            )
+            ch_str = ", ".join(c.number for c in matched)
+            return TestPaperScope(
+                scope_type="multi_chapter",
+                chapters=matched,
+                total_marks=total_marks,
+                duration_minutes=duration,
+                include_answers=include_answers,
+                description=f"Chapters {ch_str} ({len(matched)} Chapters)",
+            )
+
+    # Multi-chapter list (e.g. Chapters 1, 2 and 3)
+    list_match = re.search(
+        r"\bchapters?\s*(\d{1,2}(?:\s*,\s*\d{1,2})*(?:\s*(?:and|&)\s*\d{1,2})+)\b",
+        message,
+        re.IGNORECASE,
+    )
+    if list_match:
+        nums = [int(n) for n in re.findall(r"\b\d{1,2}\b", list_match.group(1))]
+        matched = [
+            c
+            for c in syllabus.chapters
+            if int(re.sub(r"\D", "", c.number) or 0) in nums
+        ]
+        if len(matched) > 1:
+            total_marks = explicit_marks if explicit_marks is not None else 50
+            duration = (
+                explicit_duration
+                if explicit_duration is not None
+                else (
+                    90
+                    if total_marks == 50
+                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                )
+            )
+            ch_str = ", ".join(c.number for c in matched)
+            return TestPaperScope(
+                scope_type="multi_chapter",
+                chapters=matched,
+                total_marks=total_marks,
+                duration_minutes=duration,
+                include_answers=include_answers,
+                description=f"Chapters {ch_str} ({len(matched)} Chapters)",
+            )
+
+    # Multi-chapter count (e.g. 3 chapters complete hue hain)
+    count_match = re.search(
+        r"\b(\d{1,2})\s*chapters?\b",
+        message,
+        re.IGNORECASE,
+    )
+    if count_match:
+        cnt = int(count_match.group(1))
+        if cnt > 1:
+            matched = syllabus.chapters[:cnt]
+            total_marks = explicit_marks if explicit_marks is not None else 50
+            duration = (
+                explicit_duration
+                if explicit_duration is not None
+                else (
+                    90
+                    if total_marks == 50
+                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                )
+            )
+            ch_str = ", ".join(c.number for c in matched)
+            return TestPaperScope(
+                scope_type="multi_chapter",
+                chapters=matched,
+                total_marks=total_marks,
+                duration_minutes=duration,
+                include_answers=include_answers,
+                description=f"Chapters {ch_str} ({len(matched)} Chapters)",
+            )
+
+    # Single chapter
+    ch_num_match = re.search(r"\bchapter\s*(\d{1,2})\b", message, re.IGNORECASE)
+    target_ch_num = ch_num_match.group(1) if ch_num_match else None
+    if not target_ch_num and context.current_chapter:
+        ctx_match = re.search(
+            r"\bchapter\s*(\d{1,2})\b",
+            context.current_chapter,
+            re.IGNORECASE,
+        )
+        if ctx_match:
+            target_ch_num = ctx_match.group(1)
+
+    target_ch = (
+        next(
+            (
+                c
+                for c in syllabus.chapters
+                if target_ch_num and re.sub(r"\D", "", c.number) == target_ch_num
+            ),
+            None,
+        )
+        if target_ch_num
+        else None
+    )
+
+    if target_ch is None and context.current_chapter:
+        ctx_clean = context.current_chapter.casefold()
+        target_ch = next(
+            (
+                c
+                for c in syllabus.chapters
+                if c.title.casefold() in ctx_clean or ctx_clean in c.title.casefold()
+            ),
+            None,
+        )
+
+    if target_ch is None:
+        target_ch = syllabus.chapters[0]
+
+    total_marks = explicit_marks if explicit_marks is not None else 25
+    duration = (
+        explicit_duration
+        if explicit_duration is not None
+        else (
+            45
+            if total_marks == 25
+            else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 45)
+        )
+    )
+    return TestPaperScope(
+        scope_type="single_chapter",
+        chapters=[target_ch],
+        total_marks=total_marks,
+        duration_minutes=duration,
+        include_answers=include_answers,
+        description=f"{target_ch.title} — Chapter test",
+    )
+
+
+def render_test_paper(
+    syllabus: BoardSyllabus,
+    scope: TestPaperScope,
+    *,
+    context: StudentLearningContext,
+) -> str:
+    lines: list[str] = []
+    board_name = (
+        "Gujarat Secondary and Higher Secondary Education Board (GSEB)"
+        if syllabus.board.casefold() == "gseb"
+        else syllabus.board
+    )
+    lines.append(board_name)
+    lines.append(
+        f"Medium: {syllabus.medium} | Standard: {syllabus.standard} | Subject: {syllabus.subject}"
+    )
+    lines.append(f"Test Paper: {scope.description}")
+    lines.append(
+        f"Time: {format_test_paper_duration(scope.duration_minutes)} | Total Marks: {scope.total_marks} Marks"
+    )
+    lines.append("")
+    lines.append("Instructions:")
+    lines.append("1. All questions are compulsory.")
+    lines.append("2. Figures to the right indicate full marks for each question.")
+    lines.append("3. Read all questions carefully before writing your answers.")
+    lines.append("")
+
+    SECTION_SPECS = {
+        20: [
+            ("Section A (1 Mark Each)", 1, 5),
+            ("Section B (2 Marks Each)", 2, 3),
+            ("Section C (3 Marks Each)", 3, 1),
+            ("Section D (6 Marks Each)", 6, 1),
+        ],
+        25: [
+            ("Section A (1 Mark Each)", 1, 5),
+            ("Section B (2 Marks Each)", 2, 4),
+            ("Section C (3 Marks Each)", 3, 2),
+            ("Section D (6 Marks Each)", 6, 1),
+        ],
+        50: [
+            ("Section A (1 Mark Each)", 1, 10),
+            ("Section B (2 Marks Each)", 2, 8),
+            ("Section C (3 Marks Each)", 3, 4),
+            ("Section D (6 Marks Each)", 6, 2),
+        ],
+        80: [
+            ("Section A (1 Mark Each)", 1, 20),
+            ("Section B (2 Marks Each)", 2, 12),
+            ("Section C (3 Marks Each)", 3, 6),
+            ("Section D (6 Marks Each)", 6, 3),
+        ],
+        100: [
+            ("Section A (1 Mark Each)", 1, 20),
+            ("Section B (2 Marks Each)", 2, 16),
+            ("Section C (3 Marks Each)", 3, 8),
+            ("Section D (6 Marks Each)", 6, 4),
+        ],
+    }
+    specs = SECTION_SPECS.get(scope.total_marks, SECTION_SPECS[25])
+
+    pool: list[tuple[str, str, str]] = []
+    if len(scope.chapters) > 1:
+        # Multi-chapter or Full-book: Interleave by chapter
+        ch_pools: list[list[tuple[str, str, str]]] = []
+        for ch in scope.chapters:
+            c_items: list[tuple[str, str, str]] = []
+            t_items_list: list[list[tuple[str, str, str]]] = []
+            for t in ch.topics:
+                t_q: list[tuple[str, str, str]] = []
+                for i, q in enumerate(t.exercises):
+                    sol = (
+                        t.solutions[i]
+                        if i < len(t.solutions)
+                        else "Provide a step-by-step grounded response."
+                    )
+                    t_q.append((t.title, q, sol))
+                for i, q in enumerate(t.practice_questions):
+                    sol = (
+                        t.practice_solutions[i]
+                        if i < len(t.practice_solutions)
+                        else "Apply topic principles to justify the answer."
+                    )
+                    t_q.append((t.title, q, sol))
+                for ex in t.examples:
+                    t_q.append(
+                        (
+                            t.title,
+                            f"Explain with an example: {ex}",
+                            f"Example solution: {ex}",
+                        )
+                    )
+                if t_q:
+                    t_items_list.append(t_q)
+
+            idx = 0
+            while True:
+                added = False
+                for t_q in t_items_list:
+                    if idx < len(t_q):
+                        c_items.append(t_q[idx])
+                        added = True
+                if not added:
+                    break
+                idx += 1
+            if c_items:
+                ch_pools.append(c_items)
+
+        idx = 0
+        while True:
+            added = False
+            for c_items in ch_pools:
+                if idx < len(c_items):
+                    pool.append(c_items[idx])
+                    added = True
+            if not added:
+                break
+            idx += 1
+    elif scope.chapters:
+        # Single-chapter: Interleave by topic
+        ch = scope.chapters[0]
+        t_items_list: list[list[tuple[str, str, str]]] = []
+        for t in ch.topics:
+            t_q: list[tuple[str, str, str]] = []
+            for i, q in enumerate(t.exercises):
+                sol = (
+                    t.solutions[i]
+                    if i < len(t.solutions)
+                    else "Provide a step-by-step grounded response."
+                )
+                t_q.append((t.title, q, sol))
+            for i, q in enumerate(t.practice_questions):
+                sol = (
+                    t.practice_solutions[i]
+                    if i < len(t.practice_solutions)
+                    else "Apply topic principles to justify the answer."
+                )
+                t_q.append((t.title, q, sol))
+            for ex in t.examples:
+                t_q.append(
+                    (
+                        t.title,
+                        f"Explain with an example: {ex}",
+                        f"Example solution: {ex}",
+                    )
+                )
+            if t_q:
+                t_items_list.append(t_q)
+
+        idx = 0
+        while True:
+            added = False
+            for t_q in t_items_list:
+                if idx < len(t_q):
+                    pool.append(t_q[idx])
+                    added = True
+            if not added:
+                break
+            idx += 1
+
+    if not pool:
+        pool = [
+            (
+                "General",
+                "Explain the key concepts of the topic.",
+                "Use the installed topic guide.",
+            )
+        ]
+
+    q_num = 1
+    sec_answers: list[tuple[str, list[tuple[int, str, str]]]] = []
+    pool_idx = 0
+
+    for sec_title, mark_per_q, q_count in specs:
+        sec_tot = mark_per_q * q_count
+        lines.append(f"{sec_title} — Total: {sec_tot} Marks")
+        answers_list: list[tuple[int, str, str]] = []
+        for _ in range(q_count):
+            topic_title, q_text, sol_text = pool[pool_idx % len(pool)]
+            pool_idx += 1
+            lbl = "Mark" if mark_per_q == 1 else "Marks"
+            lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
+            answers_list.append((q_num, topic_title, sol_text))
+            q_num += 1
+        lines.append("")
+        sec_answers.append((sec_title, answers_list))
+
+    origin_label = "Teacher-authored content"
+    footer = (
+        f"Source type: {origin_label}. "
+        f"{syllabus.textbook}; edition {syllabus.source.edition}."
+    )
+
+    if scope.include_answers:
+        lines.append("Answer Guide:")
+        lines.append("")
+        for sec_title, ans_items in sec_answers:
+            lines.append(f"{sec_title} Answers:")
+            for q_n, t_title, sol_t in ans_items:
+                lines.append(f"{q_n}. [{t_title}] {sol_t}")
+            lines.append("")
+
+    lines.append(footer)
+    return "\n".join(lines)
+
+
 def _source_description(match: SyllabusTopicMatch) -> str:
     origin_label = {
         "official": "Official source content",
@@ -1655,27 +2128,8 @@ def render_syllabus_match(
         else:
             sections.append("Examples:\n" + _numbered_lines(selected))
     elif request.intent == "test":
-        bank = _chapter_question_bank(
-            match.chapter,
-            prefer_solved=False,
-        )
-        selected = bank[: request.requested_count]
-        sections.append(f"{match.chapter.title} — Chapter test")
-        sections.append(
-            "Answer each question in your own words. I will evaluate your answers after you submit them."
-        )
-        sections.append(
-            "Questions:\n"
-            + _numbered_lines(
-                [f"[{topic_title}] {question}" for topic_title, question, _ in selected]
-            )
-        )
-        if request.include_answers:
-            guides = [
-                guide or "Use the topic explanation and support the response with relevant evidence."
-                for _, _, guide in selected
-            ]
-            sections.append("Answer guide:\n" + _numbered_lines(guides))
+        scope = parse_test_paper_scope(message, context, match.syllabus)
+        return render_test_paper(match.syllabus, scope, context=context)
     elif request.intent in {"practice", "homework"}:
         bank = _topic_question_bank(
             topic,

@@ -550,6 +550,107 @@ class Grade8ScienceTechnologySyllabusTests(unittest.TestCase):
                 self.assertIn("Source type:", response, f"Review for {subject} must contain source footer")
                 self.assertIn(expected_source, response, f"Review for {subject} source footer must contain '{expected_source}'")
 
+    def test_grade_8_test_paper_generation_all_requirements(self) -> None:
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            service = self.service(api_key="mock_key")
+
+            # 1. Grade 8 Math saved context + "Chapter 1 ka test banao"
+            ctx_math = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Mathematics",
+                current_chapter="Chapter 1 - Rational Numbers",
+                onboarding_complete=True,
+            ).validate()
+            res_math = service.ask_stream(message="Chapter 1 ka test banao", context=ctx_math)
+            self.assertNotIn("online tutor could not respond", res_math)
+            self.assertIn("Subject: Mathematics", res_math)
+            self.assertIn("Total Marks: 25 Marks", res_math)
+            self.assertIn("Time: 45 Minutes", res_math)
+            self.assertIn("Mathematics Textbook for Class VIII", res_math)
+            self.assertNotIn("Answer Guide:", res_math)
+            # Verify single-chapter distribution across multiple topics
+            self.assertIn("[Properties of Rational Numbers]", res_math)
+            self.assertIn("[Representation of Rational Numbers on the Number Line]", res_math)
+            service._client.models.generate_content_stream.assert_not_called()
+
+            # 2. Grade 8 Science saved context + "Chapter 1 to 3 ka 50 marks test banao"
+            ctx_sci = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Science & Technology",
+                current_chapter="Chapter 1 - Crop Production and Management",
+                onboarding_complete=True,
+            ).validate()
+            res_sci = service.ask_stream(message="Chapter 1 to 3 ka 50 marks test banao", context=ctx_sci)
+            self.assertNotIn("online tutor could not respond", res_sci)
+            self.assertIn("Subject: Science & Technology", res_sci)
+            self.assertIn("Total Marks: 50 Marks", res_sci)
+            self.assertIn("Time: 90 Minutes", res_sci)
+            self.assertIn("Science Class VIII", res_sci)
+            self.assertNotIn("Answer Guide:", res_sci)
+            # Verify multi-chapter distribution across Chapters 1, 2, and 3
+            self.assertIn("[Sowing, Manures and Fertilisers]", res_sci)  # Chapter 1 topic
+            self.assertIn("[Types and Habitats of Microorganisms]", res_sci)  # Chapter 2 topic
+            self.assertIn("[Coal, Carbonisation and Coal Products]", res_sci)  # Chapter 3 topic
+
+            # 3. Grade 8 Social Science + "Full book ka 3 hour 100 marks test banao"
+            ctx_soc = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Social Science",
+                current_chapter="Chapter 1 - Establishment of European and British Rule in India",
+                onboarding_complete=True,
+            ).validate()
+            res_soc = service.ask_stream(message="Full book ka 3 hour 100 marks test banao", context=ctx_soc)
+            self.assertNotIn("online tutor could not respond", res_soc)
+            self.assertIn("Subject: Social Science", res_soc)
+            self.assertIn("Total Marks: 100 Marks", res_soc)
+            self.assertIn("Time: 3 Hours", res_soc)
+            self.assertIn("Social Science Standard 8", res_soc)
+            self.assertNotIn("Answer Guide:", res_soc)
+            # Verify full-book distribution includes early, middle, and later chapters
+            self.assertIn("[Arrival of European Traders and Sea Routes]", res_soc)  # Chapter 1 topic
+            self.assertIn("[Formation of INC (1885), Moderates and Extremists]", res_soc)  # Middle Chapter topic
+            self.assertIn("[Non-Conventional Energy Resources and Conservation]", res_soc)  # Final Chapter topic
+
+            # 4. Grade 8 English + "Chapter 1 test with answers"
+            ctx_eng = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="English",
+                current_chapter="Semester 1 Unit 1 - Landscapes",
+                onboarding_complete=True,
+            ).validate()
+            res_eng = service.ask_stream(message="Chapter 1 test with answers", context=ctx_eng)
+            self.assertNotIn("online tutor could not respond", res_eng)
+            self.assertIn("Subject: English", res_eng)
+            self.assertIn("Total Marks: 25 Marks", res_eng)
+            self.assertIn("Answer Guide:", res_eng)
+            self.assertIn("English First Language Standard 8", res_eng)
+
+            # 8. Grade 7/Grade 8 isolation check
+            ctx_g7 = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=7,
+                current_subject="Mathematics",
+                current_chapter="Chapter 1 - Integers",
+                onboarding_complete=True,
+            ).validate()
+            res_g7 = service.ask_stream(message="Chapter 1 ka test banao", context=ctx_g7)
+            self.assertIn("Standard: 7", res_g7)
+            self.assertNotIn("Standard: 8", res_g7)
+
 
 if __name__ == "__main__":
     unittest.main()
