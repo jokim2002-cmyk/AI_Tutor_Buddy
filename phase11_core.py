@@ -1169,7 +1169,7 @@ def classify_syllabus_tutor_request(message: str) -> SyllabusTutorRequest:
         requested_count=requested_count,
         explicit_count=explicit_count,
         include_answers=include_answers,
-        requires_provider_review=intent in {"evaluate", "hint"},
+        requires_provider_review=intent in {"evaluate"},
     )
 
 
@@ -1251,17 +1251,36 @@ def _requested_question_index(
     )
     if 0 <= selected_index < len(bank):
         return selected_index
-    return next(
-        (
-            index
-            for index, (question, _) in enumerate(bank)
-            if _contains_syllabus_phrase(
-                requested_text,
-                _normalize_syllabus_lookup_text(question),
-            )
-        ),
-        -1,
-    )
+
+    for index, (question, _) in enumerate(bank):
+        norm_q = _normalize_syllabus_lookup_text(question)
+        if norm_q and (_contains_syllabus_phrase(requested_text, norm_q) or _contains_syllabus_phrase(norm_q, requested_text)):
+            return index
+
+    hint_stop_words = _CONTEXT_FALLBACK_WORDS | {
+        "give", "me", "only", "just", "one", "two", "three", "hint", "hints",
+        "for", "this", "homework", "question", "solve", "solution", "answer",
+        "what", "why", "how", "is", "are", "do", "does", "did", "the", "a", "an",
+    }
+    requested_tokens = {
+        token for token in requested_text.split()
+        if len(token) > 2 and token not in hint_stop_words
+    }
+
+    best_index = -1
+    best_overlap = 0
+    if requested_tokens:
+        for index, (question, _) in enumerate(bank):
+            q_tokens = {
+                token for token in _normalize_syllabus_lookup_text(question).split()
+                if len(token) > 2 and token not in hint_stop_words
+            }
+            overlap = len(requested_tokens & q_tokens)
+            if overlap >= 2 and overlap > best_overlap:
+                best_overlap = overlap
+                best_index = index
+
+    return best_index
 
 
 def _student_review_answer(message: str) -> str:

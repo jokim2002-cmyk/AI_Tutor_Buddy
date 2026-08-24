@@ -362,6 +362,89 @@ class Grade8ScienceTechnologySyllabusTests(unittest.TestCase):
         self.assertIn("Teacher-authored content", ans)
         self.assertEqual(service.last_metrics.route, "local-syllabus")
 
+    def test_grade_8_science_damaged_seeds_hint_route(self) -> None:
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            service = self.service(api_key="mock_key")
+            ctx = self.context(
+                chapter="Chapter 1 - Crop Production and Management",
+                topic="Sowing, Manures and Fertilisers",
+            )
+            prompt = "Give me only one hint for this homework question: Why should damaged seeds be separated before sowing?"
+            response = service.ask_stream(message=prompt, context=ctx)
+
+            self.assertNotIn("online tutor could not respond", response)
+            self.assertIn("Sowing, Manures and Fertilisers", response)
+            self.assertIn("Hint:", response)
+            self.assertNotIn("Hints:\n", response)
+            self.assertNotIn("separating them ensures only healthy, high-yielding seeds are sown", response)
+            self.assertIn("Source type:", response)
+            self.assertTrue(
+                "Science Class VIII" in response or "Standard 8 Science" in response,
+                "Source footer must cite Science Class VIII or Standard 8 Science",
+            )
+
+    def test_grade_8_cross_subject_hint_route_smoke(self) -> None:
+        test_cases = [
+            (
+                "Science & Technology",
+                "Chapter 1 - Crop Production and Management",
+                "Give me only one hint for this homework question: Why should damaged seeds be separated before sowing?",
+                "Sowing, Manures and Fertilisers",
+                "Science Class VIII",
+            ),
+            (
+                "Mathematics",
+                "Chapter 1 - Rational Numbers",
+                "Give me only one hint for this homework question: Evaluate using distributive property: (2/5 * -3/7) - (1/14) - (3/7 * 3/5)",
+                "Properties of Rational Numbers",
+                "Mathematics Textbook for Class VIII",
+            ),
+            (
+                "English",
+                "Semester 1 Unit 1 - Landscapes",
+                "Give me only one hint for this homework question: What is Land Art?",
+                "Land Art and Environmental Appreciation",
+                "English First Language Standard 8",
+            ),
+            (
+                "Social Science",
+                "Chapter 1 - Establishment of European and British Rule in India",
+                "Give me only one hint for this homework question: Why did European nations search for a sea route to India in the 15th century?",
+                "Arrival of European Traders and Sea Routes",
+                "Social Science Standard 8",
+            ),
+        ]
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            for subject, chapter, prompt, expected_topic, expected_source in test_cases:
+                ctx = StudentLearningContext(
+                    board="GSEB",
+                    medium="English",
+                    standard=8,
+                    preferred_language="English",
+                    current_subject=subject,
+                    current_chapter=chapter,
+                    onboarding_complete=True,
+                ).validate()
+
+                service = self.service(api_key="mock_key")
+                response = service.ask_stream(message=prompt, context=ctx)
+                self.assertNotIn("online tutor could not respond", response, f"Hint for {subject} must not fail to online tutor")
+                self.assertIn(expected_topic, response, f"Hint for {subject} must contain topic '{expected_topic}'")
+                self.assertIn("Hint:", response, f"Hint for {subject} must contain 'Hint:' label")
+                self.assertIn("Source type:", response, f"Hint for {subject} must contain source footer")
+                self.assertIn(expected_source, response, f"Hint for {subject} source footer must contain '{expected_source}'")
+
 
 if __name__ == "__main__":
     unittest.main()
+
