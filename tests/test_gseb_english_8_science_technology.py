@@ -651,6 +651,120 @@ class Grade8ScienceTechnologySyllabusTests(unittest.TestCase):
             self.assertIn("Standard: 7", res_g7)
             self.assertNotIn("Standard: 8", res_g7)
 
+    def test_grade_8_test_answer_evaluation_all_scenarios(self) -> None:
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            service = self.service(api_key="mock_key")
+
+            # 5. Guard test: ask to evaluate without prior generated test paper
+            ctx_math = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Mathematics",
+                current_chapter="Chapter 1 - Rational Numbers",
+                onboarding_complete=True,
+            ).validate()
+            res_no_paper = service.ask_stream(message="Check my test answers out of 25", context=ctx_math)
+            self.assertIn("No test paper has been generated in our current session yet", res_no_paper)
+            service._client.models.generate_content_stream.assert_not_called()
+
+            # 1. Science Chapter 1 Test generation
+            ctx_sci = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Science & Technology",
+                current_chapter="Chapter 1 - Crop Production and Management",
+                onboarding_complete=True,
+            ).validate()
+            gen_sci = service.ask_stream(message="Chapter 1 ka 25 marks test banao", context=ctx_sci)
+            self.assertNotIn("Answer Guide:", gen_sci)
+
+            # 1a. Mismatched numbered answers (triggers warning, no silent 0/25 final)
+            pasted_mismatched_sci = """Here are my answers:
+1. Turning and loosening of soil allows roots to penetrate deep into the soil and breathe easily.
+2. Classify wheat as Rabi crop and paddy as Kharif crop.
+3. Traditional tool funnels seeds into soil whereas modern seed drill sows seeds uniformly at equal distance and depth.
+4. Because damaged hollow seeds float in water and healthy seeds sink.
+5. Damaged seeds are red in color.
+6. Leveller is used for levelling soil."""
+            eval_warning = service.ask_stream(message=pasted_mismatched_sci, context=ctx_sci)
+            self.assertIn("Your pasted answers do not appear to match the question numbers", eval_warning)
+            self.assertIn("Detected Question Mismatches:", eval_warning)
+            self.assertNotIn("Total Marks: 0/25", eval_warning)
+            service._client.models.generate_content_stream.assert_not_called()
+
+            # 1b. Correctly ordered valid answers (grades Q1-Q6 correctly, Q7-Q12 Not answered)
+            pasted_valid_sci = """1. Paddy is a Kharif crop and wheat is a Rabi crop.
+2. Damaged seeds should be separated because they are hollow and weak and may not grow into healthy plants.
+3. Drip irrigation.
+4. It loosens soil so roots can breathe and grow deeper.
+5. Put seeds in water; healthy seeds sink and damaged hollow seeds float.
+6. To reduce moisture and prevent fungi, bacteria and pests."""
+            eval_sci = service.ask_stream(message=pasted_valid_sci, context=ctx_sci)
+            self.assertIn("Test Evaluation", eval_sci)
+            self.assertIn("Per-Question Evaluation:", eval_sci)
+            self.assertIn("Science Class VIII", eval_sci)
+            self.assertIn("| Q3 | [Irrigation, Weeding, Harvesting and Storage] | 1 | 1 | Correct |", eval_sci)
+            self.assertIn("Weak Topics Identified:", eval_sci)
+            self.assertIn("Suggested Revision Plan:", eval_sci)
+            self.assertIn("Not answered", eval_sci)
+            self.assertNotIn("Total Marks: 0/25", eval_sci)
+            service._client.models.generate_content_stream.assert_not_called()
+
+            # 1c. Question-text answer format
+            pasted_qtext_sci = """Q1. Classify wheat and paddy as Kharif or Rabi crops.
+Ans: Paddy is a Kharif crop and wheat is a Rabi crop.
+
+Q2. Why should damaged seeds be separated before sowing?
+Ans: Damaged seeds should be separated because they are hollow and weak."""
+            eval_qtext = service.ask_stream(message=pasted_qtext_sci, context=ctx_sci)
+            self.assertIn("Test Evaluation", eval_qtext)
+            self.assertIn("Science Class VIII", eval_qtext)
+            service._client.models.generate_content_stream.assert_not_called()
+
+            # 2. Mathematics Chapter 1 Test generation + deterministic numeric answer evaluation
+            gen_math = service.ask_stream(message="Chapter 1 ka test banao", context=ctx_math)
+            self.assertNotIn("Answer Guide:", gen_math)
+
+            pasted_math_answers = """Here are my answers:
+1. -5/9
+2. 0
+3. 1
+4. -3/7
+5. 5/9"""
+            eval_math = service.ask_stream(message=pasted_math_answers, context=ctx_math)
+            self.assertIn("Test Evaluation", eval_math)
+            self.assertIn("Total Marks:", eval_math)
+            self.assertIn("Mathematics Textbook for Class VIII", eval_math)
+
+            # 3. Social Science 50-mark multi-chapter test generation + conceptual evaluation
+            ctx_soc = StudentLearningContext(
+                board="GSEB",
+                medium="English",
+                standard=8,
+                current_subject="Social Science",
+                current_chapter="Chapter 1 - Establishment of European and British Rule in India",
+                onboarding_complete=True,
+            ).validate()
+            gen_soc = service.ask_stream(message="Chapter 1 to 3 ka 50 marks test banao", context=ctx_soc)
+            self.assertNotIn("Answer Guide:", gen_soc)
+
+            pasted_soc_answers = """Q1. European nations searched for sea route after Ottoman Turks captured Constantinople.
+Ans: European nations searched for sea route after Ottoman Turks captured Constantinople in 1453.
+
+Q2. Permanent Settlement in Bengal.
+Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal."""
+            eval_soc = service.ask_stream(message=pasted_soc_answers, context=ctx_soc)
+            self.assertIn("Test Evaluation", eval_soc)
+            self.assertIn("Social Science Standard 8", eval_soc)
+            service._client.models.generate_content_stream.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

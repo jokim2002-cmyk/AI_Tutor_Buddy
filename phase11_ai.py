@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -23,10 +24,12 @@ if load_dotenv is not None:
 
 from phase11_core import (
     AttachmentRecord,
+    GeneratedTestPaper,
     StudentLearningContext,
     SyllabusRepository,
     SyllabusTopicMatch,
     classify_syllabus_tutor_request,
+    evaluate_test_paper,
     parse_test_paper_scope,
     render_test_paper,
     render_syllabus_match,
@@ -258,6 +261,11 @@ class GyanVerseAIService:
     )
     _teaching_strategy_service: TeachingStrategyService = field(
         default_factory=TeachingStrategyService,
+        init=False,
+        repr=False,
+    )
+    _last_generated_test_paper: GeneratedTestPaper | None = field(
+        default=None,
         init=False,
         repr=False,
     )
@@ -578,6 +586,40 @@ class GyanVerseAIService:
             f"{att_section}"
         )
 
+    def _record_local_response_metrics(
+        self,
+        *,
+        message: str,
+        answer: str,
+        backend: str,
+        route: str,
+        t_start: float,
+        t_format_start: float,
+    ) -> None:
+        t_end = time.perf_counter()
+        self.last_backend = backend
+        self.last_error = ""
+        self._history.append((message or "[syllabus request]", answer))
+        self._history = self._history[-self.max_history_turns :]
+        self.last_metrics = TutorLatencyMetrics(
+            route=route,
+            request_start_ms=t_start * 1000.0,
+            prompt_build_ms=0.0,
+            attachment_prepare_ms=0.0,
+            provider_first_chunk_ms=0.0,
+            ui_first_visible_ms=0.0,
+            provider_complete_ms=0.0,
+            formatting_ms=(t_end - t_format_start) * 1000.0,
+            final_render_ms=0.0,
+            provider_ms=0.0,
+            total_ms=(t_end - t_start) * 1000.0,
+            backend=backend,
+            fallback_used=False,
+            timed_out=False,
+            stream_used=False,
+            chunk_count=1,
+        )
+
     def _local_syllabus_answer(
         self,
         *,
@@ -590,13 +632,77 @@ class GyanVerseAIService:
         if attachments or self.syllabus_repository is None:
             return None
 
+        msg_lower = message.casefold()
+        eval_phrases = (
+            "check my test answers",
+            "check test answers",
+            "evaluate my test answers",
+            "evaluate test answers",
+            "evaluate my answers",
+            "check my answers",
+            "check my paper",
+            "evaluate my paper",
+            "mera paper check karo",
+            "paper check karo",
+            "check answers out of",
+            "evaluate answers out of",
+            "here are my answers",
+            "here are my test answers",
+            "my answers:",
+            "my answers",
+            "check answers",
+            "evaluate answers",
+        )
+        is_test_eval_request = any(
+            phrase in msg_lower for phrase in eval_phrases
+        ) or (
+            bool(re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message, re.IGNORECASE))
+            and self._last_generated_test_paper is not None
+        )
+
+        if is_test_eval_request:
+            if t_start is None:
+                t_start = time.perf_counter()
+            t_format_start = time.perf_counter()
+            if self._last_generated_test_paper is not None:
+                eval_raw = evaluate_test_paper(self._last_generated_test_paper, message)
+                answer = format_tutor_response(eval_raw, student_message=message)
+                self._record_local_response_metrics(
+                    message=message,
+                    answer=answer,
+                    backend="local syllabus",
+                    route="local-syllabus",
+                    t_start=t_start,
+                    t_format_start=t_format_start,
+                )
+                return answer
+            else:
+                guard_msg = (
+                    "No test paper has been generated in our current session yet. "
+                    "Please ask me to generate a test paper first (e.g. 'Chapter 1 ka test banao' or 'Full book test banao') "
+                    "or paste your test questions along with your answers."
+                )
+                answer = format_tutor_response(guard_msg, student_message=message)
+                self._record_local_response_metrics(
+                    message=message,
+                    answer=answer,
+                    backend="local syllabus metadata",
+                    route="local-syllabus-no-paper-context",
+                    t_start=t_start,
+                    t_format_start=t_format_start,
+                )
+                return answer
+
         match = self.syllabus_repository.lookup_topic(
             message=message,
             context=context,
         )
         request = classify_syllabus_tutor_request(message)
-        if request.intent == "test" and match is None:
+        if request.intent == "test":
             subject = context.current_subject
+            if not subject and match is not None:
+                subject = match.syllabus.subject
+
             syllabus = None
             if subject:
                 syllabus = self.syllabus_repository.find(
@@ -615,13 +721,26 @@ class GyanVerseAIService:
                         standard=context.standard,
                         subject="Science & Technology",
                     )
-            if syllabus is not None and syllabus.chapters and syllabus.chapters[0].topics:
-                match = SyllabusTopicMatch(
-                    syllabus=syllabus,
-                    chapter=syllabus.chapters[0],
-                    topic=syllabus.chapters[0].topics[0],
-                    matched_by="message-chapter",
+            if syllabus is None and match is not None:
+                syllabus = match.syllabus
+
+            if syllabus is not None:
+                if t_start is None:
+                    t_start = time.perf_counter()
+                t_format_start = time.perf_counter()
+                scope = parse_test_paper_scope(message, context, syllabus)
+                raw_answer, paper_obj = render_test_paper(syllabus, scope, context=context)
+                self._last_generated_test_paper = paper_obj
+                answer = format_tutor_response(raw_answer, student_message=message)
+                self._record_local_response_metrics(
+                    message=message,
+                    answer=answer,
+                    backend="local syllabus",
+                    route="local-syllabus",
+                    t_start=t_start,
+                    t_format_start=t_format_start,
                 )
+                return answer
 
         if match is None:
             return None

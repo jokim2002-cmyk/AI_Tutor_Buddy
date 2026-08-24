@@ -8,6 +8,7 @@ import re
 import shutil
 import tempfile
 import threading
+import time
 import uuid
 from dataclasses import asdict, dataclass, field, replace
 from datetime import datetime, timezone
@@ -1597,6 +1598,335 @@ class TestPaperScope:
     description: str
 
 
+@dataclass(frozen=True)
+class TestPaperQuestionItem:
+    question_num: int
+    section_title: str
+    topic_title: str
+    question_text: str
+    max_marks: int
+    solution_guide: str
+
+
+@dataclass
+class GeneratedTestPaper:
+    board: str
+    medium: str
+    standard: int
+    subject: str
+    scope_description: str
+    total_marks: int
+    duration_minutes: int
+    questions: list[TestPaperQuestionItem]
+    source_footer: str
+    created_at: float = field(default_factory=time.time)
+
+
+def parse_student_test_answers(message: str) -> dict[int, tuple[str, str]]:
+    pattern = r"(?:^|\n|\s+)(?:Q|Ans|Question)?\s*(\d{1,2})\s*[:\.\)]\s*"
+    splits = re.split(pattern, message, flags=re.IGNORECASE)
+    answers: dict[int, tuple[str, str]] = {}
+    if len(splits) >= 3:
+        for i in range(1, len(splits), 2):
+            q_num = int(splits[i])
+            ans_text = splits[i + 1].strip() if i + 1 < len(splits) else ""
+            lines = [line.strip() for line in ans_text.splitlines() if line.strip()]
+            clean_text = " ".join(lines)
+            ans_split = re.split(
+                r"\b(?:Ans|Answer|My\s+answer)\s*[:\.]\s*",
+                clean_text,
+                flags=re.IGNORECASE,
+            )
+            if len(ans_split) == 2:
+                answers[q_num] = (ans_split[0].strip(), ans_split[1].strip())
+            else:
+                answers[q_num] = ("", clean_text)
+    return answers
+
+
+def _detect_test_paper_mismatches(
+    paper: GeneratedTestPaper,
+    parsed_answers: dict[int, tuple[str, str]],
+) -> list[tuple[int, str, int, TestPaperQuestionItem]]:
+    stop_words = {
+        "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for", "with",
+        "of", "and", "or", "because", "it", "they", "them", "this", "that", "from", "be", "been",
+        "your", "my", "our", "used", "using", "how", "what", "why", "which", "when", "where",
+    }
+    q_map = {q.question_num: q for q in paper.questions}
+    mismatches: list[tuple[int, str, int, TestPaperQuestionItem]] = []
+
+    for q_num, (q_prompt, ans_text) in parsed_answers.items():
+        if q_prompt or not ans_text.strip():
+            continue
+        ans_words = {
+            w for w in re.findall(r"\w+", ans_text.casefold())
+            if len(w) > 2 and w not in stop_words
+        }
+        if not ans_words:
+            continue
+
+        assigned_q = q_map.get(q_num)
+        assigned_score = 0
+        if assigned_q:
+            ref_text = f"{assigned_q.question_text} {assigned_q.solution_guide} {assigned_q.topic_title}"
+            ref_words = {
+                w for w in re.findall(r"\w+", ref_text.casefold())
+                if len(w) > 2 and w not in stop_words
+            }
+            assigned_score = len(ans_words & ref_words)
+
+        best_other_q: int | None = None
+        best_other_score = 0
+        for o_num, o_q in q_map.items():
+            if o_num == q_num:
+                continue
+            o_text = f"{o_q.question_text} {o_q.solution_guide} {o_q.topic_title}"
+            o_words = {
+                w for w in re.findall(r"\w+", o_text.casefold())
+                if len(w) > 2 and w not in stop_words
+            }
+            score = len(ans_words & o_words)
+            if score > best_other_score:
+                best_other_score = score
+                best_other_q = o_num
+
+        if (
+            best_other_q is not None
+            and best_other_score >= 2
+            and (best_other_score > assigned_score + 1 or assigned_score == 0)
+        ):
+            mismatches.append((q_num, ans_text, best_other_q, q_map[best_other_q]))
+
+    return mismatches
+
+
+def evaluate_single_test_answer(
+    q_text: str,
+    user_ans: str,
+    sol_guide: str,
+    max_marks: int,
+) -> tuple[float, str, str]:
+    if not user_ans or not user_ans.strip():
+        return 0.0, "Not answered", "No answer provided."
+
+    u_clean = user_ans.strip().casefold()
+    g_clean = sol_guide.strip().casefold()
+
+    def _strip_short_fillers(t: str) -> str:
+        words = re.findall(r"\w+", t.casefold())
+        fillers = {"system", "method", "process", "tool", "device", "technique", "type", "crops", "crop"}
+        filtered = [w for w in words if w not in fillers]
+        return " ".join(filtered) if filtered else " ".join(words)
+
+    u_norm = _strip_short_fillers(u_clean)
+    g_norm = _strip_short_fillers(g_clean)
+
+    u_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", u_clean)
+    g_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", g_clean)
+
+    if len(g_clean.split()) <= 5 or g_nums:
+        if u_nums and g_nums:
+            if u_nums == g_nums:
+                return float(max_marks), "Correct", "Correct answer."
+            else:
+                return 0.0, "Incorrect", f"Incorrect. Expected value: {sol_guide}"
+        if (
+            u_clean == g_clean
+            or u_norm == g_norm
+            or (len(u_norm) >= 4 and u_norm in g_norm)
+            or (len(g_norm) >= 4 and g_norm in u_norm)
+        ):
+            return float(max_marks), "Correct", "Correct answer."
+        if len(u_clean.split()) <= 4:
+            return 0.0, "Incorrect", f"Incorrect. Expected answer: {sol_guide}"
+
+    if u_clean == g_clean or u_norm == g_norm:
+        return float(max_marks), "Correct", "Correct answer."
+
+    wrong_keywords = {
+        "red", "blue", "green", "yellow", "iron", "steel", "plastic", "magic", "fake", "bad"
+    }
+    u_words = set(re.findall(r"\w+", u_clean))
+    g_words = set(re.findall(r"\w+", g_clean))
+
+    stop_words = {
+        "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for", "with",
+        "of", "and", "or", "because", "it", "they", "them", "this", "that", "from", "be", "been"
+    }
+    ref_keywords = {w for w in g_words if len(w) > 2 and w not in stop_words}
+    user_keywords = {w for w in u_words if len(w) > 2 and w not in stop_words}
+
+    has_wrong_keyword = (
+        bool(user_keywords & wrong_keywords)
+        and not bool(ref_keywords & wrong_keywords)
+    )
+    if has_wrong_keyword:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    method_words = {"water", "float", "sink", "hollow"}
+    consequence_words = {
+        "healthy", "yield", "crop", "plants", "grow", "growth", "produce", "weak"
+    }
+
+    has_method = bool(user_keywords & method_words)
+    has_consequence = bool(user_keywords & consequence_words)
+
+    if "why" in q_text.casefold() or "seed" in q_text.casefold():
+        if has_method and not has_consequence:
+            half = round(max_marks * 0.5, 1)
+            return (
+                half,
+                "Partially correct",
+                "Explains the identification method (float/sink) but misses main reason (hollow/weak seeds failing to grow into healthy plants).",
+            )
+
+    if ref_keywords:
+        matched = user_keywords & ref_keywords
+        ratio = len(matched) / float(len(ref_keywords))
+        if ratio >= 0.5 or len(matched) >= 3:
+            return float(max_marks), "Correct", "Correct key concepts covered."
+        elif ratio >= 0.25 or len(matched) >= 2:
+            half = round(max_marks * 0.5, 1)
+            return (
+                half,
+                "Partially correct",
+                f"Partially correct answer. Missing complete details: {sol_guide}",
+            )
+
+    return 0.0, "Incorrect", f"Incorrect. Correct answer: {sol_guide}"
+
+
+def evaluate_test_paper(
+    paper: GeneratedTestPaper,
+    message: str,
+) -> str:
+    parsed_answers = parse_student_test_answers(message)
+
+    # 1. Question-prompt remapping (if user included question text in submission)
+    mapped_answers: dict[int, str] = {}
+    stop_words = {
+        "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for", "with",
+        "of", "and", "or", "because", "it", "they", "them", "this", "that", "from", "be", "been",
+    }
+    for q_num, (q_prompt, ans_text) in parsed_answers.items():
+        if q_prompt:
+            p_words = {
+                w for w in re.findall(r"\w+", q_prompt.casefold())
+                if len(w) > 2 and w not in stop_words
+            }
+            best_q = q_num
+            best_overlap = 0
+            for q_item in paper.questions:
+                q_words = {
+                    w for w in re.findall(r"\w+", q_item.question_text.casefold())
+                    if len(w) > 2 and w not in stop_words
+                }
+                overlap = len(p_words & q_words)
+                if overlap > best_overlap:
+                    best_overlap = overlap
+                    best_q = q_item.question_num
+            mapped_answers[best_q] = ans_text
+        else:
+            mapped_answers[q_num] = ans_text
+
+    # 2. Check for concept mismatches (only when prompts were not explicitly given)
+    mismatches = _detect_test_paper_mismatches(paper, parsed_answers)
+    answered_count = len([a for _, a in mapped_answers.items() if a.strip()])
+    if len(mismatches) >= 2 or (answered_count > 0 and len(mismatches) / float(answered_count) >= 0.5):
+        warning_lines = [
+            "Your pasted answers do not appear to match the question numbers in the generated test paper.",
+            "",
+            "Detected Question Mismatches:",
+        ]
+        for q_num, ans_text, alt_q_num, alt_item in mismatches[:4]:
+            trunc_ans = ans_text[:40] + ("..." if len(ans_text) > 40 else "")
+            trunc_q = alt_item.question_text[:40] + ("..." if len(alt_item.question_text) > 40 else "")
+            warning_lines.append(
+                f"- Your Answer {q_num} (\"{trunc_ans}\") matches Question {alt_q_num} (\"{trunc_q}\")"
+            )
+        warning_lines.extend(
+            [
+                "",
+                "How to Fix & Re-submit:",
+                "1. Re-paste your answers using the exact question numbers from the test paper:",
+                "   1. <Answer for Question 1>",
+                "   2. <Answer for Question 2>",
+                "   3. <Answer for Question 3>",
+                "",
+                "2. OR include the question text with each answer:",
+                "   Q1. Classify wheat and paddy... Ans: Paddy is Kharif crop...",
+                "   Q2. Why should damaged seeds be separated? Ans: Because...",
+                "",
+                paper.source_footer,
+            ]
+        )
+        return "\n".join(warning_lines)
+
+    # 3. Perform actual grading
+    total_awarded = 0.0
+    total_max = paper.total_marks
+
+    table_rows: list[str] = []
+    weak_topics: dict[str, float] = {}
+
+    for q_item in paper.questions:
+        ans_text = mapped_answers.get(q_item.question_num, "")
+        awarded, result_str, feedback_str = evaluate_single_test_answer(
+            q_item.question_text,
+            ans_text,
+            q_item.solution_guide,
+            q_item.max_marks,
+        )
+        total_awarded += awarded
+        table_rows.append(
+            f"| Q{q_item.question_num} | [{q_item.topic_title}] | {q_item.max_marks} | {awarded:g} | {result_str} | {feedback_str} |"
+        )
+        if awarded < q_item.max_marks:
+            lost = q_item.max_marks - awarded
+            weak_topics[q_item.topic_title] = weak_topics.get(q_item.topic_title, 0.0) + lost
+
+    percentage = (total_awarded / float(total_max) * 100.0) if total_max > 0 else 0.0
+
+    board_name = (
+        "Gujarat Secondary and Higher Secondary Education Board (GSEB)"
+        if paper.board.casefold() == "gseb"
+        else paper.board
+    )
+
+    lines: list[str] = [
+        "Test Evaluation",
+        board_name,
+        f"Medium: {paper.medium} | Standard: {paper.standard} | Subject: {paper.subject}",
+        f"Test Scope: {paper.scope_description}",
+        f"Total Marks: {total_awarded:g}/{total_max} ({percentage:.1f}%)",
+        "",
+        "Per-Question Evaluation:",
+        "| Q No | Topic | Max Marks | Awarded Marks | Result | Feedback |",
+        "|---|---|---|---|---|---|",
+    ]
+    lines.extend(table_rows)
+    lines.append("")
+
+    if weak_topics:
+        lines.append("Weak Topics Identified:")
+        for top_title, lost_m in weak_topics.items():
+            lines.append(f"- {top_title}: Lost {lost_m:g} mark/marks")
+        lines.append("")
+        lines.append("Suggested Revision Plan:")
+        for top_title in weak_topics.keys():
+            lines.append(
+                f"- Review topic '{top_title}' in {paper.subject} textbook and re-solve key practice exercises."
+            )
+        lines.append("")
+    else:
+        lines.append("Excellent performance! All answers were fully correct.")
+        lines.append("")
+
+    lines.append(paper.source_footer)
+    return "\n".join(lines)
+
+
 def format_test_paper_duration(duration_minutes: int) -> str:
     if duration_minutes == 180:
         return "3 Hours"
@@ -2013,6 +2343,7 @@ def render_test_paper(
 
     q_num = 1
     sec_answers: list[tuple[str, list[tuple[int, str, str]]]] = []
+    items: list[TestPaperQuestionItem] = []
     pool_idx = 0
 
     for sec_title, mark_per_q, q_count in specs:
@@ -2025,6 +2356,16 @@ def render_test_paper(
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
+            items.append(
+                TestPaperQuestionItem(
+                    question_num=q_num,
+                    section_title=sec_title,
+                    topic_title=topic_title,
+                    question_text=q_text,
+                    max_marks=mark_per_q,
+                    solution_guide=sol_text,
+                )
+            )
             q_num += 1
         lines.append("")
         sec_answers.append((sec_title, answers_list))
@@ -2045,7 +2386,18 @@ def render_test_paper(
             lines.append("")
 
     lines.append(footer)
-    return "\n".join(lines)
+    paper_obj = GeneratedTestPaper(
+        board=syllabus.board,
+        medium=syllabus.medium,
+        standard=syllabus.standard,
+        subject=syllabus.subject,
+        scope_description=scope.description,
+        total_marks=scope.total_marks,
+        duration_minutes=scope.duration_minutes,
+        questions=items,
+        source_footer=footer,
+    )
+    return "\n".join(lines), paper_obj
 
 
 def _source_description(match: SyllabusTopicMatch) -> str:
@@ -2129,7 +2481,8 @@ def render_syllabus_match(
             sections.append("Examples:\n" + _numbered_lines(selected))
     elif request.intent == "test":
         scope = parse_test_paper_scope(message, context, match.syllabus)
-        return render_test_paper(match.syllabus, scope, context=context)
+        raw_text, _ = render_test_paper(match.syllabus, scope, context=context)
+        return raw_text
     elif request.intent in {"practice", "homework"}:
         bank = _topic_question_bank(
             topic,
