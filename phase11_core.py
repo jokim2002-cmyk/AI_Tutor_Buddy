@@ -759,6 +759,8 @@ class SyllabusRepository:
                         f"chapter {chapter.number}",
                         f"chap {chapter.number}",
                         f"ch {chapter.number}",
+                        f"unit {chapter.number}",
+                        f"lesson {chapter.number}",
                         f"પાઠ {chapter.number}",
                         f"અધ્યાય {chapter.number}",
                     )
@@ -1748,7 +1750,7 @@ def detect_context_from_message(
         detected["subject"] = canonical
 
     chapter_match = re.search(
-        r"(?:chapter|chap|ch|પાઠ|અધ્યાય)\s*(?:number|no\.?|નંબર)?\s*[:#-]?\s*([\w.-]+)",
+        r"(?:chapter|chap|ch|unit|lesson|પાઠ|અધ્યાય)\s*(?:number|no\.?|નંબર)?\s*[:#-]?\s*([\w.-]+)",
         normalized,
         flags=re.IGNORECASE,
     )
