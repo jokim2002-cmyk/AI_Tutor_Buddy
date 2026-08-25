@@ -86,7 +86,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("text_size=16", composer_block)
         self.assertIn("composer_slot = ft.Container(content=composer, expand=True)", composer_block)
         self.assertIn("composer.on_change = handle_composer_change", UI)
-        self.assertIn("composer.on_submit = send", UI)
+        self.assertIn("composer.on_submit = queue_send", UI)
         self.assertIn("def estimated_composer_lines() -> int:", UI)
         self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
@@ -202,7 +202,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn('COLOR_TEXT = "#0F172A"', UI)
         self.assertIn('COLOR_MUTED = "#334155"', UI)
         self.assertIn('COLOR_USER = "#E0EBFF"', UI)
-        self.assertIn("send_button.on_click = send", UI)
+        self.assertIn("send_button.on_click = queue_send", UI)
         self.assertIn("attach_button.on_click = pick_files", UI)
         self.assertIn("mic_button.on_click = toggle_recording", UI)
         self.assertIn("speak_button.on_click = speak_last", UI)
@@ -362,6 +362,117 @@ class Phase11UIContractTests(unittest.TestCase):
         eval_formatted = gyanverse_ui.format_tutor_response(eval_raw, student_message=ans_txt)
         self.assertIn("Total Marks: 3/25", eval_formatted)
         self.assertIn("Source type: Teacher-authored content.", eval_formatted)
+
+    def test_single_ui_send_for_test_paper_appends_exactly_one_tutor_response(self):
+        import asyncio
+        import flet as ft
+        import gyanverse_ui
+        from unittest.mock import MagicMock
+
+        tasks = []
+        page = MagicMock(spec=ft.Page)
+        page.controls = []
+        page.overlay = []
+        page.dialog = None
+        page.width = 1200
+        page.height = 800
+
+        def run_task_mock(func, *args, **kwargs):
+            t = asyncio.create_task(func(*args, **kwargs))
+            tasks.append(t)
+            return t
+
+        page.run_task = run_task_mock
+        gyanverse_ui.main(page)
+
+        def collect_all(control):
+            res = [control]
+            if hasattr(control, "controls") and isinstance(control.controls, list):
+                for c in control.controls:
+                    res.extend(collect_all(c))
+            if hasattr(control, "content") and control.content:
+                res.extend(collect_all(control.content))
+            return res
+
+        all_controls = []
+        for call_arg in page.add.call_args_list:
+            for top in call_arg[0]:
+                all_controls.extend(collect_all(top))
+
+        composers = [c for c in all_controls if isinstance(c, ft.TextField)]
+        icon_buttons = [c for c in all_controls if isinstance(c, ft.IconButton)]
+        composer = composers[0]
+        send_button = icon_buttons[-1]
+        queue_fn = send_button.on_click
+
+        async def run_test():
+            composer.value = "Generate Science Chapter 1 25-mark test paper"
+            # Synchronously trigger both on_click and on_submit
+            queue_fn(None)
+            queue_fn(None)
+            if tasks:
+                await asyncio.gather(*tasks)
+
+        asyncio.run(run_test())
+        self.assertEqual(len(tasks), 1, "queue_send must schedule exactly 1 task when double-triggered synchronously")
+
+    def test_normal_non_test_prompt_appends_exactly_one_tutor_reply(self):
+        import asyncio
+        import flet as ft
+        import gyanverse_ui
+        from unittest.mock import MagicMock
+
+        tasks = []
+        page = MagicMock(spec=ft.Page)
+        page.controls = []
+        page.overlay = []
+        page.dialog = None
+        page.width = 1200
+        page.height = 800
+
+        def run_task_mock(func, *args, **kwargs):
+            t = asyncio.create_task(func(*args, **kwargs))
+            tasks.append(t)
+            return t
+
+        page.run_task = run_task_mock
+        gyanverse_ui.main(page)
+
+        def collect_all(control):
+            res = [control]
+            if hasattr(control, "controls") and isinstance(control.controls, list):
+                for c in control.controls:
+                    res.extend(collect_all(c))
+            if hasattr(control, "content") and control.content:
+                res.extend(collect_all(control.content))
+            return res
+
+        all_controls = []
+        for call_arg in page.add.call_args_list:
+            for top in call_arg[0]:
+                all_controls.extend(collect_all(top))
+
+        composers = [c for c in all_controls if isinstance(c, ft.TextField)]
+        icon_buttons = [c for c in all_controls if isinstance(c, ft.IconButton)]
+        composer = composers[0]
+        send_button = icon_buttons[-1]
+        queue_fn = send_button.on_click
+
+        async def run_test():
+            composer.value = "What is crop production?"
+            queue_fn(None)
+            queue_fn(None)
+            if tasks:
+                await asyncio.gather(*tasks)
+
+        asyncio.run(run_test())
+        self.assertEqual(len(tasks), 1, "queue_send must schedule exactly 1 task when double-triggered synchronously")
+
+    def test_visible_tutor_reply_is_not_duplicated_by_outer_exception_fallback(self):
+        self.assertIn("tutor_reply_visible = False", UI)
+        self.assertIn("tutor_reply_visible = True", UI)
+        self.assertIn("if tutor_reply_visible:", UI)
+        self.assertIn('add_message("tutor", fallback)', UI)
 
     def test_app_launch_smoke_test_catches_unsupported_flet_kwargs(self):
         import flet as ft

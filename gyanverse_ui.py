@@ -1627,15 +1627,35 @@ def main(page: ft.Page) -> None:
             status_text.value = message
             page.update()
 
-        async def send(_: object = None, *, is_retry: bool = False) -> None:
-            nonlocal selected_attachments, latest_tutor_answer
-            text = (composer.value or "").strip()
-            if not text and not selected_attachments:
+        is_sending = False
+
+        def queue_send(_: object = None) -> None:
+            nonlocal is_sending
+            if is_sending:
+                return
+            captured_text = (composer.value or "").strip()
+            if not captured_text and not selected_attachments:
                 notify("Type a question or attach homework first.", error=True)
                 return
+            is_sending = True
+            send_button.disabled = True
+            composer.value = ""
+            update_compact_tutor_layout()
+            try:
+                page.update()
+            except Exception:
+                pass
+            page.run_task(send, captured_text)
+
+        async def send(captured_text: str = "", *, is_retry: bool = False) -> None:
+            nonlocal is_sending, selected_attachments, latest_tutor_answer
+            text = (captured_text or "").strip()
             request_attachments = tuple(selected_attachments)
             started_at = time.perf_counter()
             ai_service.stop_playback()
+            tutor_text_control: ft.Text | None = None
+            bubble_container: ft.Column | None = None
+            tutor_reply_visible = False
             try:
                 requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
                 if requested_mode != context.learning_mode:
@@ -1649,8 +1669,6 @@ def main(page: ft.Page) -> None:
                     update_context(detected_context)
                 if not is_retry:
                     add_message("student", text or "Please review my attached homework.")
-                composer.value = ""
-                update_compact_tutor_layout()
 
                 if ai_service.configured:
                     set_busy(True, "Thinking...")
@@ -1722,6 +1740,7 @@ def main(page: ft.Page) -> None:
                     )
                 latest_tutor_answer = answer
                 tutor_text_control.value = answer
+                tutor_reply_visible = True
 
                 saved_tutor_message = persist_message(
                     "tutor",
@@ -1777,6 +1796,9 @@ def main(page: ft.Page) -> None:
                     # Learning analytics must never block the visible tutor reply.
                     pass
             except Exception as exc:
+                if tutor_reply_visible:
+                    status_text.value = "Fast local reply shown"
+                    return
                 fallback = ai_service.offline_answer(
                     message=text,
                     context=context,
@@ -1784,12 +1806,17 @@ def main(page: ft.Page) -> None:
                     reason=f"{type(exc).__name__}: {exc}",
                 )
                 latest_tutor_answer = fallback
-                add_message("tutor", fallback)
+                if tutor_text_control is not None:
+                    tutor_text_control.value = fallback
+                    tutor_reply_visible = True
+                else:
+                    add_message("tutor", fallback)
                 status_text.value = "Fast local reply shown"
             finally:
                 busy.visible = False
                 send_button.disabled = False
                 mic_button.disabled = False
+                is_sending = False
                 page.update()
 
 
@@ -1984,9 +2011,9 @@ def main(page: ft.Page) -> None:
 
         mode_dropdown.on_change = mode_changed
         attach_button.on_click = pick_files
-        send_button.on_click = send
+        send_button.on_click = queue_send
         composer.on_change = handle_composer_change
-        composer.on_submit = send
+        composer.on_submit = queue_send
         mic_button.on_click = toggle_recording
         speak_button.on_click = speak_last
 
