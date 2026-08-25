@@ -4,6 +4,7 @@ import asyncio
 import io
 import json
 import os
+import subprocess
 import tempfile
 import time
 import uuid
@@ -1261,14 +1262,40 @@ def main(page: ft.Page) -> None:
             def handle_replay(_: object = None) -> None:
                 handle_play()
 
-            def copy_answer(_: object = None) -> None:
+            def copy_full_answer_to_clipboard(full_text: str) -> bool:
+                text_to_copy = str(full_text or "")
+                if not text_to_copy:
+                    return False
+                if os.name == "nt":
+                    try:
+                        subprocess.run(
+                            ["powershell.exe", "-NoProfile", "-Command", "[Console]::InputEncoding=[System.Text.UTF8Encoding]::new($false); [Console]::In.ReadToEnd() | Set-Clipboard"],
+                            input=text_to_copy,
+                            text=True,
+                            encoding="utf-8",
+                            timeout=5,
+                            check=True,
+                            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                        )
+                        return True
+                    except Exception:
+                        pass
                 try:
                     if hasattr(page, "set_clipboard") and callable(page.set_clipboard):
-                        page.set_clipboard(answer_text)
+                        page.set_clipboard(text_to_copy)
+                        return True
+                except Exception:
+                    pass
+                return False
+
+            def copy_answer(_: object = None) -> None:
+                try:
+                    if not copy_full_answer_to_clipboard(answer_text):
+                        raise RuntimeError("Clipboard unavailable")
                     btn_copy.icon = ft.Icons.CHECK
                     btn_copy.icon_color = COLOR_SUCCESS
                     btn_copy.tooltip = "Copied!"
-                    voice_status_control.value = "Answer copied to clipboard"
+                    voice_status_control.value = "Full answer copied to clipboard"
                     try:
                         page.update()
                     except Exception:

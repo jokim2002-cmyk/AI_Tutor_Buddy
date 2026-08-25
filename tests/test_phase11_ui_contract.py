@@ -474,6 +474,14 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("if tutor_reply_visible:", UI)
         self.assertIn('add_message("tutor", fallback)', UI)
 
+    def test_copy_button_uses_full_answer_clipboard_path(self):
+        self.assertIn("import subprocess", UI)
+        self.assertIn("def copy_full_answer_to_clipboard(full_text: str) -> bool:", UI)
+        self.assertIn("[Console]::In.ReadToEnd() | Set-Clipboard", UI)
+        self.assertIn("input=text_to_copy", UI)
+        self.assertIn("Full answer copied to clipboard", UI)
+        self.assertIn('raise RuntimeError("Clipboard unavailable")', UI)
+
     def test_app_launch_smoke_test_catches_unsupported_flet_kwargs(self):
         import flet as ft
         import gyanverse_ui
