@@ -248,6 +248,121 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
         self.assertIn("height=520", UI)
 
+    def test_phase2b_attachment_answer_submission_contracts(self):
+        self.assertIn("attach_button.on_click = pick_files", UI)
+        self.assertIn("Only .txt and .md files are supported for test answer evaluation right now.", UI)
+        self.assertIn("File size exceeds 1 MB limit (max 1 MB).", UI)
+        self.assertIn("No active test paper found. Please generate a test paper first", UI)
+        self.assertIn("eval_raw = evaluate_test_paper(ai_service._last_generated_test_paper, text_content)", UI)
+
+    def test_attachment_evaluation_handler_executes_without_name_errors(self):
+        import gyanverse_ui
+        from phase11_core import (
+            GSEBSyllabusRepository,
+            render_test_paper,
+            parse_test_paper_scope,
+        )
+
+        self.assertTrue(hasattr(gyanverse_ui, "evaluate_test_paper"))
+        self.assertTrue(hasattr(gyanverse_ui, "format_tutor_response"))
+
+        repo = GSEBSyllabusRepository(ROOT / "syllabus")
+        syl = repo.find(board="GSEB", medium="English", standard=8, subject="Science & Technology")
+        self.assertIsNotNone(syl)
+        scope = parse_test_paper_scope("Generate Science Chapter 1 25-mark test paper", None, syl)
+        _, paper = render_test_paper(syl, scope, context=None)
+
+        ans = (
+            "1. Paddy is a Kharif crop and wheat is a Rabi crop.\n"
+            "2. Damaged seeds should be separated because they are hollow and weak.\n"
+            "3. Drip irrigation."
+        )
+
+        eval_raw = gyanverse_ui.evaluate_test_paper(paper, ans)
+        eval_formatted = gyanverse_ui.format_tutor_response(eval_raw, student_message=ans)
+
+        self.assertIn("Total Marks:", eval_formatted)
+        self.assertIn("Per-Question Evaluation:", eval_formatted)
+        self.assertIn("Source type: Teacher-authored content.", eval_formatted)
+
+    def test_generate_test_paper_persists_state_and_enables_attachment_eval(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import GSEBSyllabusRepository, StudentLearningContext
+        import gyanverse_ui
+
+        repo = GSEBSyllabusRepository(ROOT / "syllabus")
+        ai = GyanVerseAIService(syllabus_repository=repo, api_key="mock_key")
+        ctx = StudentLearningContext(
+            student_id="s1",
+            name="Student",
+            board="GSEB",
+            medium="English",
+            standard=8,
+            current_subject="Science & Technology",
+            current_chapter="Chapter 1 - Crop Production and Management",
+        )
+
+        self.assertIsNone(ai._last_generated_test_paper)
+
+        prompts = [
+            "Chapter 1 ka 25 marks test banao",
+            "Generate Science Chapter 1 25-mark test paper",
+            "Full book test banao",
+        ]
+
+        ans_txt = (
+            "1. Paddy is a Kharif crop and wheat is a Rabi crop.\n"
+            "2. Damaged seeds should be separated because they are hollow and weak.\n"
+            "3. Drip irrigation."
+        )
+
+        for p in prompts:
+            ai._last_generated_test_paper = None
+            _ = ai.ask_stream(message=p, context=ctx)
+            self.assertIsNotNone(
+                ai._last_generated_test_paper,
+                f"Failed to set _last_generated_test_paper for prompt: {p}",
+            )
+            eval_raw = gyanverse_ui.evaluate_test_paper(ai._last_generated_test_paper, ans_txt)
+            eval_formatted = gyanverse_ui.format_tutor_response(eval_raw, student_message=ans_txt)
+            self.assertTrue(
+                "Total Marks:" in eval_formatted or "Your pasted answers" in eval_formatted,
+                f"Evaluation failed for prompt: {p}",
+            )
+            self.assertIn("Source type: Teacher-authored content.", eval_formatted)
+
+    def test_live_ui_send_flow_syncs_test_paper_state_and_status_text(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import GSEBSyllabusRepository, StudentLearningContext
+        import gyanverse_ui
+
+        repo = GSEBSyllabusRepository(ROOT / "syllabus")
+        ai = GyanVerseAIService(syllabus_repository=repo, api_key="mock_key")
+        ctx = StudentLearningContext(
+            student_id="s1",
+            name="Student",
+            board="GSEB",
+            medium="English",
+            standard=8,
+            current_subject="",
+            current_chapter="",
+        )
+
+        p = "Generate Science Chapter 1 25-mark paper"
+        _ = ai.ask_stream(message=p, context=ctx)
+        self.assertIsNotNone(ai._last_generated_test_paper)
+
+        ans_txt = (
+            "1. Paddy is a Kharif crop and wheat is a Rabi crop.\n"
+            "2. Damaged seeds should be separated because they are hollow and weak.\n"
+            "3. Drip irrigation."
+        )
+
+        eval_raw = gyanverse_ui.evaluate_test_paper(ai._last_generated_test_paper, ans_txt)
+        eval_formatted = gyanverse_ui.format_tutor_response(eval_raw, student_message=ans_txt)
+        self.assertIn("Total Marks: 3/25", eval_formatted)
+        self.assertIn("Source type: Teacher-authored content.", eval_formatted)
+
     def test_app_launch_smoke_test_catches_unsupported_flet_kwargs(self):
         import flet as ft
         import gyanverse_ui

@@ -620,6 +620,100 @@ class GyanVerseAIService:
             chunk_count=1,
         )
 
+    def ensure_test_paper_context(
+        self, message: str, context: StudentLearningContext
+    ) -> GeneratedTestPaper | None:
+        """Capture and store the generated test paper object for the active session across all routes."""
+        try:
+            msg_lower = message.casefold()
+            eval_phrases = (
+                "check my test answers",
+                "check test answers",
+                "evaluate my test answers",
+                "evaluate test answers",
+                "evaluate my answers",
+                "check my answers",
+                "check my paper",
+                "evaluate my paper",
+                "mera paper check karo",
+                "paper check karo",
+                "check answers out of",
+                "evaluate answers out of",
+                "here are my answers",
+                "here are my test answers",
+                "my answers:",
+                "my answers",
+                "check answers",
+                "evaluate answers",
+            )
+            is_eval = any(phrase in msg_lower for phrase in eval_phrases) or bool(
+                re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message, re.IGNORECASE)
+            )
+            if is_eval:
+                return self._last_generated_test_paper
+
+            req = classify_syllabus_tutor_request(message)
+            is_test_gen = req.intent == "test" or any(
+                term in msg_lower
+                for term in ("paper", "test", "exam", "banao", "marks", "quiz")
+            )
+            if not is_test_gen or self.syllabus_repository is None:
+                return self._last_generated_test_paper
+
+            match = self.syllabus_repository.lookup_topic(message=message, context=context)
+            subject = context.current_subject
+            if not subject and match is not None:
+                subject = match.syllabus.subject
+
+            if not subject:
+                if "science" in msg_lower:
+                    subject = "Science & Technology"
+                elif "math" in msg_lower or "maths" in msg_lower:
+                    subject = "Mathematics"
+                elif "social" in msg_lower:
+                    subject = "Social Science"
+                elif "english" in msg_lower:
+                    subject = "English"
+                else:
+                    subject = "Science & Technology"
+
+            syllabus = None
+            if subject:
+                syllabus = self.syllabus_repository.find(
+                    board=context.board,
+                    medium=context.medium,
+                    standard=context.standard,
+                    subject=subject,
+                )
+                if (
+                    syllabus is None
+                    and subject.casefold() in {"science", "science & technology"}
+                ):
+                    syllabus = self.syllabus_repository.find(
+                        board=context.board,
+                        medium=context.medium,
+                        standard=context.standard,
+                        subject="Science & Technology",
+                    )
+            if syllabus is None and match is not None:
+                syllabus = match.syllabus
+            if syllabus is None:
+                syllabus = self.syllabus_repository.find(
+                    board=context.board,
+                    medium=context.medium,
+                    standard=context.standard,
+                    subject="Science & Technology",
+                )
+
+            if syllabus is not None:
+                scope = parse_test_paper_scope(message, context, syllabus)
+                _, paper_obj = render_test_paper(syllabus, scope, context=context)
+                self._last_generated_test_paper = paper_obj
+                return paper_obj
+        except Exception:
+            pass
+        return self._last_generated_test_paper
+
     def _local_syllabus_answer(
         self,
         *,
@@ -631,6 +725,8 @@ class GyanVerseAIService:
     ) -> str | None:
         if attachments or self.syllabus_repository is None:
             return None
+
+        self.ensure_test_paper_context(message, context)
 
         msg_lower = message.casefold()
         eval_phrases = (
@@ -1050,6 +1146,7 @@ class GyanVerseAIService:
     ) -> str:
         t_start = time.perf_counter()
         clean_msg = clean_student_text(message)
+        self.ensure_test_paper_context(clean_msg, context)
 
         if not attachments:
             intent = classify_instant_intent(clean_msg)

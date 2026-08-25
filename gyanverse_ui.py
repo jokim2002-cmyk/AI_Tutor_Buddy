@@ -36,6 +36,8 @@ from phase11_core import (
     VoiceState,
     canonicalize_installed_syllabus_context,
     detect_context_from_message,
+    evaluate_test_paper,
+    format_tutor_response,
 )
 from tutor_engine import TutorEngine
 
@@ -1490,36 +1492,132 @@ def main(page: ft.Page) -> None:
             nonlocal selected_attachments
             try:
                 files = await ft.FilePicker().pick_files(
-                    dialog_title="Select homework photos or files",
-                    allow_multiple=True,
+                    dialog_title="Select test answer file (.txt or .md)",
+                    allow_multiple=False,
                     with_data=True,
-                    file_type=ft.FilePickerFileType.CUSTOM,
-                    allowed_extensions=["jpg", "jpeg", "png", "webp", "pdf", "txt", "md", "doc", "docx"],
-                    compression_quality=88,
                 )
                 if not files:
                     status_text.value = "Attachment selection cancelled"
-                    page.update()
+                    try:
+                        page.update()
+                    except Exception:
+                        pass
                     return
+
                 for picked in files:
+                    ext = Path(picked.name).suffix.lower()
+                    if ext not in [".txt", ".md"]:
+                        add_message(
+                            "tutor",
+                            "Only .txt and .md files are supported for test answer evaluation right now.",
+                            error=True,
+                        )
+                        status_text.value = "Unsupported file type"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
                     data = picked.bytes
                     if data is None and getattr(picked, "path", None):
-                        data = Path(picked.path).read_bytes()
+                        try:
+                            data = Path(picked.path).read_bytes()
+                        except Exception as read_err:
+                            add_message(
+                                "tutor",
+                                f"Unable to read file {picked.name}: {read_err}",
+                                error=True,
+                            )
+                            status_text.value = "File read error"
+                            try:
+                                page.update()
+                            except Exception:
+                                pass
+                            return
+
                     if data is None:
-                        raise Phase11Error(f"Unable to read {picked.name}.")
-                    record = attachment_store.add_bytes(
-                        student_id=context.student_id,
-                        session_id=session_id,
-                        original_name=picked.name,
-                        data=data,
-                    )
-                    selected_attachments.append(record)
-                refresh_attachment_preview()
-                mode_dropdown.value = LearningMode.HOMEWORK.value
-                update_context(replace(context, learning_mode=LearningMode.HOMEWORK.value))
-                notify(f"{len(files)} homework file(s) attached")
+                        add_message(
+                            "tutor",
+                            f"Unable to read file {picked.name}.",
+                            error=True,
+                        )
+                        status_text.value = "File read error"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
+                    if len(data) > 1_048_576:
+                        add_message(
+                            "tutor",
+                            "File size exceeds 1 MB limit (max 1 MB).",
+                            error=True,
+                        )
+                        status_text.value = "File size limit exceeded"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
+                    try:
+                        text_content = data.decode("utf-8")
+                    except Exception as decode_err:
+                        add_message(
+                            "tutor",
+                            f"Unable to read file text {picked.name}: {decode_err}",
+                            error=True,
+                        )
+                        status_text.value = "File text decode error"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
+                    if not text_content.strip():
+                        add_message(
+                            "tutor",
+                            f"File {picked.name} is empty.",
+                            error=True,
+                        )
+                        status_text.value = "Empty answer file"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
+                    if getattr(ai_service, "_last_generated_test_paper", None) is None:
+                        guard_msg = (
+                            "No active test paper found. Please generate a test paper first (e.g. type 'generate chapter test')."
+                        )
+                        add_message("tutor", guard_msg, error=True)
+                        status_text.value = "No active test paper"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
+                        return
+
+                    add_message("student", f"[Attached answer file: {picked.name}]\n\n{text_content}")
+                    set_busy(True, "Evaluating attached test answers...")
+                    try:
+                        eval_raw = evaluate_test_paper(ai_service._last_generated_test_paper, text_content)
+                        eval_formatted = format_tutor_response(eval_raw, student_message=text_content)
+                        add_message("tutor", eval_formatted)
+                        status_text.value = "Test evaluation complete"
+                    finally:
+                        set_busy(False, "Ready")
             except Exception as exc:
-                notify(str(exc), error=True)
+                add_message("tutor", "Unable to process attached answer file. Please try again or re-attach a valid .txt/.md file.", error=True)
+                status_text.value = "Attachment processing error"
+                try:
+                    page.update()
+                except Exception:
+                    pass
 
         def set_busy(value: bool, message: str) -> None:
             busy.visible = value
@@ -1649,13 +1747,15 @@ def main(page: ft.Page) -> None:
                 selected_attachments = []
                 refresh_attachment_preview()
 
+                active_paper = getattr(ai_service, "_last_generated_test_paper", None)
                 m = ai_service.last_metrics
                 elapsed = time.perf_counter() - started_at
+                paper_suffix = f" • Active test paper ({active_paper.scope.subject})" if active_paper is not None else ""
                 if m.stream_used and m.ui_first_visible_ms > 0:
                     first_sec = m.ui_first_visible_ms / 1000.0
-                    status_text.value = f"Ready • first text {first_sec:.1f}s • complete {elapsed:.1f}s • {ai_service.status_label}"
+                    status_text.value = f"Ready • first text {first_sec:.1f}s • complete {elapsed:.1f}s • {ai_service.status_label}{paper_suffix}"
                 else:
-                    status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}"
+                    status_text.value = f"Ready • {elapsed:.1f}s • {ai_service.status_label}{paper_suffix}"
 
                 busy.visible = False
                 send_button.disabled = False
