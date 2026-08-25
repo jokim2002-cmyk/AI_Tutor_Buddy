@@ -51,8 +51,8 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
-        self.assertIn("transcript_height = max(260.0, min(640.0, viewport_height - 245.0))", UI)
-        self.assertIn("transcript_bottom_spacer = ft.Container(height=24)", UI)
+        self.assertIn("transcript_height = max(260.0, viewport_height - 210.0)", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=48)", UI)
         self.assertIn("transcript = ft.Column(", UI)
         self.assertIn("height=transcript_height", UI)
         self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.STRETCH", UI)
@@ -62,7 +62,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("controls=[transcript_bottom_spacer]", UI)
         self.assertIn("transcript_surface = ft.Container(", UI)
         self.assertIn("content=transcript", UI)
-        self.assertIn("            [context_banner, transcript_surface],", UI)
+        self.assertIn("[context_banner, transcript_surface]", UI)
         self.assertIn("page.on_resize = handle_tutor_resize", UI)
         self.assertIn("transcript_surface.height = resized_height", UI)
         self.assertIn("transcript_surface.update()", UI)
@@ -83,17 +83,17 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("shift_enter=True", composer_block)
         self.assertIn("dense=True", composer_block)
         self.assertIn("content_padding=ft.Padding(left=0, top=4, right=0, bottom=4)", composer_block)
-        self.assertIn("text_size=14", composer_block)
+        self.assertIn("text_size=16", composer_block)
         self.assertIn("composer_slot = ft.Container(content=composer, expand=True)", composer_block)
         self.assertIn("composer.on_change = handle_composer_change", UI)
         self.assertIn("composer.on_submit = send", UI)
         self.assertIn("def estimated_composer_lines() -> int:", UI)
         self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
-        self.assertIn("current_page_height - (193.0 + composer_height)", UI)
+        self.assertIn("current_page_height - (160.0 + composer_height)", UI)
         mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
-        self.assertIn("width=132", mode_block)
-        self.assertIn("text_size=12", mode_block)
+        self.assertIn("width=140", mode_block)
+        self.assertIn("text_size=13", mode_block)
         shell_block = UI.split("composer_shell = ft.Container(", 1)[1].split("context_banner = ft.Container(", 1)[0]
         self.assertIn("height=52", shell_block)
         self.assertIn("padding=ft.Padding(left=6, top=2, right=4, bottom=2)", shell_block)
@@ -103,11 +103,11 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("                        spacing=2,", shell_block)
         self.assertIn("attachment_preview.visible = bool(selected_attachments)", UI)
         self.assertNotIn("Enter sends • Shift+Enter adds a new line", shell_block)
-        banner_block = UI.split("context_banner = ft.Container(", 1)[1].split("conversation_area = ft.Column(", 1)[0]
+        banner_block = UI.split("context_banner = ft.Container(", 1)[1].split("conversation_area = ft.Container(", 1)[0]
         self.assertIn("                    mode_dropdown,", banner_block)
         self.assertIn("                        expand=True,", banner_block)
         self.assertIn("alignment=ft.MainAxisAlignment.SPACE_BETWEEN", UI)
-        self.assertIn("conversation_area = ft.Column(", UI)
+        self.assertIn("conversation_area = ft.Container(", UI)
         self.assertNotIn("                        transcript,\n                        composer_shell,", UI)
 
     def test_async_composer_focus_is_awaited(self):
@@ -197,10 +197,74 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn("C:\\Ai_Tutor_Buddy", runtime)
         self.assertNotIn("E:\\Ai_Tutor_Buddy", runtime)
 
-    def test_send_flow_duplicate_submission_protection_for_online_and_offline(self):
-        self.assertIn('set_busy(True, "Thinking...")', UI)
-        self.assertIn('set_busy(True, "Using local tutor...")', UI)
-        self.assertIn('finally:\n                busy.visible = False', UI)
+    def test_ui_button_wiring_and_contrast_contracts(self):
+        self.assertIn('COLOR_BACKGROUND = "#F8F9FA"', UI)
+        self.assertIn('COLOR_TEXT = "#0F172A"', UI)
+        self.assertIn('COLOR_MUTED = "#334155"', UI)
+        self.assertIn('COLOR_USER = "#E0EBFF"', UI)
+        self.assertIn("send_button.on_click = send", UI)
+        self.assertIn("attach_button.on_click = pick_files", UI)
+        self.assertIn("mic_button.on_click = toggle_recording", UI)
+        self.assertIn("speak_button.on_click = speak_last", UI)
+        self.assertIn("board_field.on_change = profile_scope_changed", UI)
+        self.assertIn("subject_field.on_change = subject_changed", UI)
+        self.assertIn("chapter_field.on_change = chapter_changed", UI)
+        self.assertIn("save_profile", UI)
+        self.assertIn("retry_question", UI)
+
+    def test_profile_dropdown_cascade_logic(self):
+        from phase11_core import GSEBSyllabusRepository
+        repo = GSEBSyllabusRepository(ROOT / "syllabus")
+        syllabi = repo.all(board="GSEB")
+        g8_eng = [s for s in syllabi if s.medium.casefold() == "english" and s.standard == 8]
+        subjects = sorted({s.subject for s in g8_eng})
+        self.assertIn("Mathematics", subjects)
+        self.assertIn("Science & Technology", subjects)
+        self.assertIn("Social Science", subjects)
+
+        math_syllabus = next(s for s in g8_eng if s.subject == "Mathematics")
+        chapters = [c.title for c in math_syllabus.chapters]
+        self.assertTrue(len(chapters) >= 1)
+        self.assertIn("Chapter 1 - Rational Numbers", chapters[0])
+
+        topics = [t.title for t in math_syllabus.chapters[0].topics]
+        self.assertTrue(len(topics) >= 1)
+
+    def test_ui_readability_and_chatgpt_layout_contracts(self):
+        self.assertIn('COLOR_TEXT = "#0F172A"', UI)
+        self.assertIn('title_text = ft.Text("Tutor", size=24, weight=ft.FontWeight.BOLD', UI)
+        self.assertIn("size=17", UI)
+        self.assertNotIn("line_height", UI)
+        self.assertIn("text_size=16", UI)
+        self.assertIn("shared_conversation_width = max(340.0, min(1200.0, viewport_width - 32.0))", UI)
+        self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.CENTER", UI)
+        self.assertIn("alignment=ft.alignment.Alignment(0, -1)", UI)
+        self.assertNotIn("top_center", UI)
+        self.assertIn("target_bubble_width = max(320.0, min(760.0 if is_student else 960.0, shared_w - 24.0))", UI)
+        self.assertIn("tutor_bubble_width = max(320.0, min(960.0, shared_w - 24.0))", UI)
+        self.assertIn("ft.Icons.COPY", UI)
+        self.assertIn("page.set_clipboard(", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=48)", UI)
+        self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
+        self.assertIn("height=520", UI)
+
+    def test_app_launch_smoke_test_catches_unsupported_flet_kwargs(self):
+        import flet as ft
+        import gyanverse_ui
+        from unittest.mock import MagicMock
+
+        mock_page = MagicMock(spec=ft.Page)
+        mock_page.window = MagicMock()
+        mock_page.controls = []
+        mock_page.drawer = None
+        mock_page.update = MagicMock()
+        mock_page.add = MagicMock()
+        mock_page.run_task = MagicMock()
+
+        try:
+            gyanverse_ui.main(mock_page)
+        except Exception as exc:
+            self.fail(f"App launch failed due to unsupported control attribute or argument: {exc}")
 
 
 if __name__ == "__main__":

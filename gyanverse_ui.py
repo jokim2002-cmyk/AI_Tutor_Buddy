@@ -67,18 +67,18 @@ NAV_ITEMS = (
     ("settings", "Settings", ft.Icons.SETTINGS_OUTLINED, ft.Icons.SETTINGS),
 )
 
-COLOR_PRIMARY = "#3157C8"
-COLOR_PRIMARY_DARK = "#1D347A"
-COLOR_ACCENT = "#00A99D"
-COLOR_BACKGROUND = "#F5F7FC"
+COLOR_PRIMARY = "#2563EB"
+COLOR_PRIMARY_DARK = "#1E40AF"
+COLOR_ACCENT = "#059669"
+COLOR_BACKGROUND = "#F8F9FA"
 COLOR_SURFACE = "#FFFFFF"
-COLOR_BORDER = "#DDE3F0"
-COLOR_TEXT = "#17213A"
-COLOR_MUTED = "#68738B"
-COLOR_USER = "#E7EDFF"
+COLOR_BORDER = "#E2E8F0"
+COLOR_TEXT = "#0F172A"
+COLOR_MUTED = "#334155"
+COLOR_USER = "#E0EBFF"
 COLOR_TUTOR = "#FFFFFF"
-COLOR_SUCCESS = "#0D7C66"
-COLOR_ERROR = "#B3261E"
+COLOR_SUCCESS = "#059669"
+COLOR_ERROR = "#DC2626"
 FAST_REPLY_DEADLINE_SECONDS = 15.0
 SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0
 SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0
@@ -165,11 +165,11 @@ def main(page: ft.Page) -> None:
     selected_attachments = []
     cloud_sync_busy = False
 
-    title_text = ft.Text("Tutor", size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
-    context_text = ft.Text(context.context_label, size=11, color=COLOR_MUTED, max_lines=1)
+    title_text = ft.Text("Tutor", size=24, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
+    context_text = ft.Text(context.context_label, size=13, color=COLOR_MUTED, max_lines=1)
     lesson_context_text: ft.Text | None = None
-    status_text = ft.Text("Ready", size=11, color=COLOR_MUTED)
-    cloud_status_text = ft.Text("Cloud: signed out", size=10, color=COLOR_MUTED)
+    status_text = ft.Text("Ready", size=13, color=COLOR_MUTED)
+    cloud_status_text = ft.Text("Cloud: signed out", size=13, color=COLOR_MUTED)
     account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
     body = ft.Container(expand=True, padding=0, bgcolor=COLOR_BACKGROUND)
     menu_button = ft.IconButton(icon=ft.Icons.MENU, tooltip="Open menu")
@@ -384,16 +384,16 @@ def main(page: ft.Page) -> None:
             border_radius=16,
         )
 
-    def page_panel(title: str, subtitle: str, content: ft.Control) -> ft.Control:
-        return ft.SafeArea(
+    def page_panel(title: str, subtitle: str, content: ft.Control) -> ft.Container:
+        return ft.Container(
             expand=True,
             content=ft.Container(
                 expand=True,
                 padding=ft.Padding(left=12, top=12, right=12, bottom=12),
                 content=ft.Column(
                     [
-                        ft.Text(title, size=23, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
-                        ft.Text(subtitle, size=12, color=COLOR_MUTED),
+                        ft.Text(title, size=24, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                        ft.Text(subtitle, size=13, color=COLOR_MUTED),
                         content,
                     ],
                     expand=True,
@@ -407,9 +407,9 @@ def main(page: ft.Page) -> None:
         return surface(
             ft.Column(
                 [
-                    ft.Text(label, size=11, color=COLOR_MUTED),
-                    ft.Text(value, size=18, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
-                    ft.Text(hint, size=10, color=COLOR_MUTED),
+                    ft.Text(label, size=13, color=COLOR_MUTED),
+                    ft.Text(value, size=20, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                    ft.Text(hint, size=12, color=COLOR_MUTED),
                 ],
                 spacing=3,
             ),
@@ -417,7 +417,7 @@ def main(page: ft.Page) -> None:
         )
 
     def report_card(title: str, getter: Callable[[], str]) -> ft.Control:
-        output = ft.Text("Tap refresh to load the latest report.", selectable=True, color=COLOR_TEXT)
+        output = ft.Text("Tap refresh to load the latest report.", selectable=True, color=COLOR_TEXT, size=17)
 
         def refresh(_: object = None) -> None:
             try:
@@ -432,7 +432,7 @@ def main(page: ft.Page) -> None:
                 [
                     ft.Row(
                         [
-                            ft.Text(title, size=16, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
+                            ft.Text(title, size=18, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
                             ft.Container(expand=True),
                             ft.IconButton(ft.Icons.REFRESH, tooltip="Refresh", on_click=refresh),
                         ]
@@ -546,10 +546,15 @@ def main(page: ft.Page) -> None:
             refresh_topics(preserve=False)
             page.update()
 
+        board_field.on_change = profile_scope_changed
         board_field.on_select = profile_scope_changed
+        medium_field.on_change = profile_scope_changed
         medium_field.on_select = profile_scope_changed
+        standard_field.on_change = profile_scope_changed
         standard_field.on_select = profile_scope_changed
+        subject_field.on_change = subject_changed
         subject_field.on_select = subject_changed
+        chapter_field.on_change = chapter_changed
         chapter_field.on_select = chapter_changed
         subject_field.value = context.current_subject
         chapter_field.value = context.current_chapter
@@ -585,25 +590,28 @@ def main(page: ft.Page) -> None:
 
         dialog = ft.AlertDialog(
             modal=first_use,
-            title=ft.Text("Set up your personal tutor"),
-            content=ft.Column(
-                [
-                    name_field,
-                    board_field,
-                    medium_field,
-                    standard_field,
-                    language_field,
-                    ft.Divider(height=8),
-                    ft.Text("Current school lesson", weight=ft.FontWeight.BOLD),
-                    package_status,
-                    subject_field,
-                    chapter_field,
-                    topic_field,
-                ],
-                tight=True,
-                scroll=ft.ScrollMode.AUTO,
-                height=500,
-                width=420,
+            title=ft.Text("Set up your personal tutor", size=20, weight=ft.FontWeight.BOLD),
+            content=ft.Container(
+                width=460,
+                height=520,
+                content=ft.Column(
+                    [
+                        name_field,
+                        board_field,
+                        medium_field,
+                        standard_field,
+                        language_field,
+                        ft.Divider(height=8),
+                        ft.Text("Current school lesson", size=15, weight=ft.FontWeight.BOLD),
+                        package_status,
+                        subject_field,
+                        chapter_field,
+                        topic_field,
+                    ],
+                    tight=True,
+                    spacing=10,
+                    scroll=ft.ScrollMode.AUTO,
+                ),
             ),
             actions=[
                 ft.TextButton("Cancel", on_click=lambda _: page.pop_dialog())
@@ -1034,8 +1042,10 @@ def main(page: ft.Page) -> None:
         # path, keeps full controls mounted, and uses native auto-scroll
         # pinning that pauses when the student scrolls away from the end.
         viewport_height = float(getattr(page, "height", 0) or 760)
-        transcript_height = max(260.0, min(640.0, viewport_height - 245.0))
-        transcript_bottom_spacer = ft.Container(height=24)
+        viewport_width = float(getattr(page, "width", 0) or 1180)
+        shared_conversation_width = max(340.0, min(1200.0, viewport_width - 32.0))
+        transcript_height = max(260.0, viewport_height - 210.0)
+        transcript_bottom_spacer = ft.Container(height=48)
         transcript = ft.Column(
             height=transcript_height,
             spacing=12,
@@ -1063,14 +1073,14 @@ def main(page: ft.Page) -> None:
             filled=True,
             dense=True,
             content_padding=ft.Padding(left=0, top=4, right=0, bottom=4),
-            text_size=14,
+            text_size=16,
         )
         composer_slot = ft.Container(content=composer, expand=True)
         mode_dropdown = ft.Dropdown(
             value=context.learning_mode,
-            width=132,
+            width=140,
             dense=True,
-            text_size=12,
+            text_size=13,
             options=[
                 ft.dropdown.Option(LearningMode.EXPLAIN.value, "Explain"),
                 ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework Help"),
@@ -1249,6 +1259,32 @@ def main(page: ft.Page) -> None:
             def handle_replay(_: object = None) -> None:
                 handle_play()
 
+            def copy_answer(_: object = None) -> None:
+                try:
+                    if hasattr(page, "set_clipboard") and callable(page.set_clipboard):
+                        page.set_clipboard(answer_text)
+                    btn_copy.icon = ft.Icons.CHECK
+                    btn_copy.icon_color = COLOR_SUCCESS
+                    btn_copy.tooltip = "Copied!"
+                    voice_status_control.value = "Answer copied to clipboard"
+                    try:
+                        page.update()
+                    except Exception:
+                        pass
+                except Exception:
+                    voice_status_control.value = "Clipboard unavailable — select text to copy"
+                    try:
+                        page.update()
+                    except Exception:
+                        pass
+
+            btn_copy = ft.IconButton(
+                icon=ft.Icons.COPY,
+                icon_size=16,
+                padding=2,
+                tooltip="Copy answer to clipboard",
+                on_click=copy_answer,
+            )
             btn_play = ft.IconButton(
                 icon=ft.Icons.PLAY_ARROW, icon_size=16, padding=2, tooltip="Play spoken answer", on_click=handle_play
             )
@@ -1260,7 +1296,7 @@ def main(page: ft.Page) -> None:
             )
 
             controls_row = ft.Row(
-                [voice_status_control, btn_play, btn_stop, btn_replay],
+                [voice_status_control, btn_copy, btn_play, btn_stop, btn_replay],
                 spacing=2,
                 alignment=ft.MainAxisAlignment.END,
             )
@@ -1330,20 +1366,24 @@ def main(page: ft.Page) -> None:
             message_controls: list[ft.Control] = [
                 ft.Text(
                     "You" if is_student else "GyanVerse Tutor",
-                    size=10,
+                    size=12,
                     weight=ft.FontWeight.BOLD,
                     color=COLOR_PRIMARY if is_student else COLOR_SUCCESS,
                 ),
-                ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=14),
+                ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=17),
             ]
             if not is_student and not error:
                 controls_row, _ = create_tutor_voice_controls(text, resolved_message_id)
                 message_controls.append(controls_row)
 
+            viewport_w = float(getattr(page, "width", 0) or 1180)
+            shared_w = max(340.0, min(1200.0, viewport_w - 32.0))
+            target_bubble_width = max(320.0, min(760.0 if is_student else 960.0, shared_w - 24.0))
+
             bubble = ft.Container(
                 content=ft.Column(
                     message_controls,
-                    spacing=4,
+                    spacing=6,
                 ),
                 bgcolor=COLOR_USER if is_student else COLOR_TUTOR,
                 border=ft.Border.all(1, "#C9D5FF" if is_student else COLOR_BORDER),
@@ -1353,8 +1393,8 @@ def main(page: ft.Page) -> None:
                     bottom_left=16 if is_student else 4,
                     bottom_right=4 if is_student else 16,
                 ),
-                padding=12,
-                width=680,
+                padding=16,
+                width=target_bubble_width,
             )
             transcript.controls.insert(
                 max(0, len(transcript.controls) - 1),
@@ -1386,7 +1426,7 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "height", 0)
                 or 760
             )
-            resized_height = max(260.0, min(640.0, current_page_height - (193.0 + composer_height)))
+            resized_height = max(260.0, current_page_height - (160.0 + composer_height))
             transcript.height = resized_height
             transcript_surface.height = resized_height
 
@@ -1400,8 +1440,18 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "height", 0)
                 or 760
             )
+            new_width = float(
+                getattr(event, "width", 0)
+                or getattr(page, "width", 0)
+                or 1180
+            )
+            shared_w = max(340.0, min(1200.0, new_width - 32.0))
+            conversation_area.width = shared_w
+            composer_container.width = shared_w
             update_compact_tutor_layout(page_height=new_height)
             try:
+                conversation_area.update()
+                composer_container.update()
                 transcript_surface.update()
                 composer_shell.update()
             except Exception:
@@ -1509,12 +1559,15 @@ def main(page: ft.Page) -> None:
                 else:
                     set_busy(True, "Using local tutor...")
 
-                tutor_text_control = ft.Text("", selectable=True, color=COLOR_TEXT, size=14)
+                tutor_text_control = ft.Text("", selectable=True, color=COLOR_TEXT, size=17)
                 message_controls: list[ft.Control] = [
-                    ft.Text("GyanVerse Tutor", size=10, weight=ft.FontWeight.BOLD, color=COLOR_SUCCESS),
+                    ft.Text("GyanVerse Tutor", size=12, weight=ft.FontWeight.BOLD, color=COLOR_SUCCESS),
                     tutor_text_control,
                 ]
-                bubble_container = ft.Column(message_controls, spacing=4)
+                bubble_container = ft.Column(message_controls, spacing=6)
+                viewport_w = float(getattr(page, "width", 0) or 1180)
+                shared_w = max(340.0, min(1200.0, viewport_w - 32.0))
+                tutor_bubble_width = max(320.0, min(960.0, shared_w - 24.0))
                 tutor_bubble = ft.Container(
                     content=bubble_container,
                     bgcolor=COLOR_TUTOR,
@@ -1525,8 +1578,8 @@ def main(page: ft.Page) -> None:
                         bottom_left=4,
                         bottom_right=16,
                     ),
-                    padding=12,
-                    width=680,
+                    padding=16,
+                    width=tutor_bubble_width,
                 )
                 transcript.controls.insert(
                     max(0, len(transcript.controls) - 1),
@@ -1905,7 +1958,7 @@ def main(page: ft.Page) -> None:
 
         lesson_context_text = ft.Text(
             context.context_label,
-            size=11,
+            size=13,
             color=COLOR_MUTED,
             max_lines=1,
         )
@@ -1927,10 +1980,17 @@ def main(page: ft.Page) -> None:
             border_radius=12,
         )
 
-        conversation_area = ft.Column(
-            [context_banner, transcript_surface],
-            spacing=8,
-            tight=True,
+        conversation_area = ft.Container(
+            width=shared_conversation_width,
+            content=ft.Column(
+                [context_banner, transcript_surface],
+                spacing=8,
+                tight=True,
+            ),
+        )
+        composer_container = ft.Container(
+            width=shared_conversation_width,
+            content=composer_shell,
         )
 
         page.on_resize = handle_tutor_resize
@@ -1941,10 +2001,12 @@ def main(page: ft.Page) -> None:
             content=ft.Container(
                 expand=True,
                 padding=ft.Padding(left=8, top=8, right=8, bottom=8),
+                alignment=ft.alignment.Alignment(0, -1),
                 content=ft.Column(
-                    [conversation_area, composer_shell],
+                    [conversation_area, composer_container],
                     expand=True,
                     spacing=8,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
             ),
