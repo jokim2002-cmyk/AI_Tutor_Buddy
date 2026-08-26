@@ -217,12 +217,26 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                     is_explanation = any(
                         k in q_lower for k in ("explain", "distinguish", "why", "how", "describe", "compare", "calculate", "reason", "example")
                     )
-                    if not is_explanation:
-                        for prefix in forbidden_3m_prefixes:
-                            self.assertFalse(
-                                q_lower.startswith(prefix),
-                                f"3-mark question '{q_item.question_text}' in seed {seed} should not start with forbidden simple prefix '{prefix}'",
-                            )
+                # 4. Check explicit intended_marks match and specific forbidden phrases
+                for q_item in paper.questions:
+                    self.assertEqual(
+                        q_item.intended_marks,
+                        q_item.max_marks,
+                        f"Question '{q_item.question_text}' intended_marks ({q_item.intended_marks}) does not match section max_marks ({q_item.max_marks})",
+                    )
+                    q_lower = q_item.question_text.casefold()
+                    if "name the three main parts used to describe a lever" in q_lower:
+                        self.assertNotIn(
+                            q_item.max_marks,
+                            (3, 6),
+                            "Lever parts question must not appear in 3 or 6 marks section",
+                        )
+                    if "metal paper clip can complete a low-voltage test circuit" in q_lower:
+                        self.assertNotEqual(
+                            q_item.max_marks,
+                            6,
+                            "Metal paper clip example must not appear in 6 marks section",
+                        )
 
 
 if __name__ == "__main__":

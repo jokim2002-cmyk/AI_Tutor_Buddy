@@ -1803,6 +1803,7 @@ class TestPaperQuestionItem:
     question_text: str
     max_marks: int
     solution_guide: str
+    intended_marks: int = 1
 
 
 @dataclass
@@ -2574,6 +2575,78 @@ def extract_test_seed(message: str) -> int | str | None:
     return None
 
 
+def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bool = False) -> int:
+    q_lower = q_text.casefold().strip()
+    sol_clean = sol_text.strip()
+    sol_words = len(sol_clean.split())
+
+    # One-line / simple factual questions -> 1 Mark
+    one_line_prefixes = (
+        "which instrument",
+        "name the three main parts",
+        "name the three",
+        "give one role",
+        "which ",
+        "name ",
+        "give one ",
+        "what is ",
+        "what are ",
+        "define ",
+        "state ",
+        "where is ",
+        "what happens when ",
+        "identify ",
+        "fill in ",
+        "state one",
+    )
+    if any(q_lower.startswith(prefix) for prefix in one_line_prefixes):
+        if sol_words < 20 and not any(k in q_lower for k in ("explain in detail", "describe the process", "compare")):
+            return 1
+
+    # Examples like "Explain with an example: ..." -> 3 Marks
+    if is_example or q_lower.startswith("explain with an example"):
+        return 3
+
+    # Long-answer / process / 6-mark questions -> 6 Marks
+    long_6m_keywords = (
+        "describe the process",
+        "explain in detail",
+        "how will you show",
+        "how can you show",
+        "draw and explain",
+        "describe in detail",
+        "step-by-step process",
+        "cause and effect",
+        "advantages and limitations",
+        "detailed process",
+    )
+    if any(k in q_lower for k in long_6m_keywords) or (
+        sol_words >= 35 and (sol_clean.count(".") >= 3 or "\n" in sol_clean or ";" in sol_clean)
+    ):
+        return 6
+
+    # 3-mark questions: explanation, distinction, reasoning, multi-point, calculation with steps
+    three_mark_keywords = (
+        "explain",
+        "distinguish",
+        "why",
+        "how",
+        "describe",
+        "compare",
+        "calculate",
+        "reason",
+        "example",
+    )
+    if any(k in q_lower for k in three_mark_keywords) or sol_words >= 20:
+        return 3
+
+    # Brief reasons / 2-point answers -> 2 Marks
+    if sol_words >= 12 or any(k in q_lower for k in ("why", "reason", "difference", "two")):
+        return 2
+
+    return 1
+
+
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
     sol_text_clean = sol_text.strip()
@@ -2614,7 +2687,6 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
     )
 
     if mark_per_q == 6:
-        # 6 marks: MUST NOT be a simple one-line factual question.
         if is_one_line:
             return False
         if sol_words < 20 and not is_heavy_explanation:
@@ -2622,7 +2694,6 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         return True
 
     elif mark_per_q == 1:
-        # 1 mark: MUST NOT be a heavy explanation prompt where answer guide expects multiple points.
         if is_heavy_explanation:
             return False
         return True
@@ -2633,8 +2704,6 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         return True
 
     elif mark_per_q == 3:
-        # 3 marks: require explanation, comparison, reason, example, calculation with steps, or multi-point answer.
-        # Reject simple one-line prompts like "Give one role", "Which method", "Which instrument", "Name", "What is", "State one".
         simple_3m_prefixes = (
             "give one role",
             "give one",
@@ -2731,21 +2800,27 @@ def render_test_paper(
     }
     specs = SECTION_SPECS.get(scope.total_marks, SECTION_SPECS[25])
 
-    pool: list[tuple[str, str, str]] = []
+    pool: list[tuple[str, str, str, int]] = []
     if len(scope.chapters) > 1:
         # Multi-chapter or Full-book: Interleave by chapter
-        ch_pools: list[list[tuple[str, str, str]]] = []
+        ch_pools: list[list[tuple[str, str, str, int]]] = []
         for ch in scope.chapters:
-            c_items: list[tuple[str, str, str]] = []
-            t_items_list: list[list[tuple[str, str, str]]] = []
+            c_items: list[tuple[str, str, str, int]] = []
+            t_items_list: list[list[tuple[str, str, str, int]]] = []
             for t in ch.topics:
-                t_q: list[tuple[str, str, str]] = []
+                t_q: list[tuple[str, str, str, int]] = []
                 for i, q in enumerate(t.exercises):
                     if q and q.strip() and i < len(t.solutions) and t.solutions[i] and t.solutions[i].strip():
-                        t_q.append((t.title, q.strip(), t.solutions[i].strip()))
+                        q_txt = q.strip()
+                        sol_txt = t.solutions[i].strip()
+                        im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+                        t_q.append((t.title, q_txt, sol_txt, im))
                 for i, q in enumerate(t.practice_questions):
                     if q and q.strip() and i < len(t.practice_solutions) and t.practice_solutions[i] and t.practice_solutions[i].strip():
-                        t_q.append((t.title, q.strip(), t.practice_solutions[i].strip()))
+                        q_txt = q.strip()
+                        sol_txt = t.practice_solutions[i].strip()
+                        im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+                        t_q.append((t.title, q_txt, sol_txt, im))
                 for ex in t.examples:
                     if ex and ex.strip():
                         t_q.append(
@@ -2753,8 +2828,15 @@ def render_test_paper(
                                 t.title,
                                 f"Explain with an example: {ex.strip()}",
                                 f"Example solution: {ex.strip()}",
+                                3,
                             )
                         )
+                if t.explanation and len(t.explanation.strip().split()) >= 15:
+                    exp_clean = t.explanation.strip()
+                    q_txt_6m = f"Describe in detail the process, scientific principles, and applications of {t.title}."
+                    sol_txt_6m = f"{exp_clean} Key applications and examples: {', '.join(t.examples[:2]) if t.examples else 'Observe standard laboratory and everyday applications.'}"
+                    t_q.append((t.title, q_txt_6m, sol_txt_6m, 6))
+
                 if t_q:
                     t_items_list.append(t_q)
 
@@ -2784,15 +2866,21 @@ def render_test_paper(
     elif scope.chapters:
         # Single-chapter: Interleave by topic
         ch = scope.chapters[0]
-        t_items_list: list[list[tuple[str, str, str]]] = []
+        t_items_list: list[list[tuple[str, str, str, int]]] = []
         for t in ch.topics:
-            t_q: list[tuple[str, str, str]] = []
+            t_q: list[tuple[str, str, str, int]] = []
             for i, q in enumerate(t.exercises):
                 if q and q.strip() and i < len(t.solutions) and t.solutions[i] and t.solutions[i].strip():
-                    t_q.append((t.title, q.strip(), t.solutions[i].strip()))
+                    q_txt = q.strip()
+                    sol_txt = t.solutions[i].strip()
+                    im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+                    t_q.append((t.title, q_txt, sol_txt, im))
             for i, q in enumerate(t.practice_questions):
                 if q and q.strip() and i < len(t.practice_solutions) and t.practice_solutions[i] and t.practice_solutions[i].strip():
-                    t_q.append((t.title, q.strip(), t.practice_solutions[i].strip()))
+                    q_txt = q.strip()
+                    sol_txt = t.practice_solutions[i].strip()
+                    im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+                    t_q.append((t.title, q_txt, sol_txt, im))
             for ex in t.examples:
                 if ex and ex.strip():
                     t_q.append(
@@ -2800,8 +2888,15 @@ def render_test_paper(
                             t.title,
                             f"Explain with an example: {ex.strip()}",
                             f"Example solution: {ex.strip()}",
+                            3,
                         )
                     )
+            if t.explanation and len(t.explanation.strip().split()) >= 15:
+                exp_clean = t.explanation.strip()
+                q_txt_6m = f"Describe in detail the process, scientific principles, and applications of {t.title}."
+                sol_txt_6m = f"{exp_clean} Key applications and examples: {', '.join(t.examples[:2]) if t.examples else 'Observe standard laboratory and everyday applications.'}"
+                t_q.append((t.title, q_txt_6m, sol_txt_6m, 6))
+
             if t_q:
                 t_items_list.append(t_q)
 
@@ -2822,6 +2917,7 @@ def render_test_paper(
                 "General",
                 "Explain the key concepts of the topic.",
                 "Use the installed topic guide for explanation and practice.",
+                1,
             )
         ]
 
@@ -2860,43 +2956,55 @@ def render_test_paper(
             selected_item = None
 
             if rng is not None:
+                # 1. Primary rule: match intended_m == mark_per_q AND is_suitable_for_section
                 for idx, item in enumerate(available_pool):
-                    _, q_text, sol_text = item
-                    if is_suitable_for_section(q_text, sol_text, mark_per_q):
+                    _, q_text, sol_text, intended_m = item
+                    if intended_m == mark_per_q and is_suitable_for_section(q_text, sol_text, mark_per_q):
                         selected_item = available_pool.pop(idx)
                         break
 
+                # 2. Refill check if available_pool needs refilling
                 if selected_item is None:
                     refilled = list(pool)
                     rng.shuffle(refilled)
                     for idx, item in enumerate(refilled):
-                        _, q_text, sol_text = item
-                        if is_suitable_for_section(q_text, sol_text, mark_per_q):
+                        _, q_text, sol_text, intended_m = item
+                        if intended_m == mark_per_q and is_suitable_for_section(q_text, sol_text, mark_per_q):
                             selected_item = item
                             refilled.pop(idx)
                             available_pool = refilled
                             break
 
+                # 3. If no heuristic match, match intended_m == mark_per_q
+                if selected_item is None:
+                    for idx, item in enumerate(available_pool):
+                        _, q_text, sol_text, intended_m = item
+                        if intended_m == mark_per_q:
+                            selected_item = available_pool.pop(idx)
+                            break
+
+                # 4. Strict promotion safety: NEVER promote 1m/2m items into 3m/6m sections
+                if selected_item is None:
+                    valid_candidates = [
+                        (idx, item) for idx, item in enumerate(available_pool)
+                        if item[3] == mark_per_q or (mark_per_q in (3, 6) and item[3] >= mark_per_q - 1 and len(item[2].split()) >= 20)
+                    ]
+                    if valid_candidates:
+                        idx, selected_item = valid_candidates[0]
+                        available_pool.pop(idx)
+
+                # Fallback if pool is exhausted
                 if selected_item is None:
                     if not available_pool:
                         available_pool = list(pool)
                         rng.shuffle(available_pool)
                     selected_item = available_pool.pop(0)
             else:
-                n_pool = len(pool)
-                for offset in range(n_pool):
-                    candidate_idx = (pool_idx + offset) % n_pool
-                    _, q_text, sol_text = pool[candidate_idx]
-                    if is_suitable_for_section(q_text, sol_text, mark_per_q):
-                        selected_item = pool[candidate_idx]
-                        pool_idx = candidate_idx + 1
-                        break
+                # Deterministic selection: sequential pool item
+                selected_item = pool[pool_idx % len(pool)]
+                pool_idx += 1
 
-                if selected_item is None:
-                    selected_item = pool[pool_idx % len(pool)]
-                    pool_idx += 1
-
-            topic_title, q_text, sol_text = selected_item
+            topic_title, q_text, sol_text, raw_intended_m = selected_item
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
@@ -2908,6 +3016,7 @@ def render_test_paper(
                     question_text=q_text,
                     max_marks=mark_per_q,
                     solution_guide=sol_text,
+                    intended_marks=mark_per_q,
                 )
             )
             q_num += 1
