@@ -13,6 +13,7 @@ import uuid
 from dataclasses import asdict, dataclass, field, replace
 from datetime import datetime, timezone
 from enum import Enum
+from fractions import Fraction
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -1743,6 +1744,35 @@ def evaluate_single_test_answer(
 
     u_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", u_clean)
     g_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", g_clean)
+
+    def _fraction_values(text: str) -> list[Fraction]:
+        values: list[Fraction] = []
+        for raw_num in re.findall(r"-?\d+(?:/\d+)?", text.casefold()):
+            try:
+                values.append(Fraction(raw_num))
+            except (ValueError, ZeroDivisionError):
+                continue
+        return values
+
+    def _ceil_fraction(value: Fraction) -> int:
+        return -(-value.numerator // value.denominator)
+
+    q_clean = q_text.casefold()
+    q_values = _fraction_values(q_clean)
+    u_values = _fraction_values(u_clean)
+
+    if "between which two integers" in q_clean and q_values and u_values:
+        target = q_values[0]
+        lower = target.numerator // target.denominator
+        upper = _ceil_fraction(target)
+        if lower != upper and {Fraction(lower), Fraction(upper)} <= set(u_values):
+            return float(max_marks), "Correct", "Correct answer."
+
+    if "find three rational numbers between" in q_clean and len(q_values) >= 2 and u_values:
+        low, high = sorted((q_values[-2], q_values[-1]))
+        valid_between = {value for value in u_values if low < value < high}
+        if len(valid_between) >= 3:
+            return float(max_marks), "Correct", "Correct answer."
 
     if len(g_clean.split()) <= 5 or g_nums:
         if u_nums and g_nums:

@@ -6,7 +6,12 @@ from pathlib import Path
 from unittest.mock import MagicMock, PropertyMock, patch
 
 from phase11_ai import GyanVerseAIService
-from phase11_core import LearningMode, StudentLearningContext, SyllabusRepository
+from phase11_core import (
+    LearningMode,
+    StudentLearningContext,
+    SyllabusRepository,
+    evaluate_single_test_answer,
+)
 
 
 class Grade8MathematicsSyllabusTests(unittest.TestCase):
@@ -273,6 +278,33 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertNotIn("Needs grounded review", review)
         self.assertEqual(service.last_metrics.route, "local-syllabus")
         service._client.models.generate_content_stream.assert_not_called()
+
+    def test_math_test_evaluation_accepts_unordered_integer_interval_answer(self) -> None:
+        awarded, result, feedback = evaluate_single_test_answer(
+            q_text="Between which two integers does -7/4 lie on the number line?",
+            user_ans="Between -2 and -1.",
+            sol_guide="Between -1 and -2, because -7/4 = -1 (3/4).",
+            max_marks=1,
+        )
+
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+        self.assertEqual(feedback, "Correct answer.")
+
+    def test_math_test_evaluation_accepts_valid_rational_numbers_between_bounds(self) -> None:
+        awarded, result, feedback = evaluate_single_test_answer(
+            q_text="Find three rational numbers between -2/5 and 1/2.",
+            user_ans="-1/5, 0, 1/5",
+            sol_guide=(
+                "Convert to common denominator 10: -4/10 and 5/10. Three rational "
+                "numbers are -3/10, 0, and 1/10 (or 2/10 = 1/5)."
+            ),
+            max_marks=1,
+        )
+
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+        self.assertEqual(feedback, "Correct answer.")
 
     def test_open_ended_answers_not_falsely_marked_by_guessing(self) -> None:
         service = self.service(api_key="mock-key")
