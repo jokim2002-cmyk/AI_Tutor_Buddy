@@ -2633,7 +2633,34 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         return True
 
     elif mark_per_q == 3:
-        if is_one_line and sol_words < 12:
+        # 3 marks: require explanation, comparison, reason, example, calculation with steps, or multi-point answer.
+        # Reject simple one-line prompts like "Give one role", "Which method", "Which instrument", "Name", "What is", "State one".
+        simple_3m_prefixes = (
+            "give one role",
+            "give one",
+            "which method",
+            "which instrument",
+            "which ",
+            "name ",
+            "what is ",
+            "what are ",
+            "state one",
+            "state ",
+            "define ",
+            "fill in",
+            "identify ",
+        )
+        is_3m_explanation_type = any(
+            k in q_lower for k in (
+                "explain", "distinguish", "why", "how", "describe",
+                "compare", "calculate", "reason", "example"
+            )
+        )
+        if any(q_lower.startswith(prefix) for prefix in simple_3m_prefixes) and not is_3m_explanation_type:
+            return False
+        if is_one_line and not is_3m_explanation_type:
+            return False
+        if sol_words < 12 and not is_3m_explanation_type:
             return False
         return True
 

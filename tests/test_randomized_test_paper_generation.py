@@ -202,6 +202,28 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                             f"1-mark question '{q_item.question_text}' in seed {seed} contains heavy multi-point solution guide",
                         )
 
+                # 3. 3-mark section should not contain simple one-line questions like "Give one role of dietary fibre" or "Which method separates..."
+                sec_c_questions = [
+                    q for q in paper.questions if q.section_title == "Section C (3 Marks Each)"
+                ]
+                forbidden_3m_prefixes = (
+                    "give one role",
+                    "which method",
+                    "which instrument",
+                    "state one",
+                )
+                for q_item in sec_c_questions:
+                    q_lower = q_item.question_text.casefold()
+                    is_explanation = any(
+                        k in q_lower for k in ("explain", "distinguish", "why", "how", "describe", "compare", "calculate", "reason", "example")
+                    )
+                    if not is_explanation:
+                        for prefix in forbidden_3m_prefixes:
+                            self.assertFalse(
+                                q_lower.startswith(prefix),
+                                f"3-mark question '{q_item.question_text}' in seed {seed} should not start with forbidden simple prefix '{prefix}'",
+                            )
+
 
 if __name__ == "__main__":
     unittest.main()
