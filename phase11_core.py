@@ -1793,6 +1793,97 @@ def evaluate_single_test_answer(
     u_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", u_clean)
     g_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", g_clean)
 
+    def _canon_unit_token(token: str) -> str:
+        token = token.casefold()
+        aliases = {
+            "student": "students",
+            "students": "students",
+            "degree": "degrees",
+            "degrees": "degrees",
+            "percent": "percent",
+            "percentage": "percent",
+            "point": "points",
+            "points": "points",
+            "book": "books",
+            "books": "books",
+        }
+        return aliases.get(token, token)
+
+    def _token_stream(text: str) -> list[str]:
+        return re.findall(r"-?\d+(?:\.\d+)?|[a-z]+", text.casefold())
+
+    def _number_unit_pairs_nearby(text: str) -> list[tuple[str, set[str]]]:
+        tokens = _token_stream(text)
+        unit_words = {"students", "degrees", "percent", "points", "books"}
+        pairs: list[tuple[str, set[str]]] = []
+        for idx, token in enumerate(tokens):
+            if not re.fullmatch(r"-?\d+(?:\.\d+)?", token):
+                continue
+            nearby_units = {
+                _canon_unit_token(t)
+                for t in tokens[idx + 1 : idx + 4]
+                if _canon_unit_token(t) in unit_words
+            }
+            if nearby_units:
+                pairs.append((token, nearby_units))
+        return pairs
+
+    def _guide_has_number_unit_pair(number: str, units: set[str]) -> bool:
+        for guide_number, guide_units in _number_unit_pairs_nearby(g_clean):
+            if guide_number == number and bool(units & guide_units):
+                return True
+        return False
+
+    def _short_final_answer_embedded_in_solution() -> bool:
+        # Attached test answers are often concise final answers ("30 students")
+        # while the installed guide contains full working
+        # ("...90/360...120 x 1/4 = 30 students"). Accept only when the final
+        # number is paired with the same unit/answer word in the guide, so a
+        # wrong answer like "90 students" does not pass just because 90 appears
+        # elsewhere in the formula.
+        if "/" in u_clean:
+            return False
+
+        raw_user_tokens = _token_stream(u_clean)
+        if not raw_user_tokens or len(raw_user_tokens) > 12:
+            return False
+
+        compact_user = re.sub(r"\s+", " ", re.sub(r"[^a-z0-9.\-]+", " ", u_clean)).strip()
+        compact_guide = re.sub(r"\s+", " ", re.sub(r"[^a-z0-9.\-]+", " ", g_clean)).strip()
+        user_pairs = _number_unit_pairs_nearby(u_clean)
+        if user_pairs:
+            if not all(_guide_has_number_unit_pair(number, units) for number, units in user_pairs):
+                return False
+            if len(compact_user) >= 3 and compact_user in compact_guide:
+                return True
+
+        stop = {
+            "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for",
+            "with", "of", "and", "or", "because", "it", "they", "them", "this", "that", "from",
+            "be", "been", "so", "as", "than",
+        }
+        user_tokens = {
+            _canon_unit_token(t)
+            for t in raw_user_tokens
+            if len(t) > 1 and t not in stop
+        }
+        guide_tokens = {
+            _canon_unit_token(t)
+            for t in _token_stream(g_clean)
+            if len(t) > 1 and t not in stop
+        }
+        if len(user_tokens) < 2 or not user_tokens <= guide_tokens:
+            return False
+        if user_pairs:
+            return True
+
+        anchor_words = {
+            "larger", "smaller", "left", "right", "between", "complete", "incomplete",
+            "yes", "no", "bus", "walk", "cycle", "music", "art",
+        }
+        return bool(user_tokens & anchor_words)
+
+
     def _fraction_values(text: str) -> list[Fraction]:
         values: list[Fraction] = []
         for raw_num in re.findall(r"-?\d+(?:/\d+)?", text.casefold()):
@@ -1821,6 +1912,9 @@ def evaluate_single_test_answer(
         valid_between = {value for value in u_values if low < value < high}
         if len(valid_between) >= 3:
             return float(max_marks), "Correct", "Correct answer."
+
+    if _short_final_answer_embedded_in_solution():
+        return float(max_marks), "Correct", "Correct answer."
 
     if len(g_clean.split()) <= 5 or g_nums:
         if u_nums and g_nums:

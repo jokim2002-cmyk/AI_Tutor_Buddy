@@ -505,5 +505,47 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertEqual(service.last_metrics.route, "local-syllabus")
 
 
+
+    def test_std7_math_pie_graph_test_eval_accepts_short_final_answers_from_long_guides(self):
+        cases = [
+            (
+                "A pie graph shows 120 students; the sports sector is 90 degrees. How many students chose sports?",
+                "30 students",
+                "Sports represents 90/360 = 1/4 of the total, so 120 × 1/4 = 30 students.",
+            ),
+            (
+                "Find the sector angle for 18 books out of a total of 72 books.",
+                "90 degrees",
+                "(18/72) × 360 = 90 degrees.",
+            ),
+            (
+                "In a pie graph, Art is 25 percent and Music is 35 percent. Which is larger and by how many percentage points?",
+                "Music is larger by 10 percentage points",
+                "Music is larger. The difference is 35 − 25 = 10 percentage points.",
+            ),
+            (
+                "A sector measures 144 degrees. Find its percentage of the circle.",
+                "40 percent",
+                "(144/360) × 100 = 40 percent.",
+            ),
+        ]
+        for q_text, user_ans, guide in cases:
+            with self.subTest(user_ans=user_ans):
+                awarded, result, _feedback = evaluate_single_test_answer(q_text, user_ans, guide, 1)
+                self.assertEqual(awarded, 1.0)
+                self.assertEqual(result, "Correct")
+
+    def test_std7_math_pie_graph_test_eval_rejects_wrong_number_unit_pair(self):
+        awarded, result, feedback = evaluate_single_test_answer(
+            "A pie graph shows 120 students; the sports sector is 90 degrees. How many students chose sports?",
+            "90 students",
+            "Sports represents 90/360 = 1/4 of the total, so 120 × 1/4 = 30 students.",
+            1,
+        )
+        self.assertEqual(awarded, 0.0)
+        self.assertEqual(result, "Incorrect")
+        self.assertIn("30 students", feedback)
+
+
 if __name__ == "__main__":
     unittest.main()
