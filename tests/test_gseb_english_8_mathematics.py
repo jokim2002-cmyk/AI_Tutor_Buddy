@@ -432,6 +432,27 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertEqual(service.last_metrics.route, "local-syllabus")
         service._client.models.generate_content_stream.assert_not_called()
 
+    def test_grade_8_english_answer_file_accepts_short_keyword_answers(self) -> None:
+        beneath_marks, beneath_result, beneath_feedback = evaluate_single_test_answer(
+            q_text="Identify the preposition of place in: The cabin stood beneath the tall pine trees.",
+            user_ans="beneath",
+            sol_guide="The preposition of place is beneath.",
+            max_marks=1,
+        )
+        hearing_marks, hearing_result, hearing_feedback = evaluate_single_test_answer(
+            q_text="What sense does auditory imagery appeal to?",
+            user_ans="Hearing",
+            sol_guide="Auditory imagery appeals to the sense of hearing.",
+            max_marks=1,
+        )
+
+        self.assertEqual(beneath_marks, 1.0)
+        self.assertEqual(beneath_result, "Correct")
+        self.assertEqual(beneath_feedback, "Correct answer.")
+        self.assertEqual(hearing_marks, 1.0)
+        self.assertEqual(hearing_result, "Correct")
+        self.assertEqual(hearing_feedback, "Correct answer.")
+
     def test_exact_local_syllabus_routes_do_not_consume_provider(self) -> None:
         service = self.service(api_key="")
         ctx = self.context(

@@ -1807,6 +1807,27 @@ def evaluate_single_test_answer(
     ref_keywords = {w for w in g_words if len(w) > 2 and w not in stop_words}
     user_keywords = {w for w in u_words if len(w) > 2 and w not in stop_words}
 
+    short_fact_question = any(
+        phrase in q_text.casefold()
+        for phrase in (
+            "identify",
+            "complete",
+            "what sense",
+            "which word",
+            "name",
+            "what is",
+            "who is",
+            "when",
+            "where",
+        )
+    )
+    if (
+        short_fact_question
+        and 0 < len(user_keywords) <= 3
+        and user_keywords <= ref_keywords
+    ):
+        return float(max_marks), "Correct", "Correct answer."
+
     has_wrong_keyword = (
         bool(user_keywords & wrong_keywords)
         and not bool(ref_keywords & wrong_keywords)
