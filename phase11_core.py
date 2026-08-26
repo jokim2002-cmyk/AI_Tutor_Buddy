@@ -1298,23 +1298,24 @@ def _requested_question_index(
 
 def _student_review_answer(message: str) -> str:
     raw = clean_student_text(message, max_length=4_000)
-    match = re.search(
-        r"\b(?:my answer|my attempt)\s*:\s*(.+)",
-        raw,
-        flags=re.IGNORECASE | re.DOTALL,
+    markers = list(
+        re.finditer(
+            r"\b(?:my answer|my attempt)\s*:\s*",
+            raw,
+            flags=re.IGNORECASE,
+        )
     )
-    if not match:
+    if not markers:
         return ""
+    answer = raw[markers[-1].end():]
     answer = re.split(
         r"\s+(?:is\s+(?:my|this)\s+answer\s+correct|is\s+this\s+correct|"
         r"is\s+it\s+correct|am\s+i\s+correct)\b",
-        match.group(1),
+        answer,
         maxsplit=1,
         flags=re.IGNORECASE,
     )[0]
     return answer.strip(" \t\r\n.?!")
-
-
 _SHORT_NUMERIC_REVIEW_RE = re.compile(
     r"^\s*([−-]?\s*₹?\s*\d[\d,]*(?:\.\d+)?"
     r"(?:\s*/\s*[−-]?\s*\d[\d,]*(?:\.\d+)?)?)\s*"
@@ -1493,6 +1494,24 @@ def _local_question_hints(
     solution: str = "",
 ) -> list[str]:
     normalized = _normalize_syllabus_lookup_text(question)
+    if "multiplicative inverse" in normalized:
+        return [
+            (
+                "Use this installed rule: The multiplicative inverse is the number that makes "
+                "the product 1 with the given number. For a fraction, think about swapping the "
+                "numerator and denominator while keeping the sign, then stop before writing the "
+                "final value."
+            ),
+            f"Use this learning goal as your boundary: {topic.learning_objectives[0] if topic.learning_objectives else topic.title}",
+            "Before finishing, check that your answer would multiply with the given number to make 1.",
+            "Write down what the question gives you and what it asks you to produce before continuing.",
+            "Break the task into two smaller steps and complete only the first step initially.",
+            "Try a simple original example to test whether your reasoning follows the topic rule.",
+            "Circle the task word and make sure each part of your response directly serves it.",
+            "Check every condition in the question; do not rely on a detail the question never gives.",
+            "Explain your first step aloud in one sentence; revise it if the reason is unclear.",
+            "Before submitting, remove unrelated details and verify that the response answers the exact question.",
+        ]
     hint_stop_words = _CONTEXT_FALLBACK_WORDS | {
         "calculate", "complete", "determine", "find", "given", "identify",
         "name", "show", "state", "using", "value", "values", "which",

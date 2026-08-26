@@ -205,6 +205,75 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
             self.assertIn("Result:", correct)
             self.assertEqual(service.last_metrics.route, "local-syllabus")
 
+    def test_multiplicative_inverse_hint_uses_reciprocal_rule_without_answer(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 1 - Rational Numbers",
+            topic="Properties of Rational Numbers",
+        )
+
+        hint_response = service.ask(
+            message="Give me only one hint for this homework question: Find the multiplicative inverse of -13/19.",
+            context=ctx,
+        )
+
+        self.assertIn("Hint", hint_response)
+        self.assertIn("multiplicative inverse", hint_response.lower())
+        self.assertIn("product 1", hint_response.lower())
+        self.assertIn("numerator", hint_response.lower())
+        self.assertIn("denominator", hint_response.lower())
+        self.assertNotIn("-19/13", hint_response)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+
+    def test_multiplicative_inverse_embedded_review_marked_correct_locally(self) -> None:
+        service = self.service(api_key="mock-key")
+        ctx = self.context(
+            chapter="Chapter 1 - Rational Numbers",
+            topic="Properties of Rational Numbers",
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            review = service.ask_stream(
+                message="Check my answer: Find the multiplicative inverse of -13/19. My answer: -19/13",
+                context=ctx,
+            )
+
+        self.assertIn("Question: Find the multiplicative inverse of -13/19.", review)
+        self.assertIn("Your answer: -19/13", review)
+        self.assertIn("Result: Correct.", review)
+        self.assertNotIn("Needs grounded review", review)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
+    def test_multiplicative_inverse_embedded_review_marks_wrong_answer_incorrect(self) -> None:
+        service = self.service(api_key="mock-key")
+        ctx = self.context(
+            chapter="Chapter 1 - Rational Numbers",
+            topic="Properties of Rational Numbers",
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            review = service.ask_stream(
+                message="Check my answer: Find the multiplicative inverse of -13/19. My answer: 13/19",
+                context=ctx,
+            )
+
+        self.assertIn("Your answer: 13/19", review)
+        self.assertIn("Result: Incorrect.", review)
+        self.assertNotIn("Needs grounded review", review)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
     def test_open_ended_answers_not_falsely_marked_by_guessing(self) -> None:
         service = self.service(api_key="mock-key")
         ctx = self.context(
