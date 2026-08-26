@@ -2661,8 +2661,18 @@ def build_natural_6mark_question(
     ex_str = f" Examples: {', '.join(examples[:2])}." if examples else ""
     sol_text = f"{exp_clean}{ex_str}"
 
-    # 1. Specifically requested topic mappings
-    if "light, visibility and reflection" in t_lower or "light, visibility" in t_lower:
+    # 1. Specifically requested exact-topic mappings
+    if "energy conservation and responsible use" in t_lower or ("energy" in t_lower and "conservation" in t_lower):
+        return (
+            "Explain why electrical energy should be used responsibly and describe four ways to conserve energy at home or school.",
+            sol_text,
+        )
+    if "conservation and sustainable action" in t_lower:
+        return (
+            "Explain the importance of water conservation and describe the process of rainwater harvesting.",
+            sol_text,
+        )
+    if "light, visibility and reflection" in t_lower or ("light" in t_lower and "visibility" in t_lower):
         return (
             "Explain how we see luminous and non-luminous objects. Include the role of light, reflection, and two examples.",
             sol_text,
@@ -2691,7 +2701,7 @@ def build_natural_6mark_question(
         )
 
     # 3. Plant Reproduction / Flowers / Fruits / Seeds / Roots / Stems
-    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower or "plant" in t_lower:
+    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower or "part of plant" in t_lower:
         return (
             "Explain how flowers help in reproduction and describe how fruits and seeds are formed.",
             sol_text,
@@ -2718,7 +2728,7 @@ def build_natural_6mark_question(
             "Describe the structure and function of the human circulatory system and how blood is pumped.",
             sol_text,
         )
-    if "excret" in t_lower or "waste" in t_lower and "system" in t_lower:
+    if "excret" in t_lower or "waste system" in t_lower:
         return (
             "Explain the process of excretion in humans and the role of organs involved.",
             sol_text,
@@ -2730,22 +2740,22 @@ def build_natural_6mark_question(
             "Solve a speed-distance-time calculation problem and explain the formula, steps, and units used.",
             sol_text,
         )
-    if "heat" in t_lower or "conduction" in t_lower or "convection" in t_lower or "radiation" in t_lower:
+    if "conduction" in t_lower or "convection" in t_lower or "radiation" in t_lower or "heat transfer" in t_lower:
         return (
             "Explain the three modes of heat transfer with labelled diagrams and real-life examples.",
             sol_text,
         )
-    if "electric" in t_lower or "circuit" in t_lower or "current" in t_lower:
+    if "electric cell" in t_lower or "electric circuit" in t_lower or "electrical effect" in t_lower:
         return (
             "Describe the construction and working of a simple electric circuit with symbols and safety measures.",
             sol_text,
         )
-    if "magnet" in t_lower or "pole" in t_lower:
+    if "magnetic" in t_lower or "magnet" in t_lower:
         return (
             "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
             sol_text,
         )
-    if "mirror" in t_lower or "reflection" in t_lower:
+    if "mirror" in t_lower or "laws of reflection" in t_lower:
         return (
             "Explain the laws of reflection and compare the image properties formed by plane, concave, and convex mirrors.",
             sol_text,
@@ -2757,46 +2767,46 @@ def build_natural_6mark_question(
             "Differentiate between acids and bases using indicators and explain neutralization with an example.",
             sol_text,
         )
-    if "change" in t_lower or ("physical" in t_lower and "chemical" in t_lower):
+    if "physical and chemical" in t_lower or "chemical change" in t_lower:
         return (
             "Compare physical and chemical changes with at least three differences and supporting examples.",
             sol_text,
         )
-    if "element" in t_lower or "compound" in t_lower or "mixture" in t_lower or "substance" in t_lower:
+    if "element" in t_lower or "compound" in t_lower or "mixtures and separation" in t_lower or "insoluble solid" in t_lower:
         return (
             "Differentiate between elements, compounds, and mixtures with fixed vs variable compositions and two examples of each.",
             sol_text,
         )
 
     # 7. Environment / Soil / Water / Air pollution
-    if "soil" in t_lower:
+    if "soil composition" in t_lower or "soil testing" in t_lower or "soil fertility" in t_lower or "soil profile" in t_lower:
         return (
             "Describe the different layers of a soil profile and explain the causes and prevention of soil erosion.",
             sol_text,
         )
-    if "water" in t_lower or "rain" in t_lower or "conservation" in t_lower:
+    if "properties of water" in t_lower or "water cycle" in t_lower or "water as a solvent" in t_lower or "rainwater" in t_lower:
         return (
             "Explain the importance of water conservation and describe the process of rainwater harvesting.",
             sol_text,
         )
-    if "pollut" in t_lower or "smog" in t_lower or "air" in t_lower:
+    if "air pollutant" in t_lower or "polluted air" in t_lower or "air-quality" in t_lower:
         return (
             "Explain the major sources of air pollution, their harmful effects on health and environment, and prevention measures.",
             sol_text,
         )
 
-    # 8. Solar system / Ecosystem / Food chain / Skeleton / Muscles / Diet
-    if "solar system" in t_lower or "planet" in t_lower or "sun" in t_lower:
+    # 8. Solar system / Ecosystem / Food chain / Skeleton / Muscles / Diet / Energy
+    if "sun and planet" in t_lower or "rotation, revolution" in t_lower:
         return (
             "Describe the structure of the solar system, distinguishing inner and outer planets, and explain Earth's rotation and revolution.",
             sol_text,
         )
-    if "food chain" in t_lower or "food web" in t_lower or "producer" in t_lower or "consumer" in t_lower or "decomposer" in t_lower:
+    if "producer" in t_lower or "consumer" in t_lower or "decomposer" in t_lower or "food chain" in t_lower or "food web" in t_lower:
         return (
             "Explain the roles of producers, consumers, and decomposers in a food web and describe how energy flows through trophic levels.",
             sol_text,
         )
-    if "ecosystem" in t_lower or "biotic" in t_lower or "biodiversity" in t_lower or "equilibrium" in t_lower:
+    if "biotic and abiotic" in t_lower or "disturbance, biodiversity" in t_lower:
         return (
             "Distinguish biotic and abiotic ecosystem components and explain how biodiversity and conservation maintain environmental equilibrium.",
             sol_text,
@@ -2806,14 +2816,19 @@ def build_natural_6mark_question(
             "Describe the functions of the human skeleton, types of movable joints, and how antagonistic muscle pairs produce movement.",
             sol_text,
         )
-    if "diet" in t_lower or "nutrient" in t_lower or "deficiency" in t_lower:
+    if "nutrient" in t_lower or "food test" in t_lower or "balanced diet" in t_lower:
         return (
             "Explain the key nutrients required in a balanced diet, their main functions, and the effects of nutrient deficiency.",
             sol_text,
         )
-    if "density" in t_lower or "mass" in t_lower or "volume" in t_lower:
+    if "density" in t_lower or "mass, volume" in t_lower or "measuring time" in t_lower or "standard unit" in t_lower:
         return (
             "Explain how mass, volume, and density are measured, write the formula used, and solve a density calculation problem.",
+            sol_text,
+        )
+    if "renewable and non-renewable" in t_lower or "forms and transformation" in t_lower:
+        return (
+            "Compare renewable and non-renewable energy sources with suitable examples and explain energy transformations.",
             sol_text,
         )
 

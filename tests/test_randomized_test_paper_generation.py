@@ -4,6 +4,7 @@ from pathlib import Path
 from phase11_core import (
     GSEBSyllabusRepository,
     StudentLearningContext,
+    build_natural_6mark_question,
     parse_test_paper_scope,
     render_test_paper,
     evaluate_test_paper,
@@ -293,6 +294,59 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                     self.assertTrue(
                         has_task_word,
                         f"Section D question '{q_item.question_text}' in seed {seed} lacks topic-specific task words",
+                    )
+
+    def test_energy_conservation_and_water_conservation_topic_question_alignment_regression(self):
+        # 1. Energy conservation topic must not generate water conservation/rainwater harvesting question
+        energy_q = build_natural_6mark_question(
+            "Energy conservation and responsible use",
+            "Energy conservation means using energy efficiently and avoiding waste in daily activities at home and school.",
+            ["Turn off lights", "Use LED bulbs"],
+        )
+        self.assertIsNotNone(energy_q)
+        energy_text, _ = energy_q
+        self.assertNotIn("water conservation", energy_text.casefold())
+        self.assertNotIn("rainwater harvesting", energy_text.casefold())
+        self.assertIn("energy", energy_text.casefold())
+
+        # 2. Conservation and sustainable action may generate water conservation/rainwater harvesting question
+        water_q = build_natural_6mark_question(
+            "Conservation and sustainable action",
+            "Water conservation protects essential natural resources for organisms and ecosystems. Rainwater harvesting collects and stores rain for future use.",
+            ["Roof rainwater collection"],
+        )
+        self.assertIsNotNone(water_q)
+        water_text, _ = water_q
+        self.assertIn("water conservation", water_text.casefold())
+        self.assertIn("rainwater harvesting", water_text.casefold())
+
+        # 3. Verify across full syllabus test papers that Section D questions match their displayed topic labels
+        for seed in [111, 222]:
+            scope = parse_test_paper_scope("new full syllabus test banao", self.ctx, self.science_syl)
+            _, paper = render_test_paper(
+                self.science_syl,
+                scope,
+                context=self.ctx,
+                message="new full syllabus test banao",
+                seed=seed,
+            )
+            self.assertEqual(paper.total_marks, 100)
+            sec_d_questions = [
+                q for q in paper.questions if q.section_title == "Section D (6 Marks Each)"
+            ]
+            self.assertEqual(len(sec_d_questions), 4)
+
+            for q_item in sec_d_questions:
+                topic_lower = q_item.topic_title.casefold()
+                q_lower = q_item.question_text.casefold()
+                self.assertEqual(q_item.intended_marks, q_item.max_marks)
+                self.assertTrue(bool(q_item.solution_guide and q_item.solution_guide.strip()))
+
+                if "energy conservation" in topic_lower:
+                    self.assertNotIn(
+                        "rainwater harvesting",
+                        q_lower,
+                        f"Topic '{q_item.topic_title}' generated mismatched question '{q_item.question_text}' in seed {seed}",
                     )
 
 
