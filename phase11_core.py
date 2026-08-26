@@ -1424,13 +1424,14 @@ def _evaluate_student_answer(
     wrong_keywords = {
         "colorful", "colourful", "iron", "steel", "plastic", "stone", "fire", "magic",
         "red", "blue", "green", "yellow", "wrong", "fake", "bad", "expensive", "cheap",
+        "computer", "game", "mobile", "app", "software", "video",
     }
     has_wrong_claim = bool(student_tokens & wrong_keywords)
 
     if has_wrong_claim:
         return (
             "Result: Incorrect.",
-            "Your answer does not match the key scientific concepts in the installed solution.",
+            "Your answer does not match the key concepts in the installed solution.",
         )
 
     guide_tokens = {

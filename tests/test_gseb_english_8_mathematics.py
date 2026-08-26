@@ -397,6 +397,41 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertIn("land art refers to artistic creations", ans_eng8.lower())
         self.assertNotIn("Squares and Square Roots", ans_eng8)
 
+    def test_grade_8_english_wrong_conceptual_review_stays_local(self) -> None:
+        service = self.service(api_key="mock-key")
+        ctx_eng8 = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Semester 1 Unit 1 - Landscapes",
+            current_topic="Land Art and Environmental Appreciation",
+            learning_mode=LearningMode.EXPLAIN.value,
+            onboarding_complete=True,
+        ).validate()
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            review = service.ask_stream(
+                message="Check my answer: What is Land Art? My answer: Land Art is a computer game.",
+                context=ctx_eng8,
+            )
+
+        self.assertIn("Land Art and Environmental Appreciation", review)
+        self.assertIn("Question: What is Land Art?", review)
+        self.assertIn("Your answer: Land Art is a computer game", review)
+        self.assertIn("Result: Incorrect.", review)
+        self.assertIn("Correct method:", review)
+        self.assertIn("Source type: Teacher-authored content", review)
+        self.assertNotIn("Needs grounded review", review)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
     def test_exact_local_syllabus_routes_do_not_consume_provider(self) -> None:
         service = self.service(api_key="")
         ctx = self.context(
