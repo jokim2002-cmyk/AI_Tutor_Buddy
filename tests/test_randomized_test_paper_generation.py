@@ -153,6 +153,55 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         )
         self.assertEqual(calculated_total, 25)
 
+    def test_question_depth_matching_to_marks_regression(self):
+        test_seeds = [1, 42, 101, 777, 999]
+        for seed in test_seeds:
+            with self.subTest(seed=seed):
+                scope = parse_test_paper_scope("new full syllabus test banao", self.ctx, self.science_syl)
+                _, paper = render_test_paper(
+                    self.science_syl,
+                    scope,
+                    context=self.ctx,
+                    message="new full syllabus test banao",
+                    seed=seed,
+                )
+
+                sec_d_questions = [
+                    q for q in paper.questions if q.section_title == "Section D (6 Marks Each)"
+                ]
+                sec_a_questions = [
+                    q for q in paper.questions if q.section_title == "Section A (1 Mark Each)"
+                ]
+
+                # 1. 6-mark section should not contain "Which instrument", "Name the three", "Give one role", "Name the three main parts" style one-line questions.
+                forbidden_6m_prefixes = (
+                    "which instrument",
+                    "name the three",
+                    "give one role",
+                    "name the three main parts",
+                    "which ",
+                    "name ",
+                    "give one ",
+                )
+                for q_item in sec_d_questions:
+                    q_lower = q_item.question_text.casefold()
+                    for prefix in forbidden_6m_prefixes:
+                        self.assertFalse(
+                            q_lower.startswith(prefix),
+                            f"6-mark question '{q_item.question_text}' in seed {seed} should not start with forbidden simple prefix '{prefix}'",
+                        )
+
+                # 2. 1-mark section should not contain heavy explanation prompts where answer guide expects multiple points.
+                for q_item in sec_a_questions:
+                    q_lower = q_item.question_text.casefold()
+                    sol_words = len(q_item.solution_guide.strip().split())
+                    if q_lower.startswith("explain with an example"):
+                        self.assertLess(
+                            sol_words,
+                            25,
+                            f"1-mark question '{q_item.question_text}' in seed {seed} contains heavy multi-point solution guide",
+                        )
+
 
 if __name__ == "__main__":
     unittest.main()

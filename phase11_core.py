@@ -2574,6 +2574,72 @@ def extract_test_seed(message: str) -> int | str | None:
     return None
 
 
+def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
+    q_lower = q_text.casefold().strip()
+    sol_text_clean = sol_text.strip()
+    sol_words = len(sol_text_clean.split())
+
+    one_line_prefixes = (
+        "which instrument",
+        "name the three main parts",
+        "name the three",
+        "give one role",
+        "which ",
+        "name ",
+        "give one ",
+        "what is ",
+        "what are ",
+        "define ",
+        "state ",
+        "where is ",
+        "what happens when ",
+        "identify ",
+        "fill in ",
+    )
+    is_one_line = any(q_lower.startswith(prefix) for prefix in one_line_prefixes) or (
+        sol_words < 15 and not any(k in q_lower for k in ("explain", "describe", "detail", "process", "how"))
+    )
+
+    heavy_prefixes = (
+        "explain with an example",
+        "explain in detail",
+        "describe the process",
+        "how will you show",
+        "how can you show",
+        "draw and explain",
+        "describe ",
+    )
+    is_heavy_explanation = any(q_lower.startswith(prefix) for prefix in heavy_prefixes) or (
+        sol_words >= 25 and (sol_text_clean.count(".") >= 2 or "\n" in sol_text_clean or ";" in sol_text_clean)
+    )
+
+    if mark_per_q == 6:
+        # 6 marks: MUST NOT be a simple one-line factual question.
+        if is_one_line:
+            return False
+        if sol_words < 20 and not is_heavy_explanation:
+            return False
+        return True
+
+    elif mark_per_q == 1:
+        # 1 mark: MUST NOT be a heavy explanation prompt where answer guide expects multiple points.
+        if is_heavy_explanation:
+            return False
+        return True
+
+    elif mark_per_q == 2:
+        if sol_words > 90:
+            return False
+        return True
+
+    elif mark_per_q == 3:
+        if is_one_line and sol_words < 12:
+            return False
+        return True
+
+    return True
+
+
 def render_test_paper(
     syllabus: BoardSyllabus,
     scope: TestPaperScope,
@@ -2757,22 +2823,53 @@ def render_test_paper(
         available_pool = list(pool)
         rng.shuffle(available_pool)
     else:
-        available_pool = []
+        available_pool = list(pool)
 
     for sec_title, mark_per_q, q_count in specs:
         sec_tot = mark_per_q * q_count
         lines.append(f"{sec_title} — Total: {sec_tot} Marks")
         answers_list: list[tuple[int, str, str]] = []
         for _ in range(q_count):
-            if rng is not None:
-                if not available_pool:
-                    available_pool = list(pool)
-                    rng.shuffle(available_pool)
-                topic_title, q_text, sol_text = available_pool.pop(0)
-            else:
-                topic_title, q_text, sol_text = pool[pool_idx % len(pool)]
-                pool_idx += 1
+            selected_item = None
 
+            if rng is not None:
+                for idx, item in enumerate(available_pool):
+                    _, q_text, sol_text = item
+                    if is_suitable_for_section(q_text, sol_text, mark_per_q):
+                        selected_item = available_pool.pop(idx)
+                        break
+
+                if selected_item is None:
+                    refilled = list(pool)
+                    rng.shuffle(refilled)
+                    for idx, item in enumerate(refilled):
+                        _, q_text, sol_text = item
+                        if is_suitable_for_section(q_text, sol_text, mark_per_q):
+                            selected_item = item
+                            refilled.pop(idx)
+                            available_pool = refilled
+                            break
+
+                if selected_item is None:
+                    if not available_pool:
+                        available_pool = list(pool)
+                        rng.shuffle(available_pool)
+                    selected_item = available_pool.pop(0)
+            else:
+                n_pool = len(pool)
+                for offset in range(n_pool):
+                    candidate_idx = (pool_idx + offset) % n_pool
+                    _, q_text, sol_text = pool[candidate_idx]
+                    if is_suitable_for_section(q_text, sol_text, mark_per_q):
+                        selected_item = pool[candidate_idx]
+                        pool_idx = candidate_idx + 1
+                        break
+
+                if selected_item is None:
+                    selected_item = pool[pool_idx % len(pool)]
+                    pool_idx += 1
+
+            topic_title, q_text, sol_text = selected_item
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
