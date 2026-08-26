@@ -581,6 +581,42 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
                 service._client.models.generate_content_stream.assert_not_called()
 
 
+
+
+class Std7ScienceGenericExamplesRouteTests(unittest.TestCase):
+    def test_std7_science_generic_examples_from_this_chapter_stays_local(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import LearningMode, StudentLearningContext, SyllabusRepository
+
+        repo = SyllabusRepository(Path(__file__).resolve().parents[1] / "syllabus")
+        service = GyanVerseAIService(api_key="", syllabus_repository=repo)
+        ctx = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Semester 1 — Properties of Magnet",
+            current_topic="Magnetic materials and poles",
+            learning_mode=LearningMode.EXPLAIN.value,
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask_stream(
+            message="Give me two examples from this chapter",
+            context=ctx,
+        )
+
+        self.assertIn("Source type: Teacher-authored content", answer)
+        self.assertIn("Examples:", answer)
+        self.assertIn("1.", answer)
+        self.assertIn("2.", answer)
+        self.assertIn("iron pin", answer.casefold())
+        self.assertIn("iron filings", answer.casefold())
+        self.assertNotIn("The online tutor could not respond right now", answer)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+
+
 if __name__ == "__main__":
     unittest.main()
 

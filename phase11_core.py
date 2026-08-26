@@ -600,12 +600,12 @@ def _semester_chapter_reference(value: object) -> str:
 
 _CONTEXT_FALLBACK_WORDS = {
     "a", "about", "again", "an", "and", "answer", "answers", "any", "are",
-    "can", "chapter", "check", "correct", "do", "easy", "example", "examples",
-    "exercise", "exercises", "explain", "for", "give", "help", "homework", "how",
+    "can", "chapter", "check", "correct", "current", "do", "easy", "example", "examples",
+    "exercise", "exercises", "explain", "for", "from", "give", "help", "homework", "how",
     "hint", "hints", "i", "in", "is", "it", "just", "language", "mark", "marks", "me", "my", "of", "one", "only",
     "please", "practice", "question", "questions", "quiz", "repeat", "revision",
     "revise", "right", "show", "simple", "solution", "solutions", "solve", "summary",
-    "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
+    "same", "selected", "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
     "what", "with", "without", "wrong", "you", "your",
 }
 
