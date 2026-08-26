@@ -4,6 +4,7 @@ import hashlib
 import json
 import mimetypes
 import os
+import random
 import re
 import shutil
 import tempfile
@@ -1424,6 +1425,39 @@ def _std7_magnet_material_classification_decision(
         return True
     return None
 
+
+def _std7_water_states_classification_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide the installed Std 7 water physical states classification locally."""
+
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        "water" in clean_question
+        and ("state" in clean_question or "states" in clean_question or "phase" in clean_question or "phases" in clean_question or "form" in clean_question or "forms" in clean_question)
+        and ("three" in clean_question or "3" in clean_question or "physical" in clean_question or "common" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer).replace("vapor", "vapour")
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    # Normalize "water vapour" to a single token so "water" in "water vapour" is not confused with liquid water
+    norm_student = clean_student.replace("water vapour", "watervapour")
+    tokens = set(norm_student.split())
+
+    has_solid = bool(tokens & {"solid", "ice"})
+    has_liquid = bool(tokens & {"liquid", "water"})
+    has_gas = bool(tokens & {"gas", "gaseous", "vapour", "watervapour", "steam"})
+
+    if has_solid and has_liquid and has_gas:
+        return True
+
+    return False
+
+
 def _evaluate_student_answer(
     student_answer: str,
     guide: str,
@@ -1447,6 +1481,18 @@ def _evaluate_student_answer(
         return (
             "Result: Incorrect.",
             "Your answer reverses the installed material classification.",
+        )
+
+    water_decision = _std7_water_states_classification_decision(student_answer, question)
+    if water_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly names the three physical states of water.",
+        )
+    if water_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer does not correctly name all three physical states of water.",
         )
 
     # 1. Check Yes/No decision
@@ -1865,6 +1911,12 @@ def evaluate_single_test_answer(
     if magnet_decision is True:
         return float(max_marks), "Correct", "Correct answer."
     elif magnet_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    water_decision = _std7_water_states_classification_decision(user_ans, q_text)
+    if water_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif water_decision is False:
         return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     u_clean = user_ans.strip().casefold()
@@ -2473,12 +2525,64 @@ def parse_test_paper_scope(
     )
 
 
+def is_random_test_request(message: str) -> bool:
+    msg_clean = message.casefold()
+    repeat_phrases = (
+        "same test",
+        "repeat test",
+        "same paper",
+        "repeat paper",
+        "previous test",
+        "default test",
+    )
+    if any(phrase in msg_clean for phrase in repeat_phrases):
+        return False
+
+    random_phrases = (
+        "new test",
+        "different test",
+        "random test",
+        "practice test",
+        "practice exam",
+        "another test",
+        "new paper",
+        "different paper",
+        "random paper",
+        "naya test",
+        "naya paper",
+        "dusra test",
+        "dusra paper",
+        "dusri test",
+        "shuffle",
+        "vary",
+    )
+    if any(phrase in msg_clean for phrase in random_phrases):
+        return True
+
+    if any(w in msg_clean for w in ("new", "different", "random", "practice", "naya", "dusra", "another")):
+        if any(w in msg_clean for w in ("banao", "create", "generate", "give", "karo", "chahiye")):
+            return True
+
+    return False
+
+
+def extract_test_seed(message: str) -> int | str | None:
+    match = re.search(r"\bseed\s*[:=]?\s*(\w+)\b", message, re.IGNORECASE)
+    if match:
+        val = match.group(1)
+        return int(val) if val.isdigit() else val
+    return None
+
+
 def render_test_paper(
     syllabus: BoardSyllabus,
     scope: TestPaperScope,
     *,
-    context: StudentLearningContext,
-) -> str:
+    context: StudentLearningContext | None = None,
+    message: str = "",
+    randomize: bool | None = None,
+    seed: int | str | None = None,
+) -> tuple[str, GeneratedTestPaper]:
     lines: list[str] = []
     board_name = (
         "Gujarat Secondary and Higher Secondary Education Board (GSEB)"
@@ -2544,27 +2648,20 @@ def render_test_paper(
             for t in ch.topics:
                 t_q: list[tuple[str, str, str]] = []
                 for i, q in enumerate(t.exercises):
-                    sol = (
-                        t.solutions[i]
-                        if i < len(t.solutions)
-                        else "Provide a step-by-step grounded response."
-                    )
-                    t_q.append((t.title, q, sol))
+                    if q and q.strip() and i < len(t.solutions) and t.solutions[i] and t.solutions[i].strip():
+                        t_q.append((t.title, q.strip(), t.solutions[i].strip()))
                 for i, q in enumerate(t.practice_questions):
-                    sol = (
-                        t.practice_solutions[i]
-                        if i < len(t.practice_solutions)
-                        else "Apply topic principles to justify the answer."
-                    )
-                    t_q.append((t.title, q, sol))
+                    if q and q.strip() and i < len(t.practice_solutions) and t.practice_solutions[i] and t.practice_solutions[i].strip():
+                        t_q.append((t.title, q.strip(), t.practice_solutions[i].strip()))
                 for ex in t.examples:
-                    t_q.append(
-                        (
-                            t.title,
-                            f"Explain with an example: {ex}",
-                            f"Example solution: {ex}",
+                    if ex and ex.strip():
+                        t_q.append(
+                            (
+                                t.title,
+                                f"Explain with an example: {ex.strip()}",
+                                f"Example solution: {ex.strip()}",
+                            )
                         )
-                    )
                 if t_q:
                     t_items_list.append(t_q)
 
@@ -2598,27 +2695,20 @@ def render_test_paper(
         for t in ch.topics:
             t_q: list[tuple[str, str, str]] = []
             for i, q in enumerate(t.exercises):
-                sol = (
-                    t.solutions[i]
-                    if i < len(t.solutions)
-                    else "Provide a step-by-step grounded response."
-                )
-                t_q.append((t.title, q, sol))
+                if q and q.strip() and i < len(t.solutions) and t.solutions[i] and t.solutions[i].strip():
+                    t_q.append((t.title, q.strip(), t.solutions[i].strip()))
             for i, q in enumerate(t.practice_questions):
-                sol = (
-                    t.practice_solutions[i]
-                    if i < len(t.practice_solutions)
-                    else "Apply topic principles to justify the answer."
-                )
-                t_q.append((t.title, q, sol))
+                if q and q.strip() and i < len(t.practice_solutions) and t.practice_solutions[i] and t.practice_solutions[i].strip():
+                    t_q.append((t.title, q.strip(), t.practice_solutions[i].strip()))
             for ex in t.examples:
-                t_q.append(
-                    (
-                        t.title,
-                        f"Explain with an example: {ex}",
-                        f"Example solution: {ex}",
+                if ex and ex.strip():
+                    t_q.append(
+                        (
+                            t.title,
+                            f"Explain with an example: {ex.strip()}",
+                            f"Example solution: {ex.strip()}",
+                        )
                     )
-                )
             if t_q:
                 t_items_list.append(t_q)
 
@@ -2638,22 +2728,51 @@ def render_test_paper(
             (
                 "General",
                 "Explain the key concepts of the topic.",
-                "Use the installed topic guide.",
+                "Use the installed topic guide for explanation and practice.",
             )
         ]
+
+    if seed is not None:
+        do_random = True
+    elif randomize is not None:
+        do_random = randomize
+    else:
+        do_random = is_random_test_request(message)
+
+    if do_random:
+        if seed is None:
+            seed = extract_test_seed(message)
+        if seed is None:
+            seed = random.randrange(1, 1_000_000_000)
+        rng = random.Random(seed)
+    else:
+        rng = None
 
     q_num = 1
     sec_answers: list[tuple[str, list[tuple[int, str, str]]]] = []
     items: list[TestPaperQuestionItem] = []
     pool_idx = 0
 
+    if rng is not None:
+        available_pool = list(pool)
+        rng.shuffle(available_pool)
+    else:
+        available_pool = []
+
     for sec_title, mark_per_q, q_count in specs:
         sec_tot = mark_per_q * q_count
         lines.append(f"{sec_title} — Total: {sec_tot} Marks")
         answers_list: list[tuple[int, str, str]] = []
         for _ in range(q_count):
-            topic_title, q_text, sol_text = pool[pool_idx % len(pool)]
-            pool_idx += 1
+            if rng is not None:
+                if not available_pool:
+                    available_pool = list(pool)
+                    rng.shuffle(available_pool)
+                topic_title, q_text, sol_text = available_pool.pop(0)
+            else:
+                topic_title, q_text, sol_text = pool[pool_idx % len(pool)]
+                pool_idx += 1
+
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
@@ -2782,7 +2901,7 @@ def render_syllabus_match(
             sections.append("Examples:\n" + _numbered_lines(selected))
     elif request.intent == "test":
         scope = parse_test_paper_scope(message, context, match.syllabus)
-        raw_text, _ = render_test_paper(match.syllabus, scope, context=context)
+        raw_text, _ = render_test_paper(match.syllabus, scope, context=context, message=message)
         return raw_text
     elif request.intent in {"practice", "homework"}:
         bank = _topic_question_bank(

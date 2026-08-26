@@ -707,7 +707,7 @@ class GyanVerseAIService:
 
             if syllabus is not None:
                 scope = parse_test_paper_scope(message, context, syllabus)
-                _, paper_obj = render_test_paper(syllabus, scope, context=context)
+                _, paper_obj = render_test_paper(syllabus, scope, context=context, message=message)
                 self._last_generated_test_paper = paper_obj
                 return paper_obj
         except Exception:
@@ -825,7 +825,7 @@ class GyanVerseAIService:
                     t_start = time.perf_counter()
                 t_format_start = time.perf_counter()
                 scope = parse_test_paper_scope(message, context, syllabus)
-                raw_answer, paper_obj = render_test_paper(syllabus, scope, context=context)
+                raw_answer, paper_obj = render_test_paper(syllabus, scope, context=context, message=message)
                 self._last_generated_test_paper = paper_obj
                 answer = format_tutor_response(raw_answer, student_message=message)
                 self._record_local_response_metrics(
@@ -1142,8 +1142,8 @@ class GyanVerseAIService:
 
     def ask_stream(
         self,
+        message: str = "",
         *,
-        message: str,
         context: StudentLearningContext,
         attachments: Sequence[AttachmentRecord] = (),
         on_chunk: Any | None = None,

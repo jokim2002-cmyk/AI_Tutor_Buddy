@@ -714,6 +714,74 @@ class Std7ScienceMagnetReviewTests(unittest.TestCase):
         self.assertEqual(result, "Incorrect")
 
 
+class Std7ScienceWaterStatesReviewTests(unittest.TestCase):
+    def test_std7_science_water_states_evaluation_regression_cases(self):
+        from phase11_core import evaluate_single_test_answer
+
+        q_text = "Name the three common physical states of water."
+        sol_guide = "They are solid ice, liquid water and gaseous water vapour."
+        max_marks = 1
+
+        # 1. "Solid, liquid and gas." => full marks Correct
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Solid, liquid and gas.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+
+        # 2. "Ice, water and water vapour." => full marks Correct
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Ice, water and water vapour.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+
+        # 3. "Solid and liquid only." => not full marks
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Solid and liquid only.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertLess(awarded, 1.0)
+        self.assertNotEqual(result, "Correct")
+
+    def test_std7_science_water_states_review_accepts_short_answer(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import LearningMode, StudentLearningContext, SyllabusRepository
+
+        repo = SyllabusRepository(Path(__file__).resolve().parents[1] / "syllabus")
+        service = GyanVerseAIService(api_key="", syllabus_repository=repo)
+        ctx = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Semester 1 — Physical properties and states of water",
+            current_topic="Physical properties and states of water",
+            learning_mode=LearningMode.EXPLAIN.value,
+            onboarding_complete=True,
+        ).validate()
+
+        correct = service.ask_stream(
+            message=(
+                "Check my answer: Name the three common physical states of water. "
+                "My answer: Solid, liquid and gas."
+            ),
+            context=ctx,
+        )
+
+        self.assertIn("Result: Correct.", correct)
+        self.assertNotIn("Needs grounded review", correct)
+
+
 if __name__ == "__main__":
     unittest.main()
 
