@@ -453,6 +453,46 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertEqual(hearing_result, "Correct")
         self.assertEqual(hearing_feedback, "Correct answer.")
 
+    def test_grade_7_english_preposition_reviews_stay_local(self) -> None:
+        service = self.service(api_key="mock-key")
+        ctx_eng7 = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Chapter 1 - The Day the River Spoke",
+            current_topic="Prepositions, adverbs and descriptive paragraphs",
+            learning_mode=LearningMode.EXPLAIN.value,
+            onboarding_complete=True,
+        ).validate()
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            correct = service.ask_stream(
+                message="Check my answer: Identify the preposition in: Jahnavi stood beside the river. My answer: beside",
+                context=ctx_eng7,
+            )
+            wrong = service.ask_stream(
+                message="Check my answer: Identify the preposition in: Jahnavi stood beside the river. My answer: river",
+                context=ctx_eng7,
+            )
+
+        self.assertIn("Question: Identify the preposition in: Jahnavi stood beside the river.", correct)
+        self.assertIn("Your answer: beside", correct)
+        self.assertIn("Result: Correct.", correct)
+        self.assertNotIn("Needs grounded review", correct)
+        self.assertIn("Question: Identify the preposition in: Jahnavi stood beside the river.", wrong)
+        self.assertIn("Your answer: river", wrong)
+        self.assertIn("Result: Incorrect.", wrong)
+        self.assertNotIn("Needs grounded review", wrong)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
     def test_exact_local_syllabus_routes_do_not_consume_provider(self) -> None:
         service = self.service(api_key="")
         ctx = self.context(

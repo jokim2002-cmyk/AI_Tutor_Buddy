@@ -1421,6 +1421,50 @@ def _evaluate_student_answer(
 
     matched_tokens = student_tokens & ref_tokens
 
+    short_answer_tokens = {
+        token
+        for token in clean_student.split()
+        if token and token not in eval_stop_words
+    }
+    clean_guide = _normalize_syllabus_lookup_text(guide)
+    expected_short_tokens: set[str] = set()
+    grammar_labels = (
+        "preposition",
+        "adverb",
+        "adjective",
+        "imperative verb",
+        "verb",
+        "conjunction",
+        "pronoun",
+        "modal",
+        "prefix",
+        "suffix",
+        "silent letter",
+    )
+    for label in grammar_labels:
+        if label in clean_question:
+            label_pattern = re.escape(label)
+            match = re.search(
+                rf"\b(?:the\s+)?{label_pattern}\s+(?:is|are)\s+([a-z]+)\b",
+                clean_guide,
+            )
+            if match:
+                expected_short_tokens.add(match.group(1))
+    sense_match = re.search(r"\bsense\s+of\s+([a-z]+)\b", clean_guide)
+    if "what sense" in clean_question and sense_match:
+        expected_short_tokens.add(sense_match.group(1))
+
+    if expected_short_tokens and 0 < len(short_answer_tokens) <= 3:
+        if short_answer_tokens & expected_short_tokens:
+            return (
+                "Result: Correct.",
+                "Your short answer matches the installed solution.",
+            )
+        return (
+            "Result: Incorrect.",
+            "Your short answer does not match the installed solution.",
+        )
+
     wrong_keywords = {
         "colorful", "colourful", "iron", "steel", "plastic", "stone", "fire", "magic",
         "red", "blue", "green", "yellow", "wrong", "fake", "bad", "expensive", "cheap",
