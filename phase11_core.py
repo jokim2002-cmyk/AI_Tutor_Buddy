@@ -1363,11 +1363,11 @@ def _std7_magnet_material_classification_decision(
 
     clean_question = _normalize_syllabus_lookup_text(question)
     if not (
-        "magnet" in clean_question
+        ("magnet" in clean_question or "magnetic" in clean_question)
         and "iron" in clean_question
         and ("aluminium" in clean_question or "aluminum" in clean_question)
         and ("wooden" in clean_question or "wood" in clean_question or "ruler" in clean_question)
-        and ("attract" in clean_question or "attracted" in clean_question)
+        and ("attract" in clean_question or "attracted" in clean_question or "attracts" in clean_question or "attraction" in clean_question)
     ):
         return None
 
@@ -1392,9 +1392,13 @@ def _std7_magnet_material_classification_decision(
                     predicate_index = offset
                     break
             if predicate_index is None:
+                for offset, item in enumerate(window[1:]):
+                    if item in {"not", "no", "non", "neither"}:
+                        polarities.add(False)
+                        break
                 continue
             before_predicate = set(window[:predicate_index])
-            negated = bool(before_predicate & {"not", "no", "non"})
+            negated = bool(before_predicate & {"not", "no", "non", "neither"})
             polarities.add(not negated)
         return polarities
 
@@ -1856,6 +1860,12 @@ def evaluate_single_test_answer(
 ) -> tuple[float, str, str]:
     if not user_ans or not user_ans.strip():
         return 0.0, "Not answered", "No answer provided."
+
+    magnet_decision = _std7_magnet_material_classification_decision(user_ans, q_text)
+    if magnet_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif magnet_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     u_clean = user_ans.strip().casefold()
     g_clean = sol_guide.strip().casefold()

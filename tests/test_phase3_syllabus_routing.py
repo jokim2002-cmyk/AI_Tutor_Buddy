@@ -660,6 +660,59 @@ class Std7ScienceMagnetReviewTests(unittest.TestCase):
         self.assertNotIn("Needs grounded review", wrong)
         self.assertEqual(service.last_metrics.route, "local-syllabus")
 
+    def test_std7_science_magnet_evaluation_regression_cases(self):
+        from phase11_core import evaluate_single_test_answer
+
+        q_text = (
+            "Classify an iron nail, an aluminium spoon and a wooden ruler "
+            "by whether a common magnet attracts them strongly."
+        )
+        sol_guide = (
+            "The iron nail is magnetic and is attracted strongly. "
+            "The aluminium spoon and wooden ruler are not strongly attracted by a common classroom magnet."
+        )
+        max_marks = 1
+
+        # 1. correct classification => full marks
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Iron nail is attracted strongly; aluminium spoon and wooden ruler are not attracted strongly.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+
+        # 2. wooden ruler attracted strongly => 0 marks
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Wooden ruler is attracted strongly.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 0.0)
+        self.assertEqual(result, "Incorrect")
+
+        # 3. aluminium spoon attracted strongly => 0 marks
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Aluminium spoon is attracted strongly.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 0.0)
+        self.assertEqual(result, "Incorrect")
+
+        # 4. iron nail not attracted => 0 marks
+        awarded, result, _feedback = evaluate_single_test_answer(
+            q_text,
+            "Iron nail is not attracted strongly.",
+            sol_guide,
+            max_marks,
+        )
+        self.assertEqual(awarded, 0.0)
+        self.assertEqual(result, "Incorrect")
+
 
 if __name__ == "__main__":
     unittest.main()
