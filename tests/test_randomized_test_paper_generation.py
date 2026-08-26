@@ -238,6 +238,48 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                             "Metal paper clip example must not appear in 6 marks section",
                         )
 
+    def test_section_d_natural_quality_and_templates_regression(self):
+        test_seeds = [1, 42, 101, 777, 999]
+        valid_task_words = ("explain", "describe", "compare", "differentiate", "solve", "how", "why")
+        for seed in test_seeds:
+            with self.subTest(seed=seed):
+                scope = parse_test_paper_scope("new full syllabus test banao", self.ctx, self.science_syl)
+                _, paper = render_test_paper(
+                    self.science_syl,
+                    scope,
+                    context=self.ctx,
+                    message="new full syllabus test banao",
+                    seed=seed,
+                )
+
+                sec_d_questions = [
+                    q for q in paper.questions if q.section_title == "Section D (6 Marks Each)"
+                ]
+                self.assertGreater(len(sec_d_questions), 0)
+
+                for q_item in sec_d_questions:
+                    q_lower = q_item.question_text.casefold()
+
+                    # 1. Section D must not contain "scientific principles, and applications of"
+                    self.assertNotIn(
+                        "scientific principles, and applications of",
+                        q_lower,
+                        f"Section D question '{q_item.question_text}' contains generic 'scientific principles, and applications of'",
+                    )
+
+                    # 2. Section D must not contain generic title-only template
+                    self.assertFalse(
+                        q_lower.startswith("describe in detail the process, scientific principles"),
+                        f"Section D question '{q_item.question_text}' uses generic title-only fallback",
+                    )
+
+                    # 3. Must include natural task words
+                    has_task_word = any(word in q_lower for word in valid_task_words)
+                    self.assertTrue(
+                        has_task_word,
+                        f"Section D question '{q_item.question_text}' lacks topic-specific task words",
+                    )
+
 
 if __name__ == "__main__":
     unittest.main()

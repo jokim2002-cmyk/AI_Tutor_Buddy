@@ -2647,6 +2647,131 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
     return 1
 
 
+def build_natural_6mark_question(
+    topic_title: str,
+    explanation: str,
+    examples: list[str],
+) -> tuple[str, str] | None:
+    t_lower = topic_title.casefold().strip()
+    exp_clean = explanation.strip() if explanation else ""
+
+    if len(exp_clean.split()) < 12:
+        return None
+
+    ex_str = f" Examples: {', '.join(examples[:2])}." if examples else ""
+    sol_text = f"{exp_clean}{ex_str}"
+
+    # 1. Levers & Simple machines
+    if "lever" in t_lower:
+        return (
+            "Explain the three classes of levers with one example of each class.",
+            sol_text,
+        )
+    if "machine" in t_lower:
+        return (
+            "Explain the working principles of simple machines with suitable examples and uses.",
+            sol_text,
+        )
+
+    # 2. Plant Reproduction / Flowers / Fruits / Seeds
+    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower:
+        return (
+            "Explain how flowers help in reproduction and describe how fruits and seeds are formed.",
+            sol_text,
+        )
+    if "photosynthesis" in t_lower:
+        return (
+            "Describe the process of photosynthesis in green plants, including raw materials, conditions, and products formed.",
+            sol_text,
+        )
+
+    # 3. Physiology / Digestion / Respiration / Circulation / Excretion
+    if "digest" in t_lower or "alimentary" in t_lower:
+        return (
+            "Describe the process of digestion and absorption in humans step by step.",
+            sol_text,
+        )
+    if "respirat" in t_lower or "breath" in t_lower:
+        return (
+            "Explain the process of respiration in human beings and describe how gas exchange occurs.",
+            sol_text,
+        )
+    if "circulat" in t_lower or "blood" in t_lower or "heart" in t_lower:
+        return (
+            "Describe the structure and function of the human circulatory system and how blood is pumped.",
+            sol_text,
+        )
+    if "excret" in t_lower or "waste" in t_lower:
+        return (
+            "Explain the process of excretion in humans and the role of organs involved.",
+            sol_text,
+        )
+
+    # 4. Physics / Speed / Motion / Heat / Electricity / Magnetism
+    if "speed" in t_lower or "motion" in t_lower or ("time" in t_lower and "measure" in t_lower):
+        return (
+            "Solve a speed-distance-time calculation problem and explain the formula, steps, and units used.",
+            sol_text,
+        )
+    if "heat" in t_lower or "temperature" in t_lower:
+        return (
+            "Explain the three modes of heat transfer with labelled diagrams and real-life examples.",
+            sol_text,
+        )
+    if "electric" in t_lower or "circuit" in t_lower or "current" in t_lower:
+        return (
+            "Describe the construction and working of a simple electric circuit with symbols and safety measures.",
+            sol_text,
+        )
+    if "magnet" in t_lower or "pole" in t_lower:
+        return (
+            "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
+            sol_text,
+        )
+
+    # 5. Chemistry / Acid-Base / Physical-Chemical changes
+    if "acid" in t_lower or "base" in t_lower or "salt" in t_lower:
+        return (
+            "Differentiate between acids and bases using indicators and explain neutralization with an example.",
+            sol_text,
+        )
+    if "change" in t_lower or ("physical" in t_lower and "chemical" in t_lower):
+        return (
+            "Compare physical and chemical changes with at least three differences and supporting examples.",
+            sol_text,
+        )
+
+    # 6. Environment / Soil / Water / Climate
+    if "soil" in t_lower:
+        return (
+            "Describe the different layers of a soil profile and explain the causes and prevention of soil erosion.",
+            sol_text,
+        )
+    if "water" in t_lower or "rain" in t_lower or "conservation" in t_lower:
+        return (
+            "Explain the importance of water conservation and describe the process of rainwater harvesting.",
+            sol_text,
+        )
+
+    # 7. Natural contextual fallback
+    t_clean = topic_title.strip()
+    if "process" in exp_clean.lower() or "step" in exp_clean.lower() or "procedure" in exp_clean.lower():
+        return (
+            f"Describe the step-by-step process, observations, and conclusion for {t_clean.lower()}.",
+            sol_text,
+        )
+    if "example" in exp_clean.lower() or examples:
+        return (
+            f"Explain the core scientific principles of {t_clean.lower()} with suitable examples and applications.",
+            sol_text,
+        )
+
+    return (
+        f"Explain the structure, functions, and key features of {t_clean.lower()} in detail.",
+        sol_text,
+    )
+
+
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
     sol_text_clean = sol_text.strip()
@@ -2690,6 +2815,8 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         if is_one_line:
             return False
         if sol_words < 20 and not is_heavy_explanation:
+            return False
+        if "scientific principles, and applications of" in q_lower:
             return False
         return True
 
@@ -2831,11 +2958,10 @@ def render_test_paper(
                                 3,
                             )
                         )
-                if t.explanation and len(t.explanation.strip().split()) >= 15:
-                    exp_clean = t.explanation.strip()
-                    q_txt_6m = f"Describe in detail the process, scientific principles, and applications of {t.title}."
-                    sol_txt_6m = f"{exp_clean} Key applications and examples: {', '.join(t.examples[:2]) if t.examples else 'Observe standard laboratory and everyday applications.'}"
-                    t_q.append((t.title, q_txt_6m, sol_txt_6m, 6))
+                nat_6m = build_natural_6mark_question(t.title, t.explanation, t.examples)
+                if nat_6m is not None:
+                    q_6m_txt, sol_6m_txt = nat_6m
+                    t_q.append((t.title, q_6m_txt, sol_6m_txt, 6))
 
                 if t_q:
                     t_items_list.append(t_q)
@@ -2891,11 +3017,10 @@ def render_test_paper(
                             3,
                         )
                     )
-            if t.explanation and len(t.explanation.strip().split()) >= 15:
-                exp_clean = t.explanation.strip()
-                q_txt_6m = f"Describe in detail the process, scientific principles, and applications of {t.title}."
-                sol_txt_6m = f"{exp_clean} Key applications and examples: {', '.join(t.examples[:2]) if t.examples else 'Observe standard laboratory and everyday applications.'}"
-                t_q.append((t.title, q_txt_6m, sol_txt_6m, 6))
+            nat_6m = build_natural_6mark_question(t.title, t.explanation, t.examples)
+            if nat_6m is not None:
+                q_6m_txt, sol_6m_txt = nat_6m
+                t_q.append((t.title, q_6m_txt, sol_6m_txt, 6))
 
             if t_q:
                 t_items_list.append(t_q)
