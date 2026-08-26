@@ -865,7 +865,12 @@ class GyanVerseAIService:
                     or "Result: Incorrect." in raw_answer
                 )
             )
-            if not decisive_local_review:
+            decisive_local_hint = (
+                request.intent == "hint"
+                and "Hint:" in raw_answer
+                and "The online tutor could not respond right now" not in raw_answer
+            )
+            if not (decisive_local_review or decisive_local_hint):
                 return None
 
         answer = format_tutor_response(

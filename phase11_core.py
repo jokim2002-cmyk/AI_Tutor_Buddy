@@ -602,7 +602,7 @@ _CONTEXT_FALLBACK_WORDS = {
     "a", "about", "again", "an", "and", "answer", "answers", "any", "are",
     "can", "chapter", "check", "correct", "do", "easy", "example", "examples",
     "exercise", "exercises", "explain", "for", "give", "help", "homework", "how",
-    "i", "in", "is", "it", "language", "mark", "marks", "me", "my", "of", "one",
+    "hint", "hints", "i", "in", "is", "it", "just", "language", "mark", "marks", "me", "my", "of", "one", "only",
     "please", "practice", "question", "questions", "quiz", "repeat", "revision",
     "revise", "right", "show", "simple", "solution", "solutions", "solve", "summary",
     "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
@@ -2616,6 +2616,8 @@ def render_syllabus_match(
         bank = _topic_question_bank(topic, prefer_solved=True)
         selected_index = _requested_question_index(bank, message)
         sections.append(topic.title)
+        if selected_index < 0 and bank:
+            selected_index = 0
         if 0 <= selected_index < len(bank):
             question, guide = bank[selected_index]
             hints = _local_question_hints(topic, question, guide)[: request.requested_count]

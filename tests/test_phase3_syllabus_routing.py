@@ -157,6 +157,70 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         self.assertIn("Teacher-authored integer addition explanation", answer)
         self.assertEqual(service.last_metrics.route, "local-syllabus")
 
+    def test_context_topic_supports_generic_hint_follow_up(self) -> None:
+        payload = syllabus_payload(
+            topic="Reading and interpreting pie graphs",
+            explanation=(
+                "A pie graph represents one whole as a circle divided into sectors. "
+                "The complete circle is 360 degrees and represents 100 percent."
+            ),
+        )
+        topic = payload["chapters"][0]["topics"][0]
+        topic["exercises"] = [
+            "A pie graph shows 120 students; the sports sector is 90 degrees. How many students chose sports?"
+        ]
+        topic["solutions"] = [
+            "Sports represents 90/360 = 1/4 of the total, so 120 x 1/4 = 30 students."
+        ]
+        self.repo.install_payload(payload)
+        service = self.service()
+
+        answer = service.ask_stream(
+            message="Give me only one hint",
+            context=self.context(topic="Reading and interpreting pie graphs"),
+        )
+
+        self.assertIn("Reading and interpreting pie graphs", answer)
+        self.assertIn("Question: A pie graph shows 120 students", answer)
+        self.assertIn("Hint:", answer)
+        self.assertIn("pie graph represents one whole", answer.lower())
+        self.assertNotIn("The online tutor could not respond right now", answer)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
+    def test_online_configured_hint_follow_up_stays_deterministic_local(self) -> None:
+        payload = syllabus_payload(
+            topic="Reading and interpreting pie graphs",
+            explanation="A pie graph represents one whole as a circle divided into sectors.",
+        )
+        topic = payload["chapters"][0]["topics"][0]
+        topic["practice_questions"] = [
+            "A 72-degree sector in a pie graph represents what fraction and percentage of the whole?"
+        ]
+        topic["practice_solutions"] = [
+            "72/360 = 1/5, so it represents 20 percent."
+        ]
+        self.repo.install_payload(payload)
+        service = self.service()
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            answer = service.ask_stream(
+                message="Give me only one hint",
+                context=self.context(topic="Reading and interpreting pie graphs"),
+            )
+
+        self.assertIn("Hint:", answer)
+        self.assertIn("Question:", answer)
+        self.assertIn("pie graph represents one whole", answer.lower())
+        self.assertNotIn("20 percent", answer)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
     def test_metadata_only_match_returns_truthful_missing_content(self) -> None:
         payload = syllabus_payload(explanation="", origin="metadata_only")
         topic = payload["chapters"][0]["topics"][0]
