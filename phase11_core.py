@@ -2662,7 +2662,17 @@ def build_natural_6mark_question(
     sol_text = f"{exp_clean}{ex_str}"
 
     # 1. Specifically requested exact-topic mappings
-    if "energy conservation and responsible use" in t_lower or ("energy" in t_lower and "conservation" in t_lower):
+    if "mixtures and separation choices" in t_lower:
+        return (
+            "Explain how different mixture components can be separated using hand-picking, filtration, magnetic separation, and evaporation, with one example each.",
+            sol_text,
+        )
+    if "plane-mirror images and types of reflection" in t_lower:
+        return (
+            "Explain the image properties formed by a plane mirror and distinguish regular reflection from diffuse reflection with examples.",
+            sol_text,
+        )
+    if "energy conservation and responsible use" in t_lower or ("energy" in t_lower and "responsible use" in t_lower):
         return (
             "Explain why electrical energy should be used responsibly and describe four ways to conserve energy at home or school.",
             sol_text,
@@ -2672,163 +2682,283 @@ def build_natural_6mark_question(
             "Explain the importance of water conservation and describe the process of rainwater harvesting.",
             sol_text,
         )
-    if "light, visibility and reflection" in t_lower or ("light" in t_lower and "visibility" in t_lower):
+    if "light, visibility and reflection" in t_lower:
         return (
             "Explain how we see luminous and non-luminous objects. Include the role of light, reflection, and two examples.",
             sol_text,
         )
-    if "thermal equilibrium and everyday applications" in t_lower or "thermal equilibrium" in t_lower:
+    if "laws of reflection" in t_lower:
+        return (
+            "State the two laws of reflection, explain the angle of incidence and angle of reflection, and solve a reflection angle problem.",
+            sol_text,
+        )
+    if "concave and convex mirrors" in t_lower:
+        return (
+            "Compare concave and convex mirrors in terms of reflecting surface shape, focal point, and ray convergence or divergence.",
+            sol_text,
+        )
+    if "images and uses of curved mirrors" in t_lower:
+        return (
+            "Describe image formation in concave and convex mirrors for different object positions and state their practical applications in dentist mirrors and rear-view mirrors.",
+            sol_text,
+        )
+    if "thermal equilibrium and everyday applications" in t_lower:
         return (
             "Explain thermal equilibrium with two everyday examples and describe how heat transfer stops when temperatures become equal.",
             sol_text,
         )
-    if "smaller bodies and conditions for life" in t_lower or "conditions for life" in t_lower:
+    if "smaller bodies and conditions for life" in t_lower:
         return (
             "Describe the main conditions that make Earth suitable for life and compare them with smaller bodies such as comets or dwarf planets.",
             sol_text,
         )
 
     # 2. Levers & Simple machines
-    if "lever" in t_lower:
+    if "classes of levers" in t_lower or "class of lever" in t_lower:
         return (
             "Explain the three classes of levers with one example of each class.",
             sol_text,
         )
-    if "machine" in t_lower:
+    if "lever parts and mechanical advantage" in t_lower:
         return (
-            "Explain the working principles of simple machines with suitable examples and uses.",
+            "Define fulcrum, effort, and load in a lever, and explain mechanical advantage with formula.",
+            sol_text,
+        )
+    if "moments, balance and applications" in t_lower:
+        return (
+            "Explain the principle of moments, beam balance equilibrium, and practical applications of levers in daily tools.",
             sol_text,
         )
 
     # 3. Plant Reproduction / Flowers / Fruits / Seeds / Roots / Stems
-    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower or "part of plant" in t_lower:
+    if "flowers, fruits and seeds" in t_lower or "parts of plants" in t_lower:
         return (
             "Explain how flowers help in reproduction and describe how fruits and seeds are formed.",
             sol_text,
         )
-    if "photosynthesis" in t_lower:
+    if "roots and root modifications" in t_lower:
         return (
-            "Describe the process of photosynthesis in green plants, including raw materials, conditions, and products formed.",
+            "Describe taproot and fibrous root systems and explain how root modifications support storage, anchoring, and breathing.",
+            sol_text,
+        )
+    if "stems, leaves and modifications" in t_lower:
+        return (
+            "Explain the functions of stems and leaves, including modifications for food storage, tendrils, and protection.",
             sol_text,
         )
 
     # 4. Physiology / Digestion / Respiration / Circulation / Excretion
-    if "digest" in t_lower or "alimentary" in t_lower:
+    if "digestion and absorption" in t_lower:
         return (
             "Describe the process of digestion and absorption in humans step by step.",
             sol_text,
         )
-    if "respirat" in t_lower or "breath" in t_lower:
+    if "respiration and gas exchange" in t_lower:
         return (
             "Explain the process of respiration in human beings and describe how gas exchange occurs.",
             sol_text,
         )
-    if "circulat" in t_lower or "blood" in t_lower or "heart" in t_lower:
+    if "blood circulation, heart and pulse" in t_lower:
         return (
             "Describe the structure and function of the human circulatory system and how blood is pumped.",
             sol_text,
         )
-    if "excret" in t_lower or "waste system" in t_lower:
-        return (
-            "Explain the process of excretion in humans and the role of organs involved.",
-            sol_text,
-        )
 
-    # 5. Physics / Speed / Motion / Heat / Electricity / Magnetism / Mirrors
-    if "speed" in t_lower or "motion" in t_lower or ("time" in t_lower and "measure" in t_lower):
+    # 5. Physics / Speed / Motion / Heat / Electricity / Magnetism
+    if "speed and its measurement" in t_lower:
         return (
             "Solve a speed-distance-time calculation problem and explain the formula, steps, and units used.",
             sol_text,
         )
-    if "conduction" in t_lower or "convection" in t_lower or "radiation" in t_lower or "heat transfer" in t_lower:
+    if "conduction, convection and radiation" in t_lower:
         return (
             "Explain the three modes of heat transfer with labelled diagrams and real-life examples.",
             sol_text,
         )
-    if "electric cell" in t_lower or "electric circuit" in t_lower or "electrical effect" in t_lower:
+    if "heat, temperature and thermometers" in t_lower:
+        return (
+            "Distinguish heat from temperature, explain heat flow direction, and describe laboratory and clinical thermometers.",
+            sol_text,
+        )
+    if "electric cells, circuits and current" in t_lower:
         return (
             "Describe the construction and working of a simple electric circuit with symbols and safety measures.",
             sol_text,
         )
-    if "magnetic" in t_lower or "magnet" in t_lower:
+    if "conductors, insulators and switches" in t_lower:
+        return (
+            "Differentiate between electrical conductors and insulators with three examples each and explain the role of a switch.",
+            sol_text,
+        )
+    if "electrical effects, safety and conservation" in t_lower:
+        return (
+            "Explain the heating and magnetic effects of electric current and safety measures like fuses and insulation.",
+            sol_text,
+        )
+    if "magnetic materials and poles" in t_lower:
+        return (
+            "Describe magnetic materials, poles, and how magnetic force behaves near magnet ends.",
+            sol_text,
+        )
+    if "attraction, repulsion and magnetic field" in t_lower:
         return (
             "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
             sol_text,
         )
-    if "mirror" in t_lower or "laws of reflection" in t_lower:
-        return (
-            "Explain the laws of reflection and compare the image properties formed by plane, concave, and convex mirrors.",
-            sol_text,
-        )
 
-    # 6. Chemistry / Acid-Base / Physical-Chemical changes / Elements / Mixtures
-    if "acid" in t_lower or "base" in t_lower or "salt" in t_lower:
-        return (
-            "Differentiate between acids and bases using indicators and explain neutralization with an example.",
-            sol_text,
-        )
+    # 6. Chemistry / Acid-Base / Physical-Chemical changes / Elements / Compounds / Mixtures
     if "physical and chemical" in t_lower or "chemical change" in t_lower:
         return (
             "Compare physical and chemical changes with at least three differences and supporting examples.",
             sol_text,
         )
-    if "element" in t_lower or "compound" in t_lower or "mixtures and separation" in t_lower or "insoluble solid" in t_lower:
+    if "elements and atoms" in t_lower:
+        return (
+            "Define an element and atom, give chemical symbols of oxygen, iron, and copper, and explain why elements cannot be broken down by chemical methods.",
+            sol_text,
+        )
+    if "compounds and chemical combination" in t_lower:
+        return (
+            "Define a compound, explain fixed mass ratios, chemical formulas, and how compound properties differ from their component elements.",
+            sol_text,
+        )
+    if "mixtures and classification" in t_lower:
         return (
             "Differentiate between elements, compounds, and mixtures with fixed vs variable compositions and two examples of each.",
             sol_text,
         )
+    if "separating insoluble solids" in t_lower:
+        return (
+            "Describe the processes of sedimentation, decantation, and filtration for separating insoluble solids from liquids.",
+            sol_text,
+        )
+    if "separating solutions and miscible liquids" in t_lower:
+        return (
+            "Explain evaporation, condensation, and distillation methods for separating dissolved solids and miscible liquids.",
+            sol_text,
+        )
 
     # 7. Environment / Soil / Water / Air pollution
-    if "soil composition" in t_lower or "soil testing" in t_lower or "soil fertility" in t_lower or "soil profile" in t_lower:
+    if "soil composition" in t_lower:
         return (
             "Describe the different layers of a soil profile and explain the causes and prevention of soil erosion.",
             sol_text,
         )
-    if "properties of water" in t_lower or "water cycle" in t_lower or "water as a solvent" in t_lower or "rainwater" in t_lower:
+    if "soil testing and plant nutrients" in t_lower:
         return (
-            "Explain the importance of water conservation and describe the process of rainwater harvesting.",
+            "Explain how soil testing identifies nutrient deficiencies and describe major plant nutrients needed for crop yield.",
             sol_text,
         )
-    if "air pollutant" in t_lower or "polluted air" in t_lower or "air-quality" in t_lower:
+    if "maintaining soil fertility" in t_lower:
         return (
-            "Explain the major sources of air pollution, their harmful effects on health and environment, and prevention measures.",
+            "Describe the methods used to maintain soil fertility, including organic manure, crop rotation, and balanced fertilizers.",
+            sol_text,
+        )
+    if "physical properties and states of water" in t_lower:
+        return (
+            "Describe the three physical states of water, their interconversion, and physical properties like boiling and freezing points.",
+            sol_text,
+        )
+    if "water as a solvent and solutions" in t_lower:
+        return (
+            "Explain why water is a universal solvent and describe saturated, unsaturated, and concentrated solutions.",
+            sol_text,
+        )
+    if "composition of water and the water cycle" in t_lower:
+        return (
+            "Describe the chemical composition of water and explain the detailed processes of the water cycle.",
+            sol_text,
+        )
+    if "air pollutants and their sources" in t_lower:
+        return (
+            "Describe major air pollutants (carbon monoxide, PM, SO2), their human/industrial sources, and health hazards.",
+            sol_text,
+        )
+    if "effects of polluted air" in t_lower:
+        return (
+            "Explain the harmful effects of air pollution, including respiratory diseases, acid rain, smog, and plant damage.",
+            sol_text,
+        )
+    if "prevention and air-quality action" in t_lower:
+        return (
+            "Describe measures to prevent air pollution, including clean energy, public transport, industrial filters, and tree planting.",
             sol_text,
         )
 
     # 8. Solar system / Ecosystem / Food chain / Skeleton / Muscles / Diet / Energy
-    if "sun and planet" in t_lower or "rotation, revolution" in t_lower:
+    if "the sun and planets" in t_lower:
         return (
-            "Describe the structure of the solar system, distinguishing inner and outer planets, and explain Earth's rotation and revolution.",
+            "Describe the structure of the solar system, listing the eight planets in order and comparing inner rocky vs outer gas planets.",
             sol_text,
         )
-    if "producer" in t_lower or "consumer" in t_lower or "decomposer" in t_lower or "food chain" in t_lower or "food web" in t_lower:
+    if "rotation, revolution and satellites" in t_lower:
         return (
-            "Explain the roles of producers, consumers, and decomposers in a food web and describe how energy flows through trophic levels.",
+            "Distinguish rotation from revolution, explain Earth's day-night cycle, year duration, and natural satellites like the Moon.",
             sol_text,
         )
-    if "biotic and abiotic" in t_lower or "disturbance, biodiversity" in t_lower:
+    if "producers, consumers and decomposers" in t_lower:
         return (
-            "Distinguish biotic and abiotic ecosystem components and explain how biodiversity and conservation maintain environmental equilibrium.",
+            "Explain the roles of producers, consumers (primary, secondary), and decomposers in an ecosystem with examples.",
             sol_text,
         )
-    if "skeleton" in t_lower or "joint" in t_lower or "muscle" in t_lower or "bone" in t_lower:
+    if "food chains, food webs and energy flow" in t_lower:
         return (
-            "Describe the functions of the human skeleton, types of movable joints, and how antagonistic muscle pairs produce movement.",
+            "Explain how energy flows through food chains and food webs, and why energy decreases at higher trophic levels.",
             sol_text,
         )
-    if "nutrient" in t_lower or "food test" in t_lower or "balanced diet" in t_lower:
+    if "population changes and ecosystem balance" in t_lower:
+        return (
+            "Describe how changes in one population affect predator-prey relationships and overall food web balance.",
+            sol_text,
+        )
+    if "biotic and abiotic ecosystem components" in t_lower:
+        return (
+            "Distinguish biotic and abiotic components of an ecosystem and explain how they interact to support life.",
+            sol_text,
+        )
+    if "disturbance, biodiversity and resilience" in t_lower:
+        return (
+            "Explain how human activities disturb environmental equilibrium and how biodiversity increases ecosystem resilience.",
+            sol_text,
+        )
+    if "skeleton, bones and support" in t_lower:
+        return (
+            "Describe the functions of the human skeleton, bone structure, and organ protection by skull, rib cage, and spine.",
+            sol_text,
+        )
+    if "joints and their movement" in t_lower:
+        return (
+            "Explain fixed, hinge, ball-and-socket, and pivot joints with anatomical locations and movement directions.",
+            sol_text,
+        )
+    if "muscles, tendons and movement" in t_lower:
+        return (
+            "Explain how antagonistic muscle pairs (biceps and triceps) work with tendons to move bones.",
+            sol_text,
+        )
+    if "nutrients and their functions" in t_lower or "balanced diet and deficiency" in t_lower:
         return (
             "Explain the key nutrients required in a balanced diet, their main functions, and the effects of nutrient deficiency.",
             sol_text,
         )
-    if "density" in t_lower or "mass, volume" in t_lower or "measuring time" in t_lower or "standard unit" in t_lower:
+    if "simple food tests" in t_lower:
+        return (
+            "Describe the step-by-step procedures for testing starch, fats, and proteins in food samples with expected color changes.",
+            sol_text,
+        )
+    if "mass, volume and density" in t_lower:
         return (
             "Explain how mass, volume, and density are measured, write the formula used, and solve a density calculation problem.",
             sol_text,
         )
-    if "renewable and non-renewable" in t_lower or "forms and transformation" in t_lower:
+    if "forms and transformations of energy" in t_lower:
         return (
-            "Compare renewable and non-renewable energy sources with suitable examples and explain energy transformations.",
+            "Describe different forms of energy and explain law of conservation of energy with energy transformation examples.",
+            sol_text,
+        )
+    if "renewable and non-renewable sources" in t_lower:
+        return (
+            "Compare renewable and non-renewable energy sources with suitable examples and environmental impacts.",
             sol_text,
         )
 

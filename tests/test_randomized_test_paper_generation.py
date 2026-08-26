@@ -349,6 +349,53 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                         f"Topic '{q_item.topic_title}' generated mismatched question '{q_item.question_text}' in seed {seed}",
                     )
 
+    def test_exact_topic_alignment_for_mixtures_and_plane_mirror_regression(self):
+        # 1. Mixtures and separation choices topic
+        sep_q = build_natural_6mark_question(
+            "Mixtures and separation choices",
+            "Mixtures contain substances physically combined in variable proportions. Separation options depend on component properties.",
+            ["Hand-picking", "Filtration"],
+        )
+        self.assertIsNotNone(sep_q)
+        sep_text, _ = sep_q
+        self.assertIn("hand-picking", sep_text.casefold())
+        self.assertNotIn("differentiate between elements, compounds, and mixtures", sep_text.casefold())
+
+        # 2. Plane-mirror images and types of reflection topic
+        plane_q = build_natural_6mark_question(
+            "Plane-mirror images and types of reflection",
+            "A plane mirror forms a virtual, upright image. Regular reflection is from smooth surfaces while diffuse is from rough surfaces.",
+            ["Polished mirror", "Rough paper"],
+        )
+        self.assertIsNotNone(plane_q)
+        plane_text, _ = plane_q
+        self.assertIn("plane mirror", plane_text.casefold())
+        self.assertIn("diffuse reflection", plane_text.casefold())
+        self.assertNotIn("concave, and convex mirrors", plane_text.casefold())
+
+        # 3. Verify across full syllabus test papers that Section D questions match exact topic expectations
+        for seed in [1, 42, 101, 111, 222, 777, 999]:
+            scope = parse_test_paper_scope("new full syllabus test banao", self.ctx, self.science_syl)
+            _, paper = render_test_paper(
+                self.science_syl,
+                scope,
+                context=self.ctx,
+                message="new full syllabus test banao",
+                seed=seed,
+            )
+            sec_d_questions = [
+                q for q in paper.questions if q.section_title == "Section D (6 Marks Each)"
+            ]
+            for q_item in sec_d_questions:
+                t_low = q_item.topic_title.casefold()
+                q_low = q_item.question_text.casefold()
+                if "mixtures and separation choices" in t_low:
+                    self.assertNotIn("differentiate between elements, compounds, and mixtures", q_low)
+                    self.assertIn("hand-picking", q_low)
+                if "plane-mirror images and types of reflection" in t_low:
+                    self.assertNotIn("concave, and convex mirrors", q_low)
+                    self.assertIn("plane mirror", q_low)
+
 
 if __name__ == "__main__":
     unittest.main()
