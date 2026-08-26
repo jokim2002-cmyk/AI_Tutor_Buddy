@@ -630,7 +630,10 @@ def _message_allows_context_topic_fallback(message_text: str) -> bool:
         return True
 
     tokens = set(message_text.split())
-    return bool(tokens) and tokens.issubset(_CONTEXT_FALLBACK_WORDS)
+    return bool(tokens) and all(
+        token in _CONTEXT_FALLBACK_WORDS or token.isdigit()
+        for token in tokens
+    )
 
 
 @dataclass(frozen=True)

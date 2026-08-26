@@ -188,6 +188,33 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         self.assertEqual(service.last_metrics.route, "local-syllabus")
         service._client.models.generate_content_stream.assert_not_called()
 
+    def test_context_topic_hint_follow_up_allows_chapter_number_token(self) -> None:
+        payload = syllabus_payload(
+            topic="Reading and interpreting pie graphs",
+            explanation="A pie graph represents one whole as a circle divided into sectors.",
+        )
+        topic = payload["chapters"][0]["topics"][0]
+        topic["exercises"] = [
+            "A pie graph shows 120 students; the sports sector is 90 degrees. How many students chose sports?"
+        ]
+        topic["solutions"] = [
+            "Sports represents 90/360 = 1/4 of the total, so 120 x 1/4 = 30 students."
+        ]
+        self.repo.install_payload(payload)
+        service = self.service()
+
+        answer = service.ask_stream(
+            message="Give me only one hint for one Chapter 1 question",
+            context=self.context(topic="Reading and interpreting pie graphs"),
+        )
+
+        self.assertIn("Reading and interpreting pie graphs", answer)
+        self.assertIn("Question: A pie graph shows 120 students", answer)
+        self.assertIn("Hint:", answer)
+        self.assertNotIn("The online tutor could not respond right now", answer)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content_stream.assert_not_called()
+
     def test_online_configured_hint_follow_up_stays_deterministic_local(self) -> None:
         payload = syllabus_payload(
             topic="Reading and interpreting pie graphs",
