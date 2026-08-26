@@ -617,6 +617,50 @@ class Std7ScienceGenericExamplesRouteTests(unittest.TestCase):
         self.assertEqual(service.last_metrics.route, "local-syllabus")
 
 
+
+
+class Std7ScienceMagnetReviewTests(unittest.TestCase):
+    def test_std7_science_magnet_material_review_accepts_equivalent_polarity(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import LearningMode, StudentLearningContext, SyllabusRepository
+
+        repo = SyllabusRepository(Path(__file__).resolve().parents[1] / "syllabus")
+        service = GyanVerseAIService(api_key="", syllabus_repository=repo)
+        ctx = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Semester 1 — Properties of Magnet",
+            current_topic="Magnetic materials and poles",
+            learning_mode=LearningMode.EXPLAIN.value,
+            onboarding_complete=True,
+        ).validate()
+
+        correct = service.ask_stream(
+            message=(
+                "Check my answer: Classify an iron nail, an aluminium spoon and a wooden ruler "
+                "by whether a common magnet attracts them strongly. My answer: Iron nail is attracted "
+                "strongly, aluminium spoon and wooden ruler are not attracted strongly."
+            ),
+            context=ctx,
+        )
+        wrong = service.ask_stream(
+            message=(
+                "Check my answer: Classify an iron nail, an aluminium spoon and a wooden ruler "
+                "by whether a common magnet attracts them strongly. My answer: Wooden ruler is attracted strongly."
+            ),
+            context=ctx,
+        )
+
+        self.assertIn("Result: Correct.", correct)
+        self.assertNotIn("Needs grounded review", correct)
+        self.assertIn("Result: Incorrect.", wrong)
+        self.assertNotIn("Needs grounded review", wrong)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+
+
 if __name__ == "__main__":
     unittest.main()
 

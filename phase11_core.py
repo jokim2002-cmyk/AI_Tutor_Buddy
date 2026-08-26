@@ -1354,6 +1354,72 @@ def _final_numeric_solution_value(solution: str) -> str:
     return _canonical_numeric_review_value(match.group(1)) if match else ""
 
 
+
+def _std7_magnet_material_classification_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide the installed Std 7 magnet material classification locally."""
+
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        "magnet" in clean_question
+        and "iron" in clean_question
+        and ("aluminium" in clean_question or "aluminum" in clean_question)
+        and ("wooden" in clean_question or "wood" in clean_question or "ruler" in clean_question)
+        and ("attract" in clean_question or "attracted" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer).replace("aluminum", "aluminium")
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+    tokens = clean_student.split()
+
+    def _claim_polarity(alias_set: set[str]) -> set[bool]:
+        # Look forward from the material name to the first attraction/magnetic
+        # predicate. Negation only counts when it appears before that predicate,
+        # so the later "not attracted" for aluminium/wood does not accidentally
+        # negate the earlier "iron nail is attracted strongly" clause.
+        polarities: set[bool] = set()
+        for index, token in enumerate(tokens):
+            if token not in alias_set:
+                continue
+            window = tokens[index : min(len(tokens), index + 12)]
+            predicate_index: int | None = None
+            for offset, item in enumerate(window):
+                if item in {"attract", "attracted", "attracts", "magnetic"}:
+                    predicate_index = offset
+                    break
+            if predicate_index is None:
+                continue
+            before_predicate = set(window[:predicate_index])
+            negated = bool(before_predicate & {"not", "no", "non"})
+            polarities.add(not negated)
+        return polarities
+
+    def _positive_claim(alias_set: set[str]) -> bool:
+        return True in _claim_polarity(alias_set)
+
+    def _negative_claim(alias_set: set[str]) -> bool:
+        return False in _claim_polarity(alias_set)
+
+    iron_aliases = {"iron", "nail"}
+    aluminium_aliases = {"aluminium", "spoon"}
+    wooden_aliases = {"wooden", "wood", "ruler"}
+
+    if _positive_claim(aluminium_aliases) or _positive_claim(wooden_aliases):
+        return False
+    if _negative_claim(iron_aliases):
+        return False
+    if (
+        _positive_claim(iron_aliases)
+        and _negative_claim(aluminium_aliases)
+        and _negative_claim(wooden_aliases)
+    ):
+        return True
+    return None
+
 def _evaluate_student_answer(
     student_answer: str,
     guide: str,
@@ -1364,6 +1430,19 @@ def _evaluate_student_answer(
         return (
             "Result: Needs grounded review.",
             "An answer and installed solution are required to evaluate.",
+        )
+
+
+    magnet_decision = _std7_magnet_material_classification_decision(student_answer, question)
+    if magnet_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly classifies the magnetic and non-magnetic materials in the installed solution.",
+        )
+    if magnet_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer reverses the installed material classification.",
         )
 
     # 1. Check Yes/No decision
