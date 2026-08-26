@@ -239,7 +239,7 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                         )
 
     def test_section_d_natural_quality_and_templates_regression(self):
-        test_seeds = [1, 42, 101, 777, 999]
+        test_seeds = [1, 42, 101, 111, 222, 777, 999]
         valid_task_words = ("explain", "describe", "compare", "differentiate", "solve", "how", "why")
         for seed in test_seeds:
             with self.subTest(seed=seed):
@@ -252,10 +252,18 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                     seed=seed,
                 )
 
+                # Total marks check
+                self.assertEqual(paper.total_marks, 100)
+
+                # Invariant checks for every question
+                for q_item in paper.questions:
+                    self.assertEqual(q_item.intended_marks, q_item.max_marks)
+                    self.assertTrue(bool(q_item.solution_guide and q_item.solution_guide.strip()))
+
                 sec_d_questions = [
                     q for q in paper.questions if q.section_title == "Section D (6 Marks Each)"
                 ]
-                self.assertGreater(len(sec_d_questions), 0)
+                self.assertEqual(len(sec_d_questions), 4)
 
                 for q_item in sec_d_questions:
                     q_lower = q_item.question_text.casefold()
@@ -264,20 +272,27 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                     self.assertNotIn(
                         "scientific principles, and applications of",
                         q_lower,
-                        f"Section D question '{q_item.question_text}' contains generic 'scientific principles, and applications of'",
+                        f"Section D question '{q_item.question_text}' in seed {seed} contains generic phrase",
                     )
 
-                    # 2. Section D must not contain generic title-only template
+                    # 2. Section D must not contain "core scientific principles of"
+                    self.assertNotIn(
+                        "core scientific principles of",
+                        q_lower,
+                        f"Section D question '{q_item.question_text}' in seed {seed} contains generic 'core scientific principles of'",
+                    )
+
+                    # 3. Section D must not contain generic title-only fallback template
                     self.assertFalse(
                         q_lower.startswith("describe in detail the process, scientific principles"),
-                        f"Section D question '{q_item.question_text}' uses generic title-only fallback",
+                        f"Section D question '{q_item.question_text}' in seed {seed} uses generic title-only fallback",
                     )
 
-                    # 3. Must include natural task words
+                    # 4. Must include natural task words
                     has_task_word = any(word in q_lower for word in valid_task_words)
                     self.assertTrue(
                         has_task_word,
-                        f"Section D question '{q_item.question_text}' lacks topic-specific task words",
+                        f"Section D question '{q_item.question_text}' in seed {seed} lacks topic-specific task words",
                     )
 
 

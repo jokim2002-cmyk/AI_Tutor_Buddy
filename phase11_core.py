@@ -2661,7 +2661,24 @@ def build_natural_6mark_question(
     ex_str = f" Examples: {', '.join(examples[:2])}." if examples else ""
     sol_text = f"{exp_clean}{ex_str}"
 
-    # 1. Levers & Simple machines
+    # 1. Specifically requested topic mappings
+    if "light, visibility and reflection" in t_lower or "light, visibility" in t_lower:
+        return (
+            "Explain how we see luminous and non-luminous objects. Include the role of light, reflection, and two examples.",
+            sol_text,
+        )
+    if "thermal equilibrium and everyday applications" in t_lower or "thermal equilibrium" in t_lower:
+        return (
+            "Explain thermal equilibrium with two everyday examples and describe how heat transfer stops when temperatures become equal.",
+            sol_text,
+        )
+    if "smaller bodies and conditions for life" in t_lower or "conditions for life" in t_lower:
+        return (
+            "Describe the main conditions that make Earth suitable for life and compare them with smaller bodies such as comets or dwarf planets.",
+            sol_text,
+        )
+
+    # 2. Levers & Simple machines
     if "lever" in t_lower:
         return (
             "Explain the three classes of levers with one example of each class.",
@@ -2673,8 +2690,8 @@ def build_natural_6mark_question(
             sol_text,
         )
 
-    # 2. Plant Reproduction / Flowers / Fruits / Seeds
-    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower:
+    # 3. Plant Reproduction / Flowers / Fruits / Seeds / Roots / Stems
+    if "flower" in t_lower or "seed" in t_lower or "reproduction" in t_lower or "plant" in t_lower:
         return (
             "Explain how flowers help in reproduction and describe how fruits and seeds are formed.",
             sol_text,
@@ -2685,7 +2702,7 @@ def build_natural_6mark_question(
             sol_text,
         )
 
-    # 3. Physiology / Digestion / Respiration / Circulation / Excretion
+    # 4. Physiology / Digestion / Respiration / Circulation / Excretion
     if "digest" in t_lower or "alimentary" in t_lower:
         return (
             "Describe the process of digestion and absorption in humans step by step.",
@@ -2701,19 +2718,19 @@ def build_natural_6mark_question(
             "Describe the structure and function of the human circulatory system and how blood is pumped.",
             sol_text,
         )
-    if "excret" in t_lower or "waste" in t_lower:
+    if "excret" in t_lower or "waste" in t_lower and "system" in t_lower:
         return (
             "Explain the process of excretion in humans and the role of organs involved.",
             sol_text,
         )
 
-    # 4. Physics / Speed / Motion / Heat / Electricity / Magnetism
+    # 5. Physics / Speed / Motion / Heat / Electricity / Magnetism / Mirrors
     if "speed" in t_lower or "motion" in t_lower or ("time" in t_lower and "measure" in t_lower):
         return (
             "Solve a speed-distance-time calculation problem and explain the formula, steps, and units used.",
             sol_text,
         )
-    if "heat" in t_lower or "temperature" in t_lower:
+    if "heat" in t_lower or "conduction" in t_lower or "convection" in t_lower or "radiation" in t_lower:
         return (
             "Explain the three modes of heat transfer with labelled diagrams and real-life examples.",
             sol_text,
@@ -2728,8 +2745,13 @@ def build_natural_6mark_question(
             "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
             sol_text,
         )
+    if "mirror" in t_lower or "reflection" in t_lower:
+        return (
+            "Explain the laws of reflection and compare the image properties formed by plane, concave, and convex mirrors.",
+            sol_text,
+        )
 
-    # 5. Chemistry / Acid-Base / Physical-Chemical changes
+    # 6. Chemistry / Acid-Base / Physical-Chemical changes / Elements / Mixtures
     if "acid" in t_lower or "base" in t_lower or "salt" in t_lower:
         return (
             "Differentiate between acids and bases using indicators and explain neutralization with an example.",
@@ -2740,8 +2762,13 @@ def build_natural_6mark_question(
             "Compare physical and chemical changes with at least three differences and supporting examples.",
             sol_text,
         )
+    if "element" in t_lower or "compound" in t_lower or "mixture" in t_lower or "substance" in t_lower:
+        return (
+            "Differentiate between elements, compounds, and mixtures with fixed vs variable compositions and two examples of each.",
+            sol_text,
+        )
 
-    # 6. Environment / Soil / Water / Climate
+    # 7. Environment / Soil / Water / Air pollution
     if "soil" in t_lower:
         return (
             "Describe the different layers of a soil profile and explain the causes and prevention of soil erosion.",
@@ -2752,24 +2779,46 @@ def build_natural_6mark_question(
             "Explain the importance of water conservation and describe the process of rainwater harvesting.",
             sol_text,
         )
-
-    # 7. Natural contextual fallback
-    t_clean = topic_title.strip()
-    if "process" in exp_clean.lower() or "step" in exp_clean.lower() or "procedure" in exp_clean.lower():
+    if "pollut" in t_lower or "smog" in t_lower or "air" in t_lower:
         return (
-            f"Describe the step-by-step process, observations, and conclusion for {t_clean.lower()}.",
-            sol_text,
-        )
-    if "example" in exp_clean.lower() or examples:
-        return (
-            f"Explain the core scientific principles of {t_clean.lower()} with suitable examples and applications.",
+            "Explain the major sources of air pollution, their harmful effects on health and environment, and prevention measures.",
             sol_text,
         )
 
-    return (
-        f"Explain the structure, functions, and key features of {t_clean.lower()} in detail.",
-        sol_text,
-    )
+    # 8. Solar system / Ecosystem / Food chain / Skeleton / Muscles / Diet
+    if "solar system" in t_lower or "planet" in t_lower or "sun" in t_lower:
+        return (
+            "Describe the structure of the solar system, distinguishing inner and outer planets, and explain Earth's rotation and revolution.",
+            sol_text,
+        )
+    if "food chain" in t_lower or "food web" in t_lower or "producer" in t_lower or "consumer" in t_lower or "decomposer" in t_lower:
+        return (
+            "Explain the roles of producers, consumers, and decomposers in a food web and describe how energy flows through trophic levels.",
+            sol_text,
+        )
+    if "ecosystem" in t_lower or "biotic" in t_lower or "biodiversity" in t_lower or "equilibrium" in t_lower:
+        return (
+            "Distinguish biotic and abiotic ecosystem components and explain how biodiversity and conservation maintain environmental equilibrium.",
+            sol_text,
+        )
+    if "skeleton" in t_lower or "joint" in t_lower or "muscle" in t_lower or "bone" in t_lower:
+        return (
+            "Describe the functions of the human skeleton, types of movable joints, and how antagonistic muscle pairs produce movement.",
+            sol_text,
+        )
+    if "diet" in t_lower or "nutrient" in t_lower or "deficiency" in t_lower:
+        return (
+            "Explain the key nutrients required in a balanced diet, their main functions, and the effects of nutrient deficiency.",
+            sol_text,
+        )
+    if "density" in t_lower or "mass" in t_lower or "volume" in t_lower:
+        return (
+            "Explain how mass, volume, and density are measured, write the formula used, and solve a density calculation problem.",
+            sol_text,
+        )
+
+    # If no natural 6-mark builder matches, do not auto-create a generic question from topic title
+    return None
 
 
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
@@ -2817,6 +2866,8 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         if sol_words < 20 and not is_heavy_explanation:
             return False
         if "scientific principles, and applications of" in q_lower:
+            return False
+        if "core scientific principles of" in q_lower:
             return False
         return True
 
