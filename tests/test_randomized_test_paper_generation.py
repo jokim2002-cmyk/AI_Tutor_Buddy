@@ -705,6 +705,60 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(paper_motion.scope_description, "Semester 1 — Motion, Force and Speed — Chapter test")
         self.assertIn("Test Paper: Semester 1 — Motion, Force and Speed — Chapter test", raw_motion)
 
+    def test_motion_force_speed_random_chapter_test_no_generic_fallback_or_semantic_duplicates_seed_111(self):
+        ctx_motion = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Motion, Force and Speed",
+        )
+        scope = parse_test_paper_scope(
+            "Generate 25-mark random chapter test",
+            ctx_motion,
+            self.science_syl,
+        )
+        raw_paper, paper_model = render_test_paper(
+            self.science_syl,
+            scope,
+            context=ctx_motion,
+            message="Generate 25-mark random chapter test",
+            seed=111,
+        )
+
+        # 1. 25-mark structure preserved
+        self.assertEqual(paper_model.total_marks, 25)
+        self.assertEqual(sum(q.max_marks for q in paper_model.questions), 25)
+
+        # 2. No "Explain the main ideas of" or generic topic-title fallback phrasing
+        forbidden_phrases = [
+            "Explain the main ideas of",
+            "Explain the main properties of",
+            "State the main idea of",
+            "key principle behind",
+            "Why is the study of",
+        ]
+        for q in paper_model.questions:
+            for phrase in forbidden_phrases:
+                self.assertNotIn(
+                    phrase.casefold(),
+                    q.question_text.casefold(),
+                    f"Question contained generic fallback phrase '{phrase}': {q.question_text}",
+                )
+
+        # 3. No semantic duplicate bus-passenger relative motion questions
+        bus_passenger_questions = [
+            q.question_text for q in paper_model.questions
+            if "passenger" in q.question_text.casefold() or ("bus" in q.question_text.casefold() and "rest" in q.question_text.casefold())
+        ]
+        self.assertLessEqual(
+            len(bus_passenger_questions),
+            1,
+            f"Found semantic duplicate bus-passenger questions: {bus_passenger_questions}",
+        )
+
+        # 4. Every selected question has solution guide and intended_marks == max_marks
+        for q in paper_model.questions:
+            self.assertTrue(q.solution_guide and len(q.solution_guide.strip()) > 5)
+            self.assertEqual(q.intended_marks, q.max_marks)
+
 
 if __name__ == "__main__":
     unittest.main()

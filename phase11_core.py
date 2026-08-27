@@ -1528,6 +1528,12 @@ def _std7_magnet_unlike_poles_interaction_decision(
     has_repel_claim = bool(tokens & repel_indicators) or "push away" in clean_student
     has_attract_claim = bool(tokens & attract_indicators) or "move toward" in clean_student or "moves toward" in clean_student
 
+    if "two south poles attract" in clean_student or "two north poles attract" in clean_student or bool(re.search(r"\blike poles attract\b", clean_student)):
+        return False
+
+    if "unlike poles attract" in clean_student or ("north" in clean_student and "south" in clean_student and "attract" in clean_student):
+        return True
+
     if has_repel_claim and not has_attract_claim:
         return False
     if "repel each other" in clean_student or "repel" in clean_student or "push away" in clean_student:
@@ -3490,6 +3496,79 @@ def build_natural_6mark_question(
     return None
 
 
+def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
+    q_clean = q_text.casefold().strip()
+    forbidden_patterns = (
+        "explain the main ideas of",
+        "explain the main properties of",
+        "state the main idea of",
+        "state the main properties of",
+        "key principle behind",
+        "why is the study of",
+        "what is the key principle behind",
+        "explain in detail the concept of",
+        "give one example related to",
+        "state one key observation related to",
+    )
+    if any(p in q_clean for p in forbidden_patterns):
+        return True
+
+    if "(variant" in q_clean or "variant 2" in q_clean:
+        return True
+
+    if topic_title:
+        t_clean = topic_title.casefold().strip()
+        generic_phrases = (
+            f"explain the main ideas of {t_clean}",
+            f"explain the main properties of {t_clean}",
+            f"state the main idea of {t_clean}",
+            f"why is the study of {t_clean}",
+            f"key principle behind {t_clean}",
+        )
+        if any(g in q_clean for g in generic_phrases):
+            return True
+
+    return False
+
+
+def extract_question_concept_words(q_text: str) -> set[str]:
+    text = q_text.casefold().strip()
+    text = re.sub(r"[\(\[\{]\s*variant\s*\d*\s*[\)\]\}]", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"[^\w\s]", " ", text)
+    stop_words = {
+        "explain", "state", "describe", "why", "how", "what", "which", "when", "where",
+        "example", "examples", "following", "with", "from", "that", "this", "these", "those",
+        "can", "could", "would", "should", "does", "do", "did", "is", "are", "was", "were",
+        "and", "the", "for", "one", "two", "three", "both", "all", "any", "each", "other",
+        "main", "ideas", "properties", "concept", "principles", "observation", "demonstrate",
+        "relative", "respect", "given", "below", "show", "find", "calculate"
+    }
+    words = [w for w in text.split() if len(w) > 2 and w not in stop_words]
+    normalized = set()
+    for w in words:
+        if w in {"moving", "moves", "moved", "motion"}:
+            normalized.add("motion")
+        elif w in {"passengers", "passenger"}:
+            normalized.add("passenger")
+        elif w in {"seated", "seat", "seats"}:
+            normalized.add("seat")
+        elif w in {"forces", "force", "forced"}:
+            normalized.add("force")
+        elif w in {"speeds", "speed"}:
+            normalized.add("speed")
+        elif w in {"magnets", "magnet", "magnetic"}:
+            normalized.add("magnet")
+        elif w in {"poles", "pole"}:
+            normalized.add("pole")
+        elif w in {"attracts", "attraction", "attract"}:
+            normalized.add("attract")
+        elif w in {"repels", "repulsion", "repel"}:
+            normalized.add("repel")
+        else:
+            normalized.add(w)
+    return normalized
+
+
 def extract_question_intent(q_text: str) -> str:
     text = q_text.casefold().strip()
     text = re.sub(r"[\(\[\{]\s*variant\s*\d*\s*[\)\]\}]", "", text, flags=re.IGNORECASE)
@@ -3538,14 +3617,29 @@ def is_duplicate_question(
     used_q_texts: set[str],
     used_intents: set[tuple[str, str]],
 ) -> bool:
+    if is_generic_topic_title_question(q_text, topic_title):
+        return True
+
     q_norm = " ".join(q_text.casefold().strip().split())
     if q_norm in used_q_texts:
         return True
+
     intent = extract_question_intent(q_text)
     if intent:
         topic_norm = " ".join(topic_title.casefold().strip().split())
         if (topic_norm, intent) in used_intents:
             return True
+
+    new_concepts = extract_question_concept_words(q_text)
+    if len(new_concepts) >= 2:
+        for prev_q in used_q_texts:
+            prev_concepts = extract_question_concept_words(prev_q)
+            overlap = new_concepts & prev_concepts
+            if len(overlap) >= 3:
+                return True
+            if "passenger" in overlap and len(overlap & {"rest", "motion", "seat", "bus"}) >= 2:
+                return True
+
     return False
 
 
@@ -3565,19 +3659,7 @@ def mark_question_used(
 
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
-    generic_patterns = (
-        "(variant",
-        "variant 2",
-        "why is the study of",
-        "key principle behind",
-        "explain the main ideas of",
-        "explain the main properties of",
-        "state the main idea of",
-        "explain in detail the concept of",
-        "give one example related to",
-        "state one key observation related to",
-    )
-    if any(p in q_lower for p in generic_patterns):
+    if is_generic_topic_title_question(q_text):
         return False
 
     sol_text_clean = sol_text.strip()
@@ -3680,6 +3762,8 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
         if q and q.strip() and i < len(topic.solutions) and topic.solutions[i] and topic.solutions[i].strip():
             q_txt = q.strip()
             sol_txt = topic.solutions[i].strip()
+            if is_generic_topic_title_question(q_txt, topic.title):
+                continue
             im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
             if im == mark_per_q:
                 variants.append((topic.title, q_txt, sol_txt, mark_per_q))
@@ -3687,11 +3771,13 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
         if q and q.strip() and i < len(topic.practice_solutions) and topic.practice_solutions[i] and topic.practice_solutions[i].strip():
             q_txt = q.strip()
             sol_txt = topic.practice_solutions[i].strip()
+            if is_generic_topic_title_question(q_txt, topic.title):
+                continue
             im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
             if im == mark_per_q:
                 variants.append((topic.title, q_txt, sol_txt, mark_per_q))
 
-    # 2. Topic-specific natural 2-mark fallback questions for Properties of Magnet
+    # 2. Topic-specific natural 2-mark fallback questions
     if mark_per_q == 2:
         if "magnetic materials and poles" in t_lower:
             variants.append((
@@ -3768,6 +3854,63 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 "Earth's magnetic field aligns the magnetized compass needle along the magnetic north-south direction.",
                 2,
             ))
+        elif "motion and reference point" in t_lower:
+            variants.append((
+                topic.title,
+                "Explain how motion depends on the observer's reference point with one example.",
+                "A passenger sitting in a moving bus is at rest relative to other passengers inside the bus, but in motion relative to trees and buildings outside on the roadside.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Distinguish rest and motion using a passenger in a moving bus as an example.",
+                "Rest means an object does not change its position relative to a reference frame, while motion means position changes over time. A bus passenger is at rest relative to the bus seat but in motion relative to the ground.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Classify linear, circular and oscillatory motion with one example each.",
+                "Linear motion: a car moving on a straight road. Circular motion: hands of a clock. Oscillatory motion: a swinging pendulum.",
+                2,
+            ))
+        elif "force and its effects" in t_lower:
+            variants.append((
+                topic.title,
+                "State two effects of force on an object with examples.",
+                "1. Force can change the speed of a moving object (e.g. pressing a car accelerator). 2. Force can change the direction of motion (e.g. hitting a cricket ball with a bat).",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Classify contact and non-contact forces with one example of each.",
+                "Contact forces require physical touch (e.g. friction or muscular force). Non-contact forces act at a distance without physical touch (e.g. magnetic or gravitational force).",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "How can force change the speed, direction or shape of an object?",
+                "Pushing or pulling can increase or decrease speed, alter the path of a moving body, or deform an object like squeezing a rubber ball.",
+                2,
+            ))
+        elif "speed and its measurement" in t_lower:
+            variants.append((
+                topic.title,
+                "Find the speed of a runner who covers 100 metres in 20 seconds.",
+                "Speed = Distance / Time = 100 metres / 20 seconds = 5 m/s.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "A toy car covers 24 metres at 3 m/s. Find the time taken.",
+                "Time = Distance / Speed = 24 metres / 3 m/s = 8 seconds.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Explain why speed is calculated as distance divided by time.",
+                "Speed measures the rate of motion, which is the amount of distance covered per unit of time (metres per second or kilometres per hour).",
+                2,
+            ))
 
     # 3. From examples
     if mark_per_q == 3:
@@ -3796,6 +3939,8 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             for obj in topic.learning_objectives:
                 if obj.startswith("Explain "):
                     q_2m = f"{obj.strip()}"
+                    if is_generic_topic_title_question(q_2m, topic.title):
+                        continue
                     sol_2m = exp_clean if len(exp_clean.split()) < 30 else ". ".join(exp_clean.split('.')[:2]).strip()
                     if len(sol_2m.split()) < 12:
                         sol_2m = f"{sol_2m} This is an essential scientific concept of {topic.title}."
@@ -4117,34 +4262,46 @@ def render_test_paper(
                     for t in ch.topics:
                         t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
                         if mark_per_q == 1:
-                            if t.learning_objectives:
+                            if t.learning_objectives and not is_generic_topic_title_question(t.learning_objectives[0].strip(), t.title):
                                 fallback_q = t.learning_objectives[0].strip()
                                 fallback_sol = f"{t_exp.strip().split('.')[0]}. This is an essential observation."
                             else:
-                                fallback_q = f"What physical observations demonstrate {t.title}?"
-                                fallback_sol = f"Key physical observations in {t.title}: {t_exp.strip()}"
+                                fallback_q = f"Identify one key observation or everyday example of {t.title}."
+                                fallback_sol = f"Key observation of {t.title}: {t_exp.strip()}"
                         elif mark_per_q == 2:
-                            if t.learning_objectives:
+                            if t.learning_objectives and not is_generic_topic_title_question(t.learning_objectives[0].strip(), t.title):
                                 fallback_q = t.learning_objectives[0].strip()
                                 fallback_sol = f"{t_exp.strip()} This provides essential foundational understanding."
                             else:
-                                fallback_q = f"What physical observations demonstrate {t.title}?"
-                                fallback_sol = f"Key physical observations in {t.title}: {t_exp.strip()}"
+                                fallback_q = f"Explain with an example how {t.title} is observed in daily life."
+                                fallback_sol = f"Everyday observation of {t.title}: {t_exp.strip()}"
                         elif mark_per_q == 3:
                             if t.examples:
                                 fallback_q = f"Explain how {t.examples[0]} demonstrates {t.title}."
                                 fallback_sol = f"{t.examples[0]} demonstrates {t.title} as follows: {t_exp.strip()}"
                             else:
-                                fallback_q = f"Describe the experimental observations supporting {t.title}."
-                                fallback_sol = f"Experimental observations for {t.title}: {t_exp.strip()}"
+                                fallback_q = f"Describe the observations and scientific principles supporting {t.title}."
+                                fallback_sol = f"Observations for {t.title}: {t_exp.strip()}"
                         else: # 6
                             nat_6m = build_natural_6mark_question(t.title, t.explanation, t.examples)
                             if nat_6m is not None:
                                 fallback_q, fallback_sol = nat_6m
                             else:
-                                fallback_q = f"Describe in detail the principles, observations, and practical applications of {t.title}."
+                                fallback_q = f"Describe the key principles, observations, and practical applications of {t.title}."
                                 fallback_sol = f"Detailed description: {t_exp.strip()} This concept plays an important role in scientific study."
 
+                        if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents) and not is_generic_topic_title_question(fallback_q, t.title):
+                            selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
+                            break
+                    if selected_item is not None:
+                        break
+
+            if selected_item is None:
+                for ch in scope.chapters:
+                    for t in ch.topics:
+                        t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
+                        fallback_q = f"Describe how {t.title} is observed and applied in daily life."
+                        fallback_sol = f"Daily life observation of {t.title}: {t_exp.strip()}"
                         if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents):
                             selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
                             break
@@ -4154,8 +4311,11 @@ def render_test_paper(
             if selected_item is None:
                 first_ch = scope.chapters[0] if scope.chapters else syllabus.chapters[0]
                 first_topic = first_ch.topics[0]
-                fallback_q = f"Describe in detail the principles, observations, and practical applications of {first_topic.title}."
-                fallback_sol = f"Detailed description of {first_topic.title}: {first_topic.explanation or 'Scientific observations.'}"
+                fallback_q = f"Describe how {first_topic.title} is observed and applied in daily life."
+                if " ".join(fallback_q.casefold().strip().split()) in used_q_texts:
+                    q_idx = len(used_q_texts) + 1
+                    fallback_q = f"Describe key daily life applications of {first_topic.title} (Part {q_idx})."
+                fallback_sol = f"Daily life observation of {first_topic.title}: {first_topic.explanation or 'Scientific principles and observations.'}"
                 selected_item = (first_topic.title, fallback_q, fallback_sol, mark_per_q)
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
