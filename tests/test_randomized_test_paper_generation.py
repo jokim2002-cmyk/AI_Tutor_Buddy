@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from phase11_core import (
@@ -639,6 +640,70 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
             len(set(full_q_texts)),
             f"Full syllabus test seed 111 contains duplicate questions: {full_q_texts}",
         )
+
+    def test_stale_chapter_context_and_ambiguous_another_chapter_resolution(self):
+        # 1. selected chapter != Properties of Magnet generates selected chapter test
+        ctx_heat = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Heat and Temperature",
+        )
+        scope_heat = parse_test_paper_scope("Generate 25-mark chapter test", ctx_heat, self.science_syl)
+        self.assertEqual(scope_heat.scope_type, "single_chapter")
+        self.assertIn("Heat and Temperature", scope_heat.description)
+        self.assertNotIn("Properties of Magnet", scope_heat.description)
+
+        raw_heat, paper_heat = render_test_paper(
+            self.science_syl,
+            scope_heat,
+            context=ctx_heat,
+            message="Generate 25-mark chapter test",
+            seed=42,
+        )
+        self.assertIn("Heat and Temperature", paper_heat.scope_description)
+        self.assertIn(f"Test Paper: {scope_heat.description}", raw_heat)
+
+        # 2. ambiguous "another chapter" does not reuse stale chapter
+        ctx_magnet = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Properties of Magnet",
+        )
+        ambiguous_prompts = [
+            "dusra chapter ka test banao",
+            "another chapter test",
+            "dusri chapter test banao",
+            "different chapter test",
+        ]
+        for prompt in ambiguous_prompts:
+            scope_amb = parse_test_paper_scope(prompt, ctx_magnet, self.science_syl)
+            self.assertEqual(scope_amb.scope_type, "ambiguous", f"Failed for prompt: {prompt}")
+            raw_amb, paper_amb = render_test_paper(
+                self.science_syl,
+                scope_amb,
+                context=ctx_magnet,
+                message=prompt,
+            )
+            self.assertEqual(raw_amb, "Please select or name the chapter for the chapter test.")
+            self.assertEqual(len(paper_amb.questions), 0)
+            self.assertNotIn("Properties of Magnet", paper_amb.scope_description)
+
+        # 3. random chapter test title matches selected chapter
+        ctx_motion = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Motion, Force and Speed",
+        )
+        scope_motion = parse_test_paper_scope("new test banao", ctx_motion, self.science_syl)
+        self.assertEqual(scope_motion.scope_type, "single_chapter")
+        self.assertEqual(scope_motion.description, "Semester 1 — Motion, Force and Speed — Chapter test")
+
+        raw_motion, paper_motion = render_test_paper(
+            self.science_syl,
+            scope_motion,
+            context=ctx_motion,
+            message="new test banao",
+            seed=77,
+        )
+        self.assertEqual(paper_motion.scope_description, "Semester 1 — Motion, Force and Speed — Chapter test")
+        self.assertIn("Test Paper: Semester 1 — Motion, Force and Speed — Chapter test", raw_motion)
 
 
 if __name__ == "__main__":

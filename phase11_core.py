@@ -2717,6 +2717,107 @@ def format_test_paper_duration(duration_minutes: int) -> str:
     return f"{duration_minutes} Minutes"
 
 
+def _chapter_number_digits(c_num: str) -> list[str]:
+    """Extract list of possible chapter number representations."""
+    digits = re.sub(r"\D", "", c_num)
+    results = [c_num.casefold(), digits]
+    m = re.search(r"[-_](\d+)$", c_num)
+    if m:
+        results.append(m.group(1))
+        results.append(str(int(m.group(1))))
+    elif digits and digits.isdigit():
+        results.append(str(int(digits)))
+    return list(set(r for r in results if r))
+
+
+def _find_explicit_chapter_in_message(
+    message: str,
+    syllabus: BoardSyllabus,
+) -> SyllabusChapter | None:
+    msg_clean = message.casefold()
+
+    # 1. Match chapter number (e.g. "chapter 2", "ch 2", "chap 2", "path 2", "chapter 02")
+    num_match = re.search(
+        r"\b(?:chapter|ch|chap|path|adhyay)\.?\s*(\d{1,2})\b",
+        message,
+        re.IGNORECASE,
+    )
+    if num_match:
+        target_num_str = num_match.group(1)
+        target_num_int = str(int(target_num_str))
+        for c in syllabus.chapters:
+            c_digits = _chapter_number_digits(c.number)
+            if target_num_str in c_digits or target_num_int in c_digits:
+                return c
+
+    # 2. Match chapter titles or stripped titles in message
+    for c in syllabus.chapters:
+        c_title_clean = c.title.casefold()
+        if c_title_clean in msg_clean:
+            return c
+        stripped_title = re.sub(
+            r"^semester\s*\d+\s*[—\-–:]\s*",
+            "",
+            c_title_clean,
+            flags=re.IGNORECASE,
+        ).strip()
+        if len(stripped_title) >= 3 and stripped_title in msg_clean:
+            return c
+
+    return None
+
+
+def _find_chapter_from_context(
+    ctx_ch: str,
+    syllabus: BoardSyllabus,
+) -> SyllabusChapter | None:
+    if not ctx_ch or not ctx_ch.strip():
+        return None
+    ctx_clean = ctx_ch.casefold().strip()
+
+    # 1. Direct title comparison (exact or substring)
+    for c in syllabus.chapters:
+        c_title_clean = c.title.casefold()
+        if c_title_clean == ctx_clean or c_title_clean in ctx_clean or ctx_clean in c_title_clean:
+            return c
+
+    # 2. Stripped title comparison (removing "Semester X — ")
+    for c in syllabus.chapters:
+        stripped_title = re.sub(
+            r"^semester\s*\d+\s*[—\-–:]\s*",
+            "",
+            c.title.casefold(),
+            flags=re.IGNORECASE,
+        ).strip()
+        if len(stripped_title) >= 3 and (stripped_title in ctx_clean or ctx_clean in stripped_title):
+            return c
+
+    # 3. Chapter number in context string (e.g. "Chapter 2", "Ch 2", "Path 2", "S1-2")
+    num_match = re.search(
+        r"\b(?:chapter|ch|chap|path|s\d+[-_]?)\s*(\d{1,2})\b",
+        ctx_ch,
+        re.IGNORECASE,
+    )
+    if num_match:
+        target_num_str = num_match.group(1)
+        target_num_int = str(int(target_num_str))
+        for c in syllabus.chapters:
+            c_digits = _chapter_number_digits(c.number)
+            if target_num_str in c_digits or target_num_int in c_digits:
+                return c
+
+    # 4. Digits match if context is short (e.g. "2" or "S1-2")
+    ctx_digits = re.sub(r"\D", "", ctx_ch)
+    if ctx_digits:
+        ctx_num_int = str(int(ctx_digits)) if ctx_digits.isdigit() else ""
+        for c in syllabus.chapters:
+            c_digits = _chapter_number_digits(c.number)
+            if ctx_digits in c_digits or (ctx_num_int and ctx_num_int in c_digits):
+                return c
+
+    return None
+
+
 def parse_test_paper_scope(
     message: str,
     context: StudentLearningContext,
@@ -2891,41 +2992,40 @@ def parse_test_paper_scope(
                 description=f"Chapters {ch_str} ({len(matched)} Chapters)",
             )
 
-    # Single chapter
-    ch_num_match = re.search(r"\bchapter\s*(\d{1,2})\b", message, re.IGNORECASE)
-    target_ch_num = ch_num_match.group(1) if ch_num_match else None
-    if not target_ch_num and context.current_chapter:
-        ctx_match = re.search(
-            r"\bchapter\s*(\d{1,2})\b",
-            context.current_chapter,
-            re.IGNORECASE,
-        )
-        if ctx_match:
-            target_ch_num = ctx_match.group(1)
-
-    target_ch = (
-        next(
-            (
-                c
-                for c in syllabus.chapters
-                if target_ch_num and re.sub(r"\D", "", c.number) == target_ch_num
-            ),
-            None,
-        )
-        if target_ch_num
-        else None
+    # Single chapter resolution
+    ambiguous_another_phrases = (
+        "dusra chapter",
+        "dusre chapter",
+        "dusri chapter",
+        "another chapter",
+        "different chapter",
+        "other chapter",
+        "next chapter",
+        "naya chapter",
+        "naye chapter",
+        "nayi chapter",
+        "dusra test",
+        "dusri test",
+        "dusre test",
+        "change chapter",
     )
+    is_ambiguous_another = any(phrase in msg_clean for phrase in ambiguous_another_phrases)
 
-    if target_ch is None and context.current_chapter:
-        ctx_clean = context.current_chapter.casefold()
-        target_ch = next(
-            (
-                c
-                for c in syllabus.chapters
-                if c.title.casefold() in ctx_clean or ctx_clean in c.title.casefold()
-            ),
-            None,
+    explicit_ch = _find_explicit_chapter_in_message(message, syllabus)
+
+    if is_ambiguous_another and explicit_ch is None:
+        return TestPaperScope(
+            scope_type="ambiguous",
+            chapters=[],
+            total_marks=0,
+            duration_minutes=0,
+            include_answers=include_answers,
+            description="Please select or name the chapter for the chapter test.",
         )
+
+    target_ch = explicit_ch
+    if target_ch is None and context and context.current_chapter:
+        target_ch = _find_chapter_from_context(context.current_chapter, syllabus)
 
     if target_ch is None:
         target_ch = syllabus.chapters[0]
@@ -3714,6 +3814,21 @@ def render_test_paper(
     randomize: bool | None = None,
     seed: int | str | None = None,
 ) -> tuple[str, GeneratedTestPaper]:
+    if scope.scope_type == "ambiguous":
+        msg = "Please select or name the chapter for the chapter test."
+        empty_paper = GeneratedTestPaper(
+            board=syllabus.board,
+            medium=syllabus.medium,
+            standard=syllabus.standard,
+            subject=syllabus.subject,
+            scope_description=scope.description,
+            total_marks=0,
+            duration_minutes=0,
+            questions=[],
+            source_footer="GyanVerse AI Tutor",
+        )
+        return msg, empty_paper
+
     lines: list[str] = []
     board_name = (
         "Gujarat Secondary and Higher Secondary Education Board (GSEB)"
@@ -4035,6 +4150,13 @@ def render_test_paper(
                             break
                     if selected_item is not None:
                         break
+
+            if selected_item is None:
+                first_ch = scope.chapters[0] if scope.chapters else syllabus.chapters[0]
+                first_topic = first_ch.topics[0]
+                fallback_q = f"Describe in detail the principles, observations, and practical applications of {first_topic.title}."
+                fallback_sol = f"Detailed description of {first_topic.title}: {first_topic.explanation or 'Scientific observations.'}"
+                selected_item = (first_topic.title, fallback_q, fallback_sol, mark_per_q)
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
