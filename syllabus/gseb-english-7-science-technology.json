@@ -29,8 +29,8 @@
             "magnetism"
           ],
           "learning_objectives": [
-            "Explain the main ideas of Magnetic materials and poles.",
-            "Apply Magnetic materials and poles to a familiar scientific situation."
+            "Identify magnetic materials and describe why magnetic force is strongest at magnet poles.",
+            "Explain why breaking a bar magnet creates two new magnets with north and south poles."
           ],
           "explanation": "A magnet attracts magnetic materials such as iron, nickel and cobalt. Every magnet has a north pole and a south pole, and magnetic force is strongest near these poles. Breaking a magnet does not isolate one pole; each piece forms a new north-south pair.",
           "examples": [
@@ -66,8 +66,8 @@
             "attraction and repulsion"
           ],
           "learning_objectives": [
-            "Explain the main ideas of Attraction, repulsion and magnetic field.",
-            "Apply Attraction, repulsion and magnetic field to a familiar scientific situation."
+            "Distinguish between attraction of unlike poles and repulsion of like poles.",
+            "Describe what a magnetic field is and how field line density represents magnetic strength."
           ],
           "explanation": "Unlike magnetic poles attract, while like poles repel. The region around a magnet where magnetic force can act is its magnetic field. Field lines are a model used to show direction and relative strength; closer lines represent a stronger field.",
           "examples": [
@@ -103,8 +103,8 @@
             "compass needle"
           ],
           "learning_objectives": [
-            "Explain the main ideas of Compass and Earth's magnetism.",
-            "Apply Compass and Earth's magnetism to a familiar scientific situation."
+            "Explain how a magnetic compass needle aligns with Earth's magnetic field.",
+            "Describe how a freely suspended bar magnet indicates geographical directions."
           ],
           "explanation": "A freely suspended magnet settles approximately along the north-south direction because Earth behaves like a large magnet. A compass contains a small magnetized needle that turns freely. Its marked north-seeking end helps identify directions, but nearby magnets or iron objects can disturb the reading.",
           "examples": [

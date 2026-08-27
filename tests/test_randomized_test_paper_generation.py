@@ -477,12 +477,22 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(magnet_paper.total_marks, 25)
         self.assertEqual(len(magnet_paper.questions), 12)
 
-        # Assert no "(Variant", "Why is the study of", or "key principle behind" in any question
+        # Assert no generic topic-title fallback phrasing or visible variant labels in any question
+        forbidden_patterns = (
+            "(variant",
+            "why is the study of",
+            "key principle behind",
+            "explain the main ideas of",
+            "explain the main properties of",
+        )
         for q in magnet_paper.questions:
             q_text = q.question_text
-            self.assertNotIn("(Variant", q_text, f"Found visible variant label in question: '{q_text}'")
-            self.assertNotIn("Why is the study of", q_text, f"Found generic filler phrasing in question: '{q_text}'")
-            self.assertNotIn("key principle behind", q_text.casefold(), f"Found generic template phrasing in question: '{q_text}'")
+            for pattern in forbidden_patterns:
+                self.assertNotIn(
+                    pattern,
+                    q_text.casefold(),
+                    f"Found generic pattern '{pattern}' in question: '{q_text}'",
+                )
             self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
             self.assertEqual(q.intended_marks, q.max_marks)
 

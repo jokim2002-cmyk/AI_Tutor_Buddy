@@ -3171,6 +3171,10 @@ def extract_question_intent(q_text: str) -> str:
     text = re.sub(r"[\(\[\{]\s*variant\s*\d*\s*[\)\]\}]", "", text, flags=re.IGNORECASE)
     text = re.sub(r"[^\w\s]", " ", text)
     fillers = (
+        "explain the main ideas of",
+        "explain the main properties of",
+        "explain the main idea of",
+        "explain the main property of",
         "key principle behind",
         "why is the study of",
         "is significant",
@@ -3237,7 +3241,19 @@ def mark_question_used(
 
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
-    if "(variant" in q_lower or "variant 2" in q_lower or "why is the study of" in q_lower or "key principle behind" in q_lower:
+    generic_patterns = (
+        "(variant",
+        "variant 2",
+        "why is the study of",
+        "key principle behind",
+        "explain the main ideas of",
+        "explain the main properties of",
+        "state the main idea of",
+        "explain in detail the concept of",
+        "give one example related to",
+        "state one key observation related to",
+    )
+    if any(p in q_lower for p in generic_patterns):
         return False
 
     sol_text_clean = sol_text.strip()
@@ -3372,6 +3388,12 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 "Each broken piece becomes a complete magnet with its own north pole and south pole.",
                 2,
             ))
+            variants.append((
+                topic.title,
+                "How can you test whether an object is magnetic using a bar magnet?",
+                "Bring a bar magnet near the object; if it is attracted strongly to either pole of the magnet, the object is magnetic.",
+                2,
+            ))
         elif "attraction, repulsion and magnetic field" in t_lower:
             variants.append((
                 topic.title,
@@ -3389,6 +3411,12 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 topic.title,
                 "How can attraction and repulsion be used to identify magnet poles?",
                 "Repulsion is the sure test of magnetism because a known pole will repel only a like pole of another magnet.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Why do two north poles repel each other?",
+                "Like magnetic poles exert repulsive forces on each other due to the alignment of their magnetic field lines.",
                 2,
             ))
         elif "compass and earth's magnetism" in t_lower or "compass and earth" in t_lower:
@@ -3410,6 +3438,12 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 "The magnetic field of the Earth exerts force on the freely suspended magnet, causing it to align along the geomagnetic meridian.",
                 2,
             ))
+            variants.append((
+                topic.title,
+                "How does Earth's magnetic field affect a compass needle?",
+                "Earth's magnetic field aligns the magnetized compass needle along the magnetic north-south direction.",
+                2,
+            ))
 
     # 3. From examples
     if mark_per_q == 3:
@@ -3423,20 +3457,6 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                         3,
                     )
                 )
-    elif mark_per_q == 1:
-        for ex in topic.examples:
-            if ex and ex.strip():
-                v_sol = f"An example of {topic.title} is: {ex.strip()}."
-                if len(v_sol.split()) > 18:
-                    v_sol = f"{ex.strip()} is a key example."
-                variants.append(
-                    (
-                        topic.title,
-                        f"Give one example related to {topic.title}.",
-                        v_sol,
-                        1,
-                    )
-                )
 
     # 4. Natural 6-mark builder
     if mark_per_q == 6:
@@ -3445,25 +3465,10 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             q_6m_txt, sol_6m_txt = nat_6m
             variants.append((topic.title, q_6m_txt, sol_6m_txt, 6))
 
-        if topic.explanation and len(topic.explanation.strip().split()) >= 15:
-            ex_str = f" Examples include: {', '.join(topic.examples[:2])}." if topic.examples else ""
-            q_6m_gen = f"Explain step-by-step the main principles, real-world observations, and practical applications of {topic.title}."
-            sol_6m_gen = f"Step-by-step explanation: {topic.explanation.strip()}{ex_str} This fundamental concept forms an essential basis in science."
-            if determine_question_intended_marks(q_6m_gen, sol_6m_gen) == 6:
-                variants.append((topic.title, q_6m_gen, sol_6m_gen, 6))
-
-    # 5. Objective / Explanation based variants for 1m, 2m, 3m
+    # 5. Objective / Explanation based variants using learning objectives
     if topic.explanation and topic.explanation.strip():
         exp_clean = topic.explanation.strip()
-        first_sentence = exp_clean.split('.')[0] + "."
-
-        if mark_per_q == 1:
-            q_1m = f"State the main idea of {topic.title}."
-            sol_1m = first_sentence if len(first_sentence.split()) < 20 else " ".join(first_sentence.split()[:15]) + "."
-            if determine_question_intended_marks(q_1m, sol_1m) == 1:
-                variants.append((topic.title, q_1m, sol_1m, 1))
-
-        elif mark_per_q == 2:
+        if mark_per_q == 2:
             for obj in topic.learning_objectives:
                 if obj.startswith("Explain "):
                     q_2m = f"{obj.strip()}"
@@ -3472,14 +3477,6 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                         sol_2m = f"{sol_2m} This is an essential scientific concept of {topic.title}."
                     if determine_question_intended_marks(q_2m, sol_2m) == 2:
                         variants.append((topic.title, q_2m, sol_2m, 2))
-
-        elif mark_per_q == 3:
-            q_3m = f"Explain in detail the concept of {topic.title}."
-            sol_3m = f"The main concept of {topic.title} is: {exp_clean}"
-            if len(sol_3m.split()) < 20:
-                sol_3m = f"{sol_3m} This helps explain physical phenomena and scientific applications."
-            if determine_question_intended_marks(q_3m, sol_3m) == 3:
-                variants.append((topic.title, q_3m, sol_3m, 3))
 
     return variants
 
@@ -3781,21 +3778,33 @@ def render_test_paper(
                     for t in ch.topics:
                         t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
                         if mark_per_q == 1:
-                            fallback_q = f"State one key observation related to {t.title}."
-                            fallback_sol = f"A key observation in {t.title} is that {t_exp.strip().split('.')[0]}."
+                            if t.learning_objectives:
+                                fallback_q = t.learning_objectives[0].strip()
+                                fallback_sol = f"{t_exp.strip().split('.')[0]}. This is an essential observation."
+                            else:
+                                fallback_q = f"What physical observations demonstrate {t.title}?"
+                                fallback_sol = f"Key physical observations in {t.title}: {t_exp.strip()}"
                         elif mark_per_q == 2:
                             if t.learning_objectives:
                                 fallback_q = t.learning_objectives[0].strip()
                                 fallback_sol = f"{t_exp.strip()} This provides essential foundational understanding."
                             else:
-                                fallback_q = f"Explain the main properties of {t.title}."
-                                fallback_sol = f"The main properties of {t.title} are: {t_exp.strip()}"
+                                fallback_q = f"What physical observations demonstrate {t.title}?"
+                                fallback_sol = f"Key physical observations in {t.title}: {t_exp.strip()}"
                         elif mark_per_q == 3:
-                            fallback_q = f"Explain in detail how {t.title} functions."
-                            fallback_sol = f"In {t.title}, the key concept functions as follows: {t_exp.strip()}"
+                            if t.examples:
+                                fallback_q = f"Explain how {t.examples[0]} demonstrates {t.title}."
+                                fallback_sol = f"{t.examples[0]} demonstrates {t.title} as follows: {t_exp.strip()}"
+                            else:
+                                fallback_q = f"Describe the experimental observations supporting {t.title}."
+                                fallback_sol = f"Experimental observations for {t.title}: {t_exp.strip()}"
                         else: # 6
-                            fallback_q = f"Explain step-by-step the main principles, real-world observations, and practical applications of {t.title}."
-                            fallback_sol = f"Step-by-step explanation: {t_exp.strip()} Applications and observations form the essential basis of this scientific field."
+                            nat_6m = build_natural_6mark_question(t.title, t.explanation, t.examples)
+                            if nat_6m is not None:
+                                fallback_q, fallback_sol = nat_6m
+                            else:
+                                fallback_q = f"Describe in detail the principles, observations, and practical applications of {t.title}."
+                                fallback_sol = f"Detailed description: {t_exp.strip()} This concept plays an important role in scientific study."
 
                         if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents):
                             selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
