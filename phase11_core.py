@@ -3171,6 +3171,7 @@ def extract_question_intent(q_text: str) -> str:
     text = re.sub(r"[\(\[\{]\s*variant\s*\d*\s*[\)\]\}]", "", text, flags=re.IGNORECASE)
     text = re.sub(r"[^\w\s]", " ", text)
     fillers = (
+        "key principle behind",
         "why is the study of",
         "is significant",
         "what can be concluded",
@@ -3236,7 +3237,7 @@ def mark_question_used(
 
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
-    if "(variant" in q_lower or "variant 2" in q_lower or "why is the study of" in q_lower:
+    if "(variant" in q_lower or "variant 2" in q_lower or "why is the study of" in q_lower or "key principle behind" in q_lower:
         return False
 
     sol_text_clean = sol_text.strip()
@@ -3361,8 +3362,14 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             ))
             variants.append((
                 topic.title,
-                "Why is magnetic force strongest near the two poles of a bar magnet?",
-                "Magnetic field lines are concentrated near the ends, creating maximum force at the north and south poles.",
+                "Why is magnetic force usually strongest near the two poles of a bar magnet?",
+                "Magnetic field lines are concentrated near the ends, creating maximum magnetic force at the north and south poles.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "What happens when a bar magnet is broken into two pieces?",
+                "Each broken piece becomes a complete magnet with its own north pole and south pole.",
                 2,
             ))
         elif "attraction, repulsion and magnetic field" in t_lower:
@@ -3378,6 +3385,12 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 "It represents a stronger magnetic field in that region, where magnetic force is greater.",
                 2,
             ))
+            variants.append((
+                topic.title,
+                "How can attraction and repulsion be used to identify magnet poles?",
+                "Repulsion is the sure test of magnetism because a known pole will repel only a like pole of another magnet.",
+                2,
+            ))
         elif "compass and earth's magnetism" in t_lower or "compass and earth" in t_lower:
             variants.append((
                 topic.title,
@@ -3389,6 +3402,12 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 topic.title,
                 "What can a compass show about direction in a classroom?",
                 "Its marked north-seeking end points toward the north direction of the room, assuming no magnetic objects disturb it.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Why does a freely suspended magnet point roughly north-south?",
+                "The magnetic field of the Earth exerts force on the freely suspended magnet, causing it to align along the geomagnetic meridian.",
                 2,
             ))
 
@@ -3765,8 +3784,12 @@ def render_test_paper(
                             fallback_q = f"State one key observation related to {t.title}."
                             fallback_sol = f"A key observation in {t.title} is that {t_exp.strip().split('.')[0]}."
                         elif mark_per_q == 2:
-                            fallback_q = f"What is the key principle behind {t.title}?"
-                            fallback_sol = f"The key principle behind {t.title} is that {t_exp.strip()}"
+                            if t.learning_objectives:
+                                fallback_q = t.learning_objectives[0].strip()
+                                fallback_sol = f"{t_exp.strip()} This provides essential foundational understanding."
+                            else:
+                                fallback_q = f"Explain the main properties of {t.title}."
+                                fallback_sol = f"The main properties of {t.title} are: {t_exp.strip()}"
                         elif mark_per_q == 3:
                             fallback_q = f"Explain in detail how {t.title} functions."
                             fallback_sol = f"In {t.title}, the key concept functions as follows: {t_exp.strip()}"
