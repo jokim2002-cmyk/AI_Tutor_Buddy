@@ -3166,8 +3166,79 @@ def build_natural_6mark_question(
     return None
 
 
+def extract_question_intent(q_text: str) -> str:
+    text = q_text.casefold().strip()
+    text = re.sub(r"[\(\[\{]\s*variant\s*\d*\s*[\)\]\}]", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"[^\w\s]", " ", text)
+    fillers = (
+        "why is the study of",
+        "is significant",
+        "what can be concluded",
+        "explain with an example",
+        "explain step by step",
+        "explain in detail",
+        "briefly explain",
+        "state the main idea of",
+        "state the main principle of",
+        "give one example related to",
+        "give one example of",
+        "give one role of",
+        "what is meant by",
+        "what is the concept of",
+        "what is the main concept of",
+        "what is",
+        "what are",
+        "why is",
+        "why do",
+        "why does",
+        "how does",
+        "how can",
+        "classify",
+        "state",
+        "define",
+    )
+    for filler in fillers:
+        text = text.replace(filler, " ")
+    words = [w for w in text.split() if len(w) > 2]
+    return " ".join(words)
+
+
+def is_duplicate_question(
+    topic_title: str,
+    q_text: str,
+    used_q_texts: set[str],
+    used_intents: set[tuple[str, str]],
+) -> bool:
+    q_norm = " ".join(q_text.casefold().strip().split())
+    if q_norm in used_q_texts:
+        return True
+    intent = extract_question_intent(q_text)
+    if intent:
+        topic_norm = " ".join(topic_title.casefold().strip().split())
+        if (topic_norm, intent) in used_intents:
+            return True
+    return False
+
+
+def mark_question_used(
+    topic_title: str,
+    q_text: str,
+    used_q_texts: set[str],
+    used_intents: set[tuple[str, str]],
+) -> None:
+    q_norm = " ".join(q_text.casefold().strip().split())
+    used_q_texts.add(q_norm)
+    intent = extract_question_intent(q_text)
+    if intent:
+        topic_norm = " ".join(topic_title.casefold().strip().split())
+        used_intents.add((topic_norm, intent))
+
+
 def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool:
     q_lower = q_text.casefold().strip()
+    if "(variant" in q_lower or "variant 2" in q_lower or "why is the study of" in q_lower:
+        return False
+
     sol_text_clean = sol_text.strip()
     sol_words = len(sol_text_clean.split())
 
@@ -3261,6 +3332,7 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
 
 def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[tuple[str, str, str, int]]:
     variants: list[tuple[str, str, str, int]] = []
+    t_lower = topic.title.casefold().strip()
 
     # 1. From existing exercises and practice questions
     for i, q in enumerate(topic.exercises):
@@ -3278,7 +3350,49 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             if im == mark_per_q:
                 variants.append((topic.title, q_txt, sol_txt, mark_per_q))
 
-    # 2. From examples
+    # 2. Topic-specific natural 2-mark fallback questions for Properties of Magnet
+    if mark_per_q == 2:
+        if "magnetic materials and poles" in t_lower:
+            variants.append((
+                topic.title,
+                "Classify an iron nail, an aluminium spoon and a wooden ruler by whether a common magnet attracts them strongly.",
+                "The iron nail is magnetic and is attracted strongly. The aluminium spoon and wooden ruler are not strongly attracted by a common classroom magnet.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "Why is magnetic force strongest near the two poles of a bar magnet?",
+                "Magnetic field lines are concentrated near the ends, creating maximum force at the north and south poles.",
+                2,
+            ))
+        elif "attraction, repulsion and magnetic field" in t_lower:
+            variants.append((
+                topic.title,
+                "What happens when like poles and unlike poles of magnets are brought near each other?",
+                "Unlike poles attract each other, while like poles push away or repel each other.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "What does a crowded pattern of magnetic field lines show?",
+                "It represents a stronger magnetic field in that region, where magnetic force is greater.",
+                2,
+            ))
+        elif "compass and earth's magnetism" in t_lower or "compass and earth" in t_lower:
+            variants.append((
+                topic.title,
+                "Why does a compass needle turn and settle in a particular direction?",
+                "Earth acts as a giant magnet, and its magnetic field exerts a turning effect on the needle until it aligns approximately north-south.",
+                2,
+            ))
+            variants.append((
+                topic.title,
+                "What can a compass show about direction in a classroom?",
+                "Its marked north-seeking end points toward the north direction of the room, assuming no magnetic objects disturb it.",
+                2,
+            ))
+
+    # 3. From examples
     if mark_per_q == 3:
         for ex in topic.examples:
             if ex and ex.strip():
@@ -3305,7 +3419,7 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                     )
                 )
 
-    # 3. Natural 6-mark builder
+    # 4. Natural 6-mark builder
     if mark_per_q == 6:
         nat_6m = build_natural_6mark_question(topic.title, topic.explanation, list(topic.examples))
         if nat_6m is not None:
@@ -3319,7 +3433,7 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             if determine_question_intended_marks(q_6m_gen, sol_6m_gen) == 6:
                 variants.append((topic.title, q_6m_gen, sol_6m_gen, 6))
 
-    # 4. Objective / Explanation based variants for 1m, 2m, 3m
+    # 5. Objective / Explanation based variants for 1m, 2m, 3m
     if topic.explanation and topic.explanation.strip():
         exp_clean = topic.explanation.strip()
         first_sentence = exp_clean.split('.')[0] + "."
@@ -3331,12 +3445,14 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
                 variants.append((topic.title, q_1m, sol_1m, 1))
 
         elif mark_per_q == 2:
-            q_2m = f"Briefly explain {topic.title}."
-            sol_2m = exp_clean if len(exp_clean.split()) < 30 else ". ".join(exp_clean.split('.')[:2]).strip()
-            if len(sol_2m.split()) < 12:
-                sol_2m = f"{sol_2m} This is a key scientific property of {topic.title}."
-            if determine_question_intended_marks(q_2m, sol_2m) == 2:
-                variants.append((topic.title, q_2m, sol_2m, 2))
+            for obj in topic.learning_objectives:
+                if obj.startswith("Explain "):
+                    q_2m = f"{obj.strip()}"
+                    sol_2m = exp_clean if len(exp_clean.split()) < 30 else ". ".join(exp_clean.split('.')[:2]).strip()
+                    if len(sol_2m.split()) < 12:
+                        sol_2m = f"{sol_2m} This is an essential scientific concept of {topic.title}."
+                    if determine_question_intended_marks(q_2m, sol_2m) == 2:
+                        variants.append((topic.title, q_2m, sol_2m, 2))
 
         elif mark_per_q == 3:
             q_3m = f"Explain in detail the concept of {topic.title}."
@@ -3549,9 +3665,7 @@ def render_test_paper(
         rng = None
 
     used_q_texts: set[str] = set()
-
-    def norm_q(t: str) -> str:
-        return " ".join(t.casefold().strip().split())
+    used_intents: set[tuple[str, str]] = set()
 
     q_num = 1
     sec_answers: list[tuple[str, list[tuple[int, str, str]]]] = []
@@ -3572,20 +3686,20 @@ def render_test_paper(
             selected_item: tuple[str, str, str, int] | None = None
 
             if rng is not None:
-                # 1. Primary rule: match intended_m == mark_per_q AND is_suitable_for_section AND unused
+                # 1. Primary rule: match intended_m == mark_per_q AND is_suitable_for_section AND non-duplicate
                 candidates_p1 = [
                     (idx, item) for idx, item in enumerate(available_pool)
-                    if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q and is_suitable_for_section(item[1], item[2], mark_per_q)
+                    if not is_duplicate_question(item[0], item[1], used_q_texts, used_intents) and item[3] == mark_per_q and is_suitable_for_section(item[1], item[2], mark_per_q)
                 ]
                 if candidates_p1:
                     idx, selected_item = rng.choice(candidates_p1)
                     available_pool.pop(idx)
 
-                # 2. Secondary rule: match intended_m == mark_per_q AND unused in available_pool
+                # 2. Secondary rule: match intended_m == mark_per_q AND non-duplicate in available_pool
                 if selected_item is None:
                     candidates_p2 = [
                         (idx, item) for idx, item in enumerate(available_pool)
-                        if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q
+                        if not is_duplicate_question(item[0], item[1], used_q_texts, used_intents) and item[3] == mark_per_q and is_suitable_for_section(item[1], item[2], mark_per_q)
                     ]
                     if candidates_p2:
                         idx, selected_item = rng.choice(candidates_p2)
@@ -3595,7 +3709,7 @@ def render_test_paper(
                 if selected_item is None:
                     candidates_p3 = [
                         item for item in pool
-                        if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q
+                        if not is_duplicate_question(item[0], item[1], used_q_texts, used_intents) and item[3] == mark_per_q and is_suitable_for_section(item[1], item[2], mark_per_q)
                     ]
                     if candidates_p3:
                         selected_item = rng.choice(candidates_p3)
@@ -3604,7 +3718,7 @@ def render_test_paper(
                 while pool_idx < len(pool):
                     candidate = pool[pool_idx]
                     pool_idx += 1
-                    if norm_q(candidate[1]) not in used_q_texts:
+                    if not is_duplicate_question(candidate[0], candidate[1], used_q_texts, used_intents):
                         selected_item = candidate
                         break
 
@@ -3617,7 +3731,7 @@ def render_test_paper(
                             rng.shuffle(variants)
                         for v_item in variants:
                             t_lbl, q_t, sol_t, im = v_item
-                            if norm_q(q_t) not in used_q_texts and determine_question_intended_marks(q_t, sol_t) == mark_per_q and is_suitable_for_section(q_t, sol_t, mark_per_q):
+                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and determine_question_intended_marks(q_t, sol_t) == mark_per_q and is_suitable_for_section(q_t, sol_t, mark_per_q):
                                 selected_item = (t_lbl, q_t, sol_t, mark_per_q)
                                 break
                         if selected_item is not None:
@@ -3625,7 +3739,7 @@ def render_test_paper(
                     if selected_item is not None:
                         break
 
-            # Safe Fallback Level B: same chapter different topic / alternate variant without suitability restriction
+            # Safe Fallback Level B: same chapter different topic natural variant
             if selected_item is None:
                 for ch in scope.chapters:
                     for t in ch.topics:
@@ -3634,7 +3748,7 @@ def render_test_paper(
                             rng.shuffle(variants)
                         for v_item in variants:
                             t_lbl, q_t, sol_t, im = v_item
-                            if norm_q(q_t) not in used_q_texts and determine_question_intended_marks(q_t, sol_t) == mark_per_q:
+                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and determine_question_intended_marks(q_t, sol_t) == mark_per_q:
                                 selected_item = (t_lbl, q_t, sol_t, mark_per_q)
                                 break
                         if selected_item is not None:
@@ -3644,33 +3758,30 @@ def render_test_paper(
 
             # Safe Fallback Level C: alternate natural generated variant guaranteed unique with correct solution guide
             if selected_item is None:
-                t_obj = scope.chapters[0].topics[0] if scope.chapters and scope.chapters[0].topics else None
-                t_title = t_obj.title if t_obj else "Science"
-                t_exp = t_obj.explanation if t_obj else "Core principles and scientific observation."
+                for ch in scope.chapters:
+                    for t in ch.topics:
+                        t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
+                        if mark_per_q == 1:
+                            fallback_q = f"State one key observation related to {t.title}."
+                            fallback_sol = f"A key observation in {t.title} is that {t_exp.strip().split('.')[0]}."
+                        elif mark_per_q == 2:
+                            fallback_q = f"What is the key principle behind {t.title}?"
+                            fallback_sol = f"The key principle behind {t.title} is that {t_exp.strip()}"
+                        elif mark_per_q == 3:
+                            fallback_q = f"Explain in detail how {t.title} functions."
+                            fallback_sol = f"In {t.title}, the key concept functions as follows: {t_exp.strip()}"
+                        else: # 6
+                            fallback_q = f"Explain step-by-step the main principles, real-world observations, and practical applications of {t.title}."
+                            fallback_sol = f"Step-by-step explanation: {t_exp.strip()} Applications and observations form the essential basis of this scientific field."
 
-                if mark_per_q == 1:
-                    fallback_q = f"State one key observation related to {t_title}."
-                    fallback_sol = f"A key observation in {t_title} is that {t_exp.strip().split('.')[0]}."
-                elif mark_per_q == 2:
-                    fallback_q = f"Why is the study of {t_title} significant?"
-                    fallback_sol = f"The study of {t_title} is significant because {t_exp.strip()} This provides essential foundational scientific understanding."
-                elif mark_per_q == 3:
-                    fallback_q = f"Explain in detail how {t_title} functions."
-                    fallback_sol = f"In {t_title}, the key concept functions as follows: {t_exp.strip()} This helps explain physical phenomena and scientific applications."
-                else: # 6
-                    fallback_q = f"Explain step-by-step the main principles, real-world observations, and practical applications of {t_title}."
-                    fallback_sol = f"Step-by-step explanation: {t_exp.strip()} Applications and observations form the essential basis of this scientific field."
-
-                counter = 1
-                orig_q = fallback_q
-                while norm_q(fallback_q) in used_q_texts:
-                    counter += 1
-                    fallback_q = f"{orig_q} (Variant {counter})"
-
-                selected_item = (t_title, fallback_q, fallback_sol, mark_per_q)
+                        if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents):
+                            selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
+                            break
+                    if selected_item is not None:
+                        break
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
-            used_q_texts.add(norm_q(q_text))
+            mark_question_used(topic_title, q_text, used_q_texts, used_intents)
 
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")

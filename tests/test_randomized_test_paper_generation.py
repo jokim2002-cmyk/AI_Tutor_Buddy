@@ -462,6 +462,8 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(total_correct_score, 5.0)
 
     def test_no_duplicate_questions_magnet_25m_and_full_syllabus_100m_seed_111_regression(self):
+        from phase11_core import extract_question_intent
+
         # 1. Properties of Magnet 25-mark random chapter test seed 111
         magnet_scope = parse_test_paper_scope("Properties of Magnet chapter test", self.ctx, self.science_syl)
         _, magnet_paper = render_test_paper(
@@ -475,15 +477,35 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(magnet_paper.total_marks, 25)
         self.assertEqual(len(magnet_paper.questions), 12)
 
+        # Assert no "(Variant" or "Why is the study of" in any question
+        for q in magnet_paper.questions:
+            q_text = q.question_text
+            self.assertNotIn("(Variant", q_text, f"Found visible variant label in question: '{q_text}'")
+            self.assertNotIn("Why is the study of", q_text, f"Found generic filler phrasing in question: '{q_text}'")
+            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
+            self.assertEqual(q.intended_marks, q.max_marks)
+
+        # Assert no exact duplicate question text
         magnet_q_texts = [q.question_text.strip().casefold() for q in magnet_paper.questions]
         self.assertEqual(
             len(magnet_q_texts),
             len(set(magnet_q_texts)),
             f"Properties of Magnet test seed 111 contains duplicate questions: {magnet_q_texts}",
         )
+
+        # Assert no semantic duplicate intents per topic
+        magnet_intents_by_topic: dict[str, set[str]] = {}
         for q in magnet_paper.questions:
-            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
-            self.assertEqual(q.intended_marks, q.max_marks)
+            t_norm = q.topic_title.strip().casefold()
+            intent = extract_question_intent(q.question_text)
+            if t_norm not in magnet_intents_by_topic:
+                magnet_intents_by_topic[t_norm] = set()
+            self.assertNotIn(
+                intent,
+                magnet_intents_by_topic[t_norm],
+                f"Properties of Magnet test seed 111 contains semantic duplicate intent '{intent}' in topic '{q.topic_title}'",
+            )
+            magnet_intents_by_topic[t_norm].add(intent)
 
         # 2. Full syllabus 100-mark random test seed 111
         full_scope = parse_test_paper_scope("Full book test banao", self.ctx, self.science_syl)
@@ -498,15 +520,18 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(full_paper.total_marks, 100)
         self.assertEqual(len(full_paper.questions), 48)
 
+        for q in full_paper.questions:
+            self.assertNotIn("(Variant", q.question_text)
+            self.assertNotIn("Why is the study of", q.question_text)
+            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
+            self.assertEqual(q.intended_marks, q.max_marks)
+
         full_q_texts = [q.question_text.strip().casefold() for q in full_paper.questions]
         self.assertEqual(
             len(full_q_texts),
             len(set(full_q_texts)),
             f"Full syllabus test seed 111 contains duplicate questions: {full_q_texts}",
         )
-        for q in full_paper.questions:
-            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
-            self.assertEqual(q.intended_marks, q.max_marks)
 
 
 if __name__ == "__main__":
