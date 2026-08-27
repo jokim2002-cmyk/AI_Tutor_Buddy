@@ -8,6 +8,7 @@ from phase11_core import (
     parse_test_paper_scope,
     render_test_paper,
     evaluate_test_paper,
+    evaluate_single_test_answer,
 )
 from phase11_ai import GyanVerseAIService
 
@@ -395,6 +396,70 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
                 if "plane-mirror images and types of reflection" in t_low:
                     self.assertNotIn("concave, and convex mirrors", q_low)
                     self.assertIn("plane mirror", q_low)
+
+    def test_std7_random_test_q1_q5_wrong_answer_guard_regression(self):
+        # 1. Correct Q1-Q5 evaluation
+        q1_score, q1_status, _ = evaluate_single_test_answer(
+            "Name the three major nutrients represented by N, P and K.",
+            "N, P and K are nitrogen, phosphorus and potassium.",
+            "Nitrogen, phosphorus and potassium.",
+            1,
+        )
+        self.assertEqual(q1_score, 1.0)
+        self.assertEqual(q1_status, "Correct")
+
+        q3_score, q3_status, _ = evaluate_single_test_answer(
+            "Give one example of oscillatory motion.",
+            "A swing moving to and fro is oscillatory motion.",
+            "A pendulum / swing moving to and fro.",
+            1,
+        )
+        self.assertEqual(q3_score, 1.0)
+        self.assertEqual(q3_status, "Correct")
+
+        q5_score, q5_status, _ = evaluate_single_test_answer(
+            "Which method separates an insoluble solid from a liquid using filter paper?",
+            "Filtration separates insoluble solid from liquid using filter paper.",
+            "Filtration.",
+            1,
+        )
+        self.assertEqual(q5_score, 1.0)
+        self.assertEqual(q5_status, "Correct")
+
+        # 2. Deliberately wrong Q1-Q5 evaluation
+        wrong_answers = [
+            ("Name the three major nutrients represented by N, P and K.", "N, P and K stand for neon, potassium and krypton.", "Nitrogen, phosphorus and potassium.", 1),
+            ("What is a natural satellite? Give one example.", "A natural satellite is a man-made machine. Example: a bus.", "A natural satellite is a celestial body revolving around a planet, such as the Moon.", 1),
+            ("Give one example of oscillatory motion.", "Straight-line motion is oscillatory motion.", "A pendulum / swing moving to and fro.", 1),
+            ("A bus travels 150 kilometres in 3 hours. Find its average speed.", "Average speed = 150 + 3 = 153 km/h.", "50 km/h", 1),
+            ("Which method separates an insoluble solid from a liquid using filter paper?", "Evaporation separates insoluble solid from liquid using filter paper.", "Filtration.", 1),
+        ]
+
+        total_wrong_score = 0.0
+        for q_t, u_a, s_g, m_m in wrong_answers:
+            score, status, _ = evaluate_single_test_answer(q_t, u_a, s_g, m_m)
+            self.assertEqual(score, 0.0, f"Wrong answer '{u_a}' for '{q_t}' scored {score} instead of 0.0")
+            self.assertEqual(status, "Incorrect")
+            total_wrong_score += score
+
+        self.assertEqual(total_wrong_score, 0.0)
+
+        # 3. Correct Q1-Q5 answers total score
+        correct_answers = [
+            ("Name the three major nutrients represented by N, P and K.", "N, P and K are nitrogen, phosphorus and potassium.", "Nitrogen, phosphorus and potassium.", 1),
+            ("What is a natural satellite? Give one example.", "A natural satellite is a celestial body that revolves around a planet. Example: Moon.", "A natural satellite is a celestial body revolving around a planet, such as the Moon.", 1),
+            ("Give one example of oscillatory motion.", "A swing moving to and fro is oscillatory motion.", "A pendulum / swing moving to and fro.", 1),
+            ("A bus travels 150 kilometres in 3 hours. Find its average speed.", "Average speed = 150 / 3 = 50 km/h.", "50 km/h", 1),
+            ("Which method separates an insoluble solid from a liquid using filter paper?", "Filtration separates insoluble solid from liquid using filter paper.", "Filtration.", 1),
+        ]
+        total_correct_score = 0.0
+        for q_t, u_a, s_g, m_m in correct_answers:
+            score, status, _ = evaluate_single_test_answer(q_t, u_a, s_g, m_m)
+            self.assertEqual(score, 1.0)
+            self.assertEqual(status, "Correct")
+            total_correct_score += score
+
+        self.assertEqual(total_correct_score, 5.0)
 
 
 if __name__ == "__main__":

@@ -1458,6 +1458,132 @@ def _std7_water_states_classification_decision(
     return False
 
 
+def _std7_npk_nutrients_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide NPK plant nutrients question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("n, p" in clean_question or "n,p" in clean_question or "npk" in clean_question or "represented by n" in clean_question)
+        and ("nutrient" in clean_question or "nutrients" in clean_question or "major" in clean_question or "element" in clean_question or "elements" in clean_question or "stand" in clean_question or "plant" in clean_question or "soil" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    has_nitrogen = "nitrogen" in tokens or "nitrogene" in clean_student
+    has_phosphorus = "phosphorus" in tokens or "phosphorus" in clean_student or "phosphorous" in clean_student
+    has_potassium = "potassium" in tokens or "potasium" in clean_student or "kalium" in clean_student
+
+    wrong_elements = {
+        "neon", "krypton", "argon", "helium", "xenon", "radon", "sodium", "calcium",
+        "magnesium", "iron", "copper", "zinc", "carbon", "oxygen", "hydrogen"
+    }
+    has_wrong_element = bool(tokens & wrong_elements)
+
+    if has_wrong_element or not (has_nitrogen and has_phosphorus and has_potassium):
+        return False
+
+    return True
+
+
+def _std7_oscillatory_motion_example_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide oscillatory motion example question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not ("oscillatory" in clean_question and "motion" in clean_question):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_motion_types = {
+        "straight", "linear", "rectilinear", "circular", "rotational", "random"
+    }
+
+    if bool(tokens & wrong_motion_types):
+        return False
+
+    valid_oscillatory_indicators = {
+        "swing", "pendulum", "fro", "forth", "vibration", "vibrating", "vibrate", "vibrates", "guitar", "cradle", "tuning", "fork", "oscillation", "oscillates", "bob", "clock"
+    }
+
+    if bool(tokens & valid_oscillatory_indicators):
+        return True
+
+    return False
+
+
+def _std7_filtration_insoluble_solid_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide filtration using filter paper question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("filter paper" in clean_question or "filtration" in clean_question)
+        and ("insoluble" in clean_question or "solid" in clean_question or "liquid" in clean_question or "method" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_methods = {
+        "evaporation", "sedimentation", "decantation", "distillation", "handpicking", "sieving", "winnowing", "threshing", "magnetic"
+    }
+
+    if bool(tokens & wrong_methods):
+        return False
+
+    valid_filtration_tokens = {"filtration", "filtering", "filter"}
+    if bool(tokens & valid_filtration_tokens):
+        return True
+
+    return False
+
+
+def _std7_natural_satellite_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide natural satellite definition/example question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not ("satellite" in clean_question and ("natural" in clean_question or "example" in clean_question or "what is" in clean_question)):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_satellite_claims = {
+        "manmade", "artificial", "human", "machine", "bus", "car", "robot", "vehicle", "rocket", "airplane"
+    }
+
+    if "man made" in clean_student or "man-made" in clean_student or bool(tokens & wrong_satellite_claims):
+        return False
+
+    if "moon" in tokens or "celestial" in tokens or ("revolves" in tokens and "planet" in tokens) or ("orbits" in tokens and "planet" in tokens):
+        return True
+
+    return False
+
+
 def _evaluate_student_answer(
     student_answer: str,
     guide: str,
@@ -1493,6 +1619,54 @@ def _evaluate_student_answer(
         return (
             "Result: Incorrect.",
             "Your answer does not correctly name all three physical states of water.",
+        )
+
+    npk_decision = _std7_npk_nutrients_decision(student_answer, question)
+    if npk_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly names the three major plant nutrients (nitrogen, phosphorus, potassium).",
+        )
+    if npk_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer does not correctly name nitrogen, phosphorus, and potassium.",
+        )
+
+    osc_decision = _std7_oscillatory_motion_example_decision(student_answer, question)
+    if osc_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly provides a valid example of oscillatory motion.",
+        )
+    if osc_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer does not give a valid example of oscillatory motion.",
+        )
+
+    filt_decision = _std7_filtration_insoluble_solid_decision(student_answer, question)
+    if filt_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly names filtration as the separation method.",
+        )
+    if filt_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer does not correctly identify filtration as the separation method using filter paper.",
+        )
+
+    sat_decision = _std7_natural_satellite_decision(student_answer, question)
+    if sat_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly defines/gives an example of a natural satellite.",
+        )
+    if sat_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer incorrectly defines a natural satellite as artificial/man-made.",
         )
 
     # 1. Check Yes/No decision
@@ -1920,6 +2094,30 @@ def evaluate_single_test_answer(
     elif water_decision is False:
         return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
+    npk_decision = _std7_npk_nutrients_decision(user_ans, q_text)
+    if npk_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif npk_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    osc_decision = _std7_oscillatory_motion_example_decision(user_ans, q_text)
+    if osc_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif osc_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    filt_decision = _std7_filtration_insoluble_solid_decision(user_ans, q_text)
+    if filt_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif filt_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    sat_decision = _std7_natural_satellite_decision(user_ans, q_text)
+    if sat_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif sat_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
     u_clean = user_ans.strip().casefold()
     g_clean = sol_guide.strip().casefold()
 
@@ -2060,7 +2258,9 @@ def evaluate_single_test_answer(
 
     if len(g_clean.split()) <= 5 or g_nums:
         if u_nums and g_nums:
-            if u_nums == g_nums:
+            q_nums = re.findall(r"-?\d+(?:\.\d+)?(?:/\d+)?", q_clean)
+            u_ans_nums = [n for n in u_nums if n not in q_nums]
+            if u_nums == g_nums or u_ans_nums == g_nums or (g_nums and g_nums[-1] in u_nums and set(u_nums) - set(q_nums) == set(g_nums)):
                 return float(max_marks), "Correct", "Correct answer."
             else:
                 return 0.0, "Incorrect", f"Incorrect. Expected value: {sol_guide}"
