@@ -2335,8 +2335,17 @@ def derive_structured_evaluation_rules(
     # 12. Natural satellite
     elif "satellite" in q_clean and ("natural" in q_clean or "example" in q_clean or "what is" in q_clean):
         rules.required_concepts = ["moon", "celestial"]
-        rules.forbidden_concepts = ["manmade", "artificial", "human", "machine", "rocket", "airplane"]
-        rules.contradiction_patterns = [r"\bman-?made\b", r"\bartificial\b"]
+        rules.forbidden_concepts = ["manmade", "man made", "artificial", "human", "machine", "rocket", "airplane", "bus"]
+        rules.contradiction_patterns = [r"\bman\s*made\b", r"\bman-?made\b", r"\bartificial\b"]
+
+    # 13. Automatic Proper Noun required concepts for factual identity/ruler/place/event questions
+    if not rules.required_concepts and re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the|what was the capital)\b", q_clean):
+        proper_nouns = [
+            w for w in re.findall(r"\b[A-Z][a-zA-Z0-9]+\b", solution_guide)
+            if w.casefold() not in {"the", "a", "an", "of", "and", "in", "on", "at", "to", "first", "second", "third", "south", "north", "east", "west"}
+        ]
+        if proper_nouns:
+            rules.required_concepts = [p.casefold() for p in proper_nouns]
 
     # Numeric extraction
     nums = re.findall(r"-?\d+(?:\.\d+)?", g_clean)
@@ -2411,6 +2420,8 @@ def evaluate_strict_short_answer(
         matched_req = bool(tokens & req_set) or any(rc in clean_student for rc in rules.required_concepts)
         if matched_req:
             return float(max_marks), "Correct", "Correct answer."
+        elif max_marks == 1 or re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the)\b", q_clean):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     return None
 
