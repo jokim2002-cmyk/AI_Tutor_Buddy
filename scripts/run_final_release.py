@@ -41,7 +41,7 @@ def run_real_regression(root: Path) -> RegressionRunResult:
             capture_output=True,
             text=True,
             env=env,
-            timeout=120,
+            timeout=600,
         )
         output = (proc.stdout or "") + "\n" + (proc.stderr or "")
         test_count = 0

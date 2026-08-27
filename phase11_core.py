@@ -3803,7 +3803,84 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
             if im == mark_per_q:
                 variants.append((topic.title, q_txt, sol_txt, mark_per_q))
 
-    # 2. Topic-specific natural 2-mark fallback questions
+    # 2. Topic-specific natural 1-mark and 2-mark fallback questions
+    if mark_per_q == 1:
+        if "motion and reference point" in t_lower:
+            variants.append((
+                topic.title,
+                "What is the term for a fixed point used to decide whether an object is in motion?",
+                "A reference point.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "What type of motion does a simple pendulum show as it swings to and fro?",
+                "Oscillatory motion.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "What type of motion is shown by a car moving along a straight flat road?",
+                "Linear motion.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "What type of motion is shown by the hands of a mechanical clock?",
+                "Circular motion.",
+                1,
+            ))
+        elif "force and its effects" in t_lower:
+            variants.append((
+                topic.title,
+                "Is friction classified as a contact force or a non-contact force?",
+                "Friction is a contact force.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "Is gravitational attraction classified as a contact force or a non-contact force?",
+                "Gravity is a non-contact force.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "What can an unbalanced force change about a moving body?",
+                "It can change the speed or direction of motion.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "Do balanced forces change the speed or direction of motion of an object?",
+                "No, balanced forces do not change an object's speed or direction.",
+                1,
+            ))
+        elif "speed and its measurement" in t_lower:
+            variants.append((
+                topic.title,
+                "State the SI unit of speed.",
+                "Metres per second (m/s).",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "Write the mathematical formula used to calculate speed.",
+                "Speed = distance / time.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "What quantity is obtained by dividing total distance covered by total time taken?",
+                "Average speed.",
+                1,
+            ))
+            variants.append((
+                topic.title,
+                "Name one unit used to measure speed of motor vehicles over long distances.",
+                "Kilometres per hour (km/h).",
+                1,
+            ))
+
     if mark_per_q == 2:
         if "magnetic materials and poles" in t_lower:
             variants.append((
@@ -4055,11 +4132,13 @@ def render_test_paper(
     }
     specs = SECTION_SPECS.get(scope.total_marks, SECTION_SPECS[25])
 
+    target_chapters = scope.chapters if (scope.chapters and len(scope.chapters) > 0) else syllabus.chapters
+
     pool: list[tuple[str, str, str, int]] = []
-    if len(scope.chapters) > 1:
+    if len(target_chapters) > 1:
         # Multi-chapter or Full-book: Interleave by chapter
         ch_pools: list[list[tuple[str, str, str, int]]] = []
-        for ch in scope.chapters:
+        for ch in target_chapters:
             c_items: list[tuple[str, str, str, int]] = []
             t_items_list: list[list[tuple[str, str, str, int]]] = []
             for t in ch.topics:
@@ -4091,6 +4170,11 @@ def render_test_paper(
                     q_6m_txt, sol_6m_txt = nat_6m
                     t_q.append((t.title, q_6m_txt, sol_6m_txt, 6))
 
+                for mark_b in (1, 2, 3, 6):
+                    for v in get_topic_fallback_variants(t, mark_b):
+                        if v not in t_q:
+                            t_q.append(v)
+
                 if t_q:
                     t_items_list.append(t_q)
 
@@ -4117,9 +4201,9 @@ def render_test_paper(
             if not added:
                 break
             idx += 1
-    elif scope.chapters:
+    elif target_chapters:
         # Single-chapter: Interleave by topic
-        ch = scope.chapters[0]
+        ch = target_chapters[0]
         t_items_list: list[list[tuple[str, str, str, int]]] = []
         for t in ch.topics:
             t_q: list[tuple[str, str, str, int]] = []
@@ -4149,6 +4233,11 @@ def render_test_paper(
             if nat_6m is not None:
                 q_6m_txt, sol_6m_txt = nat_6m
                 t_q.append((t.title, q_6m_txt, sol_6m_txt, 6))
+
+            for mark_b in (1, 2, 3, 6):
+                for v in get_topic_fallback_variants(t, mark_b):
+                    if v not in t_q:
+                        t_q.append(v)
 
             if t_q:
                 t_items_list.append(t_q)
@@ -4248,9 +4337,9 @@ def render_test_paper(
                         selected_item = candidate
                         break
 
-            # Safe Fallback Level A: same topic different variant
+            # Safe Fallback Level A: strictly search target_chapters for topic fallback variants matching mark_per_q
             if selected_item is None:
-                for ch in scope.chapters:
+                for ch in target_chapters:
                     for t in ch.topics:
                         variants = get_topic_fallback_variants(t, mark_per_q)
                         if rng is not None:
@@ -4265,43 +4354,9 @@ def render_test_paper(
                     if selected_item is not None:
                         break
 
-            # Safe Fallback Level B: same chapter different topic natural variant
+            # Safe Fallback Level B: strictly search target_chapters natural exercises, practice questions, and examples
             if selected_item is None:
-                for ch in scope.chapters:
-                    for t in ch.topics:
-                        variants = get_topic_fallback_variants(t, mark_per_q)
-                        if rng is not None:
-                            rng.shuffle(variants)
-                        for v_item in variants:
-                            t_lbl, q_t, sol_t, im = v_item
-                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_lbl) and (im == mark_per_q or determine_question_intended_marks(q_t, sol_t) == mark_per_q) and is_suitable_for_section(q_t, sol_t, mark_per_q):
-                                selected_item = (t_lbl, q_t, sol_t, mark_per_q)
-                                break
-                        if selected_item is not None:
-                            break
-                    if selected_item is not None:
-                        break
-
-            # Safe Fallback Level C: search across ALL syllabus chapters for natural curated fallback variants
-            if selected_item is None:
-                for ch in syllabus.chapters:
-                    for t in ch.topics:
-                        variants = get_topic_fallback_variants(t, mark_per_q)
-                        if rng is not None:
-                            rng.shuffle(variants)
-                        for v_item in variants:
-                            t_lbl, q_t, sol_t, im = v_item
-                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_lbl) and (im == mark_per_q or determine_question_intended_marks(q_t, sol_t) == mark_per_q) and is_suitable_for_section(q_t, sol_t, mark_per_q):
-                                selected_item = (t_lbl, q_t, sol_t, mark_per_q)
-                                break
-                        if selected_item is not None:
-                            break
-                    if selected_item is not None:
-                        break
-
-            # Safe Fallback Level D: search syllabus natural exercises, practice questions, and examples
-            if selected_item is None:
-                for ch in scope.chapters:
+                for ch in target_chapters:
                     for t in ch.topics:
                         candidate_qs = []
                         for i, q in enumerate(t.exercises):
@@ -4323,24 +4378,50 @@ def render_test_paper(
                     if selected_item is not None:
                         break
 
-            # Safe Fallback Level E (Absolute Safety Fallback): Pick first natural question from fallback bank and modify string if already used
+            # Safe Fallback Level C (Emergency In-Chapter Fallback): Strictly generate in-chapter topic questions from target_chapters only
             if selected_item is None:
-                first_ch = scope.chapters[0] if scope.chapters else syllabus.chapters[0]
+                first_ch = target_chapters[0]
                 first_topic = first_ch.topics[0]
-                fallback_variants = get_topic_fallback_variants(first_topic, mark_per_q)
-                if fallback_variants:
-                    t_lbl, q_t, sol_t, _ = fallback_variants[0]
-                    if " ".join(q_t.casefold().strip().split()) in used_q_texts:
-                        q_idx = len(used_q_texts) + 1
-                        q_t = f"{q_t} (Part {q_idx})"
-                    selected_item = (t_lbl, q_t, sol_t, mark_per_q)
-                else:
-                    q_t = f"State the primary scientific principle of {first_topic.title}."
-                    sol_t = first_topic.explanation or "Scientific principle and observation."
-                    if " ".join(q_t.casefold().strip().split()) in used_q_texts:
-                        q_idx = len(used_q_texts) + 1
-                        q_t = f"{q_t} (Part {q_idx})"
-                    selected_item = (first_topic.title, q_t, sol_t, mark_per_q)
+                # Find topic in target_chapters with fewest used questions
+                best_topic = first_topic
+                min_used = 999
+                for ch in target_chapters:
+                    for t in ch.topics:
+                        used_cnt = sum(1 for (t_name, _) in used_intents if t_name == t.title)
+                        if used_cnt < min_used:
+                            min_used = used_cnt
+                            best_topic = t
+
+                t_title = best_topic.title
+                exp_text = (best_topic.explanation or "Scientific principle and observation.").strip()
+
+                if mark_per_q == 1:
+                    q_t = f"What is the key scientific concept of {t_title}?"
+                    sol_t = exp_text.split('.')[0].strip() + "."
+                    if len(sol_t.split()) > 18:
+                        sol_t = " ".join(sol_t.split()[:14]) + "."
+                elif mark_per_q == 2:
+                    q_t = f"Explain {t_title} with one key scientific observation."
+                    sentences = [s.strip() for s in exp_text.split('.') if s.strip()]
+                    sol_t = ". ".join(sentences[:2]).strip() + "."
+                elif mark_per_q == 3:
+                    ex_str = best_topic.examples[0] if best_topic.examples else f"observation of {t_title}"
+                    q_t = f"Explain with an example: {ex_str}"
+                    sol_t = f"Example solution: {ex_str} demonstrates {exp_text}"
+                else:  # 6 marks
+                    nat_6m = build_natural_6mark_question(t_title, exp_text, list(best_topic.examples))
+                    if nat_6m is not None:
+                        q_t, sol_t = nat_6m
+                    else:
+                        q_t = f"Describe in detail the process and scientific principles of {t_title}."
+                        sol_t = f"{exp_text} Key examples include: {', '.join(best_topic.examples) if best_topic.examples else 'natural scientific phenomena'}."
+
+                q_clean_norm = " ".join(q_t.casefold().strip().split())
+                if q_clean_norm in used_q_texts:
+                    var_idx = sum(1 for q_k in used_q_texts if q_clean_norm in q_k) + 1
+                    q_t = f"{q_t} (Variant {var_idx})"
+
+                selected_item = (t_title, q_t, sol_t, mark_per_q)
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)

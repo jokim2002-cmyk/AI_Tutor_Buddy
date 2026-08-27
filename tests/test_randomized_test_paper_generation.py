@@ -727,6 +727,14 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(paper_model.total_marks, 25)
         self.assertEqual(sum(q.max_marks for q in paper_model.questions), 25)
 
+        motion_topic_titles = {t.title for t in scope.chapters[0].topics}
+        for q in paper_model.questions:
+            self.assertIn(
+                q.topic_title,
+                motion_topic_titles,
+                f"Question topic '{q.topic_title}' leaked from outside Motion chapter!",
+            )
+
         # 2. No "Explain the main ideas of" or generic topic-title fallback phrasing
         forbidden_phrases = [
             "Explain the main ideas of",
@@ -767,6 +775,77 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         for q in paper_model.questions:
             self.assertTrue(q.solution_guide and len(q.solution_guide.strip()) > 5)
             self.assertEqual(q.intended_marks, q.max_marks)
+
+    def test_cross_chapter_question_leakage_prevention_in_randomized_chapter_tests(self):
+        ctx_motion = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Motion, Force and Speed",
+        )
+        scope_motion = parse_test_paper_scope(
+            "Generate 25-mark random chapter test",
+            ctx_motion,
+            self.science_syl,
+        )
+        raw_motion, paper_motion = render_test_paper(
+            self.science_syl,
+            scope_motion,
+            context=ctx_motion,
+            message="Generate 25-mark random chapter test",
+            seed=111,
+        )
+
+        motion_topic_titles = {t.title for t in scope_motion.chapters[0].topics}
+
+        # 1. Motion, Force and Speed 25-mark random test seed 111 contains only topics from Motion, Force and Speed
+        for q in paper_motion.questions:
+            self.assertIn(
+                q.topic_title,
+                motion_topic_titles,
+                f"Question topic '{q.topic_title}' is outside Motion, Force and Speed chapter",
+            )
+            # 2. No Magnetic materials and poles / magnet topics appear in Motion chapter test
+            self.assertNotIn("magnet", q.question_text.casefold())
+            self.assertNotIn("magnetic", q.question_text.casefold())
+            self.assertNotIn("pole", q.question_text.casefold())
+
+        # 3. 25-mark structure preserved
+        self.assertEqual(paper_motion.total_marks, 25)
+        self.assertEqual(len(paper_motion.questions), 12)
+
+        # 4. Every question has solution guide and intended_marks == max_marks
+        for q in paper_motion.questions:
+            self.assertTrue(q.solution_guide and len(q.solution_guide.strip()) > 5)
+            self.assertEqual(q.intended_marks, q.max_marks)
+
+        # 5. Properties of Magnet 25-mark random test still contains only magnet chapter topics
+        ctx_magnet = replace(
+            self.ctx,
+            current_chapter="Semester 1 — Properties of Magnet",
+        )
+        scope_magnet = parse_test_paper_scope(
+            "Generate 25-mark random chapter test",
+            ctx_magnet,
+            self.science_syl,
+        )
+        raw_magnet, paper_magnet = render_test_paper(
+            self.science_syl,
+            scope_magnet,
+            context=ctx_magnet,
+            message="Generate 25-mark random chapter test",
+            seed=111,
+        )
+
+        magnet_topic_titles = {t.title for t in scope_magnet.chapters[0].topics}
+        for q in paper_magnet.questions:
+            self.assertIn(
+                q.topic_title,
+                magnet_topic_titles,
+                f"Question topic '{q.topic_title}' is outside Properties of Magnet chapter",
+            )
+            self.assertTrue(q.solution_guide and len(q.solution_guide.strip()) > 5)
+            self.assertEqual(q.intended_marks, q.max_marks)
+
+        self.assertEqual(paper_magnet.total_marks, 25)
 
 
 if __name__ == "__main__":
