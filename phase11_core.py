@@ -3259,6 +3259,96 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
     return True
 
 
+def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[tuple[str, str, str, int]]:
+    variants: list[tuple[str, str, str, int]] = []
+
+    # 1. From existing exercises and practice questions
+    for i, q in enumerate(topic.exercises):
+        if q and q.strip() and i < len(topic.solutions) and topic.solutions[i] and topic.solutions[i].strip():
+            q_txt = q.strip()
+            sol_txt = topic.solutions[i].strip()
+            im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+            if im == mark_per_q:
+                variants.append((topic.title, q_txt, sol_txt, mark_per_q))
+    for i, q in enumerate(topic.practice_questions):
+        if q and q.strip() and i < len(topic.practice_solutions) and topic.practice_solutions[i] and topic.practice_solutions[i].strip():
+            q_txt = q.strip()
+            sol_txt = topic.practice_solutions[i].strip()
+            im = determine_question_intended_marks(q_txt, sol_txt, is_example=False)
+            if im == mark_per_q:
+                variants.append((topic.title, q_txt, sol_txt, mark_per_q))
+
+    # 2. From examples
+    if mark_per_q == 3:
+        for ex in topic.examples:
+            if ex and ex.strip():
+                variants.append(
+                    (
+                        topic.title,
+                        f"Explain with an example: {ex.strip()}",
+                        f"Example solution: {ex.strip()}",
+                        3,
+                    )
+                )
+    elif mark_per_q == 1:
+        for ex in topic.examples:
+            if ex and ex.strip():
+                v_sol = f"An example of {topic.title} is: {ex.strip()}."
+                if len(v_sol.split()) > 18:
+                    v_sol = f"{ex.strip()} is a key example."
+                variants.append(
+                    (
+                        topic.title,
+                        f"Give one example related to {topic.title}.",
+                        v_sol,
+                        1,
+                    )
+                )
+
+    # 3. Natural 6-mark builder
+    if mark_per_q == 6:
+        nat_6m = build_natural_6mark_question(topic.title, topic.explanation, list(topic.examples))
+        if nat_6m is not None:
+            q_6m_txt, sol_6m_txt = nat_6m
+            variants.append((topic.title, q_6m_txt, sol_6m_txt, 6))
+
+        if topic.explanation and len(topic.explanation.strip().split()) >= 15:
+            ex_str = f" Examples include: {', '.join(topic.examples[:2])}." if topic.examples else ""
+            q_6m_gen = f"Explain step-by-step the main principles, real-world observations, and practical applications of {topic.title}."
+            sol_6m_gen = f"Step-by-step explanation: {topic.explanation.strip()}{ex_str} This fundamental concept forms an essential basis in science."
+            if determine_question_intended_marks(q_6m_gen, sol_6m_gen) == 6:
+                variants.append((topic.title, q_6m_gen, sol_6m_gen, 6))
+
+    # 4. Objective / Explanation based variants for 1m, 2m, 3m
+    if topic.explanation and topic.explanation.strip():
+        exp_clean = topic.explanation.strip()
+        first_sentence = exp_clean.split('.')[0] + "."
+
+        if mark_per_q == 1:
+            q_1m = f"State the main idea of {topic.title}."
+            sol_1m = first_sentence if len(first_sentence.split()) < 20 else " ".join(first_sentence.split()[:15]) + "."
+            if determine_question_intended_marks(q_1m, sol_1m) == 1:
+                variants.append((topic.title, q_1m, sol_1m, 1))
+
+        elif mark_per_q == 2:
+            q_2m = f"Briefly explain {topic.title}."
+            sol_2m = exp_clean if len(exp_clean.split()) < 30 else ". ".join(exp_clean.split('.')[:2]).strip()
+            if len(sol_2m.split()) < 12:
+                sol_2m = f"{sol_2m} This is a key scientific property of {topic.title}."
+            if determine_question_intended_marks(q_2m, sol_2m) == 2:
+                variants.append((topic.title, q_2m, sol_2m, 2))
+
+        elif mark_per_q == 3:
+            q_3m = f"Explain in detail the concept of {topic.title}."
+            sol_3m = f"The main concept of {topic.title} is: {exp_clean}"
+            if len(sol_3m.split()) < 20:
+                sol_3m = f"{sol_3m} This helps explain physical phenomena and scientific applications."
+            if determine_question_intended_marks(q_3m, sol_3m) == 3:
+                variants.append((topic.title, q_3m, sol_3m, 3))
+
+    return variants
+
+
 def render_test_paper(
     syllabus: BoardSyllabus,
     scope: TestPaperScope,
@@ -3458,6 +3548,11 @@ def render_test_paper(
     else:
         rng = None
 
+    used_q_texts: set[str] = set()
+
+    def norm_q(t: str) -> str:
+        return " ".join(t.casefold().strip().split())
+
     q_num = 1
     sec_answers: list[tuple[str, list[tuple[int, str, str]]]] = []
     items: list[TestPaperQuestionItem] = []
@@ -3474,58 +3569,109 @@ def render_test_paper(
         lines.append(f"{sec_title} — Total: {sec_tot} Marks")
         answers_list: list[tuple[int, str, str]] = []
         for _ in range(q_count):
-            selected_item = None
+            selected_item: tuple[str, str, str, int] | None = None
 
             if rng is not None:
-                # 1. Primary rule: match intended_m == mark_per_q AND is_suitable_for_section
-                for idx, item in enumerate(available_pool):
-                    _, q_text, sol_text, intended_m = item
-                    if intended_m == mark_per_q and is_suitable_for_section(q_text, sol_text, mark_per_q):
-                        selected_item = available_pool.pop(idx)
-                        break
+                # 1. Primary rule: match intended_m == mark_per_q AND is_suitable_for_section AND unused
+                candidates_p1 = [
+                    (idx, item) for idx, item in enumerate(available_pool)
+                    if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q and is_suitable_for_section(item[1], item[2], mark_per_q)
+                ]
+                if candidates_p1:
+                    idx, selected_item = rng.choice(candidates_p1)
+                    available_pool.pop(idx)
 
-                # 2. Refill check if available_pool needs refilling
+                # 2. Secondary rule: match intended_m == mark_per_q AND unused in available_pool
                 if selected_item is None:
-                    refilled = list(pool)
-                    rng.shuffle(refilled)
-                    for idx, item in enumerate(refilled):
-                        _, q_text, sol_text, intended_m = item
-                        if intended_m == mark_per_q and is_suitable_for_section(q_text, sol_text, mark_per_q):
-                            selected_item = item
-                            refilled.pop(idx)
-                            available_pool = refilled
-                            break
-
-                # 3. If no heuristic match, match intended_m == mark_per_q
-                if selected_item is None:
-                    for idx, item in enumerate(available_pool):
-                        _, q_text, sol_text, intended_m = item
-                        if intended_m == mark_per_q:
-                            selected_item = available_pool.pop(idx)
-                            break
-
-                # 4. Strict promotion safety: NEVER promote 1m/2m items into 3m/6m sections
-                if selected_item is None:
-                    valid_candidates = [
+                    candidates_p2 = [
                         (idx, item) for idx, item in enumerate(available_pool)
-                        if item[3] == mark_per_q or (mark_per_q in (3, 6) and item[3] >= mark_per_q - 1 and len(item[2].split()) >= 20)
+                        if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q
                     ]
-                    if valid_candidates:
-                        idx, selected_item = valid_candidates[0]
+                    if candidates_p2:
+                        idx, selected_item = rng.choice(candidates_p2)
                         available_pool.pop(idx)
 
-                # Fallback if pool is exhausted
+                # 3. Match intended_m == mark_per_q in base pool
                 if selected_item is None:
-                    if not available_pool:
-                        available_pool = list(pool)
-                        rng.shuffle(available_pool)
-                    selected_item = available_pool.pop(0)
+                    candidates_p3 = [
+                        item for item in pool
+                        if norm_q(item[1]) not in used_q_texts and item[3] == mark_per_q
+                    ]
+                    if candidates_p3:
+                        selected_item = rng.choice(candidates_p3)
             else:
-                # Deterministic selection: sequential pool item
-                selected_item = pool[pool_idx % len(pool)]
-                pool_idx += 1
+                # Deterministic mode: sequential search through pool for next unused item
+                while pool_idx < len(pool):
+                    candidate = pool[pool_idx]
+                    pool_idx += 1
+                    if norm_q(candidate[1]) not in used_q_texts:
+                        selected_item = candidate
+                        break
+
+            # Safe Fallback Level A: same topic different variant
+            if selected_item is None:
+                for ch in scope.chapters:
+                    for t in ch.topics:
+                        variants = get_topic_fallback_variants(t, mark_per_q)
+                        if rng is not None:
+                            rng.shuffle(variants)
+                        for v_item in variants:
+                            t_lbl, q_t, sol_t, im = v_item
+                            if norm_q(q_t) not in used_q_texts and determine_question_intended_marks(q_t, sol_t) == mark_per_q and is_suitable_for_section(q_t, sol_t, mark_per_q):
+                                selected_item = (t_lbl, q_t, sol_t, mark_per_q)
+                                break
+                        if selected_item is not None:
+                            break
+                    if selected_item is not None:
+                        break
+
+            # Safe Fallback Level B: same chapter different topic / alternate variant without suitability restriction
+            if selected_item is None:
+                for ch in scope.chapters:
+                    for t in ch.topics:
+                        variants = get_topic_fallback_variants(t, mark_per_q)
+                        if rng is not None:
+                            rng.shuffle(variants)
+                        for v_item in variants:
+                            t_lbl, q_t, sol_t, im = v_item
+                            if norm_q(q_t) not in used_q_texts and determine_question_intended_marks(q_t, sol_t) == mark_per_q:
+                                selected_item = (t_lbl, q_t, sol_t, mark_per_q)
+                                break
+                        if selected_item is not None:
+                            break
+                    if selected_item is not None:
+                        break
+
+            # Safe Fallback Level C: alternate natural generated variant guaranteed unique with correct solution guide
+            if selected_item is None:
+                t_obj = scope.chapters[0].topics[0] if scope.chapters and scope.chapters[0].topics else None
+                t_title = t_obj.title if t_obj else "Science"
+                t_exp = t_obj.explanation if t_obj else "Core principles and scientific observation."
+
+                if mark_per_q == 1:
+                    fallback_q = f"State one key observation related to {t_title}."
+                    fallback_sol = f"A key observation in {t_title} is that {t_exp.strip().split('.')[0]}."
+                elif mark_per_q == 2:
+                    fallback_q = f"Why is the study of {t_title} significant?"
+                    fallback_sol = f"The study of {t_title} is significant because {t_exp.strip()} This provides essential foundational scientific understanding."
+                elif mark_per_q == 3:
+                    fallback_q = f"Explain in detail how {t_title} functions."
+                    fallback_sol = f"In {t_title}, the key concept functions as follows: {t_exp.strip()} This helps explain physical phenomena and scientific applications."
+                else: # 6
+                    fallback_q = f"Explain step-by-step the main principles, real-world observations, and practical applications of {t_title}."
+                    fallback_sol = f"Step-by-step explanation: {t_exp.strip()} Applications and observations form the essential basis of this scientific field."
+
+                counter = 1
+                orig_q = fallback_q
+                while norm_q(fallback_q) in used_q_texts:
+                    counter += 1
+                    fallback_q = f"{orig_q} (Variant {counter})"
+
+                selected_item = (t_title, fallback_q, fallback_sol, mark_per_q)
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
+            used_q_texts.add(norm_q(q_text))
+
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))

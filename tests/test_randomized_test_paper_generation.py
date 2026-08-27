@@ -461,6 +461,54 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
 
         self.assertEqual(total_correct_score, 5.0)
 
+    def test_no_duplicate_questions_magnet_25m_and_full_syllabus_100m_seed_111_regression(self):
+        # 1. Properties of Magnet 25-mark random chapter test seed 111
+        magnet_scope = parse_test_paper_scope("Properties of Magnet chapter test", self.ctx, self.science_syl)
+        _, magnet_paper = render_test_paper(
+            self.science_syl,
+            magnet_scope,
+            context=self.ctx,
+            message="Properties of Magnet chapter test",
+            seed=111,
+        )
+
+        self.assertEqual(magnet_paper.total_marks, 25)
+        self.assertEqual(len(magnet_paper.questions), 12)
+
+        magnet_q_texts = [q.question_text.strip().casefold() for q in magnet_paper.questions]
+        self.assertEqual(
+            len(magnet_q_texts),
+            len(set(magnet_q_texts)),
+            f"Properties of Magnet test seed 111 contains duplicate questions: {magnet_q_texts}",
+        )
+        for q in magnet_paper.questions:
+            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
+            self.assertEqual(q.intended_marks, q.max_marks)
+
+        # 2. Full syllabus 100-mark random test seed 111
+        full_scope = parse_test_paper_scope("Full book test banao", self.ctx, self.science_syl)
+        _, full_paper = render_test_paper(
+            self.science_syl,
+            full_scope,
+            context=self.ctx,
+            message="Full book test banao",
+            seed=111,
+        )
+
+        self.assertEqual(full_paper.total_marks, 100)
+        self.assertEqual(len(full_paper.questions), 48)
+
+        full_q_texts = [q.question_text.strip().casefold() for q in full_paper.questions]
+        self.assertEqual(
+            len(full_q_texts),
+            len(set(full_q_texts)),
+            f"Full syllabus test seed 111 contains duplicate questions: {full_q_texts}",
+        )
+        for q in full_paper.questions:
+            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()))
+            self.assertEqual(q.intended_marks, q.max_marks)
+
 
 if __name__ == "__main__":
     unittest.main()
+
