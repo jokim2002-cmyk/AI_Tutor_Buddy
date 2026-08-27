@@ -558,6 +558,198 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
 
         self.assertEqual(wrong_q1_5_score, 0.0)
 
+    def test_std7_motion_force_speed_q1_q5_wrong_answer_guard_regression(self):
+        # Active Motion, Force and Speed 25-mark random chapter test seed 111 Q1-Q5 evaluation
+        motion_scope = parse_test_paper_scope("Motion, Force and Speed chapter test", self.ctx, self.science_syl)
+        _, motion_paper = render_test_paper(
+            self.science_syl,
+            motion_scope,
+            context=self.ctx,
+            message="Motion, Force and Speed chapter test",
+            seed=111,
+        )
+
+        q1_5 = motion_paper.questions[:5]
+        self.assertEqual(len(q1_5), 5)
+        q_map = {q.question_text.strip(): q for q in motion_paper.questions}
+
+        # 1. Q1: What quantity is obtained by dividing total distance covered by total time taken?
+        q1_txt = "What quantity is obtained by dividing total distance covered by total time taken?"
+        q1_guide = q_map[q1_txt].solution_guide if q1_txt in q_map else "Average speed."
+        s1_w, st1_w, _ = evaluate_single_test_answer(q1_txt, "Average speed is obtained by multiplying distance and time.", q1_guide, 1)
+        self.assertEqual(s1_w, 0.0)
+        self.assertEqual(st1_w, "Incorrect")
+
+        s1_c, st1_c, _ = evaluate_single_test_answer(q1_txt, "Average speed is obtained by dividing total distance covered by total time taken.", q1_guide, 1)
+        self.assertEqual(s1_c, 1.0)
+        self.assertEqual(st1_c, "Correct")
+
+        # 2. Q2: What can an unbalanced force change about a moving body?
+        q2_txt = "What can an unbalanced force change about a moving body?"
+        q2_guide = q_map[q2_txt].solution_guide if q2_txt in q_map else "It can change the speed or direction of motion."
+        s2_w, st2_w, _ = evaluate_single_test_answer(q2_txt, "An unbalanced force can never change the motion of a body.", q2_guide, 1)
+        self.assertEqual(s2_w, 0.0)
+        self.assertEqual(st2_w, "Incorrect")
+
+        s2_c, st2_c, _ = evaluate_single_test_answer(q2_txt, "An unbalanced force can change the speed or direction of motion of a body.", q2_guide, 1)
+        self.assertEqual(s2_c, 1.0)
+        self.assertEqual(st2_c, "Correct")
+
+        # 3. Q4: What type of motion is shown by the hands of a mechanical clock?
+        q4_txt = "What type of motion is shown by the hands of a mechanical clock?"
+        q4_guide = q_map[q4_txt].solution_guide if q4_txt in q_map else "Circular motion."
+        s4_w, st4_w, _ = evaluate_single_test_answer(q4_txt, "The hands of a mechanical clock show straight-line motion.", q4_guide, 1)
+        self.assertEqual(s4_w, 0.0)
+        self.assertEqual(st4_w, "Incorrect")
+
+        s4_c, st4_c, _ = evaluate_single_test_answer(q4_txt, "The hands of a mechanical clock show circular motion.", q4_guide, 1)
+        self.assertEqual(s4_c, 1.0)
+        self.assertEqual(st4_c, "Correct")
+
+        # 4. Q5: What is meant by motion relative to a reference point?
+        q5_txt = "What is meant by motion relative to a reference point?"
+        q5_guide = q_map[q5_txt].solution_guide if q5_txt in q_map else "Motion means a change in an object's position with time compared with the selected reference point."
+        s5_w, st5_w, _ = evaluate_single_test_answer(q5_txt, "Motion relative to a reference point means the object never changes position compared with that reference point.", q5_guide, 1)
+        self.assertEqual(s5_w, 0.0)
+        self.assertEqual(st5_w, "Incorrect")
+
+        s5_c, st5_c, _ = evaluate_single_test_answer(q5_txt, "Motion relative to a reference point means the object changes position compared with that reference point.", q5_guide, 1)
+        self.assertEqual(s5_c, 1.0)
+        self.assertEqual(st5_c, "Correct")
+
+        # 5. Evaluate full active Q1-Q5 set with correct answers => 5/25 (5 marks for Q1-Q5)
+        correct_answers = [
+            "Average speed is obtained by dividing total distance covered by total time taken.",
+            "An unbalanced force can change the speed or direction of motion of a body.",
+            "Kilometres per hour (km/h)",
+            "The hands of a mechanical clock show circular motion.",
+            "Motion relative to a reference point means the object changes position compared with that reference point.",
+        ]
+        correct_q1_5_score = 0.0
+        for i, q in enumerate(q1_5):
+            score, status, _ = evaluate_single_test_answer(q.question_text, correct_answers[i], q.solution_guide, 1)
+            self.assertEqual(score, 1.0, f"Question '{q.question_text}' failed correct evaluation")
+            self.assertEqual(status, "Correct")
+            correct_q1_5_score += score
+
+        self.assertEqual(correct_q1_5_score, 5.0)
+
+        # 6. Evaluate full active Q1-Q5 set with wrong answers => 0/25 (0 marks for Q1-Q5)
+        wrong_answers = [
+            "Average speed is obtained by multiplying distance and time.",
+            "An unbalanced force can never change the motion of a body.",
+            "Kilogram is used to measure speed.",
+            "The hands of a mechanical clock show straight-line motion.",
+            "Motion relative to a reference point means the object never changes position compared with that reference point.",
+        ]
+        wrong_q1_5_score = 0.0
+        for i, q in enumerate(q1_5):
+            score, status, _ = evaluate_single_test_answer(q.question_text, wrong_answers[i], q.solution_guide, 1)
+            self.assertEqual(score, 0.0, f"Question '{q.question_text}' with wrong answer '{wrong_answers[i]}' scored {score} instead of 0.0")
+            self.assertEqual(status, "Incorrect")
+            wrong_q1_5_score += score
+
+        self.assertEqual(wrong_q1_5_score, 0.0)
+
+    def test_centralized_strict_short_answer_evaluation_layer_regression(self):
+        from phase11_core import (
+            derive_structured_evaluation_rules,
+            evaluate_strict_short_answer,
+            evaluate_single_test_answer,
+        )
+
+        test_cases = [
+            # 1. speed formula multiply vs divide
+            {
+                "q": "What quantity is obtained by dividing total distance covered by total time taken?",
+                "guide": "Average speed.",
+                "wrong": "Average speed is obtained by multiplying distance and time.",
+                "correct": "Average speed is obtained by dividing total distance covered by total time taken.",
+                "forbidden": "multiply",
+            },
+            # 2. force never changes motion
+            {
+                "q": "What can an unbalanced force change about a moving body?",
+                "guide": "It can change the speed or direction of motion.",
+                "wrong": "An unbalanced force can never change the motion of a body.",
+                "correct": "An unbalanced force can change the speed or direction of motion.",
+                "forbidden": "never change",
+            },
+            # 3. straight-line vs circular clock motion
+            {
+                "q": "What type of motion is shown by the hands of a mechanical clock?",
+                "guide": "Circular motion.",
+                "wrong": "The hands of a mechanical clock show straight-line motion.",
+                "correct": "The hands of a mechanical clock show circular motion.",
+                "forbidden": "straight-line",
+            },
+            # 4. no position change vs relative motion
+            {
+                "q": "What is meant by motion relative to a reference point?",
+                "guide": "Motion means a change in an object's position with time compared with the selected reference point.",
+                "wrong": "Motion relative to a reference point means the object never changes position compared with that reference point.",
+                "correct": "Motion relative to a reference point means position changes compared with the reference point.",
+                "forbidden": "never changes position",
+            },
+            # 5. magnet middle vs poles
+            {
+                "q": "Where is the magnetic force of a bar magnet usually strongest?",
+                "guide": "It is usually strongest near the north and south poles at the two ends.",
+                "wrong": "The magnetic force is strongest in the middle of a bar magnet.",
+                "correct": "Magnetic force is strongest near the two poles at the ends.",
+                "forbidden": "middle",
+            },
+            # 6a. unlike pole contradictions
+            {
+                "q": "What happens when the north pole of one magnet is brought near the south pole of another?",
+                "guide": "The unlike poles attract each other.",
+                "wrong": "The north pole and south pole repel each other.",
+                "correct": "North and south poles attract each other.",
+                "forbidden": "repel",
+            },
+            # 6b. like pole contradictions
+            {
+                "q": "What happens when two south poles are brought close together?",
+                "guide": "The like poles repel each other.",
+                "wrong": "Two south poles attract each other.",
+                "correct": "Two south poles repel each other.",
+                "forbidden": "attract",
+            },
+            # 7. filtration vs evaporation
+            {
+                "q": "Name the process of separating an insoluble solid from a liquid using filter paper.",
+                "guide": "Filtration.",
+                "wrong": "The process of separating an insoluble solid from a liquid using filter paper is evaporation.",
+                "correct": "The separation method is filtration.",
+                "forbidden": "evaporation",
+            },
+            # 8. NPK fake elements
+            {
+                "q": "What major plant nutrients are represented by N, P, and K?",
+                "guide": "Nitrogen, phosphorus, and potassium.",
+                "wrong": "N, P, and K stand for neon, phosphorus, and krypton.",
+                "correct": "N, P, and K stand for nitrogen, phosphorus, and potassium.",
+                "forbidden": "neon",
+            },
+        ]
+
+        for tc in test_cases:
+            rules = derive_structured_evaluation_rules(tc["q"], tc["guide"])
+            self.assertTrue(
+                rules.forbidden_concepts or rules.contradiction_patterns or rules.required_concepts,
+                f"No structured rules derived for question: {tc['q']}"
+            )
+
+            # Evaluate wrong answer via evaluate_single_test_answer
+            w_score, w_status, _ = evaluate_single_test_answer(tc["q"], tc["wrong"], tc["guide"], 1, rules=rules)
+            self.assertEqual(w_score, 0.0, f"Failed zero score for contradiction in '{tc['q']}': wrong answer '{tc['wrong']}' got {w_score}")
+            self.assertEqual(w_status, "Incorrect")
+
+            # Evaluate correct answer via evaluate_single_test_answer
+            c_score, c_status, _ = evaluate_single_test_answer(tc["q"], tc["correct"], tc["guide"], 1, rules=rules)
+            self.assertEqual(c_score, 1.0, f"Failed full score for correct answer in '{tc['q']}': got {c_score}")
+            self.assertEqual(c_status, "Correct")
+
     def test_no_duplicate_questions_magnet_25m_and_full_syllabus_100m_seed_111_regression(self):
         from phase11_core import extract_question_intent
 

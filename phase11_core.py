@@ -1742,6 +1742,173 @@ def _std7_natural_satellite_decision(
     return False
 
 
+def _std7_speed_average_formula_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide average speed formula / dividing distance by time question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("total distance" in clean_question or "dividing" in clean_question or "distance" in clean_question)
+        and ("total time" in clean_question or "time" in clean_question or "speed" in clean_question)
+    ):
+        return None
+
+    if not (
+        "dividing total distance" in clean_question
+        or "quantity is obtained by dividing" in clean_question
+        or ("total distance" in clean_question and "total time" in clean_question)
+        or ("distance" in clean_question and "time" in clean_question and ("dividing" in clean_question or "divided" in clean_question or "quantity" in clean_question))
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_operation_indicators = {"multiply", "multiplying", "multiplied", "product"}
+    has_wrong_operation = bool(tokens & wrong_operation_indicators) or "product of" in clean_student or "distance times time" in clean_student
+
+    if has_wrong_operation:
+        return False
+
+    valid_speed_indicators = {
+        "dividing", "divided", "divide", "division", "speed", "average"
+    }
+    has_valid_speed = bool(tokens & valid_speed_indicators) or "/" in clean_student or "distance by time" in clean_student
+
+    if has_valid_speed and not has_wrong_operation:
+        return True
+
+    return None
+
+
+def _std7_unbalanced_force_effect_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide what an unbalanced force can change about a moving body question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("unbalanced" in clean_question or "unbalanced force" in clean_question)
+        and ("force" in clean_question or "change" in clean_question or "moving body" in clean_question or "body" in clean_question)
+    ):
+        return None
+
+    if not ("unbalanced force" in clean_question or ("unbalanced" in clean_question and "change" in clean_question)):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    negation_words = {"never", "cannot", "no", "not", "without", "none"}
+    has_negation = bool(tokens & negation_words) or "can not" in clean_student or "no change" in clean_student or "does not change" in clean_student or "will not change" in clean_student
+
+    if "never change" in clean_student or "cannot change" in clean_student or "can not change" in clean_student or "no change" in clean_student or "does not change" in clean_student or "will not change" in clean_student:
+        return False
+
+    if has_negation and ("never change the motion" in clean_student or "cannot change motion" in clean_student or "no change in motion" in clean_student or "cannot change speed" in clean_student or "never change speed" in clean_student):
+        return False
+
+    valid_change_targets = {
+        "speed", "direction", "shape", "state", "motion", "velocity", "path", "accelerate", "acceleration"
+    }
+    has_valid_target = bool(tokens & valid_change_targets) or "state of motion" in clean_student
+
+    if has_valid_target and not (has_negation and ("never" in clean_student or "cannot" in clean_student or "no change" in clean_student or "does not" in clean_student)):
+        return True
+
+    return None
+
+
+def _std7_clock_hands_motion_type_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide motion type of hands of a mechanical clock question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("clock" in clean_question or "mechanical clock" in clean_question)
+        and ("hands" in clean_question or "motion" in clean_question or "type" in clean_question)
+    ):
+        return None
+
+    if not (("hands" in clean_question and "clock" in clean_question) or "mechanical clock" in clean_question):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_motion_types = {
+        "straight", "linear", "rectilinear", "oscillatory", "random"
+    }
+    has_wrong_motion = bool(tokens & wrong_motion_types) or "straight line" in clean_student or "straight-line" in clean_student
+
+    if has_wrong_motion:
+        return False
+
+    valid_motion_types = {
+        "circular", "rotational", "rotary", "revolution", "periodic"
+    }
+    has_valid_motion = bool(tokens & valid_motion_types)
+
+    if has_valid_motion and not has_wrong_motion:
+        return True
+
+    return None
+
+
+def _std7_motion_reference_point_definition_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide motion relative to a reference point definition question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("reference point" in clean_question or "reference" in clean_question)
+        and ("motion" in clean_question or "relative" in clean_question or "meant" in clean_question or "position" in clean_question)
+    ):
+        return None
+
+    if not ("reference point" in clean_question and ("motion" in clean_question or "relative" in clean_question)):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    wrong_position_claims = {
+        "never changes position", "never change position", "does not change position",
+        "no change in position", "without changing position", "position stays same",
+        "position does not change", "same position", "always at rest", "no position change"
+    }
+    has_wrong_claim = any(claim in clean_student for claim in wrong_position_claims) or ("never" in clean_student and "change" in clean_student and "position" in clean_student)
+
+    if has_wrong_claim:
+        return False
+
+    valid_position_claims = {
+        "changes position", "change in position", "change of position", "changes its position",
+        "position changes", "position change", "moving relative"
+    }
+    has_valid_claim = any(claim in clean_student for claim in valid_position_claims) or ("changes" in tokens and "position" in tokens) or ("change" in tokens and "position" in tokens)
+
+    if has_valid_claim and not has_wrong_claim:
+        return True
+
+    return None
+
+
 def _evaluate_student_answer(
     student_answer: str,
     guide: str,
@@ -1755,125 +1922,10 @@ def _evaluate_student_answer(
         )
 
 
-    magnet_decision = _std7_magnet_material_classification_decision(student_answer, question)
-    if magnet_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly classifies the magnetic and non-magnetic materials in the installed solution.",
-        )
-    if magnet_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer reverses the installed material classification.",
-        )
-
-    magnet_force_decision = _std7_magnet_force_strongest_location_decision(student_answer, question)
-    if magnet_force_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly identifies that magnetic force is strongest near the magnet poles/ends.",
-        )
-    if magnet_force_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer incorrectly states that magnetic force is strongest in the middle of a bar magnet.",
-        )
-
-    field_lines_decision = _std7_magnetic_field_lines_density_decision(student_answer, question)
-    if field_lines_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly identifies that closely spaced field lines represent a stronger magnetic field.",
-        )
-    if field_lines_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer incorrectly states that closely spaced field lines represent a weaker magnetic field.",
-        )
-
-    unlike_poles_decision = _std7_magnet_unlike_poles_interaction_decision(student_answer, question)
-    if unlike_poles_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly identifies that unlike magnetic poles attract each other.",
-        )
-    if unlike_poles_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer incorrectly states that unlike magnetic poles repel each other.",
-        )
-
-    like_poles_decision = _std7_magnet_like_poles_interaction_decision(student_answer, question)
-    if like_poles_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly identifies that like magnetic poles repel each other.",
-        )
-    if like_poles_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer incorrectly states that like magnetic poles attract each other.",
-        )
-
-    water_decision = _std7_water_states_classification_decision(student_answer, question)
-    if water_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly names the three physical states of water.",
-        )
-    if water_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer does not correctly name all three physical states of water.",
-        )
-
-    npk_decision = _std7_npk_nutrients_decision(student_answer, question)
-    if npk_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly names the three major plant nutrients (nitrogen, phosphorus, potassium).",
-        )
-    if npk_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer does not correctly name nitrogen, phosphorus, and potassium.",
-        )
-
-    osc_decision = _std7_oscillatory_motion_example_decision(student_answer, question)
-    if osc_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly provides a valid example of oscillatory motion.",
-        )
-    if osc_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer does not give a valid example of oscillatory motion.",
-        )
-
-    filt_decision = _std7_filtration_insoluble_solid_decision(student_answer, question)
-    if filt_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly names filtration as the separation method.",
-        )
-    if filt_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer does not correctly identify filtration as the separation method using filter paper.",
-        )
-
-    sat_decision = _std7_natural_satellite_decision(student_answer, question)
-    if sat_decision is True:
-        return (
-            "Result: Correct.",
-            "Your answer correctly defines/gives an example of a natural satellite.",
-        )
-    if sat_decision is False:
-        return (
-            "Result: Incorrect.",
-            "Your answer incorrectly defines a natural satellite as artificial/man-made.",
-        )
+    strict_res = evaluate_strict_short_answer(question, student_answer, guide, 1)
+    if strict_res is not None:
+        score, status, fb = strict_res
+        return f"Result: {status}.", fb
 
     # 1. Check Yes/No decision
     student_decision = re.match(r"^\s*(yes|no)\b", student_answer.strip(), flags=re.IGNORECASE)
@@ -2175,6 +2227,16 @@ class TestPaperScope:
     description: str
 
 
+@dataclass
+class StructuredEvaluationRules:
+    required_concepts: list[str] = field(default_factory=list)
+    forbidden_concepts: list[str] = field(default_factory=list)
+    numeric_formula: str = ""
+    expected_value: str = ""
+    unit: str = ""
+    contradiction_patterns: list[str] = field(default_factory=list)
+
+
 @dataclass(frozen=True)
 class TestPaperQuestionItem:
     question_num: int
@@ -2184,6 +2246,173 @@ class TestPaperQuestionItem:
     max_marks: int
     solution_guide: str
     intended_marks: int = 1
+    required_concepts: list[str] = field(default_factory=list)
+    forbidden_concepts: list[str] = field(default_factory=list)
+    numeric_formula: str = ""
+    expected_value: str = ""
+    unit: str = ""
+    contradiction_patterns: list[str] = field(default_factory=list)
+
+
+def derive_structured_evaluation_rules(
+    question_text: str,
+    solution_guide: str,
+    topic_title: str = "",
+) -> StructuredEvaluationRules:
+    """Derive centralized structured evaluation rules for a test question across Std 7 Science."""
+    q_clean = _normalize_syllabus_lookup_text(question_text)
+    g_clean = _normalize_syllabus_lookup_text(solution_guide)
+    rules = StructuredEvaluationRules()
+
+    # 1. Average speed / Formula (multiply vs divide)
+    if (
+        ("total distance" in q_clean or "dividing" in q_clean or "distance" in q_clean)
+        and ("total time" in q_clean or "time" in q_clean or "speed" in q_clean)
+        and ("dividing" in q_clean or "quantity" in q_clean or "formula" in q_clean or "average speed" in q_clean)
+    ):
+        rules.required_concepts = ["speed", "divide", "distance", "time", "dividing"]
+        rules.forbidden_concepts = ["multiply", "multiplying", "multiplied", "product"]
+        rules.contradiction_patterns = [r"\bmultiplying?\b", r"\bproduct of\b", r"\bdistance times time\b"]
+
+    # 2. Unbalanced force effect
+    elif "unbalanced" in q_clean and ("force" in q_clean or "change" in q_clean or "body" in q_clean):
+        rules.required_concepts = ["speed", "direction", "motion", "shape", "state"]
+        rules.forbidden_concepts = ["never change", "cannot change", "can not change", "no change", "does not change", "will not change"]
+        rules.contradiction_patterns = [r"\bnever change\b", r"\bcannot change\b", r"\bno change\b", r"\bdoes not change\b"]
+
+    # 3. Mechanical clock hands motion
+    elif ("hands" in q_clean and "clock" in q_clean) or "mechanical clock" in q_clean:
+        rules.required_concepts = ["circular", "rotational", "rotary"]
+        rules.forbidden_concepts = ["straight", "linear", "rectilinear", "oscillatory", "random"]
+        rules.contradiction_patterns = [r"\bstraight-?line\b", r"\blinear\b", r"\brectilinear\b", r"\boscillatory\b"]
+
+    # 4. Motion relative to reference point
+    elif "reference point" in q_clean and ("motion" in q_clean or "relative" in q_clean):
+        rules.required_concepts = ["position", "change", "reference point"]
+        rules.forbidden_concepts = ["never changes position", "never change position", "does not change position", "no change in position", "without changing position", "position stays same", "always at rest"]
+        rules.contradiction_patterns = [r"\bnever change(s)? position\b", r"\bno change in position\b", r"\bdoes not change position\b"]
+
+    # 5. Bar magnet strongest location (poles vs middle)
+    elif ("magnet" in q_clean or "magnetic" in q_clean) and ("strongest" in q_clean or "force" in q_clean or "where" in q_clean):
+        rules.required_concepts = ["pole", "poles", "end", "ends"]
+        rules.forbidden_concepts = ["middle", "centre", "center", "central", "midway"]
+        rules.contradiction_patterns = [r"\bmiddle\b", r"\bcentre\b", r"\bcenter\b", r"\bmidway\b"]
+
+    # 6. Magnetic field line density
+    elif ("field line" in q_clean or "field-line" in q_clean or "closely spaced" in q_clean or "crowded" in q_clean) and ("field" in q_clean or "magnetic" in q_clean):
+        rules.required_concepts = ["strong", "stronger", "great", "denser"]
+        rules.forbidden_concepts = ["weak", "weaker", "smallest", "less"]
+        rules.contradiction_patterns = [r"\bweaker?\b", r"\bless\b"]
+
+    # 7. Unlike poles (North & South)
+    elif ("north pole" in q_clean and "south pole" in q_clean) or "unlike poles" in q_clean or ("unlike" in q_clean and "pole" in q_clean):
+        rules.required_concepts = ["attract", "attracts", "attraction"]
+        rules.forbidden_concepts = ["repel", "repels", "repulsion", "repelling", "push away"]
+        rules.contradiction_patterns = [r"\brepel\b", r"\brepulsion\b", r"\bpush away\b"]
+
+    # 8. Like poles (Two South / Two North)
+    elif "two south poles" in q_clean or "two north poles" in q_clean or "like poles" in q_clean:
+        rules.required_concepts = ["repel", "repels", "repulsion"]
+        rules.forbidden_concepts = ["attract", "attracts", "attraction", "pull together"]
+        rules.contradiction_patterns = [r"\battract\b", r"\battraction\b", r"\bpull together\b"]
+
+    # 9. Filtration vs Evaporation/Separation
+    elif ("filter paper" in q_clean or "filtration" in q_clean) and ("insoluble" in q_clean or "solid" in q_clean or "method" in q_clean or "process" in q_clean):
+        rules.required_concepts = ["filtration", "filter", "filtering"]
+        rules.forbidden_concepts = ["evaporation", "sedimentation", "decantation", "distillation", "handpicking", "sieving", "winnowing"]
+        rules.contradiction_patterns = [r"\bevaporation\b", r"\bdecantation\b", r"\bsedimentation\b", r"\bdistillation\b"]
+
+    # 10. NPK Plant Nutrients
+    elif ("n, p" in q_clean or "n,p" in q_clean or "npk" in q_clean or "represented by n" in q_clean) and ("nutrient" in q_clean or "nutrients" in q_clean or "major" in q_clean or "stand" in q_clean):
+        rules.required_concepts = ["nitrogen", "phosphorus", "potassium"]
+        rules.forbidden_concepts = ["neon", "krypton", "argon", "helium", "xenon", "radon", "sodium", "calcium", "magnesium", "iron", "copper", "zinc", "carbon", "oxygen", "hydrogen"]
+        rules.contradiction_patterns = [r"\bneon\b", r"\bkrypton\b", r"\bargon\b", r"\bsodium\b", r"\bcalcium\b", r"\bcarbon\b"]
+
+    # 11. Water 3 physical states
+    elif "water" in q_clean and ("state" in q_clean or "states" in q_clean or "forms" in q_clean) and ("three" in q_clean or "3" in q_clean or "physical" in q_clean):
+        rules.required_concepts = ["solid", "liquid", "gas", "ice", "vapour", "water"]
+
+    # 12. Natural satellite
+    elif "satellite" in q_clean and ("natural" in q_clean or "example" in q_clean or "what is" in q_clean):
+        rules.required_concepts = ["moon", "celestial"]
+        rules.forbidden_concepts = ["manmade", "artificial", "human", "machine", "rocket", "airplane"]
+        rules.contradiction_patterns = [r"\bman-?made\b", r"\bartificial\b"]
+
+    # Numeric extraction
+    nums = re.findall(r"-?\d+(?:\.\d+)?", g_clean)
+    if nums:
+        rules.expected_value = nums[-1]
+    units = [w for w in re.findall(r"[a-z/]+", g_clean) if w in {"km/h", "m/s", "cm", "mm", "kg", "g", "seconds", "hours", "minutes", "students", "degrees", "percent"}]
+    if units:
+        rules.unit = units[0]
+
+    return rules
+
+
+def evaluate_strict_short_answer(
+    q_text: str,
+    user_ans: str,
+    sol_guide: str,
+    max_marks: int,
+    rules: StructuredEvaluationRules | None = None,
+) -> tuple[float, str, str] | None:
+    """Centralized strict short-answer evaluation layer."""
+    if not user_ans or not user_ans.strip():
+        return 0.0, "Not answered", "No answer provided."
+
+    if rules is None:
+        rules = derive_structured_evaluation_rules(q_text, sol_guide)
+
+    # Magnet 3-material classification special handler if question matches
+    magnet_mat = _std7_magnet_material_classification_decision(user_ans, q_text)
+    if magnet_mat is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif magnet_mat is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    clean_student = _normalize_syllabus_lookup_text(user_ans)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    # 1. STRICT FORBIDDEN CONCEPTS & CONTRADICTION PATTERNS CHECK FIRST
+    if rules.forbidden_concepts or rules.contradiction_patterns:
+        has_forbidden_word = bool(tokens & set(rules.forbidden_concepts)) or any(fc in clean_student for fc in rules.forbidden_concepts)
+        has_contradiction_pattern = any(bool(re.search(pat, clean_student)) for pat in rules.contradiction_patterns)
+
+        if has_forbidden_word or has_contradiction_pattern:
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    # 2. REQUIRED CONCEPTS CHECK
+    if rules.required_concepts:
+        req_set = set(rules.required_concepts)
+        # Check special multi-concept sets
+        if "nitrogen" in req_set and "phosphorus" in req_set and "potassium" in req_set:
+            has_n = "nitrogen" in tokens or "nitrogene" in clean_student
+            has_p = "phosphorus" in tokens or "phosphorous" in clean_student
+            has_k = "potassium" in tokens or "potasium" in clean_student
+            if has_n and has_p and has_k:
+                return float(max_marks), "Correct", "Correct answer."
+            else:
+                return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        if "solid" in req_set and "liquid" in req_set and ("gas" in req_set or "vapour" in req_set):
+            norm_student = clean_student.replace("water vapour", "watervapour").replace("water vapor", "watervapour")
+            s_tokens = set(norm_student.split())
+            has_solid = bool(s_tokens & {"solid", "ice"})
+            has_liquid = bool(s_tokens & {"liquid", "water"})
+            has_gas = bool(s_tokens & {"gas", "gaseous", "vapour", "watervapour", "steam"})
+            if has_solid and has_liquid and has_gas:
+                return float(max_marks), "Correct", "Correct answer."
+            else:
+                return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        matched_req = bool(tokens & req_set) or any(rc in clean_student for rc in rules.required_concepts)
+        if matched_req:
+            return float(max_marks), "Correct", "Correct answer."
+
+    return None
 
 
 @dataclass
@@ -2284,69 +2513,14 @@ def evaluate_single_test_answer(
     user_ans: str,
     sol_guide: str,
     max_marks: int,
+    rules: StructuredEvaluationRules | None = None,
 ) -> tuple[float, str, str]:
     if not user_ans or not user_ans.strip():
         return 0.0, "Not answered", "No answer provided."
 
-    magnet_decision = _std7_magnet_material_classification_decision(user_ans, q_text)
-    if magnet_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif magnet_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    magnet_force_decision = _std7_magnet_force_strongest_location_decision(user_ans, q_text)
-    if magnet_force_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif magnet_force_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    field_lines_decision = _std7_magnetic_field_lines_density_decision(user_ans, q_text)
-    if field_lines_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif field_lines_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    unlike_poles_decision = _std7_magnet_unlike_poles_interaction_decision(user_ans, q_text)
-    if unlike_poles_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif unlike_poles_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    like_poles_decision = _std7_magnet_like_poles_interaction_decision(user_ans, q_text)
-    if like_poles_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif like_poles_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    water_decision = _std7_water_states_classification_decision(user_ans, q_text)
-    if water_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif water_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    npk_decision = _std7_npk_nutrients_decision(user_ans, q_text)
-    if npk_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif npk_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    osc_decision = _std7_oscillatory_motion_example_decision(user_ans, q_text)
-    if osc_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif osc_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    filt_decision = _std7_filtration_insoluble_solid_decision(user_ans, q_text)
-    if filt_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif filt_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
-
-    sat_decision = _std7_natural_satellite_decision(user_ans, q_text)
-    if sat_decision is True:
-        return float(max_marks), "Correct", "Correct answer."
-    elif sat_decision is False:
-        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+    strict_res = evaluate_strict_short_answer(q_text, user_ans, sol_guide, max_marks, rules=rules)
+    if strict_res is not None:
+        return strict_res
 
     u_clean = user_ans.strip().casefold()
     g_clean = sol_guide.strip().casefold()
@@ -4429,6 +4603,7 @@ def render_test_paper(
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
+            eval_rules = derive_structured_evaluation_rules(q_text, sol_text, topic_title)
             items.append(
                 TestPaperQuestionItem(
                     question_num=q_num,
@@ -4438,6 +4613,12 @@ def render_test_paper(
                     max_marks=mark_per_q,
                     solution_guide=sol_text,
                     intended_marks=mark_per_q,
+                    required_concepts=eval_rules.required_concepts,
+                    forbidden_concepts=eval_rules.forbidden_concepts,
+                    numeric_formula=eval_rules.numeric_formula,
+                    expected_value=eval_rules.expected_value,
+                    unit=eval_rules.unit,
+                    contradiction_patterns=eval_rules.contradiction_patterns,
                 )
             )
             q_num += 1
