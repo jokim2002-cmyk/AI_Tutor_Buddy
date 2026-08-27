@@ -1426,6 +1426,158 @@ def _std7_magnet_material_classification_decision(
     return None
 
 
+def _std7_magnet_force_strongest_location_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide where magnetic force is strongest question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("magnet" in clean_question or "magnetic" in clean_question)
+        and ("strongest" in clean_question or "force" in clean_question or "where" in clean_question)
+    ):
+        return None
+
+    if not ("strongest" in clean_question or ("where" in clean_question and "force" in clean_question)):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    middle_indicators = {"middle", "centre", "center", "central", "midway", "between"}
+    has_middle_claim = bool(tokens & middle_indicators)
+
+    pole_indicators = {"pole", "poles", "end", "ends", "terminal", "terminals"}
+    has_pole_claim = bool(tokens & pole_indicators) or "north and south" in clean_student
+
+    if has_middle_claim and not has_pole_claim:
+        return False
+    if has_middle_claim and ("strongest in the middle" in clean_student or "strongest in the centre" in clean_student or "strongest in the center" in clean_student):
+        return False
+
+    if has_pole_claim and not has_middle_claim:
+        return True
+
+    return None
+
+
+def _std7_magnetic_field_lines_density_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide magnetic field line density / crowded lines question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("closely spaced" in clean_question or "crowded" in clean_question or "field line" in clean_question or "field-line" in clean_question or "lines" in clean_question)
+        and ("field" in clean_question or "magnetic" in clean_question or "diagram" in clean_question)
+    ):
+        return None
+
+    if not ("field line" in clean_question or "field-line" in clean_question or "closely spaced" in clean_question or "crowded" in clean_question):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    weak_indicators = {"weak", "weaker", "smallest", "small", "less"}
+    strong_indicators = {"strong", "stronger", "great", "greater", "greatest", "maximum", "high", "denser"}
+
+    has_weak_claim = bool(tokens & weak_indicators)
+    has_strong_claim = bool(tokens & strong_indicators)
+
+    if has_weak_claim and not has_strong_claim:
+        return False
+    if "weaker magnetic field" in clean_student or "weak magnetic field" in clean_student or "weaker field" in clean_student or "weak field" in clean_student:
+        return False
+
+    if has_strong_claim and not has_weak_claim:
+        return True
+
+    return None
+
+
+def _std7_magnet_unlike_poles_interaction_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide unlike poles (north and south) interaction question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        ("north pole" in clean_question and "south pole" in clean_question)
+        or "unlike poles" in clean_question
+        or ("unlike" in clean_question and "pole" in clean_question)
+        or ("opposite" in clean_question and "pole" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    repel_indicators = {"repel", "repels", "repulsion", "repelling", "push", "pushed", "pushing"}
+    attract_indicators = {"attract", "attracts", "attraction", "attracting", "pull", "pulled", "pulling"}
+
+    has_repel_claim = bool(tokens & repel_indicators) or "push away" in clean_student
+    has_attract_claim = bool(tokens & attract_indicators) or "move toward" in clean_student or "moves toward" in clean_student
+
+    if has_repel_claim and not has_attract_claim:
+        return False
+    if "repel each other" in clean_student or "repel" in clean_student or "push away" in clean_student:
+        if not has_attract_claim:
+            return False
+
+    if has_attract_claim and not has_repel_claim:
+        return True
+
+    return None
+
+
+def _std7_magnet_like_poles_interaction_decision(
+    student_answer: str,
+    question: str,
+) -> bool | None:
+    """Decide like poles (two south poles / two north poles) interaction question evaluation locally."""
+    clean_question = _normalize_syllabus_lookup_text(question)
+    if not (
+        "two south poles" in clean_question
+        or "two north poles" in clean_question
+        or "like poles" in clean_question
+        or ("same" in clean_question and "pole" in clean_question)
+    ):
+        return None
+
+    clean_student = _normalize_syllabus_lookup_text(student_answer)
+    if " my answer " in f" {clean_student} ":
+        clean_student = clean_student.split(" my answer ", 1)[1]
+
+    tokens = set(re.findall(r"\w+", clean_student))
+
+    attract_indicators = {"attract", "attracts", "attraction", "attracting", "pull", "pulled", "pulling"}
+    repel_indicators = {"repel", "repels", "repulsion", "repelling", "push", "pushed", "pushing"}
+
+    has_attract_claim = bool(tokens & attract_indicators) or "move toward" in clean_student or "moves toward" in clean_student
+    has_repel_claim = bool(tokens & repel_indicators) or "push away" in clean_student
+
+    if has_attract_claim and not has_repel_claim:
+        return False
+    if "attract each other" in clean_student or "attract" in clean_student:
+        if not has_repel_claim:
+            return False
+
+    if has_repel_claim and not has_attract_claim:
+        return True
+
+    return None
+
+
 def _std7_water_states_classification_decision(
     student_answer: str,
     question: str,
@@ -1607,6 +1759,54 @@ def _evaluate_student_answer(
         return (
             "Result: Incorrect.",
             "Your answer reverses the installed material classification.",
+        )
+
+    magnet_force_decision = _std7_magnet_force_strongest_location_decision(student_answer, question)
+    if magnet_force_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly identifies that magnetic force is strongest near the magnet poles/ends.",
+        )
+    if magnet_force_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer incorrectly states that magnetic force is strongest in the middle of a bar magnet.",
+        )
+
+    field_lines_decision = _std7_magnetic_field_lines_density_decision(student_answer, question)
+    if field_lines_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly identifies that closely spaced field lines represent a stronger magnetic field.",
+        )
+    if field_lines_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer incorrectly states that closely spaced field lines represent a weaker magnetic field.",
+        )
+
+    unlike_poles_decision = _std7_magnet_unlike_poles_interaction_decision(student_answer, question)
+    if unlike_poles_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly identifies that unlike magnetic poles attract each other.",
+        )
+    if unlike_poles_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer incorrectly states that unlike magnetic poles repel each other.",
+        )
+
+    like_poles_decision = _std7_magnet_like_poles_interaction_decision(student_answer, question)
+    if like_poles_decision is True:
+        return (
+            "Result: Correct.",
+            "Your answer correctly identifies that like magnetic poles repel each other.",
+        )
+    if like_poles_decision is False:
+        return (
+            "Result: Incorrect.",
+            "Your answer incorrectly states that like magnetic poles attract each other.",
         )
 
     water_decision = _std7_water_states_classification_decision(student_answer, question)
@@ -2086,6 +2286,30 @@ def evaluate_single_test_answer(
     if magnet_decision is True:
         return float(max_marks), "Correct", "Correct answer."
     elif magnet_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    magnet_force_decision = _std7_magnet_force_strongest_location_decision(user_ans, q_text)
+    if magnet_force_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif magnet_force_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    field_lines_decision = _std7_magnetic_field_lines_density_decision(user_ans, q_text)
+    if field_lines_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif field_lines_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    unlike_poles_decision = _std7_magnet_unlike_poles_interaction_decision(user_ans, q_text)
+    if unlike_poles_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif unlike_poles_decision is False:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    like_poles_decision = _std7_magnet_like_poles_interaction_decision(user_ans, q_text)
+    if like_poles_decision is True:
+        return float(max_marks), "Correct", "Correct answer."
+    elif like_poles_decision is False:
         return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     water_decision = _std7_water_states_classification_decision(user_ans, q_text)

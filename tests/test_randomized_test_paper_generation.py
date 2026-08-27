@@ -461,6 +461,102 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
 
         self.assertEqual(total_correct_score, 5.0)
 
+    def test_std7_properties_of_magnet_q1_q5_wrong_answer_guard_regression(self):
+        # Active Properties of Magnet 25-mark random chapter test seed 111 Q1-Q5 evaluation
+        magnet_scope = parse_test_paper_scope("Properties of Magnet chapter test", self.ctx, self.science_syl)
+        _, magnet_paper = render_test_paper(
+            self.science_syl,
+            magnet_scope,
+            context=self.ctx,
+            message="Properties of Magnet chapter test",
+            seed=111,
+        )
+
+        q1_5 = magnet_paper.questions[:5]
+        self.assertEqual(len(q1_5), 5)
+        q_map = {q.question_text.strip(): q for q in magnet_paper.questions}
+
+        # 1. Q1: Where is the magnetic force of a bar magnet usually strongest?
+        q1_txt = "Where is the magnetic force of a bar magnet usually strongest?"
+        q1_guide = q_map[q1_txt].solution_guide if q1_txt in q_map else "It is usually strongest near the north and south poles at the two ends of the bar magnet."
+        s1_w, st1_w, _ = evaluate_single_test_answer(q1_txt, "The magnetic force is strongest in the middle of a bar magnet.", q1_guide, 1)
+        self.assertEqual(s1_w, 0.0)
+        self.assertEqual(st1_w, "Incorrect")
+
+        s1_w2, st1_w2, _ = evaluate_single_test_answer(q1_txt, "Magnetic force is strongest in the centre of a magnet.", q1_guide, 1)
+        self.assertEqual(s1_w2, 0.0)
+        self.assertEqual(st1_w2, "Incorrect")
+
+        s1_c, st1_c, _ = evaluate_single_test_answer(q1_txt, "Magnetic force is strongest near the two poles/ends.", q1_guide, 1)
+        self.assertEqual(s1_c, 1.0)
+        self.assertEqual(st1_c, "Correct")
+
+        # 2. Q3: In a field-line diagram, what does a region of closely spaced lines represent?
+        q3_txt = "In a field-line diagram, what does a region of closely spaced lines represent?"
+        q3_guide = q_map[q3_txt].solution_guide if q3_txt in q_map else "It represents a stronger magnetic field in that region."
+        s3_w, st3_w, _ = evaluate_single_test_answer(q3_txt, "Closely spaced magnetic field lines represent a weaker magnetic field.", q3_guide, 1)
+        self.assertEqual(s3_w, 0.0)
+        self.assertEqual(st3_w, "Incorrect")
+
+        s3_c, st3_c, _ = evaluate_single_test_answer(q3_txt, "Closely spaced field lines represent a stronger magnetic field.", q3_guide, 1)
+        self.assertEqual(s3_c, 1.0)
+        self.assertEqual(st3_c, "Correct")
+
+        # 3. Q4: What happens when the north pole of one magnet is brought near the south pole of another?
+        q4_txt = "What happens when the north pole of one magnet is brought near the south pole of another?"
+        q4_guide = q_map[q4_txt].solution_guide if q4_txt in q_map else "The unlike poles attract each other."
+        s4_w, st4_w, _ = evaluate_single_test_answer(q4_txt, "The north pole and south pole repel each other.", q4_guide, 1)
+        self.assertEqual(s4_w, 0.0)
+        self.assertEqual(st4_w, "Incorrect")
+
+        s4_c, st4_c, _ = evaluate_single_test_answer(q4_txt, "North and south poles attract.", q4_guide, 1)
+        self.assertEqual(s4_c, 1.0)
+        self.assertEqual(st4_c, "Correct")
+
+        # 4. Q5: What happens when two south poles are brought close together?
+        q5_txt = "What happens when two south poles are brought close together?"
+        q5_guide = q_map[q5_txt].solution_guide if q5_txt in q_map else "The like poles repel each other."
+        s5_w, st5_w, _ = evaluate_single_test_answer(q5_txt, "Two south poles attract each other.", q5_guide, 1)
+        self.assertEqual(s5_w, 0.0)
+        self.assertEqual(st5_w, "Incorrect")
+
+        s5_c, st5_c, _ = evaluate_single_test_answer(q5_txt, "Two south poles repel.", q5_guide, 1)
+        self.assertEqual(s5_c, 1.0)
+        self.assertEqual(st5_c, "Correct")
+
+        # 5. Evaluate full active Q1-Q5 set with correct answers => 5/25 (5 marks for Q1-Q5)
+        correct_q1_5_score = 0.0
+        for q in q1_5:
+            score, status, _ = evaluate_single_test_answer(q.question_text, q.solution_guide, q.solution_guide, 1)
+            self.assertEqual(score, 1.0, f"Question '{q.question_text}' failed correct evaluation")
+            self.assertEqual(status, "Correct")
+            correct_q1_5_score += score
+
+        self.assertEqual(correct_q1_5_score, 5.0)
+
+        # 6. Evaluate full active Q1-Q5 set with wrong answers => 0/25 (0 marks for Q1-Q5)
+        wrong_q1_5_score = 0.0
+        for q in q1_5:
+            q_txt = q.question_text
+            g_txt = q.solution_guide
+            if "where" in q_txt.casefold() or "strongest" in q_txt.casefold():
+                w_ans = "The magnetic force is strongest in the middle of a bar magnet."
+            elif "closely spaced" in q_txt.casefold() or "field line" in q_txt.casefold():
+                w_ans = "Closely spaced magnetic field lines represent a weaker magnetic field."
+            elif "north pole" in q_txt.casefold() and "south pole" in q_txt.casefold():
+                w_ans = "The north pole and south pole repel each other."
+            elif "two south poles" in q_txt.casefold() or "like poles" in q_txt.casefold():
+                w_ans = "Two south poles attract each other."
+            else:
+                w_ans = "This answer is completely wrong and irrelevant."
+
+            score, status, _ = evaluate_single_test_answer(q_txt, w_ans, g_txt, 1)
+            self.assertEqual(score, 0.0, f"Question '{q_txt}' with wrong answer '{w_ans}' scored {score} instead of 0.0")
+            self.assertEqual(status, "Incorrect")
+            wrong_q1_5_score += score
+
+        self.assertEqual(wrong_q1_5_score, 0.0)
+
     def test_no_duplicate_questions_magnet_25m_and_full_syllabus_100m_seed_111_regression(self):
         from phase11_core import extract_question_intent
 
