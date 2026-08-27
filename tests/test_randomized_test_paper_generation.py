@@ -734,6 +734,15 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
             "State the main idea of",
             "key principle behind",
             "Why is the study of",
+            "observed in daily life",
+            "observed and applied in daily life",
+            "key daily life applications of",
+            "effects is",
+            "topics is",
+            "properties is",
+            "poles is",
+            "principles is",
+            "materials is",
         ]
         for q in paper_model.questions:
             for phrase in forbidden_phrases:

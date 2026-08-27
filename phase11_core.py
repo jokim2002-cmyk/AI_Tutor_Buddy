@@ -3122,7 +3122,6 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
         "what is ",
         "what are ",
         "define ",
-        "state ",
         "where is ",
         "what happens when ",
         "identify ",
@@ -3133,8 +3132,12 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
         if sol_words < 20 and not any(k in q_lower for k in ("explain in detail", "describe the process", "compare")):
             return 1
 
+    if q_lower.startswith("state ") and not any(k in q_lower for k in ("state two", "state three", "state the effects", "state how", "state why")):
+        if sol_words < 18:
+            return 1
+
     # Examples like "Explain with an example: ..." -> 3 Marks
-    if is_example or q_lower.startswith("explain with an example"):
+    if is_example or q_lower.startswith("explain with an example:"):
         return 3
 
     # Long-answer / process / 6-mark questions -> 6 Marks
@@ -3155,26 +3158,30 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
     ):
         return 6
 
+    # 2-mark question specific patterns (classify, state two, distinguish with example, explain how ... with one example, calculations)
+    if any(k in q_lower for k in ("state two", "classify", "distinguish", "with one example", "with an example")) and sol_words <= 35:
+        return 2
+
+    if "speed = distance / time" in sol_clean.casefold() or "time = distance / speed" in sol_clean.casefold() or "distance = speed * time" in sol_clean.casefold():
+        if sol_words <= 30:
+            return 2
+
     # 3-mark questions: explanation, distinction, reasoning, multi-point, calculation with steps
     three_mark_keywords = (
-        "explain",
-        "distinguish",
-        "why",
-        "how",
+        "explain in detail",
+        "explain with an example",
         "describe",
-        "compare",
-        "calculate",
-        "reason",
-        "example",
+        "compare and contrast",
     )
-    if any(k in q_lower for k in three_mark_keywords) or sol_words >= 20:
+    if any(k in q_lower for k in three_mark_keywords) or sol_words >= 35:
         return 3
 
     # Brief reasons / 2-point answers -> 2 Marks
-    if sol_words >= 12 or any(k in q_lower for k in ("why", "reason", "difference", "two")):
+    if sol_words >= 12 or any(k in q_lower for k in ("why", "reason", "difference", "two", "explain", "how")):
         return 2
 
     return 1
+
 
 
 def build_natural_6mark_question(
@@ -3509,11 +3516,23 @@ def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
         "explain in detail the concept of",
         "give one example related to",
         "state one key observation related to",
+        "is observed in daily life",
+        "is observed and applied in daily life",
+        "observed and applied in daily life",
+        "observed in daily life",
+        "key daily life applications of",
+        "daily life applications of",
+        "scientific principles supporting",
+        "key principles, observations, and practical applications of",
     )
     if any(p in q_clean for p in forbidden_patterns):
         return True
 
     if "(variant" in q_clean or "variant 2" in q_clean:
+        return True
+
+    # Grammar guard: no "effects is", "topics is", "properties is", etc.
+    if re.search(r"\b(effects|topics|properties|poles|principles|materials|forces|magnets|objects|lines|examples)\s+is\b", q_clean):
         return True
 
     if topic_title:
@@ -3524,11 +3543,18 @@ def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
             f"state the main idea of {t_clean}",
             f"why is the study of {t_clean}",
             f"key principle behind {t_clean}",
+            f"how {t_clean}",
+            f"describe how {t_clean}",
+            f"explain with an example how {t_clean}",
+            f"applications of {t_clean}",
+            f"example of {t_clean}",
+            f"supporting {t_clean}",
         )
         if any(g in q_clean for g in generic_phrases):
             return True
 
     return False
+
 
 
 def extract_question_concept_words(q_text: str) -> set[str]:
@@ -4231,7 +4257,7 @@ def render_test_paper(
                             rng.shuffle(variants)
                         for v_item in variants:
                             t_lbl, q_t, sol_t, im = v_item
-                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and determine_question_intended_marks(q_t, sol_t) == mark_per_q and is_suitable_for_section(q_t, sol_t, mark_per_q):
+                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_lbl) and (im == mark_per_q or determine_question_intended_marks(q_t, sol_t) == mark_per_q) and is_suitable_for_section(q_t, sol_t, mark_per_q):
                                 selected_item = (t_lbl, q_t, sol_t, mark_per_q)
                                 break
                         if selected_item is not None:
@@ -4248,7 +4274,7 @@ def render_test_paper(
                             rng.shuffle(variants)
                         for v_item in variants:
                             t_lbl, q_t, sol_t, im = v_item
-                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and determine_question_intended_marks(q_t, sol_t) == mark_per_q:
+                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_lbl) and (im == mark_per_q or determine_question_intended_marks(q_t, sol_t) == mark_per_q) and is_suitable_for_section(q_t, sol_t, mark_per_q):
                                 selected_item = (t_lbl, q_t, sol_t, mark_per_q)
                                 break
                         if selected_item is not None:
@@ -4256,67 +4282,65 @@ def render_test_paper(
                     if selected_item is not None:
                         break
 
-            # Safe Fallback Level C: alternate natural generated variant guaranteed unique with correct solution guide
+            # Safe Fallback Level C: search across ALL syllabus chapters for natural curated fallback variants
             if selected_item is None:
-                for ch in scope.chapters:
+                for ch in syllabus.chapters:
                     for t in ch.topics:
-                        t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
-                        if mark_per_q == 1:
-                            if t.learning_objectives and not is_generic_topic_title_question(t.learning_objectives[0].strip(), t.title):
-                                fallback_q = t.learning_objectives[0].strip()
-                                fallback_sol = f"{t_exp.strip().split('.')[0]}. This is an essential observation."
-                            else:
-                                fallback_q = f"Identify one key observation or everyday example of {t.title}."
-                                fallback_sol = f"Key observation of {t.title}: {t_exp.strip()}"
-                        elif mark_per_q == 2:
-                            if t.learning_objectives and not is_generic_topic_title_question(t.learning_objectives[0].strip(), t.title):
-                                fallback_q = t.learning_objectives[0].strip()
-                                fallback_sol = f"{t_exp.strip()} This provides essential foundational understanding."
-                            else:
-                                fallback_q = f"Explain with an example how {t.title} is observed in daily life."
-                                fallback_sol = f"Everyday observation of {t.title}: {t_exp.strip()}"
-                        elif mark_per_q == 3:
-                            if t.examples:
-                                fallback_q = f"Explain how {t.examples[0]} demonstrates {t.title}."
-                                fallback_sol = f"{t.examples[0]} demonstrates {t.title} as follows: {t_exp.strip()}"
-                            else:
-                                fallback_q = f"Describe the observations and scientific principles supporting {t.title}."
-                                fallback_sol = f"Observations for {t.title}: {t_exp.strip()}"
-                        else: # 6
-                            nat_6m = build_natural_6mark_question(t.title, t.explanation, t.examples)
-                            if nat_6m is not None:
-                                fallback_q, fallback_sol = nat_6m
-                            else:
-                                fallback_q = f"Describe the key principles, observations, and practical applications of {t.title}."
-                                fallback_sol = f"Detailed description: {t_exp.strip()} This concept plays an important role in scientific study."
-
-                        if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents) and not is_generic_topic_title_question(fallback_q, t.title):
-                            selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
+                        variants = get_topic_fallback_variants(t, mark_per_q)
+                        if rng is not None:
+                            rng.shuffle(variants)
+                        for v_item in variants:
+                            t_lbl, q_t, sol_t, im = v_item
+                            if not is_duplicate_question(t_lbl, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_lbl) and (im == mark_per_q or determine_question_intended_marks(q_t, sol_t) == mark_per_q) and is_suitable_for_section(q_t, sol_t, mark_per_q):
+                                selected_item = (t_lbl, q_t, sol_t, mark_per_q)
+                                break
+                        if selected_item is not None:
                             break
                     if selected_item is not None:
                         break
 
+            # Safe Fallback Level D: search syllabus natural exercises, practice questions, and examples
             if selected_item is None:
                 for ch in scope.chapters:
                     for t in ch.topics:
-                        t_exp = t.explanation if t.explanation else "Core principles and scientific observation."
-                        fallback_q = f"Describe how {t.title} is observed and applied in daily life."
-                        fallback_sol = f"Daily life observation of {t.title}: {t_exp.strip()}"
-                        if not is_duplicate_question(t.title, fallback_q, used_q_texts, used_intents):
-                            selected_item = (t.title, fallback_q, fallback_sol, mark_per_q)
+                        candidate_qs = []
+                        for i, q in enumerate(t.exercises):
+                            if i < len(t.solutions):
+                                candidate_qs.append((q.strip(), t.solutions[i].strip()))
+                        for i, q in enumerate(t.practice_questions):
+                            if i < len(t.practice_solutions):
+                                candidate_qs.append((q.strip(), t.practice_solutions[i].strip()))
+                        for ex in t.examples:
+                            if ex and ex.strip():
+                                candidate_qs.append((f"Explain with an example: {ex.strip()}", f"{ex.strip()} illustrates {t.title}: {t.explanation}"))
+
+                        for q_t, sol_t in candidate_qs:
+                            if not is_duplicate_question(t.title, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t.title):
+                                selected_item = (t.title, q_t, sol_t, mark_per_q)
+                                break
+                        if selected_item is not None:
                             break
                     if selected_item is not None:
                         break
 
+            # Safe Fallback Level E (Absolute Safety Fallback): Pick first natural question from fallback bank and modify string if already used
             if selected_item is None:
                 first_ch = scope.chapters[0] if scope.chapters else syllabus.chapters[0]
                 first_topic = first_ch.topics[0]
-                fallback_q = f"Describe how {first_topic.title} is observed and applied in daily life."
-                if " ".join(fallback_q.casefold().strip().split()) in used_q_texts:
-                    q_idx = len(used_q_texts) + 1
-                    fallback_q = f"Describe key daily life applications of {first_topic.title} (Part {q_idx})."
-                fallback_sol = f"Daily life observation of {first_topic.title}: {first_topic.explanation or 'Scientific principles and observations.'}"
-                selected_item = (first_topic.title, fallback_q, fallback_sol, mark_per_q)
+                fallback_variants = get_topic_fallback_variants(first_topic, mark_per_q)
+                if fallback_variants:
+                    t_lbl, q_t, sol_t, _ = fallback_variants[0]
+                    if " ".join(q_t.casefold().strip().split()) in used_q_texts:
+                        q_idx = len(used_q_texts) + 1
+                        q_t = f"{q_t} (Part {q_idx})"
+                    selected_item = (t_lbl, q_t, sol_t, mark_per_q)
+                else:
+                    q_t = f"State the primary scientific principle of {first_topic.title}."
+                    sol_t = first_topic.explanation or "Scientific principle and observation."
+                    if " ".join(q_t.casefold().strip().split()) in used_q_texts:
+                        q_idx = len(used_q_texts) + 1
+                        q_t = f"{q_t} (Part {q_idx})"
+                    selected_item = (first_topic.title, q_t, sol_t, mark_per_q)
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
