@@ -3297,6 +3297,8 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
 
     # One-line / simple factual questions -> 1 Mark
     one_line_prefixes = (
+        "what was ",
+        "who was ",
         "which instrument",
         "name the three main parts",
         "name the three",
@@ -3312,6 +3314,7 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
         "identify ",
         "fill in ",
         "state one",
+        "who ",
     )
     if any(q_lower.startswith(prefix) for prefix in one_line_prefixes):
         if sol_words < 20 and not any(k in q_lower for k in ("explain in detail", "describe the process", "compare")):
@@ -3337,6 +3340,12 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
         "cause and effect",
         "advantages and limitations",
         "detailed process",
+        "describe harshavardhana's rule",
+        "explain pulakeshin ii's rule",
+        "explain how travellers' accounts",
+        "public welfare activities",
+        "importance of vatapi",
+        "cultural achievements of",
     )
     if any(k in q_lower for k in long_6m_keywords) or (
         sol_words >= 35 and (sol_clean.count(".") >= 3 or "\n" in sol_clean or ";" in sol_clean)
@@ -3384,6 +3393,21 @@ def build_natural_6mark_question(
     sol_text = f"{exp_clean}{ex_str}"
 
     # 1. Specifically requested exact-topic mappings
+    if "harshavardhana" in t_lower or "kanauj" in t_lower:
+        return (
+            "Describe Harshavardhana's rule, public welfare activities, support for learning, and importance of Kanauj.",
+            sol_text,
+        )
+    if "pulakeshin" in t_lower or "chalukya" in t_lower or "vatapi" in t_lower:
+        return (
+            "Explain Pulakeshin II's rule, the importance of Vatapi, his conflict with Harshavardhana, and cultural achievements of the Chalukyas.",
+            sol_text,
+        )
+    if "travellers" in t_lower or "nalanda" in t_lower or "historical evidence" in t_lower:
+        return (
+            "Explain how travellers' accounts, Nalanda, inscriptions, and coins help us understand early medieval India.",
+            sol_text,
+        )
     if "mixtures and separation choices" in t_lower:
         return (
             "Explain how different mixture components can be separated using hand-picking, filtration, magnetic separation, and evaporation, with one example each.",
@@ -3877,6 +3901,8 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
     sol_words = len(sol_text_clean.split())
 
     one_line_prefixes = (
+        "what was ",
+        "who was ",
         "which instrument",
         "name the three main parts",
         "name the three",
@@ -3892,6 +3918,7 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
         "what happens when ",
         "identify ",
         "fill in ",
+        "who ",
     )
     is_one_line = any(q_lower.startswith(prefix) for prefix in one_line_prefixes) or (
         sol_words < 15 and not any(k in q_lower for k in ("explain", "describe", "detail", "process", "how"))
@@ -3912,6 +3939,8 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
 
     if mark_per_q == 6:
         if is_one_line:
+            return False
+        if any(q_lower.startswith(p) for p in ("what was", "who was", "name", "give one", "which", "what is", "what are", "define", "where is")):
             return False
         if sol_words < 20 and not is_heavy_explanation:
             return False
@@ -4555,7 +4584,13 @@ def render_test_paper(
                                 candidate_qs.append((f"Explain with an example: {ex.strip()}", f"{ex.strip()} illustrates {t.title}: {t.explanation}"))
 
                         for q_t, sol_t in candidate_qs:
-                            if not is_duplicate_question(t.title, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t.title):
+                            im = determine_question_intended_marks(q_t, sol_t)
+                            if (
+                                not is_duplicate_question(t.title, q_t, used_q_texts, used_intents)
+                                and not is_generic_topic_title_question(q_t, t.title)
+                                and (im == mark_per_q or (mark_per_q != 6 and im >= 1))
+                                and is_suitable_for_section(q_t, sol_t, mark_per_q)
+                            ):
                                 selected_item = (t.title, q_t, sol_t, mark_per_q)
                                 break
                         if selected_item is not None:
@@ -4598,8 +4633,13 @@ def render_test_paper(
                     if nat_6m is not None:
                         q_t, sol_t = nat_6m
                     else:
-                        q_t = f"Describe in detail the process and scientific principles of {t_title}."
-                        sol_t = f"{exp_text} Key examples include: {', '.join(best_topic.examples) if best_topic.examples else 'natural scientific phenomena'}."
+                        is_soc_sci = any(k in t_title.casefold() or k in first_ch.title.casefold() for k in ("social science", "history", "geography", "civics", "state", "rule", "kingdom", "dynasty", "evidence", "traveller"))
+                        if is_soc_sci:
+                            q_t = f"Explain in detail the significance, key events, and historical impact of {t_title}."
+                            sol_t = f"{exp_text} Key developments include: {', '.join(best_topic.examples) if best_topic.examples else 'historical evidence'}."
+                        else:
+                            q_t = f"Describe in detail the process and scientific principles of {t_title}."
+                            sol_t = f"{exp_text} Key examples include: {', '.join(best_topic.examples) if best_topic.examples else 'natural scientific phenomena'}."
 
                 q_clean_norm = " ".join(q_t.casefold().strip().split())
                 if q_clean_norm in used_q_texts:

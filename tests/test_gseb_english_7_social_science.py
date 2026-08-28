@@ -233,6 +233,9 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(len(sec_b), 4, "Section B must have 4 2-mark questions")
         self.assertEqual(len(sec_c), 2, "Section C must have 2 3-mark questions")
         self.assertEqual(len(sec_d), 1, "Section D must have 1 6-mark question")
+        self.assertNotIn("What was the capital", sec_d[0].question_text)
+        self.assertEqual(sec_d[0].intended_marks, 6)
+        self.assertEqual(sec_d[0].max_marks, 6)
 
     # -------------------------------------------------------------------------
     # Gate 7: Full syllabus 100-mark random test generation
@@ -381,6 +384,55 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
                     q.question_text,
                     f"Question #{q.question_num} contains leaked out-of-chapter content: '{forbidden_term}'",
                 )
+
+    # -------------------------------------------------------------------------
+    # Gate 12: Two Big States Section D 6-mark Question Depth & Intended Marks
+    # -------------------------------------------------------------------------
+    def test_two_big_states_section_d_6mark_depth(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
+        self.assertIsNotNone(syllabus)
+        ctx = self.context(chapter="Semester 1 — Two Big States")
+        scope = parse_test_paper_scope("Semester 1 — Two Big States 25 marks test seed 111", ctx, syllabus)
+
+        raw, paper = render_test_paper(
+            syllabus,
+            scope,
+            seed=111,
+            context=ctx,
+            message="Semester 1 — Two Big States 25 marks test seed 111",
+        )
+
+        self.assertEqual(paper.total_marks, 25)
+        sec_d = [q for q in paper.questions if "Section D" in q.section_title]
+        self.assertEqual(len(sec_d), 1, "Section D must contain exactly 1 6-mark question")
+        q_6m = sec_d[0]
+
+        # 1. Section D must not contain "What was the capital..." or short factual recall prompts
+        self.assertNotIn("What was the capital", q_6m.question_text)
+        factual_prefixes = ("What was", "Who was", "Name", "Give one", "Which")
+        for prefix in factual_prefixes:
+            self.assertFalse(
+                q_6m.question_text.startswith(prefix),
+                f"Section D question '{q_6m.question_text}' starts with factual recall prompt '{prefix}'",
+            )
+
+        # 2. Section D must contain a long-answer Social Science question
+        self.assertTrue(
+            any(q_6m.question_text.startswith(p) for p in ("Describe", "Explain")),
+            f"Section D question '{q_6m.question_text}' is not a long-answer prompt",
+        )
+
+        # 3. Intended marks and max_marks must be 6
+        self.assertEqual(q_6m.max_marks, 6)
+        self.assertEqual(q_6m.intended_marks, 6)
+
+        # 4. No generic fallback phrases
+        for generic in ("scientific principles", "generic concept"):
+            self.assertNotIn(generic, q_6m.question_text.lower())
+
+        # 5. 25-mark total preserved across paper
+        total_m = sum(q.max_marks for q in paper.questions)
+        self.assertEqual(total_m, 25)
 
 
 if __name__ == "__main__":
