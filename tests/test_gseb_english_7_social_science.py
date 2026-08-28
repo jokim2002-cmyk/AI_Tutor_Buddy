@@ -525,6 +525,67 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         total_m = sum(q.max_marks for q in paper.questions)
         self.assertEqual(total_m, 25)
 
+    # -------------------------------------------------------------------------
+    # Gate 13: Full Syllabus Seed 111 Q1-Q5 Correct & Wrong Answer Evaluation
+    # -------------------------------------------------------------------------
+    def test_std7_social_science_full_syllabus_seed_111_q1_q5_evaluation(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
+        self.assertIsNotNone(syllabus)
+        ctx = self.context()
+        scope = parse_test_paper_scope("Generate a 100 marks full syllabus random test seed 111", ctx, syllabus)
+
+        _, paper = render_test_paper(
+            syllabus,
+            scope,
+            seed=111,
+            context=ctx,
+            message="Generate a 100 marks full syllabus random test seed 111",
+        )
+
+        q1_5 = paper.questions[:5]
+        self.assertEqual(len(q1_5), 5)
+        self.assertEqual(q1_5[0].question_text, "What does MLA stand for?")
+        self.assertEqual(q1_5[1].question_text, "What does longitude measure?")
+        self.assertEqual(q1_5[2].question_text, "Name one factor that helped Ahmedabad grow.")
+        self.assertEqual(q1_5[3].question_text, "Which Rajput dynasty is strongly associated with medieval Gujarat?")
+        self.assertEqual(q1_5[4].question_text, "Name two major physical features of Europe.")
+
+        # Student correct answers => Must score 5/5
+        correct_student_answers = [
+            "Member of Legislative Assembly.",
+            "Longitude measures distance east or west of the Prime Meridian.",
+            "Trade and good location helped Ahmedabad grow.",
+            "Solanki dynasty.",
+            "Peninsulas and rivers.",
+        ]
+
+        total_correct_score = 0.0
+        for i, q in enumerate(q1_5):
+            score, status, _ = evaluate_single_test_answer(q.question_text, correct_student_answers[i], q.solution_guide, q.max_marks)
+            self.assertEqual(score, 1.0, f"Question {i+1} '{q.question_text}' failed correct evaluation")
+            self.assertEqual(status, "Correct")
+            total_correct_score += score
+
+        self.assertEqual(total_correct_score, 5.0)
+
+        # Obviously wrong answers => Must score 0/5
+        wrong_student_answers = [
+            "Master of Local Administration.",
+            "Longitude measures distance north or south of the equator.",
+            "Submarine warfare helped Ahmedabad grow.",
+            "Mughal dynasty.",
+            "Sahara desert and Amazon river.",
+        ]
+
+        total_wrong_score = 0.0
+        for i, q in enumerate(q1_5):
+            score, status, _ = evaluate_single_test_answer(q.question_text, wrong_student_answers[i], q.solution_guide, q.max_marks)
+            self.assertEqual(score, 0.0, f"Question {i+1} '{q.question_text}' failed wrong-answer guard")
+            self.assertEqual(status, "Incorrect")
+            total_wrong_score += score
+
+        self.assertEqual(total_wrong_score, 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

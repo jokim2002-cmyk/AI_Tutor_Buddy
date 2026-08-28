@@ -2350,19 +2350,6 @@ def derive_structured_evaluation_rules(
             "paintings", "architecture", "architectural", "art", "arts",
         ]
 
-    # 14. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
-    elif "any one" in g_clean and not rules.required_concepts:
-        prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
-        stop_words = {
-            "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for",
-            "with", "of", "and", "or", "because", "it", "they", "them", "this", "that", "from",
-            "be", "been", "such", "as", "during", "period", "developed", "example",
-            "acceptable", "suitable", "examples", "work", "works", "methods", "any", "one",
-        }
-        words = [w for w in re.findall(r"\w+", prefix_part) if len(w) > 2 and w not in stop_words]
-        if words:
-            rules.required_concepts = words
-
     # 15. Harsha vs Pulakeshin II expansion/outcome question
     elif (
         ("harshavardhana" in q_clean or "harsha" in q_clean)
@@ -2390,6 +2377,73 @@ def derive_structured_evaluation_rules(
             r"\bharsha(vardhana)?\s+stopped\s+pulakeshin(\s+ii|\s+2)?\b",
             r"\bpulakeshin(\s+ii|\s+2)?\s+lost\s+to\s+harsha(vardhana)?\b",
         ]
+
+    # 16. MLA full form
+    elif "mla" in q_clean and ("stand" in q_clean or "meaning" in q_clean or "full form" in q_clean or "what" in q_clean):
+        rules.required_concepts = ["member of legislative assembly", "member of the legislative assembly", "legislative assembly"]
+        rules.forbidden_concepts = ["master", "manager", "minister", "administration", "affairs", "land", "local"]
+        rules.contradiction_patterns = [r"\bmaster\b", r"\bmanager\b", r"\bminister\b"]
+
+    # 17. Longitude measurement
+    elif "longitude" in q_clean and ("measure" in q_clean or "measures" in q_clean):
+        rules.required_concepts = ["east or west", "east and west", "east", "west", "prime meridian", "meridian"]
+        rules.forbidden_concepts = ["north", "south", "equator", "temperature", "pressure", "altitude", "weight"]
+        rules.contradiction_patterns = [r"\bnorth\s+or\s+south\b", r"\bnorth\b", r"\bsouth\b", r"\bequator\b"]
+
+    # 18. Ahmedabad growth factors
+    elif "ahmedabad" in q_clean and ("grow" in q_clean or "growth" in q_clean or "factor" in q_clean or "helped" in q_clean):
+        rules.required_concepts = [
+            "political role", "political", "skilled crafts", "skilled", "crafts", "craft",
+            "textile production", "textile", "textiles", "production", "markets", "market",
+            "trade", "trading", "route connections", "route", "routes", "connection", "connections",
+            "good location", "location", "situated", "geographical"
+        ]
+        rules.forbidden_concepts = [
+            "submarine", "glacier", "volcano", "volcanic", "eruption", "snowfall", "earthquake", "tsunami", "nuclear"
+        ]
+        rules.contradiction_patterns = [
+            r"\bsubmarine\b", r"\bglacier\b", r"\bvolcano\b", r"\beruption\b", r"\bsnowfall\b"
+        ]
+
+    # 19. Rajput dynasty strongly associated with medieval Gujarat
+    elif ("rajput" in q_clean or "dynasty" in q_clean or "gujarat" in q_clean) and ("solanki" in g_clean or "chaulukya" in g_clean):
+        rules.required_concepts = ["solanki", "chaulukya", "solankis", "chaulukyas"]
+        rules.forbidden_concepts = [
+            "mughal", "chola", "gupta", "maratha", "maurya", "mauryan", "slave", "tughlaq", "khilji", "lodhi"
+        ]
+        rules.contradiction_patterns = [
+            r"\bmughals?\b", r"\bcholas?\b", r"\bguptas?\b", r"\bmarathas?\b", r"\bmauryas?\b"
+        ]
+
+    # 20. Major physical features of Europe
+    elif "europe" in q_clean and ("physical feature" in q_clean or "physical features" in q_clean or "two" in q_clean or "features" in q_clean):
+        rules.required_concepts = [
+            "peninsulas", "peninsula", "rivers", "river", "alps", "north european plain",
+            "rhine", "danube", "scandinavian peninsula", "scandinavian", "mediterranean peninsulas",
+            "mediterranean", "mountains", "mountain", "plains", "plain", "plateaus", "plateau",
+            "highlands", "highland", "volga", "pyrenees", "urals", "ural"
+        ]
+        rules.forbidden_concepts = [
+            "sahara", "amazon", "himalayas", "himalaya", "gobi", "thar", "nile", "ganges",
+            "ganga", "mississippi", "rockies", "andes", "kalahari"
+        ]
+        rules.contradiction_patterns = [
+            r"\bsahara\b", r"\bamazon\b", r"\bhimalayas?\b", r"\bgobi\b", r"\bthar\b",
+            r"\bnile\b", r"\bganges\b", r"\bganga\b", r"\bmississippi\b", r"\bandes\b"
+        ]
+
+    # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
+    elif "any one" in g_clean and not rules.required_concepts:
+        prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
+        stop_words = {
+            "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for",
+            "with", "of", "and", "or", "because", "it", "they", "them", "this", "that", "from",
+            "be", "been", "such", "as", "during", "period", "developed", "example",
+            "acceptable", "suitable", "examples", "work", "works", "methods", "any", "one",
+        }
+        words = [w for w in re.findall(r"\w+", prefix_part) if len(w) > 2 and w not in stop_words]
+        if words:
+            rules.required_concepts = words
 
     # 13. Automatic Proper Noun required concepts for factual identity/ruler/place/event questions
     if not rules.required_concepts and re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the|what was the capital)\b", q_clean):
@@ -2425,6 +2479,8 @@ def evaluate_strict_short_answer(
     if rules is None:
         rules = derive_structured_evaluation_rules(q_text, sol_guide)
 
+    q_clean = q_text.casefold()
+
     # Magnet 3-material classification special handler if question matches
     magnet_mat = _std7_magnet_material_classification_decision(user_ans, q_text)
     if magnet_mat is True:
@@ -2444,6 +2500,43 @@ def evaluate_strict_short_answer(
         has_contradiction_pattern = any(bool(re.search(pat, clean_student)) for pat in rules.contradiction_patterns)
 
         if has_forbidden_word or has_contradiction_pattern:
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    # Europe physical features special handler
+    if "europe" in q_clean and ("physical feature" in q_clean or "physical features" in q_clean or "two" in q_clean or "features" in q_clean):
+        forbidden_europe = {
+            "sahara", "amazon", "himalayas", "himalaya", "gobi", "thar", "nile", "ganges",
+            "ganga", "mississippi", "rockies", "andes", "kalahari"
+        }
+        if any(f_word in tokens or f_word in clean_student for f_word in forbidden_europe):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        broad_features = {
+            "peninsulas", "peninsula", "rivers", "river", "mountains", "mountain",
+            "plains", "plain", "plateaus", "plateau", "seas", "sea", "oceans", "ocean",
+            "islands", "island", "highlands", "highland"
+        }
+        specific_features = [
+            "alps", "north european plain", "rhine", "danube", "scandinavian peninsula",
+            "scandinavian", "mediterranean peninsulas", "mediterranean", "volga", "pyrenees", "urals", "ural"
+        ]
+
+        found_features: set[str] = set()
+        for b in broad_features:
+            if b in tokens or b in clean_student:
+                norm_key = "peninsula" if "peninsula" in b else ("river" if "river" in b else ("mountain" if "mountain" in b else ("plain" if "plain" in b else ("plateau" if "plateau" in b else b))))
+                found_features.add(norm_key)
+
+        for s_feat in specific_features:
+            if s_feat in clean_student:
+                found_features.add(s_feat)
+
+        if len(found_features) >= 2:
+            return float(max_marks), "Correct", "Correct answer."
+        elif len(found_features) == 1:
+            half = round(max_marks * 0.5, 1)
+            return half, "Partially correct", f"Partially correct. Mentioned one feature ({list(found_features)[0]}). Expected two."
+        else:
             return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     # 2. REQUIRED CONCEPTS CHECK
