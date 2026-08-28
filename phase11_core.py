@@ -2469,6 +2469,12 @@ def derive_structured_evaluation_rules(
         rules.forbidden_concepts = ["mughal", "emperor", "emperors", "king", "kings", "sultan", "sultans", "british"]
         rules.contradiction_patterns = [r"\bmughals?\b", r"\bemperors?\b", r"\bsultans?\b"]
 
+    # 26. Values emphasized in Sufi traditions
+    elif "sufi" in q_clean and ("value" in q_clean or "values" in q_clean or "tradition" in q_clean or "traditions" in q_clean):
+        rules.required_concepts = ["love", "service", "devotion", "remembrance", "god", "ethical", "conduct", "humility", "compassion"]
+        rules.forbidden_concepts = ["violence", "hatred", "greed", "war", "cruelty", "revenge", "selfishness"]
+        rules.contradiction_patterns = [r"\bviolence\b", r"\bhatred\b", r"\bgreed\b", r"\bwar\b"]
+
     # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
     elif "any one" in g_clean and not rules.required_concepts:
         prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
@@ -2577,6 +2583,41 @@ def evaluate_strict_short_answer(
         elif len(found_features) == 1:
             half = round(max_marks * 0.5, 1)
             return half, "Partially correct", f"Partially correct. Mentioned one feature ({list(found_features)[0]}). Expected two."
+        else:
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    # Sufi values special handler
+    if "sufi" in q_clean and ("value" in q_clean or "values" in q_clean or "tradition" in q_clean or "traditions" in q_clean):
+        forbidden_sufi = {"violence", "hatred", "greed", "war", "cruelty", "revenge", "selfishness"}
+        if any(f_word in tokens or f_word in clean_student for f_word in forbidden_sufi):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        valid_sufi_values = [
+            "love", "devotion", "remembrance of god", "remembrance", "god",
+            "ethical conduct", "ethical", "conduct", "humility", "service",
+            "compassion", "peace", "harmony", "brotherhood", "tolerance", "equality"
+        ]
+        found_sufi_values: set[str] = set()
+        for v in valid_sufi_values:
+            if v in clean_student or v in tokens:
+                if v in {"love", "devotion"}:
+                    found_sufi_values.add("devotion_love")
+                elif v in {"service", "compassion"}:
+                    found_sufi_values.add(v)
+                elif v in {"remembrance of god", "remembrance", "god"}:
+                    found_sufi_values.add("god_remembrance")
+                elif v in {"ethical conduct", "ethical", "conduct"}:
+                    found_sufi_values.add("ethical_conduct")
+                elif v in {"humility"}:
+                    found_sufi_values.add("humility")
+                else:
+                    found_sufi_values.add(v)
+
+        if len(found_sufi_values) >= 2:
+            return float(max_marks), "Correct", "Correct answer."
+        elif len(found_sufi_values) == 1:
+            half = round(max_marks * 0.5, 1)
+            return half, "Partially correct", f"Partially correct. Mentioned one value. Expected two."
         else:
             return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 

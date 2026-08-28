@@ -526,9 +526,9 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(total_m, 25)
 
     # -------------------------------------------------------------------------
-    # Gate 13: Full Syllabus Seed 111 Q1-Q15 Correct & Wrong Answer Evaluation
+    # Gate 13: Full Syllabus Seed 111 Q1-Q20 Correct & Wrong Answer Evaluation
     # -------------------------------------------------------------------------
-    def test_std7_social_science_full_syllabus_seed_111_q1_q15_evaluation(self) -> None:
+    def test_std7_social_science_full_syllabus_seed_111_q1_q20_evaluation(self) -> None:
         syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
         self.assertIsNotNone(syllabus)
         ctx = self.context()
@@ -542,25 +542,30 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
             message="Generate a 100 marks full syllabus random test seed 111",
         )
 
-        q1_15 = paper.questions[:15]
-        self.assertEqual(len(q1_15), 15)
-        self.assertEqual(q1_15[0].question_text, "What does MLA stand for?")
-        self.assertEqual(q1_15[1].question_text, "What does longitude measure?")
-        self.assertEqual(q1_15[2].question_text, "Name one factor that helped Ahmedabad grow.")
-        self.assertEqual(q1_15[3].question_text, "Which Rajput dynasty is strongly associated with medieval Gujarat?")
-        self.assertEqual(q1_15[4].question_text, "Name two major physical features of Europe.")
-        self.assertEqual(q1_15[5].question_text, "Name two common features of Sultanate architecture.")
-        self.assertEqual(q1_15[6].question_text, "What is the Governor's general position in state administration?")
-        self.assertEqual(q1_15[7].question_text, "Which major mountain system forms a natural boundary in the north?")
-        self.assertEqual(q1_15[8].question_text, "Which dynasty followed the Solankis as an important regional power?")
-        self.assertEqual(q1_15[9].question_text, "What is the main role of the executive?")
-        self.assertEqual(q1_15[10].question_text, "Does Europe have one uniform culture or language?")
-        self.assertEqual(q1_15[11].question_text, "What was a mansab?")
-        self.assertEqual(q1_15[12].question_text, "Who were the Alvars and Nayanars?")
-        self.assertEqual(q1_15[13].question_text, "Name four factors that influence industrial location.")
-        self.assertEqual(q1_15[14].question_text, "Which place generally has earlier local time, one farther east or one farther west?")
+        q1_20 = paper.questions[:20]
+        self.assertEqual(len(q1_20), 20)
+        self.assertEqual(q1_20[0].question_text, "What does MLA stand for?")
+        self.assertEqual(q1_20[1].question_text, "What does longitude measure?")
+        self.assertEqual(q1_20[2].question_text, "Name one factor that helped Ahmedabad grow.")
+        self.assertEqual(q1_20[3].question_text, "Which Rajput dynasty is strongly associated with medieval Gujarat?")
+        self.assertEqual(q1_20[4].question_text, "Name two major physical features of Europe.")
+        self.assertEqual(q1_20[5].question_text, "Name two common features of Sultanate architecture.")
+        self.assertEqual(q1_20[6].question_text, "What is the Governor's general position in state administration?")
+        self.assertEqual(q1_20[7].question_text, "Which major mountain system forms a natural boundary in the north?")
+        self.assertEqual(q1_20[8].question_text, "Which dynasty followed the Solankis as an important regional power?")
+        self.assertEqual(q1_20[9].question_text, "What is the main role of the executive?")
+        self.assertEqual(q1_20[10].question_text, "Does Europe have one uniform culture or language?")
+        self.assertEqual(q1_20[11].question_text, "What was a mansab?")
+        self.assertEqual(q1_20[12].question_text, "Who were the Alvars and Nayanars?")
+        self.assertEqual(q1_20[13].question_text, "Name four factors that influence industrial location.")
+        self.assertEqual(q1_20[14].question_text, "Which place generally has earlier local time, one farther east or one farther west?")
+        self.assertEqual(q1_20[15].question_text, "Name two kinds of evidence used to study early medieval kingdoms.")
+        self.assertEqual(q1_20[16].question_text, "Which organ of government primarily makes laws?")
+        self.assertEqual(q1_20[17].question_text, "Name two cultural fields supported by the Mughal court under Jahangir or Shah Jahan.")
+        self.assertEqual(q1_20[18].question_text, "Where are the Andes located within South America?")
+        self.assertEqual(q1_20[19].question_text, "Name two values emphasized in many Sufi traditions.")
 
-        # Student correct answers => Must score 15/15
+        # Student correct answers => Must score 20/20
         correct_student_answers = [
             "Member of Legislative Assembly.",
             "Longitude measures distance east or west of the Prime Meridian.",
@@ -577,18 +582,23 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
             "They were South Indian poet-saints devoted to Vishnu and Shiva.",
             "Raw materials, labour, capital, and transport.",
             "A place farther east has earlier local time.",
+            "Inscriptions and coins.",
+            "The legislature.",
+            "Painting and architecture.",
+            "The western side of South America.",
+            "Love and service.",
         ]
 
         total_correct_score = 0.0
-        for i, q in enumerate(q1_15):
+        for i, q in enumerate(q1_20):
             score, status, _ = evaluate_single_test_answer(q.question_text, correct_student_answers[i], q.solution_guide, q.max_marks)
             self.assertEqual(score, 1.0, f"Question {i+1} '{q.question_text}' failed correct evaluation")
             self.assertEqual(status, "Correct")
             total_correct_score += score
 
-        self.assertEqual(total_correct_score, 15.0)
+        self.assertEqual(total_correct_score, 20.0)
 
-        # Obviously wrong answers => Must score 0/15
+        # Obviously wrong answers => Must score 0/20
         wrong_student_answers = [
             "Master of Local Administration.",
             "Longitude measures distance north or south of the equator.",
@@ -605,16 +615,31 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
             "They were Mughal emperors who built monuments.",
             "Warfare, magic, rumors, and snowfall.",
             "A place farther west has earlier local time.",
+            "Submarine warfare and magic.",
+            "The judiciary makes laws.",
+            "Football and nuclear weapons.",
+            "The eastern side of Africa.",
+            "Violence and hatred.",
         ]
 
         total_wrong_score = 0.0
-        for i, q in enumerate(q1_15):
+        for i, q in enumerate(q1_20):
             score, status, _ = evaluate_single_test_answer(q.question_text, wrong_student_answers[i], q.solution_guide, q.max_marks)
             self.assertEqual(score, 0.0, f"Question {i+1} '{q.question_text}' failed wrong-answer guard")
             self.assertEqual(status, "Incorrect")
             total_wrong_score += score
 
         self.assertEqual(total_wrong_score, 0.0)
+
+        # Direct Q20 assertions
+        q20 = q1_20[19]
+        q20_corr_score, q20_corr_status, _ = evaluate_single_test_answer(q20.question_text, "Love and service.", q20.solution_guide, 1)
+        self.assertEqual(q20_corr_score, 1.0)
+        self.assertEqual(q20_corr_status, "Correct")
+
+        q20_wrong_score, q20_wrong_status, _ = evaluate_single_test_answer(q20.question_text, "Violence and hatred.", q20.solution_guide, 1)
+        self.assertEqual(q20_wrong_score, 0.0)
+        self.assertEqual(q20_wrong_status, "Incorrect")
 
 
 if __name__ == "__main__":
