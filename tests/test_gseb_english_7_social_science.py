@@ -266,6 +266,18 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         # Assert no "(Variant" string anywhere in the paper
         self.assertFalse(any("(Variant" in q.question_text for q in paper.questions), "No variant suffix should leak into student-facing test paper")
 
+        # Assert no generic Section D template phrases in the paper
+        generic_phrases = [
+            "Explain in detail the structure, key functions, public importance, and constitutional role of",
+            "Explain in detail the geographical features, natural resources, environmental importance, and human impact of",
+            "Explain in detail the core principles, key developments, practical applications, and overall significance of",
+            "Explain in detail the political history, administration, social life, and cultural developments of",
+            "Explain in detail the significance, key events, and historical impact of",
+        ]
+        for q in paper.questions:
+            for phrase in generic_phrases:
+                self.assertNotIn(phrase, q.question_text, f"Question {q.question_num} contains generic template phrase: {phrase}")
+
         # Assert no duplicate Section D question text or semantic duplicate intent
         sec_d_questions = [q for q in paper.questions if q.max_marks == 6]
         self.assertEqual(len(sec_d_questions), 4)

@@ -3467,6 +3467,26 @@ def build_natural_6mark_question(
             "Explain how travellers' accounts, Nalanda, inscriptions, and coins help us understand early medieval India.",
             sol_text,
         )
+    if "court hierarchy" in t_lower or ("civil cases" in t_lower and "criminal cases" in t_lower):
+        return (
+            "Explain the court hierarchy in India and distinguish civil cases from criminal cases with examples.",
+            sol_text,
+        )
+    if "physiographic divisions" in t_lower or ("physiographic" in t_lower and "india" in t_lower):
+        return (
+            "Describe the major physiographic divisions of India and explain how they influence resources, settlement and occupations.",
+            sol_text,
+        )
+    if "saint-poets" in t_lower or ("saint" in t_lower and "equality" in t_lower) or ("devotion" in t_lower and "cultural exchange" in t_lower):
+        return (
+            "Explain how saint-poets spread messages of devotion, equality and cultural exchange with suitable examples.",
+            sol_text,
+        )
+    if "mixtures and separation choices" in t_lower:
+        return (
+            "Explain how different mixture components can be separated using hand-picking, filtration, magnetic separation, and evaporation, with one example each.",
+            sol_text,
+        )
     if "mixtures and separation choices" in t_lower:
         return (
             "Explain how different mixture components can be separated using hand-picking, filtration, magnetic separation, and evaporation, with one example each.",
@@ -3608,6 +3628,11 @@ def build_natural_6mark_question(
     if "attraction, repulsion and magnetic field" in t_lower:
         return (
             "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
+            sol_text,
+        )
+    if "compass" in t_lower or "earth's magnetism" in t_lower or "earth magnetism" in t_lower:
+        return (
+            "Explain how a magnetic compass works, describe Earth's magnetic behavior, and explain how a freely suspended magnet aligns north-south.",
             sol_text,
         )
 
@@ -3767,33 +3792,6 @@ def build_natural_6mark_question(
             sol_text,
         )
 
-    # 9. Natural fallback builders for Social Science and general topics
-    if len(exp_clean.split()) >= 8 or len(topic_title.split()) >= 2:
-        is_civics = any(k in t_lower or k in exp_clean.casefold() for k in ("government", "court", "law", "rights", "consumer", "property", "state", "legislature", "accountability", "justice", "civic", "democracy", "election", "public", "citizen", "minister", "governor", "court hierarchy", "civil cases", "criminal cases"))
-        is_hist = not is_civics and any(k in t_lower or k in exp_clean.casefold() for k in ("rule", "kingdom", "dynasty", "emperor", "sultanate", "mughal", "rajput", "medieval", "heritage", "monument", "century", "war", "trade", "evidence", "history", "period", "founding", "reign"))
-        is_geog = not is_civics and not is_hist and any(k in t_lower or k in exp_clean.casefold() for k in ("climate", "season", "soil", "mineral", "forest", "crop", "farming", "transport", "industry", "physiography", "border", "location", "river", "continent", "geography", "map", "earth", "tilt", "monsoon"))
-
-        if is_civics:
-            return (
-                f"Explain in detail the structure, key functions, public importance, and constitutional role of {topic_title}.",
-                sol_text,
-            )
-        elif is_hist:
-            return (
-                f"Describe in detail the political history, administration, social life, and cultural developments of {topic_title}.",
-                sol_text,
-            )
-        elif is_geog:
-            return (
-                f"Explain in detail the geographical features, natural resources, environmental importance, and human impact of {topic_title}.",
-                sol_text,
-            )
-        else:
-            return (
-                f"Explain in detail the core principles, key developments, practical applications, and overall significance of {topic_title}.",
-                sol_text,
-            )
-
     return None
 
 
@@ -3818,6 +3816,13 @@ def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
         "daily life applications of",
         "scientific principles supporting",
         "key principles, observations, and practical applications of",
+        "explain in detail the structure, key functions, public importance, and constitutional role of",
+        "explain in detail the geographical features, natural resources, environmental importance, and human impact of",
+        "explain in detail the core principles, key developments, practical applications, and overall significance of",
+        "explain in detail the political history, administration, social life, and cultural developments of",
+        "explain in detail the significance, key events, and historical impact of",
+        "describe in detail the process and scientific principles of",
+        "analyze and explain in detail the core features, importance, and practical applications of",
     )
     if any(p in q_clean for p in forbidden_patterns):
         return True
@@ -4719,27 +4724,13 @@ def render_test_paper(
                         if nat_6m is not None:
                             q_t, sol_t = nat_6m
                         else:
-                            is_soc_sci = any(k in t_title.casefold() or k in ch.title.casefold() for k in ("social science", "history", "geography", "civics", "state", "rule", "kingdom", "dynasty", "evidence", "traveller", "government", "court", "rajput", "delhi", "sultanate", "mughal", "gujarat", "climate", "resource", "continent", "property", "devotion"))
-                            if is_soc_sci:
-                                q_t = f"Explain in detail the significance, key events, and historical impact of {t_title}."
-                                sol_t = f"{exp_text} Key developments include: {', '.join(t.examples) if t.examples else 'historical evidence'}."
-                            else:
-                                q_t = f"Describe in detail the process and scientific principles of {t_title}."
-                                sol_t = f"{exp_text} Key examples include: {', '.join(t.examples) if t.examples else 'natural scientific phenomena'}."
+                            q_t = f"Explain the key principles, observations, and main features of {t_title}."
+                            sol_t = f"{exp_text} Key examples include: {', '.join(t.examples) if t.examples else 'natural phenomena'}."
 
-                    if not is_duplicate_question(t_title, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_title):
+                    q_clean_norm = " ".join(q_t.casefold().strip().split())
+                    if q_clean_norm not in used_q_texts and not is_generic_topic_title_question(q_t, t_title):
                         selected_item = (t_title, q_t, sol_t, mark_per_q)
                         break
-
-                if selected_item is None and sorted_topics:
-                    for _, ch, t in sorted_topics:
-                        t_title = t.title
-                        exp_text = (t.explanation or "Scientific principle and observation.").strip()
-                        q_t = f"Analyze and explain in detail the core features, importance, and practical applications of {t_title}."
-                        sol_t = f"Detailed analysis of {t_title}: {exp_text}"
-                        if not is_duplicate_question(t_title, q_t, used_q_texts, used_intents):
-                            selected_item = (t_title, q_t, sol_t, mark_per_q)
-                            break
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
