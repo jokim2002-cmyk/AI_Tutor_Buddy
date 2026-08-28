@@ -2363,6 +2363,34 @@ def derive_structured_evaluation_rules(
         if words:
             rules.required_concepts = words
 
+    # 15. Harsha vs Pulakeshin II expansion/outcome question
+    elif (
+        ("harshavardhana" in q_clean or "harsha" in q_clean)
+        and ("pulakeshin" in q_clean or "deccan" in q_clean or "stopped" in q_clean or "expansion" in q_clean or "narmada" in q_clean)
+    ) or (
+        "pulakeshin" in g_clean and ("harshavardhana" in g_clean or "harsha" in g_clean)
+    ):
+        rules.required_concepts = ["pulakeshin"]
+        rules.forbidden_concepts = [
+            "pulakeshin was defeated",
+            "pulakeshin ii was defeated",
+            "harsha defeated pulakeshin",
+            "harshavardhana defeated pulakeshin",
+            "lost to harshavardhana",
+            "lost to harsha",
+            "pulakeshin was stopped",
+            "pulakeshin ii was stopped",
+            "harsha stopped pulakeshin",
+            "harshavardhana stopped pulakeshin",
+        ]
+        rules.contradiction_patterns = [
+            r"\bpulakeshin(\s+ii|\s+2)?\s+(was\s+)?defeated\s+by\s+harsha(vardhana)?\b",
+            r"\bharsha(vardhana)?\s+defeated\s+pulakeshin(\s+ii|\s+2)?\b",
+            r"\bpulakeshin(\s+ii|\s+2)?\s+(was\s+)?stopped\s+by\s+harsha(vardhana)?\b",
+            r"\bharsha(vardhana)?\s+stopped\s+pulakeshin(\s+ii|\s+2)?\b",
+            r"\bpulakeshin(\s+ii|\s+2)?\s+lost\s+to\s+harsha(vardhana)?\b",
+        ]
+
     # 13. Automatic Proper Noun required concepts for factual identity/ruler/place/event questions
     if not rules.required_concepts and re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the|what was the capital)\b", q_clean):
         proper_nouns = [
@@ -2774,6 +2802,12 @@ def evaluate_single_test_answer(
                 "Partially correct",
                 "Explains the identification method (float/sink) but misses main reason (hollow/weak seeds failing to grow into healthy plants).",
             )
+
+    negative_words = {"never", "not", "no", "destroyed", "denied", "fake", "refused", "failed", "surrendered", "wasteland", "confuse", "useless", "nothing"}
+    user_negs = user_keywords & negative_words
+    guide_negs = ref_keywords & negative_words
+    if user_negs and not guide_negs:
+        return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     if ref_keywords:
         matched = user_keywords & ref_keywords

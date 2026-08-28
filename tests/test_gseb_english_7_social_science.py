@@ -310,6 +310,42 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(w_score, 0.0)
         self.assertEqual(w_status, "Incorrect")
 
+    def test_harsha_pulakeshin_outcome_wrong_answer_guard(self) -> None:
+        q_text = "Which ruler stopped Harshavardhana's expansion towards the Deccan?"
+        guide = "Pulakeshin II of the Chalukya dynasty stopped Harshavardhana near the Narmada."
+
+        # Correct answers => 1.0 Correct
+        c_score1, c_status1, _ = evaluate_single_test_answer(q_text, "Pulakeshin II stopped Harshavardhana's expansion towards the Deccan.", guide, 1)
+        self.assertEqual(c_score1, 1.0)
+        self.assertEqual(c_status1, "Correct")
+
+        c_score2, c_status2, _ = evaluate_single_test_answer(q_text, "Pulakeshin II resisted Harsha near the Narmada.", guide, 1)
+        self.assertEqual(c_score2, 1.0)
+        self.assertEqual(c_status2, "Correct")
+
+        # Reversed outcome answer => 0.0 Incorrect
+        r_score, r_status, _ = evaluate_single_test_answer(q_text, "Pulakeshin II was defeated by Harshavardhana in the Deccan.", guide, 1)
+        self.assertEqual(r_score, 0.0)
+        self.assertEqual(r_status, "Incorrect")
+
+        # Full Q1-Q5 wrong-answer submission => Total Marks: 0/25
+        service = self.service(api_key="")
+        ctx = self.context(chapter="Semester 1 — Two Big States")
+        service.ask(message="Generate a 25 marks random chapter test for Two Big States seed 111", context=ctx)
+
+        wrong_submission = (
+            "Q1: Pulakeshin II was defeated by Harshavardhana in the Deccan.\n"
+            "Q2: Delhi\n"
+            "Q3: War and conquest\n"
+            "Q4: Magic and rumors\n"
+            "Q5: Pulakeshin II fought Harsha"
+        )
+        eval_resp = service.ask_stream(
+            message=f"Check my test answers:\n{wrong_submission}",
+            context=ctx,
+        )
+        self.assertIn("Total Marks: 0/25", eval_resp)
+
     def test_chalukya_cultural_achievement_short_answer_evaluation(self) -> None:
         q_text = "Name one cultural achievement linked with the Chalukya period."
         guide = "Rock-cut caves, temples, sculpture and painting developed during the period; any one suitable example is acceptable."
