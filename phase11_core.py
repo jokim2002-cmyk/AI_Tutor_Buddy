@@ -2405,17 +2405,27 @@ def derive_structured_evaluation_rules(
             r"\bsubmarine\b", r"\bglacier\b", r"\bvolcano\b", r"\beruption\b", r"\bsnowfall\b"
         ]
 
-    # 19. Rajput dynasty strongly associated with medieval Gujarat
-    elif ("rajput" in q_clean or "dynasty" in q_clean or "gujarat" in q_clean) and ("solanki" in g_clean or "chaulukya" in g_clean):
-        rules.required_concepts = ["solanki", "chaulukya", "solankis", "chaulukyas"]
+    # 19. Dynasty following Solankis in medieval Gujarat (Vaghela)
+    elif ("vaghela" in g_clean or "vaghela" in q_clean or "followed the solankis" in q_clean):
+        rules.required_concepts = ["vaghela", "vaghelas"]
         rules.forbidden_concepts = [
-            "mughal", "chola", "gupta", "maratha", "maurya", "mauryan", "slave", "tughlaq", "khilji", "lodhi"
+            "mughal", "chola", "gupta", "maratha", "maurya", "mauryan", "slave", "tughlaq", "khilji", "lodhi", "solanki", "chauhan", "rashtrakuta", "pala", "pratihara"
         ]
         rules.contradiction_patterns = [
-            r"\bmughals?\b", r"\bcholas?\b", r"\bguptas?\b", r"\bmarathas?\b", r"\bmauryas?\b"
+            r"\bmughals?\b", r"\bcholas?\b", r"\bguptas?\b", r"\bmarathas?\b", r"\bmauryas?\b", r"\bsolankis?\b"
         ]
 
-    # 20. Major physical features of Europe
+    # 20. Rajput dynasty strongly associated with medieval Gujarat (Solanki/Chaulukya)
+    elif ("solanki" in g_clean or "chaulukya" in g_clean) and ("rajput" in q_clean or "gujarat" in q_clean or "associated" in q_clean or "solanki" in q_clean):
+        rules.required_concepts = ["solanki", "chaulukya", "solankis", "chaulukyas"]
+        rules.forbidden_concepts = [
+            "mughal", "chola", "gupta", "maratha", "maurya", "mauryan", "slave", "tughlaq", "khilji", "lodhi", "vaghela"
+        ]
+        rules.contradiction_patterns = [
+            r"\bmughals?\b", r"\bcholas?\b", r"\bguptas?\b", r"\bmarathas?\b", r"\bmauryas?\b", r"\bvaghelas?\b"
+        ]
+
+    # 21. Major physical features of Europe
     elif "europe" in q_clean and ("physical feature" in q_clean or "physical features" in q_clean or "two" in q_clean or "features" in q_clean):
         rules.required_concepts = [
             "peninsulas", "peninsula", "rivers", "river", "alps", "north european plain",
@@ -2431,6 +2441,18 @@ def derive_structured_evaluation_rules(
             r"\bsahara\b", r"\bamazon\b", r"\bhimalayas?\b", r"\bgobi\b", r"\bthar\b",
             r"\bnile\b", r"\bganges\b", r"\bganga\b", r"\bmississippi\b", r"\bandes\b"
         ]
+
+    # 22. Major mountain system forming natural boundary in north (Himalayas)
+    elif ("mountain" in q_clean or "boundary" in q_clean or "north" in q_clean) and ("himalayas" in g_clean or "himalaya" in g_clean):
+        rules.required_concepts = ["himalayas", "himalaya"]
+        rules.forbidden_concepts = ["andes", "alps", "rockies", "pyrenees", "urals", "ural", "karakoram", "vindhya", "satpura", "aravalli", "nilgiri"]
+        rules.contradiction_patterns = [r"\bandes\b", r"\balps\b", r"\brockies\b", r"\bpyrenees\b", r"\burals?\b"]
+
+    # 23. Executive role in government/civics
+    elif "executive" in q_clean and ("role" in q_clean or "main role" in q_clean or "function" in q_clean or "what is" in q_clean):
+        rules.required_concepts = ["implements laws", "implement laws", "implements", "implement", "enforce", "enforces", "executes", "administers", "administration", "policy"]
+        rules.forbidden_concepts = ["makes laws", "make laws", "creates laws", "create laws", "passes laws", "pass laws", "judges", "interprets"]
+        rules.contradiction_patterns = [r"\b(makes|make|creates?|passes?)\s+laws\b", r"\bjudges?\b", r"\binterprets?\b"]
 
     # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
     elif "any one" in g_clean and not rules.required_concepts:
