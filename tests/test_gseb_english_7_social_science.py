@@ -12,6 +12,7 @@ from phase11_core import (
     SyllabusRepository,
     detect_context_from_message,
     evaluate_single_test_answer,
+    evaluate_test_paper,
     parse_test_paper_scope,
     render_test_paper,
 )
@@ -762,6 +763,36 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         score_w, status_w, _ = evaluate_single_test_answer(q_1m.question_text, "Master of Local Administration.", q_1m.solution_guide, 1)
         self.assertEqual(score_w, 0.0)
         self.assertEqual(status_w, "Incorrect")
+
+    # -------------------------------------------------------------------------
+    # Gate 16: Answer submission explicit Q-number mapping trust regression
+    # -------------------------------------------------------------------------
+    def test_answer_submission_explicit_q_number_mapping_trusted(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
+        self.assertIsNotNone(syllabus)
+        ctx = self.context()
+        scope = parse_test_paper_scope("Generate a 100 marks full syllabus random test seed 111", ctx, syllabus)
+
+        _, paper = render_test_paper(
+            syllabus,
+            scope,
+            seed=111,
+            context=ctx,
+            message="Generate a 100 marks full syllabus random test seed 111",
+        )
+
+        submission = "Q37: This is important and helps people in daily life."
+        eval_res = evaluate_test_paper(paper, submission)
+
+        # Assert no mismatch warning
+        self.assertNotIn("Your pasted answers do not appear to match", eval_res)
+
+        # Assert Q37 result is Needs review
+        self.assertIn("| Q37 |", eval_res)
+
+        # Assert Q22 remains Not answered
+        self.assertIn("| Q22 |", eval_res)
+        self.assertIn("| Q22 | [Rajput administration and society] | 2 | 0 | Not answered | No answer provided. |", eval_res)
 
 
 if __name__ == "__main__":

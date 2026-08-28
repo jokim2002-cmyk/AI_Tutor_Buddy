@@ -2807,46 +2807,47 @@ def _detect_test_paper_mismatches(
     mismatches: list[tuple[int, str, int, TestPaperQuestionItem]] = []
 
     for q_num, (q_prompt, ans_text) in parsed_answers.items():
-        if q_prompt or not ans_text.strip():
+        # Trust explicit question numbers. Only check for explicit prompt text mismatches
+        # when student provided explicit question prompt text alongside their answer.
+        if not q_prompt or not q_prompt.strip():
             continue
-        ans_words = {
-            w for w in re.findall(r"\w+", ans_text.casefold())
+
+        p_words = {
+            w for w in re.findall(r"\w+", q_prompt.casefold())
             if len(w) > 2 and w not in stop_words
         }
-        if not ans_words:
+        if not p_words:
             continue
 
         assigned_q = q_map.get(q_num)
         assigned_score = 0
         if assigned_q:
-            ref_text = f"{assigned_q.question_text} {assigned_q.solution_guide} {assigned_q.topic_title}"
             ref_words = {
-                w for w in re.findall(r"\w+", ref_text.casefold())
+                w for w in re.findall(r"\w+", assigned_q.question_text.casefold())
                 if len(w) > 2 and w not in stop_words
             }
-            assigned_score = len(ans_words & ref_words)
+            assigned_score = len(p_words & ref_words)
 
         best_other_q: int | None = None
         best_other_score = 0
         for o_num, o_q in q_map.items():
             if o_num == q_num:
                 continue
-            o_text = f"{o_q.question_text} {o_q.solution_guide} {o_q.topic_title}"
             o_words = {
-                w for w in re.findall(r"\w+", o_text.casefold())
+                w for w in re.findall(r"\w+", o_q.question_text.casefold())
                 if len(w) > 2 and w not in stop_words
             }
-            score = len(ans_words & o_words)
+            score = len(p_words & o_words)
             if score > best_other_score:
                 best_other_score = score
                 best_other_q = o_num
 
         if (
             best_other_q is not None
-            and best_other_score >= 2
+            and best_other_score >= 3
             and (best_other_score > assigned_score + 1 or assigned_score == 0)
         ):
-            mismatches.append((q_num, ans_text, best_other_q, q_map[best_other_q]))
+            mismatches.append((q_num, q_prompt, best_other_q, q_map[best_other_q]))
 
     return mismatches
 
