@@ -722,6 +722,47 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(q25_w_score, 0.0)
         self.assertEqual(q25_w_status, "Incorrect")
 
+    # -------------------------------------------------------------------------
+    # Gate 15: V1 Anti-Drift Evaluation Policy: Needs Review vs Deterministic
+    # -------------------------------------------------------------------------
+    def test_v1_evaluation_policy_fallback_and_deterministic_precision(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
+        self.assertIsNotNone(syllabus)
+        ctx = self.context()
+        scope = parse_test_paper_scope("Generate a 100 marks full syllabus random test seed 111", ctx, syllabus)
+
+        _, paper = render_test_paper(
+            syllabus,
+            scope,
+            seed=111,
+            context=ctx,
+            message="Generate a 100 marks full syllabus random test seed 111",
+        )
+
+        # 1. Unsupported open-ended 6-mark descriptive question -> Returns Needs review, not false Correct
+        q_descriptive = paper.questions[44] # Section D 6-mark question
+        self.assertEqual(q_descriptive.max_marks, 6)
+        score, status, msg = evaluate_single_test_answer(
+            q_descriptive.question_text,
+            "Historians analyze various travelogues and inscriptions to construct medieval history.",
+            q_descriptive.solution_guide,
+            q_descriptive.max_marks,
+        )
+        self.assertEqual(status, "Needs review")
+        self.assertEqual(score, 0.0)
+        self.assertIn("Descriptive answer requires manual review", msg)
+
+        # 2. Deterministic 1-mark factual answers still grade Correct/Incorrect
+        q_1m = paper.questions[0] # MLA question
+        self.assertEqual(q_1m.max_marks, 1)
+        score_c, status_c, _ = evaluate_single_test_answer(q_1m.question_text, "Member of Legislative Assembly.", q_1m.solution_guide, 1)
+        self.assertEqual(score_c, 1.0)
+        self.assertEqual(status_c, "Correct")
+
+        score_w, status_w, _ = evaluate_single_test_answer(q_1m.question_text, "Master of Local Administration.", q_1m.solution_guide, 1)
+        self.assertEqual(score_w, 0.0)
+        self.assertEqual(status_w, "Incorrect")
+
 
 if __name__ == "__main__":
     unittest.main()

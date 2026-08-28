@@ -2491,6 +2491,31 @@ def derive_structured_evaluation_rules(
         rules.forbidden_concepts = ["not useful", "useless", "no role", "no importance", "unimportant", "harmful"]
         rules.contradiction_patterns = [r"\bnot\s+useful\b", r"\buseless\b", r"\bno\s+role\b", r"\bunimportant\b"]
 
+    # 29. Forts importance to regional rulers (Q22)
+    elif "forts" in q_clean and ("important" in q_clean or "rulers" in q_clean or "regional" in q_clean or "why" in q_clean):
+        rules.required_concepts = [
+            "protected", "protect", "capitals", "capital", "routes", "route", "supplies", "people", "control", "political control", "defence", "defense"
+        ]
+        rules.forbidden_concepts = ["sports", "entertainment", "recreation", "useless", "no importance"]
+        rules.contradiction_patterns = [r"\bsports?\b", r"\brecreation\b", r"\buseless\b"]
+
+    # 30. Industry adding value to raw materials (Q23)
+    elif "industry" in q_clean and ("value" in q_clean or "raw material" in q_clean or "add value" in q_clean or "adds value" in q_clean):
+        rules.required_concepts = [
+            "processes", "process", "combines", "combine", "product", "products", "usefulness", "market value", "value", "greater value"
+        ]
+        rules.forbidden_concepts = ["destroys", "destroy", "reduces value", "no value", "useless"]
+        rules.contradiction_patterns = [r"\bdestroys?\b", r"\breduces?\s+value\b", r"\bno\s+value\b"]
+
+    # 31. Major physiographic divisions of India (Q24)
+    elif "physiographic" in q_clean or ("divisions" in q_clean and "india" in q_clean):
+        rules.required_concepts = [
+            "himalayas", "northern plains", "peninsular plateau", "indian desert", "coastal plains", "islands",
+            "mountains", "plains", "plateau", "desert", "coasts"
+        ]
+        rules.forbidden_concepts = ["sahara", "amazon", "andes", "gobi", "rockies"]
+        rules.contradiction_patterns = [r"\bsahara\b", r"\bamazon\b", r"\bandes\b", r"\bgobi\b"]
+
     # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
     elif "any one" in g_clean and not rules.required_concepts:
         prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
@@ -2656,6 +2681,49 @@ def evaluate_strict_short_answer(
         has_support = bool(tokens & {"trade", "traders", "economy", "residents", "courts", "supported", "city", "market", "cities"}) or "city economy" in clean_student or "supported trade" in clean_student
         if has_goods and has_support:
             return float(max_marks), "Correct", "Correct answer."
+
+    # Q22: Forts importance handler
+    if "forts" in q_clean and ("important" in q_clean or "rulers" in q_clean or "regional" in q_clean or "why" in q_clean):
+        if any(re.search(pat, clean_student) for pat in rules.contradiction_patterns):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        has_protect = bool(tokens & {"protected", "protect", "defence", "defense", "control", "protecting", "serving"}) or "political control" in clean_student
+        has_target = bool(tokens & {"capitals", "capital", "routes", "route", "supplies", "people", "control", "center", "centers", "centres", "centre"})
+        if has_protect and has_target:
+            return float(max_marks), "Correct", "Correct answer."
+
+    # Q23: Industry adding value handler
+    if "industry" in q_clean and ("value" in q_clean or "raw material" in q_clean or "add value" in q_clean or "adds value" in q_clean):
+        if any(re.search(pat, clean_student) for pat in rules.contradiction_patterns):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        has_process = bool(tokens & {"processes", "process", "combines", "combine", "processing", "combining", "manufactures", "making"})
+        has_val = bool(tokens & {"product", "products", "usefulness", "useful", "value", "market", "greater"}) or "market value" in clean_student or "greater usefulness" in clean_student
+        if has_process and has_val:
+            return float(max_marks), "Correct", "Correct answer."
+
+    # Q24: Physiographic divisions of India handler
+    if "physiographic" in q_clean or ("divisions" in q_clean and "india" in q_clean):
+        if any(re.search(pat, clean_student) for pat in rules.contradiction_patterns):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        divisions = [
+            "himalayas", "northern plains", "peninsular plateau", "indian desert", "coastal plains", "islands",
+            "mountain", "mountains", "plain", "plains", "plateau", "desert", "coast", "coasts"
+        ]
+        found_divs: set[str] = set()
+        for div in divisions:
+            if div in clean_student or div in tokens:
+                norm_div = "mountain" if "mountain" in div or "himalayas" in div else ("plain" if "plain" in div else ("plateau" if "plateau" in div else ("desert" if "desert" in div else ("coast" if "coast" in div else div))))
+                found_divs.add(norm_div)
+
+        if len(found_divs) >= 4:
+            return float(max_marks), "Correct", "Correct answer."
+        elif len(found_divs) >= 2:
+            half = round(max_marks * 0.5, 1)
+            return half, "Partially correct", f"Partially correct. Mentioned {len(found_divs)} divisions. Expected four."
+        else:
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
 
     # 2. REQUIRED CONCEPTS CHECK
     if rules.required_concepts:
@@ -3019,6 +3087,9 @@ def evaluate_single_test_answer(
     guide_negs = ref_keywords & negative_words
     if user_negs and not guide_negs:
         return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    if max_marks >= 2:
+        return 0.0, "Needs review", f"Descriptive answer requires manual review or structured rubric. Expected key points: {sol_guide}"
 
     if ref_keywords:
         matched = user_keywords & ref_keywords
