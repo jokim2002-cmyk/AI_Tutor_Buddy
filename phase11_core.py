@@ -2338,6 +2338,31 @@ def derive_structured_evaluation_rules(
         rules.forbidden_concepts = ["manmade", "man made", "artificial", "human", "machine", "rocket", "airplane", "bus"]
         rules.contradiction_patterns = [r"\bman\s*made\b", r"\bman-?made\b", r"\bartificial\b"]
 
+    # 13. Cultural achievement linked with Chalukya period / general cultural achievements
+    elif (
+        "cultural achievement" in q_clean
+        or ("chalukya" in q_clean and "cultural" in q_clean)
+        or ("cultural" in q_clean and "achievement" in q_clean)
+    ):
+        rules.required_concepts = [
+            "temple", "temples", "rock-cut cave", "rock cut cave", "rock-cut caves",
+            "cave art", "caves", "cave", "sculpture", "sculptures", "painting",
+            "paintings", "architecture", "architectural", "art", "arts",
+        ]
+
+    # 14. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
+    elif "any one" in g_clean and not rules.required_concepts:
+        prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
+        stop_words = {
+            "the", "a", "an", "is", "are", "was", "were", "to", "in", "on", "at", "by", "for",
+            "with", "of", "and", "or", "because", "it", "they", "them", "this", "that", "from",
+            "be", "been", "such", "as", "during", "period", "developed", "example",
+            "acceptable", "suitable", "examples", "work", "works", "methods", "any", "one",
+        }
+        words = [w for w in re.findall(r"\w+", prefix_part) if len(w) > 2 and w not in stop_words]
+        if words:
+            rules.required_concepts = words
+
     # 13. Automatic Proper Noun required concepts for factual identity/ruler/place/event questions
     if not rules.required_concepts and re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the|what was the capital)\b", q_clean):
         proper_nouns = [

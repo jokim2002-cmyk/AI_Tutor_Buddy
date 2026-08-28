@@ -310,6 +310,30 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(w_score, 0.0)
         self.assertEqual(w_status, "Incorrect")
 
+    def test_chalukya_cultural_achievement_short_answer_evaluation(self) -> None:
+        q_text = "Name one cultural achievement linked with the Chalukya period."
+        guide = "Rock-cut caves, temples, sculpture and painting developed during the period; any one suitable example is acceptable."
+
+        # Correct student answer mentioning temples / architecture / cave art
+        c_score, c_status, _ = evaluate_single_test_answer(
+            q_text,
+            "Architecture such as temples or cave art was a cultural achievement of the Chalukya period.",
+            guide,
+            1,
+        )
+        self.assertEqual(c_score, 1.0)
+        self.assertEqual(c_status, "Correct")
+
+        # Wrong answer
+        w_score, w_status, _ = evaluate_single_test_answer(
+            q_text,
+            "Pulakeshin II fought Harsha",
+            guide,
+            1,
+        )
+        self.assertEqual(w_score, 0.0)
+        self.assertEqual(w_status, "Incorrect")
+
     # -------------------------------------------------------------------------
     # Gate 10: No generic fallback questions
     # -------------------------------------------------------------------------
