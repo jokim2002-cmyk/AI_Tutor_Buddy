@@ -2454,6 +2454,21 @@ def derive_structured_evaluation_rules(
         rules.forbidden_concepts = ["makes laws", "make laws", "creates laws", "create laws", "passes laws", "pass laws", "judges", "interprets"]
         rules.contradiction_patterns = [r"\b(makes|make|creates?|passes?)\s+laws\b", r"\bjudges?\b", r"\binterprets?\b"]
 
+    # 24. Earlier local time direction (East vs West)
+    elif ("earlier" in q_clean or "earlier local time" in q_clean or "earlier local" in q_clean) and ("east" in g_clean or "farther east" in g_clean):
+        rules.required_concepts = ["farther east", "further east", "east"]
+        rules.forbidden_concepts = ["farther west", "further west", "west"]
+        rules.contradiction_patterns = [
+            r"\b(farther|further|place)?\s*west\s*(has|is|gets)?\s*(earlier|ahead)\b",
+            r"\b(farther|further)?\s*west\b",
+        ]
+
+    # 25. Alvars and Nayanars (poet-saints devoted to Vishnu and Shiva)
+    elif ("alvars" in q_clean or "nayanars" in q_clean or "poet-saints" in q_clean) or ("alvars" in g_clean or "nayanars" in g_clean):
+        rules.required_concepts = ["poet", "saint", "saints", "vishnu", "shiva", "bhakti", "devoted"]
+        rules.forbidden_concepts = ["mughal", "emperor", "emperors", "king", "kings", "sultan", "sultans", "british"]
+        rules.contradiction_patterns = [r"\bmughals?\b", r"\bemperors?\b", r"\bsultans?\b"]
+
     # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
     elif "any one" in g_clean and not rules.required_concepts:
         prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
@@ -2471,7 +2486,11 @@ def derive_structured_evaluation_rules(
     if not rules.required_concepts and re.search(r"\b(who|which ruler|which king|which dynasty|which emperor|which capital|name the|what was the capital)\b", q_clean):
         proper_nouns = [
             w for w in re.findall(r"\b[A-Z][a-zA-Z0-9]+\b", solution_guide)
-            if w.casefold() not in {"the", "a", "an", "of", "and", "in", "on", "at", "to", "first", "second", "third", "south", "north", "east", "west"}
+            if w.casefold() not in {
+                "the", "a", "an", "of", "and", "in", "on", "at", "to", "first", "second", "third",
+                "south", "north", "east", "west", "they", "them", "their", "this", "that", "these",
+                "those", "it", "its", "he", "she", "who", "which", "what", "where", "when"
+            }
         ]
         if proper_nouns:
             rules.required_concepts = [p.casefold() for p in proper_nouns]
