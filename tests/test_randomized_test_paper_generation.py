@@ -618,16 +618,21 @@ class RandomizedTestPaperGenerationTests(unittest.TestCase):
         self.assertEqual(st5_c, "Correct")
 
         # 5. Evaluate full active Q1-Q5 set with correct answers => 5/25 (5 marks for Q1-Q5)
-        correct_answers = [
-            "Average speed is obtained by dividing total distance covered by total time taken.",
-            "An unbalanced force can change the speed or direction of motion of a body.",
-            "Kilometres per hour (km/h)",
-            "The hands of a mechanical clock show circular motion.",
-            "Motion relative to a reference point means the object changes position compared with that reference point.",
-        ]
+        ans_map = {
+            "What quantity is obtained by dividing total distance covered by total time taken?": "Average speed is obtained by dividing total distance covered by total time taken.",
+            "What can an unbalanced force change about a moving body?": "An unbalanced force can change the speed or direction of motion of a body.",
+            "State the SI unit of speed.": "Metres per second (m/s).",
+            "In what unit is speed commonly expressed for vehicle motion over long distances?": "Kilometres per hour (km/h)",
+            "What type of motion is shown by the hands of a mechanical clock?": "The hands of a mechanical clock show circular motion.",
+            "What is meant by motion relative to a reference point?": "Motion relative to a reference point means the object changes position compared with that reference point.",
+            "What is the term for a fixed point used to decide whether an object is in motion?": "A reference point.",
+            "Is friction classified as a contact force or a non-contact force?": "Friction is a contact force.",
+            "Do balanced forces change the speed or direction of motion of an object?": "No, balanced forces do not change an object's speed or direction.",
+        }
         correct_q1_5_score = 0.0
-        for i, q in enumerate(q1_5):
-            score, status, _ = evaluate_single_test_answer(q.question_text, correct_answers[i], q.solution_guide, 1)
+        for q in q1_5:
+            ans_text = ans_map.get(q.question_text.strip(), q.solution_guide)
+            score, status, _ = evaluate_single_test_answer(q.question_text, ans_text, q.solution_guide, 1)
             self.assertEqual(score, 1.0, f"Question '{q.question_text}' failed correct evaluation")
             self.assertEqual(status, "Correct")
             correct_q1_5_score += score

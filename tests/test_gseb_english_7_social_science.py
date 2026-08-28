@@ -263,6 +263,25 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         total_q_marks = sum(q.max_marks for q in paper.questions)
         self.assertEqual(total_q_marks, 100)
 
+        # Assert no "(Variant" string anywhere in the paper
+        self.assertFalse(any("(Variant" in q.question_text for q in paper.questions), "No variant suffix should leak into student-facing test paper")
+
+        # Assert no duplicate Section D question text or semantic duplicate intent
+        sec_d_questions = [q for q in paper.questions if q.max_marks == 6]
+        self.assertEqual(len(sec_d_questions), 4)
+
+        sec_d_texts = [q.question_text for q in sec_d_questions]
+        self.assertEqual(len(sec_d_texts), len(set(sec_d_texts)), "Section D question text must be unique")
+
+        # Q47/Q48 Harshavardhana duplicate check
+        harsha_sec_d_count = sum(1 for q in sec_d_questions if "Harshavardhana" in q.question_text or "Harsha" in q.question_text)
+        self.assertLessEqual(harsha_sec_d_count, 1, "Harshavardhana 6-mark question must not be duplicated in Section D")
+
+        # Every question must have a solution guide and intended_marks == max_marks
+        for q in paper.questions:
+            self.assertTrue(bool(q.solution_guide and q.solution_guide.strip()), f"Question {q.question_num} must have a solution guide")
+            self.assertEqual(q.intended_marks, q.max_marks, f"Question {q.question_num} intended_marks must equal max_marks")
+
     # -------------------------------------------------------------------------
     # Gate 8: Active generated paper answer evaluation
     # -------------------------------------------------------------------------

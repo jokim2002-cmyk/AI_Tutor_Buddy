@@ -3767,7 +3767,33 @@ def build_natural_6mark_question(
             sol_text,
         )
 
-    # If no natural 6-mark builder matches, do not auto-create a generic question from topic title
+    # 9. Natural fallback builders for Social Science and general topics
+    if len(exp_clean.split()) >= 8 or len(topic_title.split()) >= 2:
+        is_civics = any(k in t_lower or k in exp_clean.casefold() for k in ("government", "court", "law", "rights", "consumer", "property", "state", "legislature", "accountability", "justice", "civic", "democracy", "election", "public", "citizen", "minister", "governor", "court hierarchy", "civil cases", "criminal cases"))
+        is_hist = not is_civics and any(k in t_lower or k in exp_clean.casefold() for k in ("rule", "kingdom", "dynasty", "emperor", "sultanate", "mughal", "rajput", "medieval", "heritage", "monument", "century", "war", "trade", "evidence", "history", "period", "founding", "reign"))
+        is_geog = not is_civics and not is_hist and any(k in t_lower or k in exp_clean.casefold() for k in ("climate", "season", "soil", "mineral", "forest", "crop", "farming", "transport", "industry", "physiography", "border", "location", "river", "continent", "geography", "map", "earth", "tilt", "monsoon"))
+
+        if is_civics:
+            return (
+                f"Explain in detail the structure, key functions, public importance, and constitutional role of {topic_title}.",
+                sol_text,
+            )
+        elif is_hist:
+            return (
+                f"Describe in detail the political history, administration, social life, and cultural developments of {topic_title}.",
+                sol_text,
+            )
+        elif is_geog:
+            return (
+                f"Explain in detail the geographical features, natural resources, environmental importance, and human impact of {topic_title}.",
+                sol_text,
+            )
+        else:
+            return (
+                f"Explain in detail the core principles, key developments, practical applications, and overall significance of {topic_title}.",
+                sol_text,
+            )
+
     return None
 
 
@@ -4659,53 +4685,61 @@ def render_test_paper(
 
             # Safe Fallback Level C (Emergency In-Chapter Fallback): Strictly generate in-chapter topic questions from target_chapters only
             if selected_item is None:
-                first_ch = target_chapters[0]
-                first_topic = first_ch.topics[0]
-                # Find topic in target_chapters with fewest used questions
-                best_topic = first_topic
-                min_used = 999
+                sorted_topics: list[tuple[int, BoardSyllabusChapter, SyllabusTopic]] = []
                 for ch in target_chapters:
                     for t in ch.topics:
                         used_cnt = sum(1 for (t_name, _) in used_intents if t_name == t.title)
-                        if used_cnt < min_used:
-                            min_used = used_cnt
-                            best_topic = t
+                        sorted_topics.append((used_cnt, ch, t))
+                sorted_topics.sort(key=lambda item: item[0])
+                if rng is not None and sorted_topics:
+                    min_cnt = sorted_topics[0][0]
+                    min_candidates = [item for item in sorted_topics if item[0] == min_cnt]
+                    rng.shuffle(min_candidates)
+                    sorted_topics = min_candidates + [item for item in sorted_topics if item[0] > min_cnt]
 
-                t_title = best_topic.title
-                exp_text = (best_topic.explanation or "Scientific principle and observation.").strip()
+                for _, ch, t in sorted_topics:
+                    t_title = t.title
+                    exp_text = (t.explanation or "Scientific principle and observation.").strip()
 
-                if mark_per_q == 1:
-                    q_t = f"What is the key scientific concept of {t_title}?"
-                    sol_t = exp_text.split('.')[0].strip() + "."
-                    if len(sol_t.split()) > 18:
-                        sol_t = " ".join(sol_t.split()[:14]) + "."
-                elif mark_per_q == 2:
-                    q_t = f"Explain {t_title} with one key scientific observation."
-                    sentences = [s.strip() for s in exp_text.split('.') if s.strip()]
-                    sol_t = ". ".join(sentences[:2]).strip() + "."
-                elif mark_per_q == 3:
-                    ex_str = best_topic.examples[0] if best_topic.examples else f"observation of {t_title}"
-                    q_t = f"Explain with an example: {ex_str}"
-                    sol_t = f"Example solution: {ex_str} demonstrates {exp_text}"
-                else:  # 6 marks
-                    nat_6m = build_natural_6mark_question(t_title, exp_text, list(best_topic.examples))
-                    if nat_6m is not None:
-                        q_t, sol_t = nat_6m
-                    else:
-                        is_soc_sci = any(k in t_title.casefold() or k in first_ch.title.casefold() for k in ("social science", "history", "geography", "civics", "state", "rule", "kingdom", "dynasty", "evidence", "traveller"))
-                        if is_soc_sci:
-                            q_t = f"Explain in detail the significance, key events, and historical impact of {t_title}."
-                            sol_t = f"{exp_text} Key developments include: {', '.join(best_topic.examples) if best_topic.examples else 'historical evidence'}."
+                    if mark_per_q == 1:
+                        q_t = f"What is the key scientific concept of {t_title}?"
+                        sol_t = exp_text.split('.')[0].strip() + "."
+                        if len(sol_t.split()) > 18:
+                            sol_t = " ".join(sol_t.split()[:14]) + "."
+                    elif mark_per_q == 2:
+                        q_t = f"Explain {t_title} with one key scientific observation."
+                        sentences = [s.strip() for s in exp_text.split('.') if s.strip()]
+                        sol_t = ". ".join(sentences[:2]).strip() + "."
+                    elif mark_per_q == 3:
+                        ex_str = t.examples[0] if t.examples else f"observation of {t_title}"
+                        q_t = f"Explain with an example: {ex_str}"
+                        sol_t = f"Example solution: {ex_str} demonstrates {exp_text}"
+                    else:  # 6 marks
+                        nat_6m = build_natural_6mark_question(t_title, exp_text, list(t.examples))
+                        if nat_6m is not None:
+                            q_t, sol_t = nat_6m
                         else:
-                            q_t = f"Describe in detail the process and scientific principles of {t_title}."
-                            sol_t = f"{exp_text} Key examples include: {', '.join(best_topic.examples) if best_topic.examples else 'natural scientific phenomena'}."
+                            is_soc_sci = any(k in t_title.casefold() or k in ch.title.casefold() for k in ("social science", "history", "geography", "civics", "state", "rule", "kingdom", "dynasty", "evidence", "traveller", "government", "court", "rajput", "delhi", "sultanate", "mughal", "gujarat", "climate", "resource", "continent", "property", "devotion"))
+                            if is_soc_sci:
+                                q_t = f"Explain in detail the significance, key events, and historical impact of {t_title}."
+                                sol_t = f"{exp_text} Key developments include: {', '.join(t.examples) if t.examples else 'historical evidence'}."
+                            else:
+                                q_t = f"Describe in detail the process and scientific principles of {t_title}."
+                                sol_t = f"{exp_text} Key examples include: {', '.join(t.examples) if t.examples else 'natural scientific phenomena'}."
 
-                q_clean_norm = " ".join(q_t.casefold().strip().split())
-                if q_clean_norm in used_q_texts:
-                    var_idx = sum(1 for q_k in used_q_texts if q_clean_norm in q_k) + 1
-                    q_t = f"{q_t} (Variant {var_idx})"
+                    if not is_duplicate_question(t_title, q_t, used_q_texts, used_intents) and not is_generic_topic_title_question(q_t, t_title):
+                        selected_item = (t_title, q_t, sol_t, mark_per_q)
+                        break
 
-                selected_item = (t_title, q_t, sol_t, mark_per_q)
+                if selected_item is None and sorted_topics:
+                    for _, ch, t in sorted_topics:
+                        t_title = t.title
+                        exp_text = (t.explanation or "Scientific principle and observation.").strip()
+                        q_t = f"Analyze and explain in detail the core features, importance, and practical applications of {t_title}."
+                        sol_t = f"Detailed analysis of {t_title}: {exp_text}"
+                        if not is_duplicate_question(t_title, q_t, used_q_texts, used_intents):
+                            selected_item = (t_title, q_t, sol_t, mark_per_q)
+                            break
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
