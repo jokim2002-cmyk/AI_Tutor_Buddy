@@ -641,6 +641,87 @@ class Grade7SocialScienceSyllabusTests(unittest.TestCase):
         self.assertEqual(q20_wrong_score, 0.0)
         self.assertEqual(q20_wrong_status, "Incorrect")
 
+    # -------------------------------------------------------------------------
+    # Gate 14: Full Syllabus Seed 111 Q21-Q25 Correct & Wrong Answer Evaluation
+    # -------------------------------------------------------------------------
+    def test_std7_social_science_full_syllabus_seed_111_q21_q25_evaluation(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=7, subject="Social Science")
+        self.assertIsNotNone(syllabus)
+        ctx = self.context()
+        scope = parse_test_paper_scope("Generate a 100 marks full syllabus random test seed 111", ctx, syllabus)
+
+        _, paper = render_test_paper(
+            syllabus,
+            scope,
+            seed=111,
+            context=ctx,
+            message="Generate a 100 marks full syllabus random test seed 111",
+        )
+
+        q21_25 = paper.questions[20:25]
+        self.assertEqual(len(q21_25), 5)
+        self.assertEqual(q21_25[0].question_text, "Can every dispute be settled through informal agreement?")
+        self.assertEqual(q21_25[1].question_text, "Why were forts important to regional rulers?")
+        self.assertEqual(q21_25[2].question_text, "How does an industry add value to a raw material?")
+        self.assertEqual(q21_25[3].question_text, "Name four major physiographic divisions of India.")
+        self.assertEqual(q21_25[4].question_text, "Why were artisans important to medieval cities?")
+
+        # Student correct answers => Must score 10/10
+        correct_student_answers = [
+            "No. Some disputes need courts or formal legal processes.",
+            "Forts protected capitals, routes, people and served as centers of political control.",
+            "An industry processes raw materials into products with greater usefulness or market value.",
+            "Himalayas, Northern Plains, Peninsular Plateau, and Coastal Plains.",
+            "Artisans made goods and supported trade and city economy.",
+        ]
+
+        total_correct_score = 0.0
+        for i, q in enumerate(q21_25):
+            score, status, _ = evaluate_single_test_answer(q.question_text, correct_student_answers[i], q.solution_guide, q.max_marks)
+            self.assertEqual(score, 2.0, f"Question {i+21} '{q.question_text}' failed correct evaluation")
+            self.assertEqual(status, "Correct")
+            total_correct_score += score
+
+        self.assertEqual(total_correct_score, 10.0)
+
+        # Obviously wrong answers => Must score 0/10
+        wrong_student_answers = [
+            "Yes, every dispute can always be settled informally.",
+            "Forts were built for playing sports only.",
+            "Industry destroys raw materials without adding any value.",
+            "Sahara desert, Amazon river, Andes, and Gobi desert.",
+            "Artisans were not useful to medieval cities.",
+        ]
+
+        total_wrong_score = 0.0
+        for i, q in enumerate(q21_25):
+            score, status, _ = evaluate_single_test_answer(q.question_text, wrong_student_answers[i], q.solution_guide, q.max_marks)
+            self.assertEqual(score, 0.0, f"Question {i+21} '{q.question_text}' failed wrong-answer guard")
+            self.assertEqual(status, "Incorrect")
+            total_wrong_score += score
+
+        self.assertEqual(total_wrong_score, 0.0)
+
+        # Direct Q21 assertions
+        q21 = q21_25[0]
+        q21_c_score, q21_c_status, _ = evaluate_single_test_answer(q21.question_text, "No. Some disputes need courts or formal legal processes.", q21.solution_guide, 2)
+        self.assertEqual(q21_c_score, 2.0)
+        self.assertEqual(q21_c_status, "Correct")
+
+        q21_w_score, q21_w_status, _ = evaluate_single_test_answer(q21.question_text, "Yes, every dispute can always be settled informally.", q21.solution_guide, 2)
+        self.assertEqual(q21_w_score, 0.0)
+        self.assertEqual(q21_w_status, "Incorrect")
+
+        # Direct Q25 assertions
+        q25 = q21_25[4]
+        q25_c_score, q25_c_status, _ = evaluate_single_test_answer(q25.question_text, "Artisans made goods and supported trade and city economy.", q25.solution_guide, 2)
+        self.assertEqual(q25_c_score, 2.0)
+        self.assertEqual(q25_c_status, "Correct")
+
+        q25_w_score, q25_w_status, _ = evaluate_single_test_answer(q25.question_text, "Artisans were not useful to medieval cities.", q25.solution_guide, 2)
+        self.assertEqual(q25_w_score, 0.0)
+        self.assertEqual(q25_w_status, "Incorrect")
+
 
 if __name__ == "__main__":
     unittest.main()

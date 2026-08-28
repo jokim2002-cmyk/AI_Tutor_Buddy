@@ -2475,6 +2475,22 @@ def derive_structured_evaluation_rules(
         rules.forbidden_concepts = ["violence", "hatred", "greed", "war", "cruelty", "revenge", "selfishness"]
         rules.contradiction_patterns = [r"\bviolence\b", r"\bhatred\b", r"\bgreed\b", r"\bwar\b"]
 
+    # 27. Access to justice / informal dispute settlement (Q21)
+    elif "dispute" in q_clean and ("informal" in q_clean or "settled" in q_clean or "agreement" in q_clean):
+        rules.required_concepts = [
+            "no", "courts", "court", "formal", "legal", "trial", "investigation", "binding", "judiciary"
+        ]
+        rules.forbidden_concepts = ["yes", "always", "every dispute can be settled informally"]
+        rules.contradiction_patterns = [r"\byes\b", r"\balways\s+(be\s+)?settled\b", r"\bevery\s+dispute\s+can\b"]
+
+    # 28. Artisans importance in medieval cities (Q25)
+    elif "artisans" in q_clean and ("important" in q_clean or "medieval" in q_clean or "cities" in q_clean or "role" in q_clean):
+        rules.required_concepts = [
+            "made", "produced", "goods", "crafts", "textiles", "metalwork", "trade", "economy", "traders", "residents", "courts"
+        ]
+        rules.forbidden_concepts = ["not useful", "useless", "no role", "no importance", "unimportant", "harmful"]
+        rules.contradiction_patterns = [r"\bnot\s+useful\b", r"\buseless\b", r"\bno\s+role\b", r"\bunimportant\b"]
+
     # 21. "Name one" / "Give one" questions with "any one... is acceptable" in solution guide
     elif "any one" in g_clean and not rules.required_concepts:
         prefix_part = g_clean.split(";")[0] if ";" in g_clean else g_clean.split(".")[0]
@@ -2620,6 +2636,26 @@ def evaluate_strict_short_answer(
             return half, "Partially correct", f"Partially correct. Mentioned one value. Expected two."
         else:
             return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+    # Q21: Informal dispute settlement special handler
+    if "dispute" in q_clean and ("informal" in q_clean or "settled" in q_clean or "agreement" in q_clean):
+        if any(re.search(pat, clean_student) for pat in rules.contradiction_patterns) or "yes" in tokens:
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        has_no = bool(tokens & {"no", "not", "cannot", "never"}) or "no." in clean_student or "no," in clean_student
+        has_formal = bool(tokens & {"courts", "court", "formal", "legal", "trial", "investigation", "binding", "judiciary", "processes", "process"}) or "formal legal" in clean_student
+        if has_no and has_formal:
+            return float(max_marks), "Correct", "Correct answer."
+
+    # Q25: Artisans in medieval cities special handler
+    if "artisans" in q_clean and ("important" in q_clean or "medieval" in q_clean or "cities" in q_clean or "role" in q_clean):
+        if any(re.search(pat, clean_student) for pat in rules.contradiction_patterns):
+            return 0.0, "Incorrect", f"Incorrect concept. Correct answer: {sol_guide}"
+
+        has_goods = bool(tokens & {"made", "produced", "goods", "crafts", "textiles", "metalwork", "materials", "making", "producing"}) or "made goods" in clean_student or "produced goods" in clean_student
+        has_support = bool(tokens & {"trade", "traders", "economy", "residents", "courts", "supported", "city", "market", "cities"}) or "city economy" in clean_student or "supported trade" in clean_student
+        if has_goods and has_support:
+            return float(max_marks), "Correct", "Correct answer."
 
     # 2. REQUIRED CONCEPTS CHECK
     if rules.required_concepts:
