@@ -5007,7 +5007,7 @@ def render_test_paper(
                         if nat_6m is not None:
                             q_t, sol_t = nat_6m
                         else:
-                            q_t = f"Explain the key principles, observations, and main features of {t_title}."
+                            q_t = f"Describe {t_title} in detail, including main features, observations, and real-world significance."
                             sol_t = f"{exp_text} Key examples include: {', '.join(t.examples) if t.examples else 'natural phenomena'}."
 
                     q_clean_norm = " ".join(q_t.casefold().strip().split())
