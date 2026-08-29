@@ -4078,6 +4078,94 @@ def build_natural_6mark_question(
     return None
 
 
+def build_contextual_section_d_fallback_question(
+    topic_title: str,
+    explanation: str = "",
+    examples: Sequence[str] = (),
+) -> tuple[str, str]:
+    """Build a non-generic long-answer fallback without raw topic-title stuffing."""
+
+    t_lower = clean_student_text(topic_title, max_length=200).casefold()
+    exp_text = clean_student_text(explanation, max_length=2_000).strip()
+    example_items = [
+        clean_student_text(ex, max_length=300).strip()
+        for ex in examples
+        if clean_student_text(ex, max_length=300).strip()
+    ]
+    if not exp_text:
+        exp_text = "Use the installed topic explanation to write clear points with examples."
+    if example_items:
+        sol_text = f"{exp_text} Include relevant examples such as {'; '.join(example_items[:2])}."
+    else:
+        sol_text = exp_text
+
+    if any(k in t_lower for k in ("law", "parliament", "bill")):
+        return (
+            "Explain how a public issue becomes a law through discussion, approval, and implementation, with one example.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("constitution", "rights", "duties", "equality", "reservation")):
+        return (
+            "Explain the purpose, public importance, safeguards, and one civic-life example connected with this constitutional topic.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("court", "justice", "pil", "legal", "consumer")):
+        return (
+            "Explain how this justice-related process protects people, the steps involved, and one practical example.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("government", "scheme", "welfare", "infrastructure", "administration")):
+        return (
+            "Explain the purpose, working, benefits, and public importance of this government programme or institution with examples.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("crop", "farming", "agriculture", "food", "commercial")):
+        return (
+            "Compare the main agricultural types or crops involved, including examples, growing conditions, and economic importance.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("resource", "mineral", "energy", "conservation")):
+        return (
+            "Classify the important resources, explain their uses and conservation, and give examples from India or the world.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("industry", "industries", "industrial", "textile", "steel")):
+        return (
+            "Explain the factors behind industrial location and development, and describe their economic effects with examples.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("population", "density", "distribution")):
+        return (
+            "Explain the factors affecting population distribution and density, and describe their effects with examples.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("architecture", "monument", "urban")):
+        return (
+            "Describe the main architectural features, historical evidence, preservation needs, and public importance of these monuments.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("reform", "sati", "widow", "caste")):
+        return (
+            "Explain how social reform movements challenged harmful practices, supported justice, and changed society, with examples.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("movement", "battle", "company", "colonial", "independence", "revolution", "nam")):
+        return (
+            "Explain the causes, main events, leaders, and effects of this historical development with examples.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("disaster", "preparedness", "first aid")):
+        return (
+            "Explain the causes or risks, preparedness steps, citizen duties, and response measures with examples.",
+            sol_text,
+        )
+
+    return (
+        "Explain the main purpose, important features, examples, and significance of this topic in a structured long answer.",
+        sol_text,
+    )
+
+
 def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
     q_clean = q_text.casefold().strip()
     forbidden_patterns = (
@@ -4106,6 +4194,8 @@ def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
         "explain in detail the significance, key events, and historical impact of",
         "describe in detail the process and scientific principles of",
         "analyze and explain in detail the core features, importance, and practical applications of",
+        "in detail, including main features, observations, and real-world significance",
+        "including main features, observations, and real-world significance",
     )
     if any(p in q_clean for p in forbidden_patterns):
         return True
@@ -5007,8 +5097,11 @@ def render_test_paper(
                         if nat_6m is not None:
                             q_t, sol_t = nat_6m
                         else:
-                            q_t = f"Describe {t_title} in detail, including main features, observations, and real-world significance."
-                            sol_t = f"{exp_text} Key examples include: {', '.join(t.examples) if t.examples else 'natural phenomena'}."
+                            q_t, sol_t = build_contextual_section_d_fallback_question(
+                                t_title,
+                                exp_text,
+                                t.examples,
+                            )
 
                     q_clean_norm = " ".join(q_t.casefold().strip().split())
                     if q_clean_norm not in used_q_texts and not is_generic_topic_title_question(q_t, t_title):

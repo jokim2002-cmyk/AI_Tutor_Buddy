@@ -27,6 +27,8 @@ class EnglishMediumV1ReleaseGateTests(unittest.TestCase):
             "core principles",
             "main ideas of",
             "main properties of",
+            "in detail, including main features",
+            "observations, and real-world significance",
         ]
 
     def test_v1_ui_scope_lock(self) -> None:

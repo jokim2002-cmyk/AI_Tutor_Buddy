@@ -25,6 +25,8 @@ class Std8EnglishMediumV1SmokeTests(unittest.TestCase):
             "core principles",
             "main ideas of",
             "main properties of",
+            "in detail, including main features",
+            "observations, and real-world significance",
         ]
 
     def test_std8_english_medium_four_subjects_repository_load(self) -> None:
