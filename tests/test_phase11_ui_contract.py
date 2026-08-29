@@ -380,6 +380,64 @@ class Phase11UIContractTests(unittest.TestCase):
         new_chat_block = UI.split("def start_new_chat", 1)[1].split("def refresh_cloud_status", 1)[0]
         self.assertIn("ai_service._last_generated_test_paper = None", new_chat_block)
 
+        import json
+        import tempfile
+        from dataclasses import asdict, fields
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import GSEBSyllabusRepository, StudentLearningContext, GeneratedTestPaper, TestPaperQuestionItem
+        import gyanverse_ui
+
+        repo = GSEBSyllabusRepository(ROOT / "syllabus")
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_papers_path = Path(tmpdir) / "active_test_papers.json"
+            original_path = gyanverse_ui.ACTIVE_TEST_PAPERS_PATH
+            gyanverse_ui.ACTIVE_TEST_PAPERS_PATH = tmp_papers_path
+            try:
+                ai1 = GyanVerseAIService(syllabus_repository=repo, api_key="mock_key")
+                ctx = StudentLearningContext(
+                    student_id="s_restart_test",
+                    name="Student",
+                    board="GSEB",
+                    medium="English",
+                    standard=8,
+                    current_subject="Mathematics",
+                    current_chapter="Chapter 1 - Rational Numbers",
+                )
+
+                gen_prompt = "Generate Std 8 Mathematics Chapter 1 25-mark test paper."
+                _ = ai1.ask_stream(message=gen_prompt, context=ctx)
+                active_paper = getattr(ai1, "_last_generated_test_paper", None)
+                self.assertIsNotNone(active_paper, "Active test paper should be generated")
+
+                conv_id = "conv_restart_math_8"
+                payload = {conv_id: asdict(active_paper)}
+                tmp_papers_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+                self.assertTrue(tmp_papers_path.exists())
+
+                ai2 = GyanVerseAIService(syllabus_repository=repo, api_key="mock_key")
+                self.assertIsNone(ai2._last_generated_test_paper)
+
+                raw = json.loads(tmp_papers_path.read_text(encoding="utf-8")).get(conv_id)
+                self.assertIsInstance(raw, dict)
+                q_fields = {f.name for f in fields(TestPaperQuestionItem)}
+                questions = [TestPaperQuestionItem(**{k: v for k, v in q.items() if k in q_fields}) for q in raw["questions"]]
+                p_fields = {f.name for f in fields(GeneratedTestPaper)}
+                p_payload = {k: v for k, v in raw.items() if k in p_fields}
+                p_payload["questions"] = questions
+                ai2._last_generated_test_paper = GeneratedTestPaper(**p_payload)
+
+                ans_msg = "1. -19/13\n2. Left of 0\n3. 9/40"
+                eval_resp = ai2.ask_stream(message=ans_msg, context=ctx)
+
+                self.assertIn("Test Evaluation", eval_resp)
+                self.assertIn("Standard: 8", eval_resp)
+                self.assertIn("Subject: Mathematics", eval_resp)
+                self.assertIn("Per-Question Evaluation:", eval_resp)
+                self.assertNotIn("could not respond", eval_resp.casefold())
+            finally:
+                gyanverse_ui.ACTIVE_TEST_PAPERS_PATH = original_path
+
     def test_live_ui_send_flow_syncs_test_paper_state_and_status_text(self):
         from phase11_ai import GyanVerseAIService
         from phase11_core import GSEBSyllabusRepository, StudentLearningContext
