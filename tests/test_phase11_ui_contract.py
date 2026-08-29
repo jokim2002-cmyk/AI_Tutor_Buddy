@@ -179,7 +179,13 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertTrue(permissions["android.permission.CAMERA"])
         dependencies = config["project"]["dependencies"]
         self.assertTrue(any(item.startswith("flet-audio-recorder") for item in dependencies))
-        self.assertTrue(any(item.startswith("SpeechRecognition") for item in dependencies))
+        self.assertFalse(
+            any(item.startswith("SpeechRecognition") for item in dependencies),
+            "Android Flet builds evaluate markers on the Windows host, so SpeechRecognition must not be a base dependency.",
+        )
+        optional = config["project"].get("optional-dependencies", {})
+        self.assertIn("desktop-voice", optional)
+        self.assertTrue(any(item.startswith("SpeechRecognition") for item in optional["desktop-voice"]))
         self.assertFalse(any(item.startswith("sounddevice") for item in dependencies))
 
 
