@@ -9,7 +9,7 @@ import tempfile
 import time
 import uuid
 import wave
-from dataclasses import replace
+from dataclasses import asdict, fields, replace
 from pathlib import Path
 from typing import Callable, Sequence
 
@@ -28,12 +28,14 @@ from conversation_store import ConversationStore, DeviceIdentityStore
 from gyanverse_ui_helpers import mode_label, safe_text
 from phase11_ai import AIServiceError, GyanVerseAIService
 from phase11_core import (
+    GeneratedTestPaper,
     GSEBSyllabusRepository,
     HomeworkAttachmentStore,
     LearningContextStore,
     LearningMode,
     Phase11Error,
     StudentLearningContext,
+    TestPaperQuestionItem,
     VoiceState,
     canonicalize_installed_syllabus_context,
     detect_context_from_message,
@@ -58,6 +60,7 @@ DATA_DIR = APP_DIR / "data"
 ASSETS_DIR = APP_DIR / "assets"
 DATA_DIR.mkdir(exist_ok=True)
 ASSETS_DIR.mkdir(exist_ok=True)
+ACTIVE_TEST_PAPERS_PATH = DATA_DIR / "active_test_papers.json"
 
 NAV_ITEMS = (
     ("home", "Home", ft.Icons.HOME_OUTLINED, ft.Icons.HOME),
@@ -201,6 +204,66 @@ def main(page: ft.Page) -> None:
         )
         session_id = active_conversation.conversation_id
 
+    def _active_test_papers_payload() -> dict[str, object]:
+        try:
+            if not ACTIVE_TEST_PAPERS_PATH.exists():
+                return {}
+            payload = json.loads(ACTIVE_TEST_PAPERS_PATH.read_text(encoding="utf-8"))
+            return payload if isinstance(payload, dict) else {}
+        except Exception:
+            return {}
+
+    def save_active_test_paper(paper: GeneratedTestPaper | None) -> None:
+        if paper is None:
+            return
+        try:
+            payload = _active_test_papers_payload()
+            payload[active_conversation.conversation_id] = asdict(paper)
+            ACTIVE_TEST_PAPERS_PATH.write_text(
+                json.dumps(payload, indent=2, sort_keys=True),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
+
+    def restore_active_test_paper() -> bool:
+        ai_service._last_generated_test_paper = None
+        try:
+            raw = _active_test_papers_payload().get(active_conversation.conversation_id)
+            if not isinstance(raw, dict):
+                return False
+            raw_questions = raw.get("questions")
+            if not isinstance(raw_questions, list):
+                return False
+
+            question_fields = {field.name for field in fields(TestPaperQuestionItem)}
+            questions = []
+            for item in raw_questions:
+                if not isinstance(item, dict):
+                    continue
+                question_payload = {
+                    name: item[name]
+                    for name in question_fields
+                    if name in item
+                }
+                questions.append(TestPaperQuestionItem(**question_payload))
+            if not questions:
+                return False
+
+            paper_fields = {field.name for field in fields(GeneratedTestPaper)}
+            paper_payload = {
+                name: raw[name]
+                for name in paper_fields
+                if name in raw
+            }
+            paper_payload["questions"] = questions
+            ai_service._last_generated_test_paper = GeneratedTestPaper(**paper_payload)
+            return True
+        except Exception:
+            ai_service._last_generated_test_paper = None
+            return False
+
+
     def start_new_chat(_: object = None) -> None:
         nonlocal active_conversation, session_id, latest_tutor_answer, active_audio, selected_attachments
         ai_service.stop_playback()
@@ -216,6 +279,7 @@ def main(page: ft.Page) -> None:
         session_id = active_conversation.conversation_id
         latest_tutor_answer = ""
         active_audio = None
+        ai_service._last_generated_test_paper = None
         selected_attachments = []
         status_text.value = "New chat started"
         show_view("tutor")
@@ -407,6 +471,7 @@ def main(page: ft.Page) -> None:
         if lesson_scope_changed:
             activate_owner(current_owner_id)
             ai_service.reset_session()
+            restore_active_test_paper()
         context_text.value = context.context_label
         if lesson_context_text is not None:
             lesson_context_text.value = context.context_label
@@ -1858,9 +1923,10 @@ def main(page: ft.Page) -> None:
                 refresh_attachment_preview()
 
                 active_paper = getattr(ai_service, "_last_generated_test_paper", None)
+                save_active_test_paper(active_paper)
                 m = ai_service.last_metrics
                 elapsed = time.perf_counter() - started_at
-                paper_suffix = f" • Active test paper ({active_paper.scope.subject})" if active_paper is not None else ""
+                paper_suffix = f" • Active test paper ({active_paper.subject})" if active_paper is not None else ""
                 if m.stream_used and m.ui_first_visible_ms > 0:
                     first_sec = m.ui_first_visible_ms / 1000.0
                     status_text.value = f"Ready • first text {first_sec:.1f}s • complete {elapsed:.1f}s • {ai_service.status_label}{paper_suffix}"
@@ -2113,6 +2179,7 @@ def main(page: ft.Page) -> None:
             owner_id=current_owner_id,
             limit=500,
         )
+        restored_active_test_paper = restore_active_test_paper()
         restored_turns: list[tuple[str, str]] = []
         pending_student_text = ""
         for stored_message in stored_messages:
@@ -2133,7 +2200,8 @@ def main(page: ft.Page) -> None:
         ai_service.restore_session_history(restored_turns)
 
         if stored_messages:
-            status_text.value = f"Restored {len(stored_messages)} local chat message(s)"
+            active_test_suffix = " • Active test paper restored" if restored_active_test_paper else ""
+            status_text.value = f"Restored {len(stored_messages)} local chat message(s){active_test_suffix}"
             speak_button.disabled = not bool(latest_tutor_answer)
         else:
             add_message(

@@ -361,6 +361,25 @@ class Phase11UIContractTests(unittest.TestCase):
             )
             self.assertIn("Source type: Teacher-authored content.", eval_formatted)
 
+
+    def test_active_test_paper_restores_after_app_restart(self):
+        self.assertIn('ACTIVE_TEST_PAPERS_PATH = DATA_DIR / "active_test_papers.json"', UI)
+        self.assertIn("def save_active_test_paper", UI)
+        self.assertIn("def restore_active_test_paper", UI)
+        self.assertIn("asdict(paper)", UI)
+        self.assertIn("TestPaperQuestionItem(**question_payload)", UI)
+        self.assertIn("ai_service._last_generated_test_paper = GeneratedTestPaper(**paper_payload)", UI)
+        self.assertIn("restored_active_test_paper = restore_active_test_paper()", UI)
+        self.assertIn("save_active_test_paper(active_paper)", UI)
+        self.assertIn("active_paper.subject", UI)
+        self.assertNotIn("active_paper.scope.subject", UI)
+
+        update_context_block = UI.split("def update_context", 1)[1].split("def notify", 1)[0]
+        self.assertIn("restore_active_test_paper()", update_context_block)
+
+        new_chat_block = UI.split("def start_new_chat", 1)[1].split("def refresh_cloud_status", 1)[0]
+        self.assertIn("ai_service._last_generated_test_paper = None", new_chat_block)
+
     def test_live_ui_send_flow_syncs_test_paper_state_and_status_text(self):
         from phase11_ai import GyanVerseAIService
         from phase11_core import GSEBSyllabusRepository, StudentLearningContext
