@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import base64
 import io
 import json
 import os
@@ -2133,7 +2134,7 @@ def main(page: ft.Page) -> None:
                         pass
 
                 audio = fta.Audio(
-                    src=audio_bytes,
+                    src=base64.b64encode(audio_bytes).decode("utf-8"),
                     autoplay=False,
                     volume=1.0,
                     release_mode=fta.ReleaseMode.STOP,

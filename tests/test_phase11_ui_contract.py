@@ -622,6 +622,14 @@ class Phase11UIContractTests(unittest.TestCase):
         except Exception as exc:
             self.fail(f"App launch failed due to unsupported control attribute or argument: {exc}")
 
+    def test_flet_audio_src_uses_json_serializable_base64_string(self):
+        import base64
+        import json
+        self.assertIn('base64.b64encode(audio_bytes).decode("utf-8")', UI)
+        b64 = base64.b64encode(b"RIFF1234WAVE").decode("utf-8")
+        self.assertTrue(isinstance(b64, str))
+        json.dumps({"src": b64})
+
 
 if __name__ == "__main__":
     unittest.main()
