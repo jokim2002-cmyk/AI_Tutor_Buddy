@@ -3720,6 +3720,146 @@ def determine_question_intended_marks(q_text: str, sol_text: str, is_example: bo
 
 
 
+
+def _build_english_section_d_prompt(topic_title: str, sol_text: str) -> tuple[str, str] | None:
+    """Return subject-scoped English long-answer prompts before science/social/math fallbacks can match."""
+    raw_title = clean_student_text(topic_title, max_length=200).strip()
+    t_lower = raw_title.casefold()
+
+    non_english_section_d_cues = (
+        "pie graph", "pie-graph", "circle graph", "histogram", "distance-time", "coordinates",
+        "equation", "factorisation", "factorization", "algebra", "rational", "polygon",
+        "triangle", "angle", "geometry", "construction", "constructing", "surface area", "volume", "capacity", "percentage", "tax",
+        "finance", "revision of finance", "commercial mathematics",
+        "simple-interest", "simple interest", "interest",
+        "profit", "loss", "proportion", "exponent", "cube", "square",
+        "power", "powers", "bracket", "brackets",
+        "crop", "agricultural", "agriculture", "soil", "sowing", "manure", "fertiliser",
+        "fertilizer", "irrigation", "weeding", "harvesting", "storage", "combustion",
+        "force", "friction", "sound", "light", "electric", "microorganism", "reproduction",
+        "adolescence", "deforestation", "coal", "petroleum", "earthquake",
+        "travellers", "nalanda", "harshavardhana", "social reform", "parliament",
+        "constitution", "resource", "mineral", "industry", "population", "disaster",
+    )
+    if any(k in t_lower for k in non_english_section_d_cues):
+        return None
+
+    if t_lower.startswith("revision of "):
+        return None
+
+    if "land art" in t_lower or "environmental appreciation" in t_lower:
+        return (
+            "Explain Land Art and environmental appreciation, including purpose, natural materials, examples, and care for nature.",
+            sol_text,
+        )
+    if "theatre etiquette" in t_lower or "public consideration" in t_lower:
+        return (
+            "Explain the rules of good audience behaviour during a live performance and how they show respect for performers and other viewers, with examples.",
+            sol_text,
+        )
+    if "compassion" in t_lower or "animal welfare" in t_lower or "coexistence" in t_lower:
+        return (
+            "Explain why compassion toward animals is important for coexistence, welfare, and ecological balance, with examples.",
+            sol_text,
+        )
+    if "textual evidence" in t_lower or "citation" in t_lower:
+        return (
+            "Explain the main types of textual evidence, including facts, examples, statistics, quotations, and citations, and show how they support a written answer.",
+            sol_text,
+        )
+    if "active and passive voice" in t_lower or "passive voice" in t_lower or "active voice" in t_lower:
+        return (
+            "Explain active and passive voice, including how the subject, verb, and object change, with rules and examples from action sentences.",
+            sol_text,
+        )
+    if "modal auxiliar" in t_lower or "modal verbs" in t_lower or "formal politeness" in t_lower:
+        return (
+            "Explain modal auxiliaries used for rules, permission, advice, and polite requests, with correct examples and common mistakes.",
+            sol_text,
+        )
+    if "silent letters" in t_lower or "reported speech" in t_lower:
+        return (
+            "Explain silent letters and reported speech, including pronunciation, sentence changes, punctuation, and suitable examples.",
+            sol_text,
+        )
+    if "graphic narrative" in t_lower or "sequence" in t_lower and "narrative" in t_lower:
+        return (
+            "Explain how a graphic narrative presents events through sequence, panels, captions, dialogue, and evidence from the text.",
+            sol_text,
+        )
+    if "postcard" in t_lower or "spatial organisation" in t_lower or "travel writing" in t_lower:
+        return (
+            "Explain how travel writing or a postcard uses viewpoint, place details, spatial order, and personal response, with examples.",
+            sol_text,
+        )
+    if "subject-verb agreement" in t_lower or "paragraph unity" in t_lower:
+        return (
+            "Explain subject-verb agreement and paragraph unity, including rules, topic sentences, supporting details, and corrected examples.",
+            sol_text,
+        )
+    if "descriptive adjective" in t_lower or "prepositions of place" in t_lower:
+        return (
+            "Explain descriptive adjectives and prepositions of place, including their purpose, correct use, and examples in descriptive writing.",
+            sol_text,
+        )
+    if "poetic imagery" in t_lower or "nature themes" in t_lower:
+        return (
+            "Explain poetic imagery and nature themes, including sensory details, mood, purpose, and original examples.",
+            sol_text,
+        )
+    if "literary device" in t_lower or "metaphor" in t_lower or "simile" in t_lower or "personification" in t_lower:
+        return (
+            "Explain the literary device or devices with definitions, differences, and original examples.",
+            sol_text,
+        )
+    if "writing process" in t_lower or "brainstorming" in t_lower or "drafting" in t_lower or "revision" in t_lower:
+        return (
+            "Explain the writing process from brainstorming to revision, including prewriting, drafting, editing, proofreading, and one suitable example.",
+            sol_text,
+        )
+    if "summary" in t_lower or "main ideas" in t_lower or "key details" in t_lower:
+        return (
+            "Explain how to write a good summary, including main ideas, key details, omission of opinions, and one example.",
+            sol_text,
+        )
+    if "persuasive" in t_lower or "thesis" in t_lower or "counter-argument" in t_lower or "respectful disagreement" in t_lower:
+        return (
+            "Explain persuasive writing, including thesis claim, supporting reasons, counter-argument, rebuttal, and respectful tone.",
+            sol_text,
+        )
+    if "dialogue" in t_lower or "speech conventions" in t_lower:
+        return (
+            "Explain dialogue writing conventions, including punctuation, speaker changes, quotation marks, and a short example.",
+            sol_text,
+        )
+    if "conjunction" in t_lower or "compound sentence" in t_lower or "complex sentence" in t_lower:
+        return (
+            "Explain sentence joining with conjunctions, including simple, compound, and complex sentence examples.",
+            sol_text,
+        )
+    if "adverb" in t_lower or "pronoun" in t_lower or "relative clause" in t_lower or "transition words" in t_lower or "cause and effect" in t_lower:
+        return (
+            f"Explain {raw_title}, including rules, examples, corrected usage, and its role in clear writing.",
+            sol_text,
+        )
+    if "narrative perspective" in t_lower or "character" in t_lower or "suspense" in t_lower or "storytelling" in t_lower or "irony" in t_lower:
+        return (
+            f"Explain {raw_title}, including meaning, effect on the reader, evidence from a story, and one suitable example.",
+            sol_text,
+        )
+    if "audience" in t_lower or "purpose" in t_lower or "tone" in t_lower or "note-making" in t_lower:
+        return (
+            f"Explain {raw_title}, including purpose, audience awareness, format, examples, and common mistakes.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("alliteration", "imagery", "inversion", "diary", "biography", "resilience", "humour", "fable", "limerick", "cinquain", "collocation", "idiom", "preposition", "imperative")):
+        return (
+            f"Explain {raw_title}, including definition, key features, examples, and importance in reading or writing.",
+            sol_text,
+        )
+
+    return None
+
 def build_natural_6mark_question(
     topic_title: str,
     explanation: str,
@@ -3733,6 +3873,27 @@ def build_natural_6mark_question(
 
     ex_str = f" Examples: {', '.join(examples[:2])}." if examples else ""
     sol_text = f"{exp_clean}{ex_str}"
+
+    english_prompt = _build_english_section_d_prompt(topic_title, sol_text)
+    if english_prompt is not None:
+        return english_prompt
+
+    # Science Section D natural fallback guard
+    if "agricultural practices" in t_lower or "preparation of soil" in t_lower:
+        return (
+            "Explain the main agricultural practices used in crop production, including soil preparation, sowing, irrigation, weeding, harvesting, and storage.",
+            sol_text,
+        )
+    if "sowing" in t_lower or "manures" in t_lower or "fertilisers" in t_lower or "fertilizers" in t_lower:
+        return (
+            "Explain correct sowing practices and the role of manures and fertilisers in healthy crop growth, with examples.",
+            sol_text,
+        )
+    if "irrigation" in t_lower or "weeding" in t_lower or "harvesting" in t_lower or "storage" in t_lower:
+        return (
+            "Explain irrigation, weeding, harvesting, and storage practices in crop production, including methods, precautions, and examples.",
+            sol_text,
+        )
 
     # 1. Specifically requested exact-topic mappings
     if "harshavardhana" in t_lower or "kanauj" in t_lower:
@@ -3913,7 +4074,7 @@ def build_natural_6mark_question(
             "Describe the properties of magnets, magnetic field lines, and how attraction and repulsion work.",
             sol_text,
         )
-    if "compass" in t_lower or "earth's magnetism" in t_lower or "earth magnetism" in t_lower:
+    if re.search(r"\bcompass\b", t_lower) or "earth's magnetism" in t_lower or "earth magnetism" in t_lower:
         return (
             "Explain how a magnetic compass works, describe Earth's magnetic behavior, and explain how a freely suspended magnet aligns north-south.",
             sol_text,
@@ -4101,6 +4262,167 @@ def build_contextual_section_d_fallback_question(
     if example_items:
         sol_text = f"{exp_text} Include relevant examples such as {'; '.join(example_items[:2])}."
 
+    if "rational number" in t_lower or "rational numbers" in t_lower:
+        return (
+            "Explain the important properties of rational numbers with worked examples, including closure, identity, inverse, and distributive property where applicable.",
+            sol_text,
+        )
+    if "pie graph" in t_lower or "sector angle" in t_lower or "circle graph" in t_lower:
+        return (
+            "Explain how to read and construct a pie graph, including fractions, percentages, sector angles, and one worked data example.",
+            sol_text,
+        )
+    if "number line" in t_lower:
+        return (
+            "Explain how rational numbers are represented on a number line, including equal divisions, direction from zero, and examples.",
+            sol_text,
+        )
+    if "linear equation" in t_lower or "equations" in t_lower:
+        return (
+            "Explain how to solve linear equations step by step, including balancing both sides and checking the answer with an example.",
+            sol_text,
+        )
+    if "polygon" in t_lower or "angle" in t_lower:
+        return (
+            "Explain the angle properties used in this geometry topic, including formulas, steps, and one solved example.",
+            sol_text,
+        )
+    if "square" in t_lower or "cube" in t_lower or "exponent" in t_lower:
+        return (
+            "Explain the number pattern or exponent rule involved, including formula, method, and worked examples.",
+            sol_text,
+        )
+    if "profit" in t_lower or "loss" in t_lower or "discount" in t_lower or "tax" in t_lower:
+        return (
+            "Explain the commercial mathematics method with formula, substitution, calculation steps, and final answer.",
+            sol_text,
+        )
+    if "area" in t_lower or "surface area" in t_lower or "volume" in t_lower:
+        return (
+            "Explain the mensuration formula, given values, calculation steps, units, and final answer with an example.",
+            sol_text,
+        )
+    if "graph" in t_lower or "data" in t_lower or "histogram" in t_lower:
+        return (
+            "Explain how to interpret the graph or data display, including axes, values, comparison, and conclusion.",
+            sol_text,
+        )
+
+    if "theatre etiquette" in t_lower or "public consideration" in t_lower or "audience" in t_lower or "stage performance" in t_lower:
+        return (
+            "Explain the rules of good audience behaviour during a live performance and how they show respect for performers and other viewers, with examples.",
+            sol_text,
+        )
+    if "land art" in t_lower:
+        return (
+            "Explain how Land Art uses natural materials to appreciate landscapes and encourage care for the environment, with examples.",
+            sol_text,
+        )
+    if "environmental appreciation" in t_lower:
+        return (
+            "Explain how observing and describing natural surroundings can build environmental appreciation, with examples.",
+            sol_text,
+        )
+    if "descriptive adjectives" in t_lower or "prepositions of place" in t_lower:
+        return (
+            "Describe a natural scene using suitable adjectives and prepositions of place, and explain how these words make the description clearer.",
+            sol_text,
+        )
+    if "poetic imagery" in t_lower or "nature themes" in t_lower:
+        return (
+            "Explain how poets use visual, auditory, and tactile imagery to describe nature and create mood, with examples.",
+            sol_text,
+        )
+    if "compassion" in t_lower or "animal welfare" in t_lower or "coexistence" in t_lower:
+        return (
+            "Explain why compassion toward animals is important for coexistence, welfare, and ecological balance, with examples.",
+            sol_text,
+        )
+    if "narrative perspective" in t_lower or "first-person" in t_lower or "third-person" in t_lower:
+        return (
+            "Compare first-person and third-person narration, including point of view, limits of knowledge, and examples.",
+            sol_text,
+        )
+    if "writing process" in t_lower or "summary" in t_lower or "persuasive" in t_lower:
+        return (
+            "Explain the writing process from brainstorming to revision, including prewriting, drafting, editing, proofreading, and one suitable example.",
+            sol_text,
+        )
+    if "literary devices" in t_lower or "simile" in t_lower or "metaphor" in t_lower or "personification" in t_lower:
+        return (
+            "Explain the literary device or devices with definitions, differences, and original examples.",
+            sol_text,
+        )
+
+    english_prompt = _build_english_section_d_prompt(raw_title, sol_text)
+    if english_prompt is not None:
+        return english_prompt
+
+    # Science Section D contextual fallback guard
+    if "agricultural practices" in t_lower or "preparation of soil" in t_lower:
+        return (
+            "Explain the main agricultural practices used in crop production, including soil preparation, sowing, irrigation, weeding, harvesting, and storage.",
+            sol_text,
+        )
+    if "sowing" in t_lower or "manures" in t_lower or "fertilisers" in t_lower or "fertilizers" in t_lower:
+        return (
+            "Explain correct sowing practices and the role of manures and fertilisers in healthy crop growth, with examples.",
+            sol_text,
+        )
+    if "irrigation" in t_lower or "weeding" in t_lower or "harvesting" in t_lower or "storage" in t_lower:
+        return (
+            "Explain irrigation, weeding, harvesting, and storage practices in crop production, including methods, precautions, and examples.",
+            sol_text,
+        )
+
+    if "modal auxiliar" in t_lower or "modal verbs" in t_lower or "formal politeness" in t_lower:
+        return (
+            "Explain modal auxiliaries used for rules, permission, advice, and polite requests, with correct examples and common mistakes.",
+            sol_text,
+        )
+    if "silent letters" in t_lower or "reported speech" in t_lower:
+        return (
+            "Explain silent letters and reported speech, including pronunciation, sentence changes, punctuation, and suitable examples.",
+            sol_text,
+        )
+    if ("power" in t_lower or "powers" in t_lower) and ("bracket" in t_lower or "brackets" in t_lower):
+        return (
+            "Explain how powers and brackets are handled in simplification, including order of operations, exponent rules, and worked examples.",
+            sol_text,
+        )
+    if "revision of powers" in t_lower:
+        return (
+            "Explain the revision topic using examples of powers, brackets, order of operations, and step-by-step simplification.",
+            sol_text,
+        )
+
+    if "simple-interest" in t_lower or "simple interest" in t_lower or ("interest" in t_lower and "applications" in t_lower):
+        return (
+            "Explain simple interest applications using the formula, given values, substitution, calculation steps, units, and final amount where needed.",
+            sol_text,
+        )
+
+    if "finance" in t_lower and "geometry" in t_lower:
+        return (
+            "Explain the revision topic using suitable examples from finance calculations and geometry constructions, including formulas, steps, diagrams where needed, and final answers.",
+            sol_text,
+        )
+    if "factorisation" in t_lower or "factorization" in t_lower or "common factors" in t_lower or "regrouping" in t_lower:
+        return (
+            "Explain factorisation using common factors and regrouping, including steps, identities where useful, and worked examples.",
+            sol_text,
+        )
+    if "linear equation" in t_lower or "word problems of linear equations" in t_lower:
+        return (
+            "Explain how to solve a linear equation word problem by forming an equation, solving step by step, and checking the answer.",
+            sol_text,
+        )
+    if "volume" in t_lower or "capacity" in t_lower or "surface area" in t_lower:
+        return (
+            "Explain the mensuration formula, substitution steps, units, and one worked example for this topic.",
+            sol_text,
+        )
+
     if "how laws are made" in t_lower or ("law" in t_lower and "parliament" in t_lower):
         return (
             "Explain how laws are made in Parliament, including discussion, approval, implementation, and one example.",
@@ -4172,8 +4494,20 @@ def build_contextual_section_d_fallback_question(
             sol_text,
         )
 
+    if "textual evidence" in t_lower or "citation" in t_lower or "statistics" in t_lower or "numbers and percentages" in t_lower:
+        return (
+            "Explain the main types of textual evidence, including facts, examples, statistics, quotations, and citations, and show how they support a written answer.",
+            "A strong answer should define textual evidence, mention facts, examples, statistics, quotations, and citations, explain how evidence supports a claim, and include one suitable example.",
+        )
+
+    if "active and passive voice" in t_lower or "passive voice" in t_lower or "active voice" in t_lower:
+        return (
+            "Explain active and passive voice, including how the subject, verb, and object change, with rules and examples from action sentences.",
+            "A strong answer should define active voice and passive voice, explain how subject and object positions change, mention the correct passive verb form, and give suitable examples.",
+        )
+
     return (
-        f"Explain {anchor}, including purpose, important points, examples, and significance in a structured long answer.",
+        "Explain the lesson using clear definitions, key points, suitable examples, importance, and a short conclusion.",
         sol_text,
     )
 
@@ -4210,6 +4544,11 @@ def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
         "analyze and explain in detail the core features, importance, and practical applications of",
         "in detail, including main features, observations, and real-world significance",
         "including main features, observations, and real-world significance",
+        "explain the lesson using clear definitions",
+        "topic\'s purpose, important points",
+        "including purpose, important points, examples, and significance in a structured long answer",
+        "structured long answer explaining the topic",
+        "topic's purpose, important points",
     )
     if any(p in q_clean for p in forbidden_patterns):
         return True
@@ -5160,7 +5499,93 @@ def render_test_paper(
                         selected_item = (t_title, q_t, sol_t, mark_per_q)
                         break
 
+            # Final guard: strict Section-D filtering must never leave the renderer without a question.
+            if selected_item is None:
+                fallback_topic = next((t for ch in target_chapters for t in ch.topics), None)
+                if fallback_topic is None:
+                    selected_item = (
+                        "General",
+                        "Write a structured long answer explaining the selected topic with purpose, important points, examples, and significance.",
+                        "Write a structured answer with purpose, important points, examples, explanation of importance, and a short conclusion.",
+                        mark_per_q,
+                    )
+                elif mark_per_q == 6:
+                    fallback_q, fallback_sol = build_contextual_section_d_fallback_question(
+                        fallback_topic.title,
+                        fallback_topic.explanation,
+                        fallback_topic.examples,
+                    )
+                    selected_item = (fallback_topic.title, fallback_q, fallback_sol, mark_per_q)
+                elif mark_per_q == 3 and fallback_topic.examples:
+                    ex_str = fallback_topic.examples[0]
+                    selected_item = (
+                        fallback_topic.title,
+                        f"Explain with an example: {ex_str}",
+                        f"Example solution: {ex_str} demonstrates {fallback_topic.explanation}",
+                        mark_per_q,
+                    )
+                elif mark_per_q == 2:
+                    selected_item = (
+                        fallback_topic.title,
+                        "Explain one important point from this topic with an example.",
+                        fallback_topic.explanation or "Use the installed topic guide for explanation and examples.",
+                        mark_per_q,
+                    )
+                else:
+                    first_sentence = (fallback_topic.explanation or "Use the installed topic guide.").split(".")[0].strip()
+                    selected_item = (
+                        fallback_topic.title,
+                        "State one important fact from this topic.",
+                        first_sentence + ".",
+                        mark_per_q,
+                    )
+
             topic_title, q_text, sol_text, raw_intended_m = selected_item
+            if mark_per_q == 6:
+                topic_scope = topic_title.casefold()
+                q_scope = q_text.casefold()
+                english_topic = any(k in topic_scope for k in (
+                    "adverb", "pronoun", "conjunction", "modal", "passive voice", "active voice",
+                    "reported speech", "silent letters", "textual evidence", "citation", "theatre",
+                    "writing", "summary", "narrative", "character", "imagery", "literary", "dialogue",
+                    "postcard", "paragraph", "grammar", "tone", "audience", "purpose",
+                ))
+                math_topic = any(k in topic_scope for k in (
+                    "equation", "factorisation", "factorization", "graph", "angle", "polygon",
+                    "rational", "number", "cube", "square", "exponent", "area", "volume",
+                    "profit", "loss", "percentage", "proportion", "coordinates", "finance",
+                    "geometry", "construction", "constructing", "power", "powers", "bracket", "brackets",
+                    "simple-interest", "simple interest", "interest",
+                ))
+                cross_subject_leak = (
+                    "explain the lesson using clear definitions" in q_scope
+                    or (math_topic and any(p in q_scope for p in (
+                        "explain the writing process",
+                        "prewriting",
+                        "drafting, editing, proofreading",
+                        "english language or literature",
+                        "reading or writing",
+                    )))
+                    or (english_topic and any(p in q_scope for p in (
+                        "magnetic compass",
+                        "travellers' accounts, nalanda",
+                        "social reform movements challenged",
+                        "interpret the graph or data display",
+                    )))
+                    or (math_topic and any(p in q_scope for p in (
+                        "social reform movements challenged",
+                        "travellers' accounts, nalanda",
+                        "magnetic compass",
+                    )))
+                )
+                if cross_subject_leak:
+                    replacement = None
+                    if english_topic and "_build_english_section_d_prompt" in globals():
+                        replacement = _build_english_section_d_prompt(topic_title, sol_text)
+                    if replacement is None:
+                        replacement = build_contextual_section_d_fallback_question(topic_title, sol_text)
+                    q_text, sol_text = replacement
+
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
 
             lbl = "Mark" if mark_per_q == 1 else "Marks"

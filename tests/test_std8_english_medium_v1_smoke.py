@@ -27,6 +27,10 @@ class Std8EnglishMediumV1SmokeTests(unittest.TestCase):
             "main properties of",
             "in detail, including main features",
             "observations, and real-world significance",
+            "including purpose, important points, examples, and significance",
+            "structured long answer explaining the topic",
+        "explain the lesson using clear definitions",
+            "topic's purpose, important points",
         ]
 
     def test_std8_english_medium_four_subjects_repository_load(self) -> None:
@@ -72,6 +76,29 @@ class Std8EnglishMediumV1SmokeTests(unittest.TestCase):
                     text_full.casefold(),
                     f"Std 8 {subj_name} full syllabus test paper contains forbidden generic phrase: '{phrase}'",
                 )
+
+    def test_std8_english_section_d_does_not_leak_science_compass_prompt(self) -> None:
+        syllabus = self.repo.find(board="GSEB", medium="English", standard=8, subject="English")
+        self.assertIsNotNone(syllabus)
+
+        scope_full = parse_test_paper_scope("Generate a 100 marks full syllabus random test seed 111", None, syllabus)
+        text_full, paper_full = render_test_paper(
+            syllabus,
+            scope_full,
+            seed=111,
+            message="Generate a 100 marks full syllabus random test seed 111",
+        )
+
+        section_d_text = "\n".join(q.question_text for q in paper_full.questions if q.max_marks == 6).casefold()
+        self.assertNotIn("magnetic compass", section_d_text)
+        self.assertNotIn("earth's magnetic", section_d_text)
+        self.assertNotIn("freely suspended magnet", section_d_text)
+        self.assertNotIn(
+            "including purpose, important points, examples, and significance in a structured long answer",
+            section_d_text,
+        )
+        self.assertNotIn("structured long answer explaining the topic", section_d_text)
+        self.assertNotIn("topic's purpose, important points", section_d_text)
 
     def test_std8_english_medium_answer_evaluation_policy(self) -> None:
         for subj_name in self.subjects:

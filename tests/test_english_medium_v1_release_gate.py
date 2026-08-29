@@ -29,6 +29,10 @@ class EnglishMediumV1ReleaseGateTests(unittest.TestCase):
             "main properties of",
             "in detail, including main features",
             "observations, and real-world significance",
+            "including purpose, important points, examples, and significance",
+            "structured long answer explaining the topic",
+        "explain the lesson using clear definitions",
+            "topic's purpose, important points",
         ]
 
     def test_v1_ui_scope_lock(self) -> None:
