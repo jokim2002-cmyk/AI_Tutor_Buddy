@@ -1874,7 +1874,7 @@ def main(page: ft.Page) -> None:
                     pass
             except Exception as exc:
                 if tutor_reply_visible:
-                    status_text.value = "Fast local reply shown"
+                    status_text.value = "Syllabus answer shown"
                     return
                 fallback = ai_service.offline_answer(
                     message=text,
@@ -1888,7 +1888,7 @@ def main(page: ft.Page) -> None:
                     tutor_reply_visible = True
                 else:
                     add_message("tutor", fallback)
-                status_text.value = "Fast local reply shown"
+                status_text.value = "Syllabus answer shown"
             finally:
                 busy.visible = False
                 send_button.disabled = False
