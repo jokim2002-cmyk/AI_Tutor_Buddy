@@ -435,6 +435,20 @@ class Phase11UIContractTests(unittest.TestCase):
                 self.assertIn("Subject: Mathematics", eval_resp)
                 self.assertIn("Per-Question Evaluation:", eval_resp)
                 self.assertNotIn("could not respond", eval_resp.casefold())
+
+                # Verify context isolation (switching subject invalidates cross-subject active paper)
+                ctx_sci = StudentLearningContext(
+                    student_id="s_restart_test",
+                    name="Student",
+                    board="GSEB",
+                    medium="English",
+                    standard=8,
+                    current_subject="Science & Technology",
+                    current_chapter="Chapter 1 - Crop Production and Management",
+                )
+                sci_resp = ai2.ask_stream(message=ans_msg, context=ctx_sci)
+                self.assertNotIn("Subject: Mathematics", sci_resp)
+                self.assertIsNone(ai2._last_generated_test_paper)
             finally:
                 gyanverse_ui.ACTIVE_TEST_PAPERS_PATH = original_path
 

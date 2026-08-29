@@ -625,6 +625,13 @@ class GyanVerseAIService:
     ) -> GeneratedTestPaper | None:
         """Capture and store the generated test paper object for the active session across all routes."""
         try:
+            if (
+                self._last_generated_test_paper is not None
+                and context.current_subject
+                and self._last_generated_test_paper.subject.casefold() != context.current_subject.casefold()
+            ):
+                self._last_generated_test_paper = None
+
             msg_lower = message.casefold()
             eval_phrases = (
                 "check my test answers",

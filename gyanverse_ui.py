@@ -256,6 +256,13 @@ def main(page: ft.Page) -> None:
                 for name in paper_fields
                 if name in raw
             }
+            if (
+                paper_payload.get("subject")
+                and context.current_subject
+                and str(paper_payload["subject"]).casefold() != context.current_subject.casefold()
+            ):
+                ai_service._last_generated_test_paper = None
+                return False
             paper_payload["questions"] = questions
             ai_service._last_generated_test_paper = GeneratedTestPaper(**paper_payload)
             return True
