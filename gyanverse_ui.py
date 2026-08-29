@@ -82,6 +82,13 @@ COLOR_USER = "#E0EBFF"
 COLOR_TUTOR = "#FFFFFF"
 COLOR_SUCCESS = "#059669"
 COLOR_ERROR = "#DC2626"
+COLOR_PANEL = "#F6F8FC"
+COLOR_SOFT_BORDER = "#D7DEE8"
+COLOR_TUTOR_BORDER = "#DDE5EF"
+COLOR_USER_BORDER = "#B8CAFF"
+COLOR_BANNER = "#ECFDF5"
+COLOR_BANNER_BORDER = "#C7F2DF"
+
 FAST_REPLY_DEADLINE_SECONDS = 15.0
 SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0
 SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0
@@ -100,7 +107,7 @@ def _wav_from_pcm(pcm: bytes, sample_rate: int = 44_100) -> bytes:
 def main(page: ft.Page) -> None:
     page.title = "GyanVerse Academy"
     page.padding = 0
-    page.bgcolor = COLOR_BACKGROUND
+    page.bgcolor = COLOR_PANEL
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = ft.Theme(color_scheme_seed=COLOR_PRIMARY, use_material3=True)
     try:
@@ -174,7 +181,7 @@ def main(page: ft.Page) -> None:
     status_text = ft.Text("Ready", size=13, color=COLOR_MUTED)
     cloud_status_text = ft.Text("Cloud: signed out", size=13, color=COLOR_MUTED)
     account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
-    body = ft.Container(expand=True, padding=0, bgcolor=COLOR_BACKGROUND)
+    body = ft.Container(expand=True, padding=0, bgcolor=COLOR_PANEL)
     menu_button = ft.IconButton(icon=ft.Icons.MENU, tooltip="Open menu")
 
     def activate_owner(owner_id: str) -> None:
@@ -383,8 +390,14 @@ def main(page: ft.Page) -> None:
             content=content,
             padding=padding,
             bgcolor=COLOR_SURFACE,
-            border=ft.Border.all(1, COLOR_BORDER),
-            border_radius=16,
+            border=ft.Border.all(1, COLOR_SOFT_BORDER),
+            border_radius=12,
+            shadow=ft.BoxShadow(
+                blur_radius=14,
+                spread_radius=0,
+                color="#140F172A",
+                offset=ft.Offset(0, 4),
+            ),
         )
 
     def page_panel(title: str, subtitle: str, content: ft.Control) -> ft.Container:
@@ -392,7 +405,7 @@ def main(page: ft.Page) -> None:
             expand=True,
             content=ft.Container(
                 expand=True,
-                padding=ft.Padding(left=12, top=12, right=12, bottom=12),
+                padding=ft.Padding(left=18, top=14, right=18, bottom=14),
                 content=ft.Column(
                     [
                         ft.Text(title, size=24, weight=ft.FontWeight.BOLD, color=COLOR_TEXT),
@@ -1048,9 +1061,9 @@ def main(page: ft.Page) -> None:
         # pinning that pauses when the student scrolls away from the end.
         viewport_height = float(getattr(page, "height", 0) or 760)
         viewport_width = float(getattr(page, "width", 0) or 1180)
-        shared_conversation_width = max(340.0, min(1200.0, viewport_width - 32.0))
-        transcript_height = max(260.0, viewport_height - 210.0)
-        transcript_bottom_spacer = ft.Container(height=48)
+        shared_conversation_width = max(340.0, min(1120.0, viewport_width - 40.0))
+        transcript_height = max(260.0, viewport_height - 230.0)
+        transcript_bottom_spacer = ft.Container(height=24)
         transcript = ft.Column(
             height=transcript_height,
             spacing=12,
@@ -1064,7 +1077,7 @@ def main(page: ft.Page) -> None:
             content=transcript,
             height=transcript_height,
             padding=ft.Padding(left=8, top=8, right=8, bottom=8),
-            bgcolor=COLOR_BACKGROUND,
+            bgcolor=COLOR_PANEL,
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
         )
         composer = ft.TextField(
@@ -1408,8 +1421,8 @@ def main(page: ft.Page) -> None:
                 message_controls.append(controls_row)
 
             viewport_w = float(getattr(page, "width", 0) or 1180)
-            shared_w = max(340.0, min(1200.0, viewport_w - 32.0))
-            target_bubble_width = max(320.0, min(760.0 if is_student else 960.0, shared_w - 24.0))
+            shared_w = max(340.0, min(1120.0, viewport_w - 40.0))
+            target_bubble_width = max(320.0, min(740.0 if is_student else 900.0, shared_w - 36.0))
 
             bubble = ft.Container(
                 content=ft.Column(
@@ -1417,15 +1430,21 @@ def main(page: ft.Page) -> None:
                     spacing=6,
                 ),
                 bgcolor=COLOR_USER if is_student else COLOR_TUTOR,
-                border=ft.Border.all(1, "#C9D5FF" if is_student else COLOR_BORDER),
+                border=ft.Border.all(1, COLOR_USER_BORDER if is_student else COLOR_TUTOR_BORDER),
                 border_radius=ft.BorderRadius.only(
                     top_left=16,
                     top_right=16,
                     bottom_left=16 if is_student else 4,
                     bottom_right=4 if is_student else 16,
                 ),
-                padding=16,
+                padding=ft.Padding(left=18, top=16, right=18, bottom=16),
                 width=target_bubble_width,
+                shadow=ft.BoxShadow(
+                    blur_radius=10,
+                    spread_radius=0,
+                    color="#100F172A",
+                    offset=ft.Offset(0, 3),
+                ),
             )
             transcript.controls.insert(
                 max(0, len(transcript.controls) - 1),
@@ -1457,7 +1476,7 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "height", 0)
                 or 760
             )
-            resized_height = max(260.0, current_page_height - (160.0 + composer_height))
+            resized_height = max(260.0, current_page_height - (180.0 + composer_height))
             transcript.height = resized_height
             transcript_surface.height = resized_height
 
@@ -1476,7 +1495,7 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "width", 0)
                 or 1180
             )
-            shared_w = max(340.0, min(1200.0, new_width - 32.0))
+            shared_w = max(340.0, min(1120.0, new_width - 40.0))
             conversation_area.width = shared_w
             composer_container.width = shared_w
             update_compact_tutor_layout(page_height=new_height)
@@ -1712,19 +1731,25 @@ def main(page: ft.Page) -> None:
                 bubble_container = ft.Column(message_controls, spacing=6)
                 viewport_w = float(getattr(page, "width", 0) or 1180)
                 shared_w = max(340.0, min(1200.0, viewport_w - 32.0))
-                tutor_bubble_width = max(320.0, min(960.0, shared_w - 24.0))
+                tutor_bubble_width = max(320.0, min(900.0, shared_w - 36.0))
                 tutor_bubble = ft.Container(
                     content=bubble_container,
                     bgcolor=COLOR_TUTOR,
-                    border=ft.Border.all(1, COLOR_BORDER),
+                    border=ft.Border.all(1, COLOR_TUTOR_BORDER),
                     border_radius=ft.BorderRadius.only(
                         top_left=16,
                         top_right=16,
                         bottom_left=4,
                         bottom_right=16,
                     ),
-                    padding=16,
+                    padding=ft.Padding(left=18, top=16, right=18, bottom=16),
                     width=tutor_bubble_width,
+                    shadow=ft.BoxShadow(
+                        blur_radius=10,
+                        spread_radius=0,
+                        color="#100F172A",
+                        offset=ft.Offset(0, 3),
+                    ),
                 )
                 transcript.controls.insert(
                     max(0, len(transcript.controls) - 1),
@@ -2106,10 +2131,15 @@ def main(page: ft.Page) -> None:
             ),
             padding=ft.Padding(left=6, top=2, right=4, bottom=2),
             bgcolor=COLOR_SURFACE,
-            border=ft.Border.all(1, COLOR_BORDER),
+            border=ft.Border.all(1, COLOR_SOFT_BORDER),
             border_radius=18,
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
-            shadow=ft.BoxShadow(blur_radius=8, spread_radius=0, color="#22000000", offset=ft.Offset(0, 2)),
+            shadow=ft.BoxShadow(
+                blur_radius=18,
+                spread_radius=0,
+                color="#220F172A",
+                offset=ft.Offset(0, 6),
+            ),
         )
 
         lesson_context_text = ft.Text(
@@ -2131,9 +2161,16 @@ def main(page: ft.Page) -> None:
                 ],
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
-            padding=ft.Padding(left=10, top=4, right=4, bottom=4),
-            bgcolor="#EDF7F6",
+            padding=ft.Padding(left=12, top=6, right=6, bottom=6),
+            bgcolor=COLOR_BANNER,
+            border=ft.Border.all(1, COLOR_BANNER_BORDER),
             border_radius=12,
+            shadow=ft.BoxShadow(
+                blur_radius=8,
+                spread_radius=0,
+                color="#0F059669",
+                offset=ft.Offset(0, 2),
+            ),
         )
 
         conversation_area = ft.Container(
@@ -2156,7 +2193,7 @@ def main(page: ft.Page) -> None:
             expand=True,
             content=ft.Container(
                 expand=True,
-                padding=ft.Padding(left=8, top=8, right=8, bottom=8),
+                padding=ft.Padding(left=16, top=10, right=16, bottom=8),
                 alignment=ft.alignment.Alignment(0, -1),
                 content=ft.Column(
                     [conversation_area, composer_container],
@@ -2242,9 +2279,15 @@ def main(page: ft.Page) -> None:
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.Padding(left=4, top=7, right=12, bottom=7),
+        padding=ft.Padding(left=8, top=8, right=14, bottom=8),
         bgcolor=COLOR_SURFACE,
-        border=ft.Border(bottom=ft.BorderSide(1, COLOR_BORDER)),
+        border=ft.Border(bottom=ft.BorderSide(1, COLOR_SOFT_BORDER)),
+        shadow=ft.BoxShadow(
+            blur_radius=10,
+            spread_radius=0,
+            color="#100F172A",
+            offset=ft.Offset(0, 2),
+        ),
     )
 
     page.add(ft.Column([topbar, body], expand=True, spacing=0))
