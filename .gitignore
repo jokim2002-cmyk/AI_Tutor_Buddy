@@ -17,6 +17,8 @@ dist/
 *.apk
 *.aab
 *.exe
+*.spec
+generated-*.ico
 *.jks
 *.keystore
 .local_voice_auditions/
