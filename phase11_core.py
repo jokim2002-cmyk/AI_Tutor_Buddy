@@ -2981,6 +2981,22 @@ def evaluate_single_test_answer(
                 continue
         return values
 
+    def _short_fraction_answer_matches_solution() -> bool:
+        user_fraction_tokens = re.findall(r"-?\d+/\d+", u_clean)
+        if len(user_fraction_tokens) != 1:
+            return False
+        raw_user_tokens = _token_stream(u_clean)
+        if len(raw_user_tokens) > 4:
+            return False
+        try:
+            user_value = Fraction(user_fraction_tokens[0])
+        except (ValueError, ZeroDivisionError):
+            return False
+        guide_values = _fraction_values(g_clean)
+        if not guide_values:
+            return False
+        return user_value == guide_values[-1]
+
     def _ceil_fraction(value: Fraction) -> int:
         return -(-value.numerator // value.denominator)
 
@@ -3000,6 +3016,9 @@ def evaluate_single_test_answer(
         valid_between = {value for value in u_values if low < value < high}
         if len(valid_between) >= 3:
             return float(max_marks), "Correct", "Correct answer."
+
+    if _short_fraction_answer_matches_solution():
+        return float(max_marks), "Correct", "Correct answer."
 
     if _short_final_answer_embedded_in_solution():
         return float(max_marks), "Correct", "Correct answer."

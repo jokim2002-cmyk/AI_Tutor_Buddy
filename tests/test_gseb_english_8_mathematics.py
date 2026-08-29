@@ -291,6 +291,27 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertEqual(result, "Correct")
         self.assertEqual(feedback, "Correct answer.")
 
+    def test_math_test_evaluation_accepts_short_final_fraction_from_worked_solution(self) -> None:
+        awarded, result, feedback = evaluate_single_test_answer(
+            q_text="Find a rational number exactly halfway between 1/5 and 1/4.",
+            user_ans="9/40",
+            sol_guide="Mean = (1/5 + 1/4)/2 = (9/20)/2 = 9/40.",
+            max_marks=1,
+        )
+
+        self.assertEqual(awarded, 1.0)
+        self.assertEqual(result, "Correct")
+        self.assertEqual(feedback, "Correct answer.")
+
+        wrong_awarded, wrong_result, _ = evaluate_single_test_answer(
+            q_text="Find a rational number exactly halfway between 1/5 and 1/4.",
+            user_ans="1/4",
+            sol_guide="Mean = (1/5 + 1/4)/2 = (9/20)/2 = 9/40.",
+            max_marks=1,
+        )
+        self.assertEqual(wrong_awarded, 0.0)
+        self.assertEqual(wrong_result, "Incorrect")
+
     def test_math_test_evaluation_accepts_valid_rational_numbers_between_bounds(self) -> None:
         awarded, result, feedback = evaluate_single_test_answer(
             q_text="Find three rational numbers between -2/5 and 1/2.",
