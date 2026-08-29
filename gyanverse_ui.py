@@ -454,31 +454,35 @@ def main(page: ft.Page) -> None:
             "Science & Technology",
             "Social Science",
         }
-        name_field = ft.TextField(label="Student name", value=context.name)
+        name_field = ft.TextField(label="Student name", value=context.name, width=520)
         board_field = ft.Dropdown(
             label="Board",
+            width=150,
             value=context.board if context.board in {"GSEB", "CBSE"} else "GSEB",
             options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE")],
         )
         medium_field = ft.Dropdown(
             label="Medium",
+            width=180,
             value=context.medium,
             options=[ft.dropdown.Option(item) for item in ("Gujarati", "English", "Hindi")],
         )
         standard_field = ft.Dropdown(
             label="Standard",
+            width=120,
             value=str(context.standard) if 1 <= context.standard <= 10 else "7",
             options=[ft.dropdown.Option(str(item)) for item in range(1, 11)],
         )
         language_field = ft.Dropdown(
             label="Tutor language",
+            width=180,
             value=context.preferred_language,
             options=[ft.dropdown.Option(item) for item in ("Gujarati", "Hindi", "English")],
         )
 
-        subject_field = ft.Dropdown(label="Subject")
-        chapter_field = ft.Dropdown(label="Chapter")
-        topic_field = ft.Dropdown(label="Topic")
+        subject_field = ft.Dropdown(label="Subject", width=520)
+        chapter_field = ft.Dropdown(label="Chapter", width=520)
+        topic_field = ft.Dropdown(label="Topic", width=520)
         package_status = ft.Text(size=10, color=COLOR_MUTED)
 
         def matching_syllabi() -> list[object]:
@@ -595,14 +599,12 @@ def main(page: ft.Page) -> None:
             modal=first_use,
             title=ft.Text("Set up your personal tutor", size=20, weight=ft.FontWeight.BOLD),
             content=ft.Container(
-                width=460,
-                height=520,
+                width=560,
+                height=560,
                 content=ft.Column(
                     [
                         name_field,
-                        board_field,
-                        medium_field,
-                        standard_field,
+                        ft.Row([board_field, medium_field, standard_field], spacing=12, wrap=True),
                         language_field,
                         ft.Divider(height=8),
                         ft.Text("Current school lesson", size=15, weight=ft.FontWeight.BOLD),
@@ -611,8 +613,8 @@ def main(page: ft.Page) -> None:
                         chapter_field,
                         topic_field,
                     ],
-                    tight=True,
-                    spacing=10,
+                    tight=False,
+                    spacing=12,
                     scroll=ft.ScrollMode.AUTO,
                 ),
             ),
