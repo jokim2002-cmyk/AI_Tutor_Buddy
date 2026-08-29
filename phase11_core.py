@@ -4415,9 +4415,39 @@ def is_suitable_for_section(q_text: str, sol_text: str, mark_per_q: int) -> bool
     )
 
     if mark_per_q == 6:
+        six_mark_short_prefixes = (
+            "what is ",
+            "what are ",
+            "what was ",
+            "what does ",
+            "who ",
+            "who was ",
+            "which ",
+            "when ",
+            "where ",
+            "where is ",
+            "name ",
+            "list ",
+            "state ",
+            "define ",
+            "identify ",
+            "classify ",
+            "fill ",
+            "fill in ",
+            "complete ",
+            "complete with ",
+            "combine ",
+            "change to ",
+            "select ",
+            "choose ",
+            "replace ",
+            "punctuate ",
+            "give one ",
+            "give an example",
+        )
         if is_one_line:
             return False
-        if any(q_lower.startswith(p) for p in ("what was", "who was", "name", "give one", "which", "what is", "what are", "define", "where is")):
+        if any(q_lower.startswith(prefix) for prefix in six_mark_short_prefixes):
             return False
         if sol_words < 20 and not is_heavy_explanation:
             return False
@@ -5024,7 +5054,11 @@ def render_test_paper(
                 while pool_idx < len(pool):
                     candidate = pool[pool_idx]
                     pool_idx += 1
-                    if not is_duplicate_question(candidate[0], candidate[1], used_q_texts, used_intents):
+                    if (
+                        not is_duplicate_question(candidate[0], candidate[1], used_q_texts, used_intents)
+                        and candidate[3] == mark_per_q
+                        and is_suitable_for_section(candidate[1], candidate[2], mark_per_q)
+                    ):
                         selected_item = candidate
                         break
 
@@ -5118,7 +5152,11 @@ def render_test_paper(
                             )
 
                     q_clean_norm = " ".join(q_t.casefold().strip().split())
-                    if q_clean_norm not in used_q_texts and not is_generic_topic_title_question(q_t, t_title):
+                    if (
+                        q_clean_norm not in used_q_texts
+                        and not is_generic_topic_title_question(q_t, t_title)
+                        and is_suitable_for_section(q_t, sol_t, mark_per_q)
+                    ):
                         selected_item = (t_title, q_t, sol_t, mark_per_q)
                         break
 
