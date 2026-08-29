@@ -4083,87 +4083,101 @@ def build_contextual_section_d_fallback_question(
     explanation: str = "",
     examples: Sequence[str] = (),
 ) -> tuple[str, str]:
-    """Build a non-generic long-answer fallback without raw topic-title stuffing."""
+    """Build a natural long-answer fallback while avoiding bad raw-title templates."""
 
-    t_lower = clean_student_text(topic_title, max_length=200).casefold()
+    raw_title = clean_student_text(topic_title, max_length=200).strip()
+    t_lower = raw_title.casefold()
+    anchor = re.sub(r"\s+", " ", raw_title).strip()
     exp_text = clean_student_text(explanation, max_length=2_000).strip()
     example_items = [
         clean_student_text(ex, max_length=300).strip()
         for ex in examples
         if clean_student_text(ex, max_length=300).strip()
     ]
+
     if not exp_text:
         exp_text = "Use the installed topic explanation to write clear points with examples."
+    sol_text = exp_text
     if example_items:
         sol_text = f"{exp_text} Include relevant examples such as {'; '.join(example_items[:2])}."
-    else:
-        sol_text = exp_text
 
-    if any(k in t_lower for k in ("law", "parliament", "bill")):
+    if "how laws are made" in t_lower or ("law" in t_lower and "parliament" in t_lower):
         return (
-            "Explain how a public issue becomes a law through discussion, approval, and implementation, with one example.",
+            "Explain how laws are made in Parliament, including discussion, approval, implementation, and one example.",
+            sol_text,
+        )
+    if any(k in t_lower for k in ("sati", "widow", "caste", "social reform")):
+        return (
+            "Explain how social reform movements challenged harmful practices, supported justice, and changed society with examples.",
+            sol_text,
+        )
+    if "food" in t_lower and "commercial" in t_lower:
+        return (
+            "Compare food crops and commercial crops, including examples, growing conditions, and economic importance.",
+            sol_text,
+        )
+    if "colonial architecture" in t_lower or "urban monuments" in t_lower:
+        return (
+            "Describe colonial architecture and urban monuments, including features, historical evidence, preservation, and public importance.",
             sol_text,
         )
     if any(k in t_lower for k in ("constitution", "rights", "duties", "equality", "reservation")):
         return (
-            "Explain the purpose, public importance, safeguards, and one civic-life example connected with this constitutional topic.",
+            f"Explain the civic importance of {anchor}, including purpose, safeguards, examples, and public impact.",
             sol_text,
         )
     if any(k in t_lower for k in ("court", "justice", "pil", "legal", "consumer")):
         return (
-            "Explain how this justice-related process protects people, the steps involved, and one practical example.",
+            f"Explain how {anchor} protects people, including the process, benefits, limits, and one practical example.",
             sol_text,
         )
     if any(k in t_lower for k in ("government", "scheme", "welfare", "infrastructure", "administration")):
         return (
-            "Explain the purpose, working, benefits, and public importance of this government programme or institution with examples.",
+            f"Explain the purpose, working, benefits, and public importance of {anchor} with examples.",
             sol_text,
         )
-    if any(k in t_lower for k in ("crop", "farming", "agriculture", "food", "commercial")):
+    if any(k in t_lower for k in ("crop", "farming", "agriculture")):
         return (
-            "Compare the main agricultural types or crops involved, including examples, growing conditions, and economic importance.",
+            f"Explain {anchor}, including types, conditions, uses, and importance for people and the economy.",
             sol_text,
         )
     if any(k in t_lower for k in ("resource", "mineral", "energy", "conservation")):
         return (
-            "Classify the important resources, explain their uses and conservation, and give examples from India or the world.",
+            f"Classify and explain {anchor}, including uses, conservation, and examples from India or the world.",
             sol_text,
         )
     if any(k in t_lower for k in ("industry", "industries", "industrial", "textile", "steel")):
         return (
-            "Explain the factors behind industrial location and development, and describe their economic effects with examples.",
+            f"Explain {anchor}, including location factors, development, examples, and economic effects.",
             sol_text,
         )
     if any(k in t_lower for k in ("population", "density", "distribution")):
         return (
-            "Explain the factors affecting population distribution and density, and describe their effects with examples.",
+            f"Explain {anchor}, including major factors, regional differences, effects, and examples.",
             sol_text,
         )
     if any(k in t_lower for k in ("architecture", "monument", "urban")):
         return (
-            "Describe the main architectural features, historical evidence, preservation needs, and public importance of these monuments.",
-            sol_text,
-        )
-    if any(k in t_lower for k in ("reform", "sati", "widow", "caste")):
-        return (
-            "Explain how social reform movements challenged harmful practices, supported justice, and changed society, with examples.",
+            f"Describe {anchor}, including main features, historical evidence, preservation needs, and public importance.",
             sol_text,
         )
     if any(k in t_lower for k in ("movement", "battle", "company", "colonial", "independence", "revolution", "nam")):
         return (
-            "Explain the causes, main events, leaders, and effects of this historical development with examples.",
+            f"Explain {anchor}, including causes, main events, leaders, effects, and examples.",
             sol_text,
         )
     if any(k in t_lower for k in ("disaster", "preparedness", "first aid")):
         return (
-            "Explain the causes or risks, preparedness steps, citizen duties, and response measures with examples.",
+            f"Explain {anchor}, including causes or risks, preparedness steps, citizen duties, and response measures.",
             sol_text,
         )
 
     return (
-        "Explain the main purpose, important features, examples, and significance of this topic in a structured long answer.",
+        f"Explain {anchor}, including purpose, important points, examples, and significance in a structured long answer.",
         sol_text,
     )
+
+
 
 
 def is_generic_topic_title_question(q_text: str, topic_title: str = "") -> bool:
