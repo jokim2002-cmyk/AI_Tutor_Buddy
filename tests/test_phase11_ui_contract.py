@@ -210,6 +210,14 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("if all(getattr(context, field) == getattr(validated, field)", UI)
         self.assertIn("if requested_mode != context.learning_mode", UI)
 
+    def test_context_updates_switch_active_conversation_scope(self):
+        update_context_block = UI.split("def update_context", 1)[1].split("def notify", 1)[0]
+        self.assertIn("lesson_scope_changed = any(", update_context_block)
+        self.assertIn('"current_subject"', update_context_block)
+        self.assertIn('"current_chapter"', update_context_block)
+        self.assertIn("activate_owner(current_owner_id)", update_context_block)
+        self.assertIn("ai_service.reset_session()", update_context_block)
+
     def test_no_obsolete_project_drive_hardcoding_in_runtime_files(self):
         runtime = "\n".join(
             (ROOT / name).read_text(encoding="utf-8")

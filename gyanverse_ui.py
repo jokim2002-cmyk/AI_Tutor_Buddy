@@ -384,6 +384,17 @@ def main(page: ft.Page) -> None:
                 "preferred_language",
             )
         )
+        lesson_scope_changed = any(
+            getattr(context, field) != getattr(validated, field)
+            for field in (
+                "student_id",
+                "board",
+                "medium",
+                "standard",
+                "current_subject",
+                "current_chapter",
+            )
+        )
         context = context_store.save(validated) if persist else validated
         if identity_changed:
             engine.ensure_student(
@@ -393,6 +404,9 @@ def main(page: ft.Page) -> None:
                 board=context.board,
                 preferred_language=context.preferred_language,
             )
+        if lesson_scope_changed:
+            activate_owner(current_owner_id)
+            ai_service.reset_session()
         context_text.value = context.context_label
         if lesson_context_text is not None:
             lesson_context_text.value = context.context_label
