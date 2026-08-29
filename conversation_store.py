@@ -301,11 +301,19 @@ class ConversationStore:
     ) -> ConversationRecord:
         owner_id = _safe_owner_id(owner_id)
         student_id = _safe_id(student_id, prefix="student")
+        try:
+            standard = int(standard)
+        except (TypeError, ValueError) as exc:
+            raise ConversationStoreError("standard must be a number") from exc
+        board = _clean_text(board, max_length=40).upper()
+        subject = _clean_text(subject, max_length=120)
+        chapter = _clean_text(chapter, max_length=180)
         with self._lock, self._connection() as connection:
             row = connection.execute(
                 """
                 SELECT c.* FROM conversations AS c
-                WHERE c.owner_id=? AND c.student_id=? AND c.deleted_at=''
+                WHERE c.owner_id=? AND c.student_id=? AND c.board=? AND c.standard=?
+                  AND c.subject=? AND c.chapter=? AND c.deleted_at=''
                 ORDER BY
                     EXISTS(
                         SELECT 1
@@ -318,7 +326,7 @@ class ConversationStore:
                     c.conversation_id DESC
                 LIMIT 1
                 """,
-                (owner_id, student_id),
+                (owner_id, student_id, board, standard, subject, chapter),
             ).fetchone()
             if row is not None:
                 return self._conversation_from_row(row)

@@ -84,6 +84,68 @@ class ActiveConversationRestoreTests(unittest.TestCase):
 
             self.assertEqual(filled.conversation_id, active.conversation_id)
 
+    def test_active_conversation_is_scoped_to_learning_context(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            database_path = Path(temp_dir) / "conversations.db"
+            store = ConversationStore(
+                database_path,
+                device_id="device_context_scope_test",
+            )
+
+            science = store.create_conversation(
+                owner_id="owner_context_scope_test",
+                student_id="student_context_scope_test",
+                board="GSEB",
+                standard=8,
+                subject="Science & Technology",
+                chapter="Chapter 1 - Crop Production and Management",
+                title="Science chat",
+            )
+            store.append_message(
+                conversation_id=science.conversation_id,
+                owner_id="owner_context_scope_test",
+                student_id="student_context_scope_test",
+                role="student",
+                text="Generate Science Chapter 1 test paper",
+                language="English",
+                board="GSEB",
+                standard=8,
+                subject="Science & Technology",
+                chapter="Chapter 1 - Crop Production and Management",
+                backend="local syllabus",
+            )
+
+            math = store.get_or_create_active(
+                owner_id="owner_context_scope_test",
+                student_id="student_context_scope_test",
+                board="GSEB",
+                standard=8,
+                subject="Mathematics",
+                chapter="Chapter 1 - Rational Numbers",
+            )
+
+            self.assertNotEqual(science.conversation_id, math.conversation_id)
+            self.assertEqual("Mathematics", math.subject)
+            self.assertEqual("Chapter 1 - Rational Numbers", math.chapter)
+            self.assertEqual(
+                [],
+                store.list_messages(
+                    conversation_id=math.conversation_id,
+                    owner_id="owner_context_scope_test",
+                ),
+            )
+
+            restored_science = store.get_or_create_active(
+                owner_id="owner_context_scope_test",
+                student_id="student_context_scope_test",
+                board="GSEB",
+                standard=8,
+                subject="Science & Technology",
+                chapter="Chapter 1 - Crop Production and Management",
+            )
+
+            self.assertEqual(science.conversation_id, restored_science.conversation_id)
+
 
 if __name__ == "__main__":
     unittest.main()
