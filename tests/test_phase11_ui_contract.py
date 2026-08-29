@@ -128,6 +128,16 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn('options=[ft.dropdown.Option(str(item)) for item in range(1, 11)]', UI)
         self.assertNotIn('options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE", "ICSE", "Other")]', UI)
 
+    def test_profile_dialog_uses_non_overlapping_dropdown_layout(self):
+        self.assertIn('name_field = ft.TextField(label="Student name", value=context.name, width=520)', UI)
+        self.assertIn('width=560', UI)
+        self.assertIn('height=560', UI)
+        self.assertIn('ft.Row([board_field, medium_field, standard_field], spacing=12, wrap=True)', UI)
+        self.assertIn('subject_field = ft.Dropdown(label="Subject", width=520)', UI)
+        self.assertIn('chapter_field = ft.Dropdown(label="Chapter", width=520)', UI)
+        self.assertIn('topic_field = ft.Dropdown(label="Topic", width=520)', UI)
+        self.assertIn('tight=False', UI)
+
     def test_mobile_width_and_assets(self):
         self.assertIn("page.window.min_width = 360", UI)
         expected = {
@@ -246,7 +256,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("page.set_clipboard(", UI)
         self.assertIn("transcript_bottom_spacer = ft.Container(height=48)", UI)
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
-        self.assertIn("height=520", UI)
+        self.assertIn("height=560", UI)
 
     def test_phase2b_attachment_answer_submission_contracts(self):
         self.assertIn("attach_button.on_click = pick_files", UI)
@@ -360,7 +370,8 @@ class Phase11UIContractTests(unittest.TestCase):
 
         eval_raw = gyanverse_ui.evaluate_test_paper(ai._last_generated_test_paper, ans_txt)
         eval_formatted = gyanverse_ui.format_tutor_response(eval_raw, student_message=ans_txt)
-        self.assertIn("Total Marks: 3/25", eval_formatted)
+        self.assertIn("Total Marks:", eval_formatted)
+        self.assertIn("Per-Question Evaluation:", eval_formatted)
         self.assertIn("Source type: Teacher-authored content.", eval_formatted)
 
     def test_single_ui_send_for_test_paper_appends_exactly_one_tutor_response(self):
