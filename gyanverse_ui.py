@@ -1061,7 +1061,7 @@ def main(page: ft.Page) -> None:
         # pinning that pauses when the student scrolls away from the end.
         viewport_height = float(getattr(page, "height", 0) or 760)
         viewport_width = float(getattr(page, "width", 0) or 1180)
-        shared_conversation_width = max(340.0, min(1120.0, viewport_width - 40.0))
+        shared_conversation_width = max(340.0, min(1320.0, viewport_width - 48.0))
         transcript_height = max(260.0, viewport_height - 230.0)
         transcript_bottom_spacer = ft.Container(height=24)
         transcript = ft.Column(
@@ -1421,8 +1421,8 @@ def main(page: ft.Page) -> None:
                 message_controls.append(controls_row)
 
             viewport_w = float(getattr(page, "width", 0) or 1180)
-            shared_w = max(340.0, min(1120.0, viewport_w - 40.0))
-            target_bubble_width = max(320.0, min(740.0 if is_student else 900.0, shared_w - 36.0))
+            shared_w = max(340.0, min(1320.0, viewport_w - 48.0))
+            target_bubble_width = max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))
 
             bubble = ft.Container(
                 content=ft.Column(
@@ -1495,7 +1495,7 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "width", 0)
                 or 1180
             )
-            shared_w = max(340.0, min(1120.0, new_width - 40.0))
+            shared_w = max(340.0, min(1320.0, new_width - 48.0))
             conversation_area.width = shared_w
             composer_container.width = shared_w
             update_compact_tutor_layout(page_height=new_height)
@@ -1731,7 +1731,7 @@ def main(page: ft.Page) -> None:
                 bubble_container = ft.Column(message_controls, spacing=6)
                 viewport_w = float(getattr(page, "width", 0) or 1180)
                 shared_w = max(340.0, min(1200.0, viewport_w - 32.0))
-                tutor_bubble_width = max(320.0, min(900.0, shared_w - 36.0))
+                tutor_bubble_width = max(320.0, min(1040.0, shared_w - 40.0))
                 tutor_bubble = ft.Container(
                     content=bubble_container,
                     bgcolor=COLOR_TUTOR,
