@@ -301,11 +301,10 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIsNotNone(syl)
         scope = parse_test_paper_scope("Generate Science Chapter 1 25-mark test paper", None, syl)
         _, paper = render_test_paper(syl, scope, context=None)
-
         ans = (
-            "1. Paddy is a Kharif crop and wheat is a Rabi crop.\n"
-            "2. Damaged seeds should be separated because they are hollow and weak.\n"
-            "3. Drip irrigation."
+            "1. Drip irrigation system saves water by delivering water directly to roots.\n"
+            "2. Plough and hoe are traditional tools used for preparation of soil.\n"
+            "3. Weeds are unwanted plants and weedicides control them."
         )
 
         eval_raw = gyanverse_ui.evaluate_test_paper(paper, ans)
@@ -330,6 +329,7 @@ class Phase11UIContractTests(unittest.TestCase):
             standard=8,
             current_subject="Science & Technology",
             current_chapter="Chapter 1 - Crop Production and Management",
+            onboarding_complete=True,
         )
 
         self.assertIsNone(ai._last_generated_test_paper)
@@ -474,9 +474,9 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIsNotNone(ai._last_generated_test_paper)
 
         ans_txt = (
-            "1. Paddy is a Kharif crop and wheat is a Rabi crop.\n"
-            "2. Damaged seeds should be separated because they are hollow and weak.\n"
-            "3. Drip irrigation."
+            "1. Drip irrigation system saves water by delivering water directly to roots.\n"
+            "2. Plough and hoe are traditional tools used for preparation of soil.\n"
+            "3. Weeds are unwanted plants and weedicides control them."
         )
 
         eval_raw = gyanverse_ui.evaluate_test_paper(ai._last_generated_test_paper, ans_txt)

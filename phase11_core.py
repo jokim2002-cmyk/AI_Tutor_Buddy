@@ -2807,13 +2807,15 @@ def _detect_test_paper_mismatches(
     mismatches: list[tuple[int, str, int, TestPaperQuestionItem]] = []
 
     for q_num, (q_prompt, ans_text) in parsed_answers.items():
-        # Trust explicit question numbers. Only check for explicit prompt text mismatches
-        # when student provided explicit question prompt text alongside their answer.
-        if not q_prompt or not q_prompt.strip():
+        # If student explicitly included question prompt text, step 1 remapped it automatically.
+        if q_prompt and q_prompt.strip():
+            continue
+
+        if not ans_text or not ans_text.strip():
             continue
 
         p_words = {
-            w for w in re.findall(r"\w+", q_prompt.casefold())
+            w for w in re.findall(r"\w+", ans_text.casefold())
             if len(w) > 2 and w not in stop_words
         }
         if not p_words:
@@ -2823,7 +2825,7 @@ def _detect_test_paper_mismatches(
         assigned_score = 0
         if assigned_q:
             ref_words = {
-                w for w in re.findall(r"\w+", assigned_q.question_text.casefold())
+                w for w in re.findall(r"\w+", f"{assigned_q.question_text} {assigned_q.solution_guide}".casefold())
                 if len(w) > 2 and w not in stop_words
             }
             assigned_score = len(p_words & ref_words)
@@ -2834,7 +2836,7 @@ def _detect_test_paper_mismatches(
             if o_num == q_num:
                 continue
             o_words = {
-                w for w in re.findall(r"\w+", o_q.question_text.casefold())
+                w for w in re.findall(r"\w+", f"{o_q.question_text} {o_q.solution_guide}".casefold())
                 if len(w) > 2 and w not in stop_words
             }
             score = len(p_words & o_words)
@@ -2847,7 +2849,7 @@ def _detect_test_paper_mismatches(
             and best_other_score >= 3
             and (best_other_score > assigned_score + 1 or assigned_score == 0)
         ):
-            mismatches.append((q_num, q_prompt, best_other_q, q_map[best_other_q]))
+            mismatches.append((q_num, ans_text, best_other_q, q_map[best_other_q]))
 
     return mismatches
 
