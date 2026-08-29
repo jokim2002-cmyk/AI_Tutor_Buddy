@@ -1,0 +1,6 @@
+# Optional dependencies for legacy_voice_tutor.py only.
+# They are intentionally excluded from Android production packaging.
+-r requirements.txt
+sounddevice>=0.4
+soundfile>=0.12
+SpeechRecognition>=3.10

@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "commit": "cc3858365b73ed2c0ea97255b8725e501c242672",
+  "generated_at": "2026-07-19T00:07:49.008822+00:00",
+  "gates": [
+    {
+      "gate": "tests",
+      "status": "pass",
+      "details": "193 tests passed",
+      "blocking": true
+    },
+    {
+      "gate": "working_tree",
+      "status": "pass",
+      "details": "Working tree clean",
+      "blocking": true
+    },
+    {
+      "gate": "required_documentation",
+      "status": "pass",
+      "details": "All required documents present",
+      "blocking": true
+    },
+    {
+      "gate": "version",
+      "status": "pass",
+      "details": "Version: 1.0.0",
+      "blocking": true
+    },
+    {
+      "gate": "commit",
+      "status": "pass",
+      "details": "Commit: cc3858365b73ed2c0ea97255b8725e501c242672",
+      "blocking": true
+    }
+  ],
+  "blocking_failures": [],
+  "warnings": [],
+  "release_candidate_ready": true,
+  "summary": "All release-candidate audit gates passed."
+}

@@ -1,0 +1,1606 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 8,
+  "subject": "Mathematics",
+  "textbook": "Mathematics Textbook for Class VIII",
+  "source": {
+    "title": "Mathematics Textbook for Class VIII",
+    "publisher": "Gujarat State Board of School Textbooks / NCERT",
+    "edition": "First Edition 2019; Revised Edition 2023; Reprint 2025",
+    "pdf_sha256": {
+      "Std-8_Maths_English_Medium.pdf": "f2bacd9552c7a7d136f70c68850bc280a4678421fd42e76cddb6a4f269f7a7d2"
+    },
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-24",
+    "official": true,
+    "notes": "Source type: Teacher-authored/adapted textbook content. Standard 8 Mathematics; edition First Edition 2019; Revised Edition 2023; Reprint 2025. Verified source SHA256: f2bacd9552c7a7d136f70c68850bc280a4678421fd42e76cddb6a4f269f7a7d2."
+  },
+  "chapters": [
+    {
+      "chapter_id": "math8-c01",
+      "number": "1",
+      "title": "Chapter 1 - Rational Numbers",
+      "aliases": [
+        "Rational Numbers",
+        "Chapter 1 Rational Numbers",
+        "Properties of Rational Numbers"
+      ],
+      "topics": [
+        {
+          "topic_id": "c01-t1",
+          "title": "Properties of Rational Numbers",
+          "aliases": [
+            "closure property",
+            "commutativity",
+            "associativity",
+            "distributive property"
+          ],
+          "learning_objectives": [
+            "Apply closure, commutative, and associative properties to rational numbers.",
+            "Use the distributive property of multiplication over addition and subtraction."
+          ],
+          "explanation": "A rational number is any number that can be expressed in the form p/q, where p and q are integers and q != 0. Rational numbers are closed under addition, subtraction, and multiplication. Multiplication is distributive over addition: a*(b + c) = a*b + a*c.",
+          "examples": [
+            "For a = 1/2, b = 2/3, c = 3/4: 1/2 * (2/3 + 3/4) = 1/2 * (17/12) = 17/24.",
+            "Additive identity is 0 (a + 0 = a) and multiplicative identity is 1 (a * 1 = a)."
+          ],
+          "exercises": [
+            "Evaluate using distributive property: (2/5 * -3/7) - (1/14) - (3/7 * 3/5).",
+            "Is the set of rational numbers closed under division? Explain."
+          ],
+          "solutions": [
+            "Grouping (2/5 * -3/7) - (3/7 * 3/5) gives -3/7 * (2/5 + 3/5) - 1/14 = -3/7 * 1 - 1/14 = -6/14 - 1/14 = -7/14 = -1/2.",
+            "No. Division by zero is undefined, so rational numbers are not closed under division unless zero is excluded."
+          ],
+          "practice_questions": [
+            "Find the multiplicative inverse of -13/19.",
+            "State the property used: -4/5 * 1 = 1 * -4/5 = -4/5."
+          ],
+          "practice_solutions": [
+            "-19/13",
+            "Role of 1 as multiplicative identity."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c01-t2",
+          "title": "Representation of Rational Numbers on the Number Line",
+          "aliases": [
+            "rational number line",
+            "plot rational numbers",
+            "locating fractions on number line"
+          ],
+          "learning_objectives": [
+            "Divide intervals between integers into equal parts to represent rational numbers.",
+            "Locate positive and negative rational numbers accurately on a number line."
+          ],
+          "explanation": "To represent a rational number p/q on a number line, divide each unit interval between consecutive integers into q equal sub-parts. Count p sub-parts to the right of zero for positive numbers, or to the left for negative numbers.",
+          "examples": [
+            "To plot 3/4, divide the segment between 0 and 1 into 4 equal parts; the 3rd mark is 3/4.",
+            "To plot -5/3, divide each unit interval into 3 equal parts; count 5 parts to the left of 0 (between -1 and -2)."
+          ],
+          "exercises": [
+            "Between which two integers does -7/4 lie on the number line?",
+            "Represent 7/4 on a number line: how many equal parts should each unit distance be divided into?"
+          ],
+          "solutions": [
+            "Between -1 and -2, because -7/4 = -1 (3/4).",
+            "Each unit distance should be divided into 4 equal parts."
+          ],
+          "practice_questions": [
+            "Is -2/5 located to the left or right of 0 on the number line?",
+            "Which integer is closer to -11/5: -2 or -3?"
+          ],
+          "practice_solutions": [
+            "To the left of 0, because it is negative.",
+            "-2, because -11/5 = -2.2, which is 0.2 units from -2 and 0.8 units from -3."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c01-t3",
+          "title": "Finding Rational Numbers Between Two Rational Numbers",
+          "aliases": [
+            "rational numbers between two fractions",
+            "mean method",
+            "common denominator method"
+          ],
+          "learning_objectives": [
+            "Find rational numbers between any two given rational numbers using common denominators.",
+            "Use the mean method (a+b)/2 to find rational numbers."
+          ],
+          "explanation": "There are infinitely many rational numbers between any two distinct rational numbers. They can be found either by converting fractions to an equivalent common denominator with a larger range, or by taking the average (mean) (a+b)/2.",
+          "examples": [
+            "To find 5 rational numbers between 1/4 and 1/2: convert to 10/40 and 20/40 -> 11/40, 12/40, 13/40, 14/40, 15/40.",
+            "Mean of 1/3 and 1/2 is (1/3 + 1/2)/2 = (5/6)/2 = 5/12."
+          ],
+          "exercises": [
+            "Find three rational numbers between -2/5 and 1/2.",
+            "How many rational numbers exist between 2 and 3?"
+          ],
+          "solutions": [
+            "Convert to common denominator 10: -4/10 and 5/10. Three rational numbers are -3/10, 0, and 1/10 (or 2/10 = 1/5).",
+            "Infinitely many rational numbers exist between any two distinct real numbers."
+          ],
+          "practice_questions": [
+            "Find a rational number exactly halfway between 1/5 and 1/4.",
+            "Write two rational numbers greater than -2."
+          ],
+          "practice_solutions": [
+            "Mean = (1/5 + 1/4)/2 = (9/20)/2 = 9/40.",
+            "-1 and 0 (or any rational number to the right of -2)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c02",
+      "number": "2",
+      "title": "Chapter 2 - Linear Equations in One Variable",
+      "aliases": [
+        "Linear Equations in One Variable",
+        "Chapter 2 Linear Equations",
+        "Solving Equations"
+      ],
+      "topics": [
+        {
+          "topic_id": "c02-t1",
+          "title": "Solving Equations with Variables on One Side",
+          "aliases": [
+            "linear equation one side",
+            "solving linear equations",
+            "transposition method"
+          ],
+          "learning_objectives": [
+            "Solve linear equations having algebraic expressions on one side and numbers on the other.",
+            "Verify solutions by substituting back into the original equation."
+          ],
+          "explanation": "A linear equation in one variable has an degree of 1. Transposing a term across the equals sign changes its sign (+ becomes -, * becomes /). Balance is maintained by applying the same arithmetic operation to both sides.",
+          "examples": [
+            "Solve 2x - 3 = 7 -> 2x = 7 + 3 = 10 -> x = 5.",
+            "Solve x/3 + 5/2 = -3/2 -> x/3 = -3/2 - 5/2 = -8/2 = -4 -> x = -12."
+          ],
+          "exercises": [
+            "Solve: 3x - 5 = 16.",
+            "Solve: 2y/3 + 1 = 7."
+          ],
+          "solutions": [
+            "3x = 16 + 5 = 21, so x = 21/3 = 7.",
+            "2y/3 = 7 - 1 = 6 -> 2y = 18 -> y = 9."
+          ],
+          "practice_questions": [
+            "Solve: 5t - 3 = 3t - 5.",
+            "Check if x = 4 is a solution to 2x + 3 = 11."
+          ],
+          "practice_solutions": [
+            "5t - 3t = -5 + 3 -> 2t = -2 -> t = -1.",
+            "LHS = 2(4) + 3 = 8 + 3 = 11 = RHS, so x = 4 is correct."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c02-t2",
+          "title": "Solving Equations with Variables on Both Sides",
+          "aliases": [
+            "variables on both sides",
+            "linear equations both sides",
+            "transposing variables"
+          ],
+          "learning_objectives": [
+            "Group variable terms on one side and constant terms on the other side of an equation.",
+            "Clear denominators by multiplying by the LCM when solving fractional linear equations."
+          ],
+          "explanation": "When variables appear on both sides, transpose variable terms to one side (usually LHS) and constant numbers to the opposite side (RHS). If coefficients are fractional, multiply every term by the LCM of denominators first.",
+          "examples": [
+            "Solve 5x + 9 = 5 + 3x -> 5x - 3x = 5 - 9 -> 2x = -4 -> x = -2.",
+            "Solve (x - 5)/3 = (x - 3)/5 -> Cross multiply: 5(x - 5) = 3(x - 3) -> 5x - 25 = 3x - 9 -> 2x = 16 -> x = 8."
+          ],
+          "exercises": [
+            "Solve: 8x + 4 = 3(x - 1) + 7.",
+            "Solve: (m - (m - 1)/2) = 1 - (m - 2)/3."
+          ],
+          "solutions": [
+            "8x + 4 = 3x - 3 + 7 -> 8x + 4 = 3x + 4 -> 5x = 0 -> x = 0.",
+            "Multiply by LCM 6: 6m - 3(m - 1) = 6 - 2(m - 2) -> 6m - 3m + 3 = 6 - 2m + 4 -> 3m + 3 = 10 - 2m -> 5m = 7 -> m = 7/5."
+          ],
+          "practice_questions": [
+            "Solve: 3x = 2x + 18.",
+            "Solve: 5x/3 - 4 = 2x/5 + 9."
+          ],
+          "practice_solutions": [
+            "3x - 2x = 18 -> x = 18.",
+            "Multiply by LCM 15: 25x - 60 = 6x + 135 -> 19x = 195 -> x = 195/19."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c02-t3",
+          "title": "Applications and Word Problems of Linear Equations",
+          "aliases": [
+            "linear equation word problems",
+            "age problems",
+            "number word problems",
+            "perimeter applications"
+          ],
+          "learning_objectives": [
+            "Translate word problems involving numbers, ages, geometry, and currency into linear equations.",
+            "Solve the formed linear equations and state answers with appropriate units."
+          ],
+          "explanation": "To solve word problems, identify the unknown quantity and assign it a variable x. Form an equation based on given relationships (e.g. sum, consecutive numbers, age differences), solve for x, and check that the answer satisfies word problem conditions.",
+          "examples": [
+            "The sum of two numbers is 95. If one exceeds the other by 15, find the numbers: x + (x + 15) = 95 -> 2x = 80 -> x = 40. Numbers are 40 and 55.",
+            "Perimeter of a rectangle is 13 cm and width is 2(3/4) cm. Find length: 2(l + 11/4) = 13 -> l + 11/4 = 13/2 -> l = 13/2 - 11/4 = 15/4 = 3(3/4) cm."
+          ],
+          "exercises": [
+            "Three consecutive integers add up to 51. Find these integers.",
+            "A father is 4 times as old as his son. After 5 years, he will be 3 times as old as his son. Find their present ages."
+          ],
+          "solutions": [
+            "Let integers be x, x+1, x+2. x + x+1 + x+2 = 51 -> 3x + 3 = 51 -> 3x = 48 -> x = 16. Integers are 16, 17, 18.",
+            "Let son's age = x, father's age = 4x. In 5 years: 4x + 5 = 3(x + 5) -> 4x + 5 = 3x + 15 -> x = 10. Son is 10 years, father is 40 years."
+          ],
+          "practice_questions": [
+            "The perimeter of an isosceles triangle is 42 cm. Base is 14 cm. Find equal side length.",
+            "Two numbers are in ratio 5:3. If they differ by 18, find the numbers."
+          ],
+          "practice_solutions": [
+            "2x + 14 = 42 -> 2x = 28 -> x = 14 cm.",
+            "5x - 3x = 18 -> 2x = 18 -> x = 9. Numbers are 45 and 27."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c03",
+      "number": "3",
+      "title": "Chapter 3 - Understanding Quadrilaterals",
+      "aliases": [
+        "Understanding Quadrilaterals",
+        "Chapter 3 Understanding Quadrilaterals",
+        "Polygons and Quadrilaterals"
+      ],
+      "topics": [
+        {
+          "topic_id": "c03-t1",
+          "title": "Polygons and Angle Sum Property",
+          "aliases": [
+            "polygons",
+            "convex and concave polygons",
+            "angle sum property",
+            "interior angles formula"
+          ],
+          "learning_objectives": [
+            "Classify polygons by number of sides, convexity, and regularity.",
+            "Calculate the sum of interior angles of an n-sided polygon using (n - 2) * 180°."
+          ],
+          "explanation": "A polygon is a simple closed curve made up of line segments. A polygon with n sides can be divided into (n - 2) triangles, so the sum of interior angles is (n - 2) * 180°. A regular polygon has all equal sides and equal interior angles.",
+          "examples": [
+            "Sum of interior angles of a pentagon (n=5) = (5 - 2) * 180° = 3 * 180° = 540°.",
+            "Each interior angle of a regular hexagon (n=6) = (6 - 2) * 180° / 6 = 720° / 6 = 120°."
+          ],
+          "exercises": [
+            "Find the sum of interior angles of a polygon with 7 sides (heptagon).",
+            "Find the measure of each interior angle of a regular octagon (8 sides)."
+          ],
+          "solutions": [
+            "Sum = (7 - 2) * 180° = 5 * 180° = 900°.",
+            "Sum = (8 - 2) * 180° = 1080°. Each angle = 1080° / 8 = 135°."
+          ],
+          "practice_questions": [
+            "How many diagonals does a convex hexagon have?",
+            "Can a polygon have the sum of interior angles equal to 1000°? Explain."
+          ],
+          "practice_solutions": [
+            "Number of diagonals = n(n - 3)/2 = 6(3)/2 = 9 diagonals.",
+            "No. (n - 2) * 180° must be a multiple of 180°. 1000 is not divisible by 180."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c03-t2",
+          "title": "Sum of Exterior Angles of a Polygon",
+          "aliases": [
+            "exterior angles of polygon",
+            "sum of exterior angles",
+            "exterior angle formula"
+          ],
+          "learning_objectives": [
+            "Apply the principle that the sum of exterior angles of any convex polygon is 360°.",
+            "Determine the number of sides of a regular polygon given its exterior angle."
+          ],
+          "explanation": "For any convex polygon, the sum of measures of exterior angles (one at each vertex) is always 360°, regardless of the number of sides. For a regular polygon with n sides, each exterior angle = 360° / n.",
+          "examples": [
+            "Each exterior angle of a regular 9-sided polygon = 360° / 9 = 40°.",
+            "If each exterior angle of a regular polygon is 45°, number of sides n = 360° / 45° = 8 sides."
+          ],
+          "exercises": [
+            "Find the measure of each exterior angle of a regular polygon with 15 sides.",
+            "Find the number of sides of a regular polygon if each exterior angle is 24°."
+          ],
+          "solutions": [
+            "Each exterior angle = 360° / 15 = 24°.",
+            "Number of sides n = 360° / 24° = 15 sides."
+          ],
+          "practice_questions": [
+            "Is it possible to have a regular polygon with each exterior angle = 22°? Explain.",
+            "Find x if exterior angles of a quadrilateral are 50°, 110°, x, and 90°."
+          ],
+          "practice_solutions": [
+            "No, because 360° / 22° = 16.36, which is not a whole number.",
+            "50° + 110° + x + 90° = 360° -> 250° + x = 360° -> x = 110°."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c03-t3",
+          "title": "Properties of Parallelogram, Rhombus, Rectangle and Square",
+          "aliases": [
+            "parallelogram properties",
+            "rhombus properties",
+            "rectangle square properties",
+            "special quadrilaterals"
+          ],
+          "learning_objectives": [
+            "Identify and apply side, angle, and diagonal properties of special quadrilaterals.",
+            "Solve geometric problems involving unknown sides and angles in parallelograms."
+          ],
+          "explanation": "In a parallelogram: opposite sides are equal, opposite angles are equal, adjacent angles are supplementary (sum = 180°), and diagonals bisect each other. A rhombus has all 4 equal sides and perpendicular diagonals. A rectangle has 4 right angles and equal diagonals. A square combines properties of both rhombus and rectangle.",
+          "examples": [
+            "In parallelogram ABCD, if angle A = 70°, then opposite angle C = 70°, and adjacent angles B and D = 180° - 70° = 110°.",
+            "In a rhombus, diagonals bisect each other at right angles (90°)."
+          ],
+          "exercises": [
+            "In a parallelogram HOPE, angle H = 70°. Find the measures of angles O, P, and E.",
+            "The diagonals of a rhombus are 6 cm and 8 cm. Find the length of one side."
+          ],
+          "solutions": [
+            "Opposite angle P = 70°. Adjacent angles O = 180° - 70° = 110° and E = 110°.",
+            "Diagonals bisect at 90° into segments of 3 cm and 4 cm. By Pythagoras theorem, side = sqrt(3^2 + 4^2) = sqrt(25) = 5 cm."
+          ],
+          "practice_questions": [
+            "State two properties of the diagonals of a rectangle.",
+            "In a square ABCD, find the angle measure between its diagonals."
+          ],
+          "practice_solutions": [
+            "Diagonals of a rectangle are equal in length and bisect each other.",
+            "90°, because the diagonals of a square are perpendicular bisectors."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c04",
+      "number": "4",
+      "title": "Chapter 4 - Data Handling",
+      "aliases": [
+        "Data Handling",
+        "Chapter 4 Data Handling",
+        "Statistics and Probability"
+      ],
+      "topics": [
+        {
+          "topic_id": "c04-t1",
+          "title": "Organizing Data, Grouped Frequency Distribution and Histograms",
+          "aliases": [
+            "grouped frequency table",
+            "histograms",
+            "class intervals",
+            "tally marks"
+          ],
+          "learning_objectives": [
+            "Organize raw data into grouped frequency distribution tables with class intervals.",
+            "Construct and interpret histograms for continuous grouped data."
+          ],
+          "explanation": "Grouped frequency tables organize large datasets into non-overlapping class intervals (e.g. 0-10, 10-20). In a histogram, bars are drawn adjacent to each other without gaps over class intervals on the horizontal axis, with height representing frequency.",
+          "examples": [
+            "For class interval 10-20: lower class limit is 10, upper class limit is 20, class width is 10.",
+            "Bars in a histogram touch each other because class intervals are continuous."
+          ],
+          "exercises": [
+            "What is the class mark (mid-point) of the class interval 30-40?",
+            "Why are there no gaps between bars in a histogram compared to a bar graph?"
+          ],
+          "solutions": [
+            "Class mark = (30 + 40) / 2 = 35.",
+            "A histogram represents continuous numerical class intervals, whereas a bar graph represents discrete categories."
+          ],
+          "practice_questions": [
+            "Find the class size of interval 150-175.",
+            "If the highest score is 98 and lowest is 42, recommend a suitable class size for 6 intervals."
+          ],
+          "practice_solutions": [
+            "Class size = 175 - 150 = 25.",
+            "Range = 98 - 42 = 56. Suitable class size = 56 / 6 approx 10 (e.g., intervals 40-50, 50-60, ..., 90-100)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c04-t2",
+          "title": "Circle Graphs or Pie Charts",
+          "aliases": [
+            "pie chart",
+            "circle graph",
+            "sector angle calculation",
+            "interpreting pie chart"
+          ],
+          "learning_objectives": [
+            "Calculate sector central angles for categories: Sector Angle = (Frequency / Total) * 360°.",
+            "Draw and extract numerical values from pie charts."
+          ],
+          "explanation": "A circle graph or pie chart shows the relationship between a whole and its parts. The total angle at the center of a circle is 360°. Each category corresponds to a sector whose central angle is proportional to its share.",
+          "examples": [
+            "If 30 out of 120 students like Cricket, central angle = (30/120) * 360° = 90°.",
+            "A sector of 108° in a pie chart represents (108/360) = 3/10 or 30% of the total."
+          ],
+          "exercises": [
+            "A survey of 360 people shows: Transport A = 180, Transport B = 90, Transport C = 90. Find sector angles.",
+            "In a pie chart of 720 students, the sector angle for bus users is 120°. How many students use the bus?"
+          ],
+          "solutions": [
+            "Transport A = (180/360)*360° = 180°; B = (90/360)*360° = 90°; C = (90/360)*360° = 90°.",
+            "Number of students = (120° / 360°) * 720 = 1/3 * 720 = 240 students."
+          ],
+          "practice_questions": [
+            "Convert a sector angle of 54° into a percentage of the total.",
+            "Can the sum of central angles in a pie chart be equal to 350°? Explain."
+          ],
+          "practice_solutions": [
+            "Percentage = (54 / 360) * 100% = 15%.",
+            "No. The total angle at the center of any complete circle is strictly 360°."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c04-t3",
+          "title": "Probability and Random Experiments",
+          "aliases": [
+            "probability",
+            "outcomes and events",
+            "probability of event",
+            "fair die coin"
+          ],
+          "learning_objectives": [
+            "Determine total outcomes for random experiments (tossing coins, rolling dice, drawing cards).",
+            "Calculate theoretical probability: P(E) = Number of favorable outcomes / Total possible outcomes."
+          ],
+          "explanation": "An experiment whose outcome cannot be predicted with certainty is a random experiment. Probability measures the likelihood of an event E: P(E) = (Favorable outcomes) / (Total outcomes). Probability values always lie between 0 and 1 inclusive.",
+          "examples": [
+            "Rolling a fair 6-sided die: P(getting an even number 2, 4, 6) = 3 / 6 = 1/2.",
+            "Tossing two coins: Outcomes are {HH, HT, TH, TT}. P(getting 2 heads) = 1/4."
+          ],
+          "exercises": [
+            "A bag contains 5 red balls and 3 blue balls. Find the probability of picking a red ball at random.",
+            "When rolling a die, what is the probability of getting a prime number?"
+          ],
+          "solutions": [
+            "Total balls = 5 + 3 = 8. P(Red) = 5/8.",
+            "Prime numbers on a die are 2, 3, 5 (3 favorable outcomes out of 6). P(Prime) = 3/6 = 1/2."
+          ],
+          "practice_questions": [
+            "What is the probability of a sure event?",
+            "A card is drawn from a deck of numbers 1 to 10. Find P(getting a number greater than 7)."
+          ],
+          "practice_solutions": [
+            "1.",
+            "Favorable numbers are 8, 9, 10 (3 numbers out of 10). P(X > 7) = 3/10."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c05",
+      "number": "5",
+      "title": "Chapter 5 - Squares and Square Roots",
+      "aliases": [
+        "Squares and Square Roots",
+        "Chapter 5 Squares and Square Roots",
+        "Square Roots"
+      ],
+      "topics": [
+        {
+          "topic_id": "c05-t1",
+          "title": "Properties of Square Numbers and Patterns",
+          "aliases": [
+            "square numbers",
+            "perfect squares",
+            "unit digits of squares",
+            "pythagorean triplets",
+            "Squares and Square Roots"
+          ],
+          "learning_objectives": [
+            "Identify properties of square numbers and predict ending unit digits.",
+            "Verify and construct Pythagorean triplets (2m, m^2 - 1, m^2 + 1)."
+          ],
+          "explanation": "If a natural number n can be expressed as m^2, then n is a square number. Perfect squares never end in 2, 3, 7, or 8. Pythagorean triplets satisfy a^2 + b^2 = c^2, generated for any integer m > 1 by (2m, m^2 - 1, m^2 + 1).",
+          "examples": [
+            "The square of a number ending in 3 or 7 always ends in 9 (e.g. 7^2 = 49, 13^2 = 169).",
+            "For m = 3: triplet is (2*3, 3^2 - 1, 3^2 + 1) = (6, 8, 10). Indeed 6^2 + 8^2 = 36 + 64 = 100 = 10^2."
+          ],
+          "exercises": [
+            "What will be the unit digit of the square of 272?",
+            "Write a Pythagorean triplet whose smallest member is 6."
+          ],
+          "solutions": [
+            "Unit digit of 272 is 2. Since 2^2 = 4, the square 272^2 will end in 4.",
+            "Set 2m = 6 -> m = 3. Members are 2m = 6, m^2 - 1 = 8, m^2 + 1 = 10. Triplet is (6, 8, 10)."
+          ],
+          "practice_questions": [
+            "How many non-square numbers lie between 12^2 and 13^2?",
+            "Is 1057 a perfect square? Give reason."
+          ],
+          "practice_solutions": [
+            "Between n^2 and (n+1)^2 there are 2n non-square numbers. For n=12, 2 * 12 = 24 numbers.",
+            "No, because a perfect square number never ends with digit 7."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c05-t2",
+          "title": "Finding Square Roots by Prime Factorization",
+          "aliases": [
+            "square root prime factorization",
+            "prime factors square root",
+            "simplifying square roots"
+          ],
+          "learning_objectives": [
+            "Find the square root of perfect squares using prime factorization.",
+            "Determine the smallest number by which a number must be multiplied or divided to make a perfect square."
+          ],
+          "explanation": "To find the square root by prime factorization, resolve the number into prime factors, group identical prime factors into pairs, and take one factor from each pair. Their product gives the square root sqrt(N).",
+          "examples": [
+            "sqrt(324): 324 = 2 * 2 * 3 * 3 * 3 * 3 -> Pairs (2*2), (3*3), (3*3) -> sqrt(324) = 2 * 3 * 3 = 18.",
+            "For 252 = 2 * 2 * 3 * 3 * 7: Factor 7 has no pair. Multiply by 7 -> 252 * 7 = 1764 (sqrt = 42)."
+          ],
+          "exercises": [
+            "Find the square root of 7744 by prime factorization.",
+            "Find the smallest whole number by which 1008 must be divided so as to get a perfect square."
+          ],
+          "solutions": [
+            "7744 = 2^6 * 11^2 = (2*2*2)^2 * 11^2 = 8^2 * 11^2 -> sqrt(7744) = 8 * 11 = 88.",
+            "1008 = 2 * 2 * 2 * 2 * 3 * 3 * 7 = 2^4 * 3^2 * 7. Unpaired factor is 7, so divide by 7 to get 144 (sqrt = 12)."
+          ],
+          "practice_questions": [
+            "Find sqrt(1764) using prime factorization.",
+            "By what smallest number should 180 be multiplied to get a perfect square?"
+          ],
+          "practice_solutions": [
+            "1764 = 2^2 * 3^2 * 7^2 -> sqrt(1764) = 2 * 3 * 7 = 42.",
+            "180 = 2^2 * 3^2 * 5. Unpaired factor is 5, so multiply by 5 to get 900."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c05-t3",
+          "title": "Finding Square Roots by Division Method and Decimals",
+          "aliases": [
+            "square root division method",
+            "decimal square root",
+            "long division square root"
+          ],
+          "learning_objectives": [
+            "Compute square roots of large numbers using the long division method.",
+            "Find square roots of decimal numbers accurately."
+          ],
+          "explanation": "Long division method places bars over pairs of digits starting from the ones place (or from decimal point for decimals). Find the largest digit whose square is <= first period, subtract, bring down next pair, and double quotient for next divisor.",
+          "examples": [
+            "sqrt(529): Period 5 and 29. 2^2=4 <= 5. Remainder 1, bring down 29 -> 129. Divisor 43 * 3 = 129 -> sqrt(529) = 23.",
+            "sqrt(17.64): Pair 17 and 64 -> 4^2 = 16. Remainder 1. Bring down 64 with decimal -> 4.2."
+          ],
+          "exercises": [
+            "Find the square root of 5476 by division method.",
+            "Find the square root of decimal number 42.25."
+          ],
+          "solutions": [
+            "Pair 54 and 76. 7^2 = 49. Remainder 5. Bring down 76 -> 576. Divisor 144 * 4 = 576 -> sqrt(5476) = 74.",
+            "Pair 42 and 25. 6^2 = 36. Remainder 6. Bring down 25 -> 6.25. Divisor 125 * 5 = 625 -> sqrt(42.25) = 6.5."
+          ],
+          "practice_questions": [
+            "Find the least number which must be subtracted from 1989 to get a perfect square.",
+            "Find sqrt(7.29) by division method."
+          ],
+          "practice_solutions": [
+            "By division method, 44^2 = 1936. Remainder is 1989 - 1936 = 53. Subtract 53.",
+            "2^2 = 4. Remainder 3, bring down 29 -> 3.29. Divisor 47 * 7 = 329 -> sqrt(7.29) = 2.7."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c06",
+      "number": "6",
+      "title": "Chapter 6 - Cubes and Cube Roots",
+      "aliases": [
+        "Cubes and Cube Roots",
+        "Chapter 6 Cubes and Cube Roots",
+        "Cube Roots"
+      ],
+      "topics": [
+        {
+          "topic_id": "c06-t1",
+          "title": "Properties of Cubes and Perfect Cubes",
+          "aliases": [
+            "cube of a number",
+            "perfect cubes",
+            "unit digits of cubes",
+            "cube properties"
+          ],
+          "learning_objectives": [
+            "Compute the cube of natural numbers (n^3 = n * n * n).",
+            "Identify perfect cubes by checking if prime factors form complete triplets of three."
+          ],
+          "explanation": "The cube of a number is obtained by multiplying it by itself three times: n^3 = n * n * n. A natural number is a perfect cube if its prime factors can be grouped into complete triplets (groups of three identical factors).",
+          "examples": [
+            "2^3 = 8, 3^3 = 27, 5^3 = 125, 10^3 = 1000.",
+            "216 = 2 * 2 * 2 * 3 * 3 * 3 = (2 * 3)^3 = 6^3 (perfect cube)."
+          ],
+          "exercises": [
+            "Is 500 a perfect cube? Show your prime factorization steps.",
+            "Find the unit digit of the cube of 23."
+          ],
+          "solutions": [
+            "500 = 2 * 2 * 5 * 5 * 5 = 2^2 * 5^3. Prime factor 2 has only 2 factors (incomplete triplet), so 500 is NOT a perfect cube.",
+            "Unit digit of 23 is 3. Since 3^3 = 27, the cube 23^3 ends in 7."
+          ],
+          "practice_questions": [
+            "By what smallest number should 256 be multiplied to get a perfect cube?",
+            "What is the cube of -4?"
+          ],
+          "practice_solutions": [
+            "256 = 2^8 = (2^3) * (2^3) * (2^2). To complete the last triplet, multiply by 2 to get 512 = 8^3.",
+            "(-4)^3 = (-4) * (-4) * (-4) = -64."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c06-t2",
+          "title": "Finding Cube Roots by Prime Factorization",
+          "aliases": [
+            "cube root prime factorization",
+            "cbrt",
+            "cube root symbol"
+          ],
+          "learning_objectives": [
+            "Calculate the cube root cbrt(N) using prime factorization.",
+            "Find cube roots of negative integers and product of cubes."
+          ],
+          "explanation": "The cube root of a number N, denoted as cbrt(N) or N^(1/3), is the number whose cube is N. To find cbrt(N), express N in prime factors, group into triplets, and take one factor from each triplet.",
+          "examples": [
+            "cbrt(1728): 1728 = 2^6 * 3^3 = (2*2)^3 * 3^3 = 4^3 * 3^3 -> cbrt(1728) = 4 * 3 = 12.",
+            "cbrt(-512) = -cbrt(512) = -8."
+          ],
+          "exercises": [
+            "Find the cube root of 13824 by prime factorization.",
+            "Find cbrt(-2744)."
+          ],
+          "solutions": [
+            "13824 = 2^9 * 3^3 = (2^3)^3 * 3^3 = 8^3 * 3^3 -> cbrt(13824) = 8 * 3 = 24.",
+            "2744 = 2^3 * 7^3 -> cbrt(2744) = 14. Therefore, cbrt(-2744) = -14."
+          ],
+          "practice_questions": [
+            "Evaluate cbrt(27 * 64).",
+            "Find the edge of a cubical box whose volume is 343 cm^3."
+          ],
+          "practice_solutions": [
+            "cbrt(27) * cbrt(64) = 3 * 4 = 12.",
+            "Volume = edge^3 = 343 -> Edge = cbrt(343) = 7 cm."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c06-t3",
+          "title": "Estimation Method for Cube Roots",
+          "aliases": [
+            "estimation of cube root",
+            "cube root without factorization",
+            "grouping digits cube root"
+          ],
+          "learning_objectives": [
+            "Estimate the cube root of large perfect cube numbers by digit grouping.",
+            "Use unit digit matching to determine unit and tens place of cube roots."
+          ],
+          "explanation": "To estimate cbrt(N) of a perfect cube: group digits into groups of 3 starting from right. The first group (rightmost) determines the units digit of the cube root. The second group determines the tens digit by finding the largest integer whose cube is <= second group.",
+          "examples": [
+            "Estimate cbrt(17576): Group 1 (576) ends in 6 -> unit digit = 6. Group 2 (17) lies between 2^3=8 and 3^3=27 -> tens digit = 2. So cbrt(17576) = 26.",
+            "Estimate cbrt(110592): Group 1 (592) ends in 2 -> unit digit = 8 (since 8^3=512). Group 2 (110) lies between 4^3=64 and 5^3=125 -> tens digit = 4. Result = 48."
+          ],
+          "exercises": [
+            "Estimate the cube root of 857375.",
+            "Estimate the cube root of 12167."
+          ],
+          "solutions": [
+            "Group 1 (375) ends in 5 -> unit digit 5. Group 2 (857) lies between 9^3=729 and 10^3=1000 -> tens digit 9. Estimated cbrt = 95.",
+            "Group 1 (167) ends in 7 -> unit digit 3 (3^3=27). Group 2 (12) lies between 2^3=8 and 3^3=27 -> tens digit 2. Estimated cbrt = 23."
+          ],
+          "practice_questions": [
+            "Which digit unit place produces a cube ending in 8?",
+            "Estimate cbrt(32768)."
+          ],
+          "practice_solutions": [
+            "2, because 2^3 = 8.",
+            "Group 1 (768) ends in 8 -> unit digit 2. Group 2 (32) lies between 3^3=27 and 4^3=64 -> tens digit 3. Result = 32."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c07",
+      "number": "7",
+      "title": "Chapter 7 - Comparing Quantities",
+      "aliases": [
+        "Comparing Quantities",
+        "Chapter 7 Comparing Quantities",
+        "Commercial Mathematics"
+      ],
+      "topics": [
+        {
+          "topic_id": "c07-t1",
+          "title": "Ratios, Percentages, Profit, Loss and Discount",
+          "aliases": [
+            "ratios and percentages",
+            "profit and loss percentage",
+            "discount and marked price",
+            "cost price selling price"
+          ],
+          "learning_objectives": [
+            "Calculate percentage increase/decrease, profit/loss percentage, and discount.",
+            "Use formulas: Discount = Marked Price - Selling Price; Profit% = (Profit / CP) * 100."
+          ],
+          "explanation": "Ratio compares two quantities of same units. Percentage expresses a fraction out of 100. Profit = SP - CP (when SP > CP); Loss = CP - SP (when CP > SP). Discount is a reduction given on the Marked Price (MP): Selling Price = MP - Discount.",
+          "examples": [
+            "An item marked at Rs. 800 is sold for Rs. 680. Discount = 800 - 680 = Rs. 120. Discount% = (120/800) * 100 = 15%.",
+            "CP = Rs. 400, SP = Rs. 450 -> Profit = Rs. 50 -> Profit% = (50/400) * 100 = 12.5%."
+          ],
+          "exercises": [
+            "A frock marked at Rs. 220 is sold at a discount of 20%. Find the discount amount and selling price.",
+            "A shopkeeper bought a chair for Rs. 375 and sold it for Rs. 400. Find his profit percentage."
+          ],
+          "solutions": [
+            "Discount = 20% of 220 = (20/100) * 220 = Rs. 44. Selling Price = 220 - 44 = Rs. 176.",
+            "Profit = 400 - 375 = Rs. 25. Profit% = (25 / 375) * 100 = (1/15) * 100 = 6.67% (or 6 and 2/3%)."
+          ],
+          "practice_questions": [
+            "If CP = Rs. 500 and Loss% = 5%, find the Selling Price.",
+            "Convert ratio 3:4 into percentage."
+          ],
+          "practice_solutions": [
+            "Loss = 5% of 500 = Rs. 25. SP = 500 - 25 = Rs. 475.",
+            "(3/4) * 100% = 75%."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c07-t2",
+          "title": "Sales Tax, Value Added Tax (VAT) and Goods and Services Tax (GST)",
+          "aliases": [
+            "sales tax",
+            "VAT",
+            "GST",
+            "bill amount calculation"
+          ],
+          "learning_objectives": [
+            "Calculate tax amounts added to the sale price of items.",
+            "Compute the final total bill amount inclusive of GST / Sales Tax."
+          ],
+          "explanation": "Sales tax, VAT, or GST is charged by the government on the sale of an item and added to the bill amount by the shopkeeper. Tax Amount = Tax Rate% * Sale Price. Total Bill Amount = Sale Price + Tax Amount.",
+          "examples": [
+            "Cost of a pair of skates at a shop is Rs. 450. The sales tax charged is 5%. Bill = 450 + (5/100)*450 = 450 + 22.50 = Rs. 472.50.",
+            "An air cooler bought for Rs. 3300 including 10% tax -> Original Price * (1 + 0.10) = 3300 -> Original Price = 3300 / 1.1 = Rs. 3000."
+          ],
+          "exercises": [
+            "Waheeda bought an air cooler for Rs. 3300 including a tax of 10%. Find the price of the air cooler before tax was added.",
+            "An item costs Rs. 1200. If GST is charged at 18%, calculate the final bill amount."
+          ],
+          "solutions": [
+            "Let original price = x. x + 10% of x = 3300 -> 1.1x = 3300 -> x = 3300 / 1.1 = Rs. 3000.",
+            "GST Amount = (18/100) * 1200 = Rs. 216. Total Bill = 1200 + 216 = Rs. 1416."
+          ],
+          "practice_questions": [
+            "A TV was purchased for Rs. 13,500 including 8% sales tax. Find its price before tax.",
+            "If a shirt of Rs. 800 carries 5% GST, what is the GST amount?"
+          ],
+          "practice_solutions": [
+            "Price before tax = 13500 / 1.08 = Rs. 12,500.",
+            "GST = (5/100) * 800 = Rs. 40."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c07-t3",
+          "title": "Compound Interest (Compounded Annually and Half-Yearly)",
+          "aliases": [
+            "compound interest formula",
+            "compounded annually",
+            "compounded half yearly",
+            "amount formula"
+          ],
+          "learning_objectives": [
+            "Apply the compound interest formula: A = P(1 + R/100)^n.",
+            "Calculate interest compounded half-yearly where time n is doubled and rate R is halved."
+          ],
+          "explanation": "Compound interest (CI) is interest calculated on the initial principal plus accumulated interest. Amount A = P(1 + R/100)^n and CI = A - P. When compounded half-yearly, use rate (R/2)% and conversion periods (2n).",
+          "examples": [
+            "P = Rs. 12600, R = 10% p.a., n = 2 years compounded annually: A = 12600 * (1.1)^2 = 12600 * 1.21 = Rs. 15246. CI = 15246 - 12600 = Rs. 2646.",
+            "Half-yearly for 1 year at 10% p.a.: r = 5%, periods = 2. A = P(1 + 5/100)^2."
+          ],
+          "exercises": [
+            "Calculate the amount and compound interest on Rs. 10,000 for 2 years at 10% per annum compounded annually.",
+            "Find the amount on Rs. 8,000 for 1 year at 10% per annum compounded half-yearly."
+          ],
+          "solutions": [
+            "A = 10000 * (1 + 10/100)^2 = 10000 * (11/10)^2 = 10000 * 121/100 = Rs. 12,100. CI = 12100 - 10000 = Rs. 2,100.",
+            "P = 8000, r = 10/2 = 5% per half-year, n = 2 half-years. A = 8000 * (1 + 5/100)^2 = 8000 * (21/20)^2 = 8000 * 441/400 = Rs. 8,820."
+          ],
+          "practice_questions": [
+            "What is the difference between simple interest and compound interest for 1 year compounded annually?",
+            "Find CI on Rs. 62,500 for 1.5 years at 8% p.a. compounded half-yearly."
+          ],
+          "practice_solutions": [
+            "Zero, for the first year compounded annually SI and CI are equal.",
+            "r = 4%, n = 3 half-years. A = 62500 * (1.04)^3 = Rs. 70,304. CI = 70304 - 62500 = Rs. 7,804."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c08",
+      "number": "8",
+      "title": "Chapter 8 - Algebraic Expressions and Identities",
+      "aliases": [
+        "Algebraic Expressions and Identities",
+        "Chapter 8 Algebraic Expressions",
+        "Polynomials and Identities"
+      ],
+      "topics": [
+        {
+          "topic_id": "c08-t1",
+          "title": "Terms, Factors, Coefficients and Monomial/Binomial Classification",
+          "aliases": [
+            "monomial binomial trinomial",
+            "like and unlike terms",
+            "algebraic coefficients"
+          ],
+          "learning_objectives": [
+            "Identify terms, numerical coefficients, and variables in algebraic expressions.",
+            "Classify expressions into monomials (1 term), binomials (2 terms), trinomials (3 terms), and polynomials."
+          ],
+          "explanation": "An algebraic expression is formed from variables and constants using arithmetic operations. Terms are added to form expressions; factors are multiplied to form terms. Like terms have identical variable factors.",
+          "examples": [
+            "In expression 4x^2 - 3xy: Terms are 4x^2 and -3xy. Coefficient of xy is -3.",
+            "Classification: 7xy (monomial), 2x + 3y (binomial), a + b + c (trinomial)."
+          ],
+          "exercises": [
+            "Classify as monomial, binomial or trinomial: (i) 4y - 7z  (ii) 100  (iii) x + y - xy.",
+            "Identify the numerical coefficient of term -3x^2y in the expression 5 - 3x^2y + 7."
+          ],
+          "solutions": [
+            "(i) Binomial (2 terms), (ii) Monomial (1 term), (iii) Trinomial (3 terms).",
+            "The numerical coefficient of term -3x^2y is -3."
+          ],
+          "practice_questions": [
+            "Are 7x and 14x like terms? Explain.",
+            "State the number of terms in 2l + 2b."
+          ],
+          "practice_solutions": [
+            "Yes, because both terms have the exact same variable x raised to power 1.",
+            "2 terms (binomial)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c08-t2",
+          "title": "Addition, Subtraction and Multiplication of Algebraic Expressions",
+          "aliases": [
+            "adding algebraic expressions",
+            "multiplying binomials",
+            "multiplying monomial by polynomial"
+          ],
+          "learning_objectives": [
+            "Add and subtract algebraic expressions by combining like terms.",
+            "Multiply monomials, binomials, and polynomials using the distributive property."
+          ],
+          "explanation": "When adding or subtracting, group like terms together and combine their numerical coefficients. To multiply polynomials, apply distributive law: (a + b)(c + d) = a(c + d) + b(c + d) = ac + ad + bc + bd.",
+          "examples": [
+            "Add (7x^2 - 4x + 5) + (9x - 10) = 7x^2 + (-4x + 9x) + (5 - 10) = 7x^2 + 5x - 5.",
+            "Multiply (x + 3)(x + 5) = x(x + 5) + 3(x + 5) = x^2 + 5x + 3x + 15 = x^2 + 8x + 15."
+          ],
+          "exercises": [
+            "Subtract 4a - 7ab + 3b + 12 from 12a - 9ab + 5b - 3.",
+            "Multiply binomials: (2x + 5) and (4x - 3)."
+          ],
+          "solutions": [
+            "(12a - 9ab + 5b - 3) - (4a - 7ab + 3b + 12) = (12a - 4a) + (-9ab + 7ab) + (5b - 3b) + (-3 - 12) = 8a - 2ab + 2b - 15.",
+            "2x(4x - 3) + 5(4x - 3) = 8x^2 - 6x + 20x - 15 = 8x^2 + 14x - 15."
+          ],
+          "practice_questions": [
+            "Simplify: a(a + b) - b(a - b).",
+            "Find product of 3xy and (4x - 5y)."
+          ],
+          "practice_solutions": [
+            "a^2 + ab - ab + b^2 = a^2 + b^2.",
+            "3xy * 4x - 3xy * 5y = 12x^2 y - 15x y^2."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c08-t3",
+          "title": "Standard Algebraic Identities and Applications",
+          "aliases": [
+            "algebraic identities",
+            "a plus b squared",
+            "a minus b squared",
+            "difference of squares identity"
+          ],
+          "learning_objectives": [
+            "Apply standard identities: (a+b)^2 = a^2 + 2ab + b^2, (a-b)^2 = a^2 - 2ab + b^2, (a+b)(a-b) = a^2 - b^2.",
+            "Use identity (x+a)(x+b) = x^2 + (a+b)x + ab for quick evaluation."
+          ],
+          "explanation": "An identity is an equality true for all values of its variables. Standard Identities:\n1) (a + b)^2 = a^2 + 2ab + b^2\n2) (a - b)^2 = a^2 - 2ab + b^2\n3) (a + b)(a - b) = a^2 - b^2\n4) (x + a)(x + b) = x^2 + (a + b)x + ab.",
+          "examples": [
+            "Evaluate 103^2 using identity: (100 + 3)^2 = 100^2 + 2(100)(3) + 3^2 = 10000 + 600 + 9 = 10609.",
+            "Evaluate 98 * 102: (100 - 2)(100 + 2) = 100^2 - 2^2 = 10000 - 4 = 9996."
+          ],
+          "exercises": [
+            "Use a suitable identity to evaluate (2x + 3y)^2.",
+            "Use identity (a+b)(a-b) = a^2 - b^2 to evaluate 51^2 - 49^2."
+          ],
+          "solutions": [
+            "Using (a+b)^2 = a^2 + 2ab + b^2: (2x)^2 + 2(2x)(3y) + (3y)^2 = 4x^2 + 12xy + 9y^2.",
+            "51^2 - 49^2 = (51 + 49)(51 - 49) = (100)(2) = 200."
+          ],
+          "practice_questions": [
+            "Expand (4p - 3q)^2 using identity.",
+            "Evaluate 103 * 104 using identity (x+a)(x+b)."
+          ],
+          "practice_solutions": [
+            "(4p)^2 - 2(4p)(3q) + (3q)^2 = 16p^2 - 24pq + 9q^2.",
+            "(100 + 3)(100 + 4) = 100^2 + (3+4)100 + (3*4) = 10000 + 700 + 12 = 10712."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c09",
+      "number": "9",
+      "title": "Chapter 9 - Mensuration",
+      "aliases": [
+        "Mensuration",
+        "Chapter 9 Mensuration",
+        "Area and Volume"
+      ],
+      "topics": [
+        {
+          "topic_id": "c09-t1",
+          "title": "Area of Trapezium, General Quadrilateral and Rhombus",
+          "aliases": [
+            "area of trapezium",
+            "area of quadrilateral",
+            "area of rhombus formula",
+            "quadrilateral area"
+          ],
+          "learning_objectives": [
+            "Calculate area of a trapezium: Area = 1/2 * (sum of parallel sides) * height.",
+            "Calculate area of a rhombus: Area = 1/2 * d1 * d2 using diagonal lengths."
+          ],
+          "explanation": "A trapezium has one pair of parallel sides (a and b) separated by perpendicular height h; Area = 1/2 * (a + b) * h. Area of a rhombus with diagonals d1 and d2 = 1/2 * d1 * d2. Area of general quadrilateral = 1/2 * diagonal * (h1 + h2).",
+          "examples": [
+            "Trapezium with parallel sides 10 cm, 12 cm and height 4 cm: Area = 1/2 * (10 + 12) * 4 = 1/2 * 22 * 4 = 44 cm^2.",
+            "Rhombus with diagonals 16 cm and 12 cm: Area = 1/2 * 16 * 12 = 96 cm^2."
+          ],
+          "exercises": [
+            "The area of a trapezium is 34 cm^2 and height is 4 cm. If one parallel side is 10 cm, find the other parallel side.",
+            "The diagonals of a rhombus are 7.5 cm and 12 cm. Find its area."
+          ],
+          "solutions": [
+            "Area = 1/2 * (a + b) * h -> 34 = 1/2 * (10 + b) * 4 -> 34 = 2 * (10 + b) -> 17 = 10 + b -> b = 7 cm.",
+            "Area = 1/2 * d1 * d2 = 1/2 * 7.5 * 12 = 7.5 * 6 = 45 cm^2."
+          ],
+          "practice_questions": [
+            "Find area of a rhombus whose side is 5 cm and altitude is 4.8 cm.",
+            "The parallel sides of a trapezium are 20 cm and 15 cm, height is 8 cm. Find area."
+          ],
+          "practice_solutions": [
+            "Rhombus is a parallelogram; Area = base * altitude = 5 * 4.8 = 24 cm^2.",
+            "Area = 1/2 * (20 + 15) * 8 = 35 * 4 = 140 cm^2."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c09-t2",
+          "title": "Surface Area of Cube, Cuboid and Cylinder",
+          "aliases": [
+            "surface area of cuboid",
+            "total surface area cube",
+            "curved surface area cylinder",
+            "TSA and CSA"
+          ],
+          "learning_objectives": [
+            "Compute Total Surface Area (TSA) and Lateral Surface Area (LSA) of cuboid: TSA = 2(lb + bh + hl).",
+            "Compute Total and Curved Surface Area of right circular cylinder: CSA = 2*pi*r*h, TSA = 2*pi*r*(r + h)."
+          ],
+          "explanation": "Formulas for surface area:\n- Cuboid: TSA = 2(lb + bh + hl); LSA (4 walls) = 2h(l + b)\n- Cube of side a: TSA = 6a^2; LSA = 4a^2\n- Cylinder of radius r, height h: CSA = 2*pi*r*h; TSA = 2*pi*r*(r + h).",
+          "examples": [
+            "Cube of edge 5 cm: TSA = 6 * 5^2 = 6 * 25 = 150 cm^2.",
+            "Cylinder r = 7 cm, h = 10 cm: CSA = 2 * (22/7) * 7 * 10 = 440 cm^2."
+          ],
+          "exercises": [
+            "Find the total surface area of a cuboid of length 60 cm, breadth 40 cm, and height 50 cm.",
+            "A cylindrical tank has radius 7 m and height 3 m. Find its total surface area."
+          ],
+          "solutions": [
+            "TSA = 2(lb + bh + hl) = 2(60*40 + 40*50 + 50*60) = 2(2400 + 2000 + 3000) = 2(7400) = 14,800 cm^2.",
+            "TSA = 2*pi*r*(r + h) = 2 * (22/7) * 7 * (7 + 3) = 44 * 10 = 440 m^2."
+          ],
+          "practice_questions": [
+            "Find side of a cube whose surface area is 600 cm^2.",
+            "Find lateral surface area of a cuboid of dimensions 10 cm x 8 cm x 5 cm."
+          ],
+          "practice_solutions": [
+            "6a^2 = 600 -> a^2 = 100 -> a = 10 cm.",
+            "LSA = 2h(l + b) = 2(5)(10 + 8) = 10 * 18 = 180 cm^2."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c09-t3",
+          "title": "Volume and Capacity of Cube, Cuboid and Cylinder",
+          "aliases": [
+            "volume of cuboid",
+            "volume of cube",
+            "volume of cylinder",
+            "capacity in liters"
+          ],
+          "learning_objectives": [
+            "Calculate volume of 3D solids: Cuboid V = l*b*h, Cube V = a^3, Cylinder V = pi*r^2*h.",
+            "Convert volume units to liquid capacity: 1 m^3 = 1000 L, 1000 cm^3 = 1 L."
+          ],
+          "explanation": "Volume measures 3D space occupied by an object. Capacity refers to liquid volume a hollow container holds.\n- Cuboid Volume = l * b * h\n- Cube Volume = a^3\n- Cylinder Volume = pi * r^2 * h\nConversion: 1 m^3 = 1000 liters, 1000 cm^3 = 1 liter.",
+          "examples": [
+            "Volume of a cuboid 8 cm x 5 cm x 4 cm = 8 * 5 * 4 = 160 cm^3.",
+            "A cylindrical tank r = 1.5 m, h = 7 m -> Volume = (22/7) * 1.5^2 * 7 = 22 * 2.25 = 49.5 m^3 = 49,500 liters."
+          ],
+          "exercises": [
+            "Find the height of a cuboid whose volume is 275 cm^3 and base area is 25 cm^2.",
+            "A water tank is in the form of a cylinder of radius 1.5 m and length 7 m. Find quantity of water in liters it can store."
+          ],
+          "solutions": [
+            "Volume = Base Area * Height -> 275 = 25 * h -> h = 275 / 25 = 11 cm.",
+            "Volume = pi * r^2 * h = (22/7) * (1.5)^2 * 7 = 22 * 2.25 = 49.5 m^3. Capacity = 49.5 * 1000 = 49,500 liters."
+          ],
+          "practice_questions": [
+            "Find the volume of a cube of edge 6 cm.",
+            "How many liters of water can a cuboidal tank of 2 m x 1.5 m x 1 m hold?"
+          ],
+          "practice_solutions": [
+            "Volume = 6^3 = 216 cm^3.",
+            "Volume = 2 * 1.5 * 1 = 3 m^3 = 3 * 1000 = 3000 liters."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c10",
+      "number": "10",
+      "title": "Chapter 10 - Exponents and Powers",
+      "aliases": [
+        "Exponents and Powers",
+        "Chapter 10 Exponents and Powers",
+        "Laws of Exponents"
+      ],
+      "topics": [
+        {
+          "topic_id": "c10-t1",
+          "title": "Negative Exponents and Laws of Exponents",
+          "aliases": [
+            "negative exponents",
+            "laws of exponents",
+            "power of a power",
+            "exponent rules"
+          ],
+          "learning_objectives": [
+            "Simplify expressions containing negative integral exponents: a^(-m) = 1 / a^m.",
+            "Apply laws of exponents: a^m * a^n = a^(m+n), a^m / a^n = a^(m-n), (a^m)^n = a^(m*n)."
+          ],
+          "explanation": "For any non-zero integer a and integer m, a^(-m) = 1 / a^m. Laws of Exponents:\n1) a^m * a^n = a^(m+n)\n2) a^m / a^n = a^(m-n)\n3) (a^m)^n = a^(m*n)\n4) a^m * b^m = (a*b)^m\n5) a^0 = 1.",
+          "examples": [
+            "3^(-2) = 1 / 3^2 = 1/9.",
+            "Simplify 2^5 / 2^(-3) = 2^(5 - (-3)) = 2^(5+3) = 2^8 = 256."
+          ],
+          "exercises": [
+            "Evaluate: (i) 3^(-2)  (ii) (-4)^(-2)  (iii) (1/2)^(-5).",
+            "Simplify and express with positive exponent: (-4)^5 / (-4)^8."
+          ],
+          "solutions": [
+            "(i) 1/9, (ii) 1/(-4)^2 = 1/16, (iii) 2^5 = 32.",
+            "(-4)^(5-8) = (-4)^(-3) = 1 / (-4)^3."
+          ],
+          "practice_questions": [
+            "Find value of m if 5^m / 5^(-3) = 5^5.",
+            "Evaluate (2^(-1) * 4^(-1)) / 2^(-2)."
+          ],
+          "practice_solutions": [
+            "5^(m - (-3)) = 5^5 -> m + 3 = 5 -> m = 2.",
+            "(1/2 * 1/4) / (1/4) = (1/8) / (1/4) = 4/8 = 1/2."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c10-t2",
+          "title": "Standard Form and Scientific Notation",
+          "aliases": [
+            "scientific notation",
+            "standard form small numbers",
+            "expressing large numbers"
+          ],
+          "learning_objectives": [
+            "Express very small and very large numbers in standard scientific form m * 10^n (where 1 <= m < 10).",
+            "Convert numbers from standard form back to usual decimal form."
+          ],
+          "explanation": "Any number can be expressed in standard form as k * 10^n, where 1.0 <= k < 10.0 and n is an integer. For very small numbers (0.000...x), move decimal point right by n places -> negative power 10^(-n). For large numbers, move decimal left -> positive power 10^n.",
+          "examples": [
+            "0.000007 in standard form = 7.0 * 10^(-6).",
+            "150,000,000,000 m (distance to sun) = 1.5 * 10^11 m."
+          ],
+          "exercises": [
+            "Express 0.000000000085 in standard form.",
+            "Express 3.52 * 10^5 in usual decimal form."
+          ],
+          "solutions": [
+            "Move decimal 11 places to right: 8.5 * 10^(-11).",
+            "Move decimal 5 places to right: 352,000."
+          ],
+          "practice_questions": [
+            "Express 6020000000000000 in standard form.",
+            "Express 3 * 10^(-8) in usual form."
+          ],
+          "practice_solutions": [
+            "6.02 * 10^15.",
+            "0.00000003."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c10-t3",
+          "title": "Comparing Numbers in Standard Form",
+          "aliases": [
+            "comparing standard form",
+            "adding numbers in scientific notation",
+            "ordering small numbers"
+          ],
+          "learning_objectives": [
+            "Compare very large or very small quantities expressed in standard form.",
+            "Add and subtract numbers in scientific notation by matching exponents."
+          ],
+          "explanation": "To compare numbers in standard form, first compare their powers of 10. The number with higher exponent is larger. If powers of 10 are equal, compare decimal coefficients k. To add/subtract, rewrite with identical powers of 10.",
+          "examples": [
+            "Compare Earth mass (5.97 * 10^24 kg) and Moon mass (7.35 * 10^22 kg): Earth exponent 24 > Moon exponent 22, so Earth is heavier.",
+            "Add (2.3 * 10^4) + (5.1 * 10^3) = (2.3 * 10^4) + (0.51 * 10^4) = (2.3 + 0.51) * 10^4 = 2.81 * 10^4."
+          ],
+          "exercises": [
+            "Compare size of plant cell (1.275 * 10^(-5) m) and red blood cell (7 * 10^(-6) m). Which is larger?",
+            "Find total mass of two objects: 3.5 * 10^6 kg and 4.2 * 10^5 kg."
+          ],
+          "solutions": [
+            "Convert to same power: 7 * 10^(-6) = 0.7 * 10^(-5). Since 1.275 > 0.7, Plant cell (1.275 * 10^-5 m) is larger.",
+            "(3.5 * 10^6) + (0.42 * 10^6) = (3.5 + 0.42) * 10^6 = 3.92 * 10^6 kg."
+          ],
+          "practice_questions": [
+            "Which is smaller: 4.5 * 10^(-8) or 9.1 * 10^(-9)?",
+            "Evaluate (6 * 10^8) / (2 * 10^3)."
+          ],
+          "practice_solutions": [
+            "9.1 * 10^(-9) is smaller (because -9 < -8).",
+            "(6/2) * 10^(8-3) = 3 * 10^5 = 300,000."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c11",
+      "number": "11",
+      "title": "Chapter 11 - Direct and Inverse Proportions",
+      "aliases": [
+        "Direct and Inverse Proportions",
+        "Chapter 11 Direct and Inverse Proportions",
+        "Proportion Problems"
+      ],
+      "topics": [
+        {
+          "topic_id": "c11-t1",
+          "title": "Direct Proportion and Constant of Variation",
+          "aliases": [
+            "direct proportion",
+            "direct variation",
+            "x/y = k",
+            "unitary method"
+          ],
+          "learning_objectives": [
+            "Identify direct proportion relationships where x/y = k (constant).",
+            "Solve direct proportion problems using x1 / y1 = x2 / y2."
+          ],
+          "explanation": "Two quantities x and y are in direct proportion if an increase in x causes a proportional increase in y such that x/y = k (a constant). Thus, x1 / y1 = x2 / y2.",
+          "examples": [
+            "Cost of sugar is directly proportional to weight: 2 kg costs Rs. 70, so 5 kg costs (70/2) * 5 = Rs. 175.",
+            "Scale on map 1 cm = 18 km: distance 72 km on ground corresponds to 72/18 = 4 cm on map."
+          ],
+          "exercises": [
+            "If 14 sheets of thick paper weigh 50 grams, how many such sheets would weigh 2.5 kg (2500 grams)?",
+            "A train travels 75 km in 60 minutes at constant speed. How far will it travel in 20 minutes?"
+          ],
+          "solutions": [
+            "Direct proportion: 14 / 50 = x / 2500 -> x = (14 * 2500) / 50 = 14 * 50 = 700 sheets.",
+            "Direct proportion: 75 / 60 = x / 20 -> x = (75 * 20) / 60 = 75 / 3 = 25 km."
+          ],
+          "practice_questions": [
+            "A machine fills 840 bottles in 6 hours. How many bottles will it fill in 5 hours?",
+            "Is number of articles bought and total cost in direct proportion?"
+          ],
+          "practice_solutions": [
+            "840 / 6 = x / 5 -> x = 140 * 5 = 700 bottles.",
+            "Yes, assuming price per article remains constant."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c11-t2",
+          "title": "Inverse Proportion and Product Constant",
+          "aliases": [
+            "inverse proportion",
+            "inverse variation",
+            "x * y = k",
+            "speed time inverse"
+          ],
+          "learning_objectives": [
+            "Identify inverse proportion relationships where x * y = k (constant).",
+            "Solve inverse proportion problems using x1 * y1 = x2 * y2."
+          ],
+          "explanation": "Two quantities x and y are in inverse proportion if an increase in x causes a proportional decrease in y such that x * y = k (a constant). Formula: x1 * y1 = x2 * y2.",
+          "examples": [
+            "Speed and time for a fixed distance: doubling speed halves travel time (Speed * Time = Distance).",
+            "Workmen and completion days: 6 workers take 10 days -> 6 * 10 = 60 worker-days. 12 workers take 60 / 12 = 5 days."
+          ],
+          "exercises": [
+            "If 20 workers build a wall in 6 days, how many workers are needed to build the same wall in 4 days?",
+            "A car takes 2 hours to reach destination traveling at 60 km/h. How long will it take at 80 km/h?"
+          ],
+          "solutions": [
+            "Inverse proportion: x1 * y1 = x2 * y2 -> 20 * 6 = x2 * 4 -> 120 = 4 * x2 -> x2 = 30 workers.",
+            "Distance = 60 * 2 = 120 km. At 80 km/h: Time = 120 / 80 = 1.5 hours (1 hour 30 minutes)."
+          ],
+          "practice_questions": [
+            "A hostel has food for 100 students for 20 days. If 25 more students join, how long will food last?",
+            "Is speed of a vehicle and time taken to cover a fixed distance directly or inversely proportional?"
+          ],
+          "practice_solutions": [
+            "Total students = 125. Inverse: 100 * 20 = 125 * d -> d = 2000 / 125 = 16 days.",
+            "Inversely proportional."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c11-t3",
+          "title": "Distinguishing Direct and Inverse Proportions",
+          "aliases": [
+            "direct vs inverse proportion",
+            "identifying proportion type",
+            "real world variation"
+          ],
+          "learning_objectives": [
+            "Analyze real-world scenarios to classify proportion as direct or inverse.",
+            "Formulate correct algebraic ratio/product equations based on classification."
+          ],
+          "explanation": "To distinguish direct from inverse proportion: ask whether increasing one quantity causes the other to increase (Direct: ratio x/y constant) or decrease (Inverse: product x*y constant).",
+          "examples": [
+            "Number of workers and time taken to finish work -> Inverse (more workers, less time).",
+            "Number of items bought and total cost -> Direct (more items, more cost)."
+          ],
+          "exercises": [
+            "Classify as Direct or Inverse: (i) Time taken for a journey and speed of vehicle. (ii) Area of cultivated land and crop harvested.",
+            "A pipe fills a tank in 80 minutes. If 4 identical pipes are opened together, how long will it take?"
+          ],
+          "solutions": [
+            "(i) Inverse proportion (higher speed -> less time). (ii) Direct proportion (more land -> more crop).",
+            "Inverse: 1 * 80 = 4 * t -> t = 80 / 4 = 20 minutes."
+          ],
+          "practice_questions": [
+            "Classify: Population of a country and area of land per person.",
+            "6 pipes fill a tank in 1 hr 20 min (80 min). How long will 5 pipes take?"
+          ],
+          "practice_solutions": [
+            "Inverse proportion (larger population -> less land per person).",
+            "Inverse: 6 * 80 = 5 * t -> t = 480 / 5 = 96 minutes (1 hr 36 min)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c12",
+      "number": "12",
+      "title": "Chapter 12 - Factorisation",
+      "aliases": [
+        "Factorisation",
+        "Chapter 12 Factorisation",
+        "Factoring Polynomials"
+      ],
+      "topics": [
+        {
+          "topic_id": "c12-t1",
+          "title": "Factorisation by Common Factors and Regrouping",
+          "aliases": [
+            "common factors",
+            "regrouping terms",
+            "factoring by grouping",
+            "HCF factorisation"
+          ],
+          "learning_objectives": [
+            "Factorize algebraic expressions by extracting the highest common factor (HCF).",
+            "Factorize four-term expressions by regrouping terms into pairs."
+          ],
+          "explanation": "Factorisation is the reverse of multiplication, writing an expression as a product of irreducible factors. Method 1: Common factor extraction (e.g. 12a^2b + 15ab^2 = 3ab(4a + 5b)). Method 2: Regrouping terms when no single common factor exists across all terms.",
+          "examples": [
+            "Factorize 12x + 36 = 12(x + 3).",
+            "Factorize by grouping xy + 3x + y + 3 = x(y + 3) + 1(y + 3) = (x + 1)(y + 3)."
+          ],
+          "exercises": [
+            "Factorize: 7x - 42.",
+            "Factorize by regrouping: 15xy - 6x + 5y - 2."
+          ],
+          "solutions": [
+            "7(x - 6).",
+            "Group pairs: 3x(5y - 2) + 1(5y - 2) = (3x + 1)(5y - 2)."
+          ],
+          "practice_questions": [
+            "Factorize: 6p - 12q.",
+            "Factorize: ax^2 + by^2 + bx^2 + ay^2."
+          ],
+          "practice_solutions": [
+            "6(p - 2q).",
+            "Regroup: x^2(a + b) + y^2(a + b) = (x^2 + y^2)(a + b)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c12-t2",
+          "title": "Factorisation Using Algebraic Identities and Quadratic Trinomials",
+          "aliases": [
+            "factorising using identities",
+            "difference of two squares factoring",
+            "splitting middle term"
+          ],
+          "learning_objectives": [
+            "Factorize expressions matching identities: a^2 + 2ab + b^2 = (a+b)^2 and a^2 - b^2 = (a+b)(a-b).",
+            "Factorize quadratic trinomials x^2 + (a+b)x + ab into (x+a)(x+b) by splitting the middle term."
+          ],
+          "explanation": "Identities useful for factorisation:\n1) a^2 + 2ab + b^2 = (a + b)^2\n2) a^2 - 2ab + b^2 = (a - b)^2\n3) a^2 - b^2 = (a + b)(a - b)\n4) For x^2 + px + q: find two numbers a, b such that a+b = p and a*b = q -> (x + a)(x + b).",
+          "examples": [
+            "Factorize 49p^2 - 36 = (7p)^2 - 6^2 = (7p - 6)(7p + 6).",
+            "Factorize x^2 + 6x + 8: Find factors of 8 adding to 6 -> 2 and 4 -> (x + 2)(x + 4)."
+          ],
+          "exercises": [
+            "Factorize: 49x^2 - 84xy + 36y^2.",
+            "Factorize quadratic trinomial: q^2 - 10q + 21."
+          ],
+          "solutions": [
+            "Notice (7x)^2 - 2(7x)(6y) + (6y)^2 = (7x - 6y)^2.",
+            "Find two numbers whose product is 21 and sum is -10 -> -3 and -7. Result = (q - 3)(q - 7)."
+          ],
+          "practice_questions": [
+            "Factorize: 16x^2 - 25.",
+            "Factorize: y^2 - 7y + 12."
+          ],
+          "practice_solutions": [
+            "(4x - 5)(4x + 5).",
+            "(y - 3)(y - 4)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c12-t3",
+          "title": "Division of Algebraic Expressions",
+          "aliases": [
+            "division of monomial by monomial",
+            "polynomial divided by monomial",
+            "polynomial divided by polynomial"
+          ],
+          "learning_objectives": [
+            "Divide a monomial by another monomial by canceling common numerical and variable factors.",
+            "Divide a polynomial by a monomial/binomial after factorizing."
+          ],
+          "explanation": "To divide algebraic expressions: factorize both numerator and denominator into irreducible prime/algebraic factors, then cancel out common factors present in both numerator and denominator.",
+          "examples": [
+            "Divide 28x^4 by 56x = (28/56) * (x^4/x) = (1/2)x^3.",
+            "Divide 7x^2 + 14x by (x + 2): 7x(x + 2) / (x + 2) = 7x."
+          ],
+          "exercises": [
+            "Divide: -36y^3 by 9y^2.",
+            "Divide: (y^2 + 7y + 10) by (y + 5)."
+          ],
+          "solutions": [
+            "(-36/9) * (y^3/y^2) = -4y.",
+            "Factorize numerator: (y + 5)(y + 2). Division: (y + 5)(y + 2) / (y + 5) = y + 2."
+          ],
+          "practice_questions": [
+            "Divide: 10(x - 25) by 5.",
+            "Divide: (z^2 - 4z - 12) by (z + 2)."
+          ],
+          "practice_solutions": [
+            "10(x - 25)/5 = 2(x - 25) = 2x - 50.",
+            "Factorize numerator: (z - 6)(z + 2) / (z + 2) = z - 6."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "math8-c13",
+      "number": "13",
+      "title": "Chapter 13 - Introduction to Graphs",
+      "aliases": [
+        "Introduction to Graphs",
+        "Chapter 13 Introduction to Graphs",
+        "Graphs"
+      ],
+      "topics": [
+        {
+          "topic_id": "c13-t1",
+          "title": "Types of Graphs: Bar Graphs, Pie Graphs and Line Graphs",
+          "aliases": [
+            "bar graph vs line graph",
+            "line graph",
+            "linear graph",
+            "displaying data visually"
+          ],
+          "learning_objectives": [
+            "Distinguish between bar graphs, pie charts, and line graphs.",
+            "Interpret continuous trends and data changes over time using line graphs."
+          ],
+          "explanation": "Bar graphs use bars of uniform width to compare discrete categories. Pie charts show proportional shares of a whole. Line graphs display continuous data that changes continuously over intervals of time by joining plotted points with line segments.",
+          "examples": [
+            "Tracking hourly body temperature of a patient is best shown on a line graph.",
+            "Comparing rainfall in 5 different cities in July is best shown on a bar graph."
+          ],
+          "exercises": [
+            "Which graph type is most suitable to represent temperature changes throughout a day?",
+            "What does a horizontal flat line on a time-temperature line graph indicate?"
+          ],
+          "solutions": [
+            "A line graph (or linear graph).",
+            "It indicates that the temperature remained constant (no change) during that time interval."
+          ],
+          "practice_questions": [
+            "State one difference between a bar graph and a line graph.",
+            "In a line graph tracking sales over months, what does a steep upward line segment show?"
+          ],
+          "practice_solutions": [
+            "A bar graph uses discrete vertical/horizontal bars for categories, whereas a line graph connects continuous points to show trends.",
+            "A rapid increase in sales during that month."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c13-t2",
+          "title": "Cartesian Coordinates and Plotting Points",
+          "aliases": [
+            "cartesian coordinates",
+            "plotting points",
+            "x axis y axis",
+            "ordered pair (x,y)"
+          ],
+          "learning_objectives": [
+            "Identify the origin (0,0), horizontal x-axis, and vertical y-axis on a coordinate plane.",
+            "Plot and read ordered pairs (x, y) correctly."
+          ],
+          "explanation": "A Cartesian coordinate plane consists of two perpendicular number lines: horizontal x-axis and vertical y-axis intersecting at origin (0,0). Point P is represented by ordered pair (x, y), where x is x-coordinate (abscissa) and y is y-coordinate (ordinate).",
+          "examples": [
+            "Point (3, 5): move 3 units right on x-axis, then 5 units up parallel to y-axis.",
+            "Any point on the x-axis has y-coordinate 0 (e.g. (4, 0)). Any point on y-axis has x-coordinate 0 (e.g. (0, 7))."
+          ],
+          "exercises": [
+            "Write the coordinates of the origin.",
+            "What is the x-coordinate of the point (0, 6) and which axis does it lie on?"
+          ],
+          "solutions": [
+            "(0, 0).",
+            "x-coordinate is 0; the point lies on the y-axis."
+          ],
+          "practice_questions": [
+            "Plot points A(2,3), B(2,6), C(5,6), D(5,3). What shape is formed when joined in order?",
+            "If a point lies 4 units to the right of y-axis and on the x-axis, state its coordinates."
+          ],
+          "practice_solutions": [
+            "A rectangle (width = 3 units, height = 3 units -> square of side 3).",
+            "(4, 0)."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "c13-t3",
+          "title": "Linear Graphs and Applications (Distance-Time and Quantity-Cost)",
+          "aliases": [
+            "linear graphs",
+            "distance-time graph",
+            "quantity-cost graph",
+            "independent dependent variable"
+          ],
+          "learning_objectives": [
+            "Plot linear graphs representing direct proportion relationships (e.g. cost vs quantity, distance vs time).",
+            "Read values from linear graphs and calculate rates/speed."
+          ],
+          "explanation": "A line graph that is a single unbroken straight line is a linear graph. Independent variables (e.g. time, quantity) are plotted on x-axis; dependent variables (e.g. distance, cost) on y-axis. The slope of a distance-time graph represents speed.",
+          "examples": [
+            "Cost of petrol: 1 liter = Rs. 100, 2 liters = Rs. 200 -> points (1,100), (2,200) form a straight line passing through (0,0).",
+            "Distance-time graph: line from (0,0) to (2,120) km -> speed = 120 / 2 = 60 km/h."
+          ],
+          "exercises": [
+            "From a distance-time graph passing through (0,0) and (3, 180 km), find the speed of the car.",
+            "A graph shows cost of apples: (1 kg, Rs. 80), (2 kg, Rs. 160), (3 kg, Rs. 240). Find the cost of 5 kg apples from the graph."
+          ],
+          "solutions": [
+            "Speed = Distance / Time = 180 km / 3 hours = 60 km/h.",
+            "Cost is directly proportional: Cost = 5 * Rs. 80 = Rs. 400."
+          ],
+          "practice_questions": [
+            "On which axis is the independent variable usually plotted?",
+            "If a linear graph passes through (0,0) and (4, 20), find y when x = 7."
+          ],
+          "practice_solutions": [
+            "Horizontal x-axis.",
+            "Slope k = 20/4 = 5 -> y = 5x = 5(7) = 35."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

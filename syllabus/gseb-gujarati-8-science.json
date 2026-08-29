@@ -1,0 +1,1276 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 8,
+  "subject": "Science",
+  "textbook": "Std-8 Science — Gujarati Medium",
+  "source": {
+    "title": "Std-8 Science Gujarati Medium",
+    "publisher": "Gujarat State School Textbook Board / GCERT",
+    "edition": "Revised edition 2023; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=1ZeMNjNAEsMsP_G6buQNizsCy-CPXGwb6",
+    "acquired_on": "2026-08-08",
+    "official": true,
+    "notes": "Chapter structure aligned to the uploaded official-linked GSEB textbook. Tutor explanations, examples and practice are original teacher-authored content; textbook prose is not copied."
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-crop-production-management",
+      "number": "1",
+      "title": "Crop Production and Management",
+      "topics": [
+        {
+          "topic_id": "ch01-crop-production-management-t01",
+          "title": "Agricultural Practices",
+          "aliases": [
+            "Crop Production and Management",
+            "પાક ઉત્પાદન અને વ્યવસ્થાપન",
+            "કૃષિ પદ્ધતિઓ",
+            "ખેતીની પદ્ધતિઓ",
+            "Crop Production",
+            "Agriculture"
+          ],
+          "learning_objectives": [
+            "Understand agricultural practices at GSEB Standard 8 level."
+          ],
+          "explanation": "સારા પાક માટે જમીન તૈયાર કરવી, યોગ્ય બીજ પસંદ કરવું, વાવણી, પોષક તત્ત્વો, સિંચાઈ, નીંદણ નિયંત્રણ, કાપણી અને સંગ્રહ જેવી ક્રિયાઓ ક્રમબદ્ધ રીતે કરવામાં આવે છે.",
+          "examples": [
+            "ઘઉં માટે જમીન ભુરભુરી બનાવ્યા પછી યોગ્ય અંતરે બીજ વાવવાથી મૂળને હવા અને પાણી સારી રીતે મળે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ખેતીની મુખ્ય ક્રિયાઓ યોગ્ય ક્રમમાં લખો.",
+            "જમીન ભુરભુરી કરવાથી છોડને શું ફાયદો થાય?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-crop-production-management-t02",
+          "title": "Crop Seasons",
+          "aliases": [
+            "પાક ઋતુઓ",
+            "ખરીફ અને રવિ પાક",
+            "ખરીફ પાક",
+            "રવિ પાક",
+            "Kharif Crops",
+            "Rabi Crops",
+            "Kharif and Rabi Crops"
+          ],
+          "learning_objectives": [
+            "Understand crop seasons at GSEB Standard 8 level."
+          ],
+          "explanation": "ભારતમાં પાકોને ઋતુ પ્રમાણે મુખ્યત્વે ખરીફ અને રવિ તરીકે સમજાવી શકાય. વરસાદી ઋતુમાં વાવવામાં આવતા પાક અને શિયાળામાં વાવવામાં આવતા પાકની પાણી, તાપમાન અને સમયની જરૂરિયાત અલગ હોય છે.",
+          "examples": [
+            "ડાંગર સામાન્ય રીતે વરસાદી પરિસ્થિતિ સાથે જોડાય છે, જ્યારે ઘઉં શિયાળાની ઋતુ સાથે જોડાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ખરીફ અને રવિ પાક વચ્ચે બે તફાવત લખો.",
+            "એક ખરીફ અને એક રવિ પાકનું ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-crop-production-management-t03",
+          "title": "Soil Preparation and Sowing",
+          "aliases": [
+            "જમીનની તૈયારી અને વાવણી",
+            "વાવણી",
+            "Soil Preparation",
+            "Sowing"
+          ],
+          "learning_objectives": [
+            "Understand soil preparation and sowing at GSEB Standard 8 level."
+          ],
+          "explanation": "વાવણી પહેલાં જમીન ખેડી અને સમતલ કરવામાં આવે છે. સ્વસ્થ અને યોગ્ય બીજને યોગ્ય ઊંડાઈ અને અંતરે વાવવાથી અંકુરણ અને છોડની વૃદ્ધિ સુધરે છે.",
+          "examples": [
+            "Seed drill બીજને વધુ સમાન અંતર અને ઊંડાઈએ મૂકવામાં મદદ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "યોગ્ય ઊંડાઈએ વાવણી શા માટે જરૂરી છે?",
+            "Seed drill નો એક લાભ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-crop-production-management-t04",
+          "title": "Manure and Fertilisers",
+          "aliases": [
+            "ખાતર અને રાસાયણિક ખાતર",
+            "ખાતર",
+            "રાસાયણિક ખાતર",
+            "Manure",
+            "Fertiliser",
+            "Fertilisers",
+            "Fertilizer",
+            "Fertilizers",
+            "Manure and Fertilizers"
+          ],
+          "learning_objectives": [
+            "Understand manure and fertilisers at GSEB Standard 8 level."
+          ],
+          "explanation": "છોડ જમીનમાંથી પોષક તત્ત્વો લે છે. જૈવિક ખાતર જમીનની રચના અને જૈવિક પદાર્થમાં મદદ કરે છે, જ્યારે રાસાયણિક ખાતર ચોક્કસ પોષક તત્ત્વો ઝડપથી પૂરા પાડે છે. બંનેનો સમજદારીપૂર્વક ઉપયોગ જરૂરી છે.",
+          "examples": [
+            "Compost જૈવિક પદાર્થ ઉમેરે છે; nitrogen fertiliser છોડને નાઈટ્રોજન પૂરી પાડી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "જૈવિક ખાતર અને રાસાયણિક ખાતરમાં એક તફાવત લખો.",
+            "અતિશય રાસાયણિક ખાતરનો ઉપયોગ કેમ ટાળવો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch01-crop-production-management-t05",
+          "title": "Irrigation Weed Control Harvesting and Storage",
+          "aliases": [
+            "સિંચાઈ નીંદણ નિયંત્રણ કાપણી અને સંગ્રહ",
+            "સિંચાઈ",
+            "નીંદણ",
+            "કાપણી",
+            "અનાજ સંગ્રહ",
+            "Irrigation",
+            "Weed Control",
+            "Harvesting",
+            "Crop Storage"
+          ],
+          "learning_objectives": [
+            "Understand irrigation weed control harvesting and storage at GSEB Standard 8 level."
+          ],
+          "explanation": "પાકને યોગ્ય સમયે પાણી આપવું, અનિચ્છનીય નીંદણ દૂર કરવું, પાક તૈયાર થાય ત્યારે કાપણી કરવી અને ભેજ તથા જીવાતથી સુરક્ષિત રીતે સંગ્રહ કરવો પાક વ્યવસ્થાપનના મહત્વના ભાગ છે.",
+          "examples": [
+            "અનાજને પૂરતું સુકવી પછી સંગ્રહ કરવાથી ફૂગ અને બગાડનું જોખમ ઘટે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "નીંદણ પાકને કેવી રીતે નુકસાન કરે છે?",
+            "અનાજ સંગ્રહ પહેલાં તેને સુકવવું કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-microorganisms",
+      "number": "2",
+      "title": "Microorganisms: Friend and Foe",
+      "topics": [
+        {
+          "topic_id": "ch02-microorganisms-t01",
+          "title": "Types of Microorganisms",
+          "aliases": [
+            "Microorganisms: Friend and Foe",
+            "સૂક્ષ્મજીવો : મિત્ર અને શત્રુ",
+            "સૂક્ષ્મજીવોના પ્રકાર",
+            "સૂક્ષ્મજીવો",
+            "Microorganisms",
+            "Microorganism Types"
+          ],
+          "learning_objectives": [
+            "Understand types of microorganisms at GSEB Standard 8 level."
+          ],
+          "explanation": "સૂક્ષ્મજીવો એટલા નાના જીવ છે કે ઘણા પ્રકારને જોવા માઇક્રોસ્કોપની જરૂર પડે છે. બેક્ટેરિયા, ફૂગ, પ્રોટોઝોઆ અને કેટલાક શૈવાળ મુખ્ય જૂથો છે; વાયરસ જીવિત કોષની અંદર જ વધે છે.",
+          "examples": [
+            "Yeast એક પ્રકારની ફૂગ છે અને Lactobacillus બેક્ટેરિયા છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "સૂક્ષ્મજીવોના ચાર મુખ્ય જૂથ લખો.",
+            "વાયરસને વધવા માટે શું જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-microorganisms-t02",
+          "title": "Useful Microorganisms",
+          "aliases": [
+            "ઉપયોગી સૂક્ષ્મજીવો",
+            "લાભદાયક સૂક્ષ્મજીવો",
+            "મિત્ર સૂક્ષ્મજીવો",
+            "Useful Microbes"
+          ],
+          "learning_objectives": [
+            "Understand useful microorganisms at GSEB Standard 8 level."
+          ],
+          "explanation": "કેટલાક સૂક્ષ્મજીવો ખોરાક બનાવવામાં, ઔષધિમાં, સડેલા પદાર્થોના વિઘટનમાં અને જમીનની ઉર્વરતા સુધારવામાં મદદ કરે છે.",
+          "examples": [
+            "દહીં બનવામાં Lactobacillus મદદ કરે છે અને yeast fermentationમાં ઉપયોગી છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "દહીં બનાવવામાં કયો સૂક્ષ્મજીવ મદદ કરે છે?",
+            "Fermentation નો એક ઉપયોગ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-microorganisms-t03",
+          "title": "Harmful Microorganisms and Disease",
+          "aliases": [
+            "હાનિકારક સૂક્ષ્મજીવો",
+            "રોગકારક સૂક્ષ્મજીવો",
+            "પેથોજન",
+            "Harmful Microorganisms",
+            "Pathogens",
+            "Disease-causing Microorganisms"
+          ],
+          "learning_objectives": [
+            "Understand harmful microorganisms and disease at GSEB Standard 8 level."
+          ],
+          "explanation": "રોગ પેદા કરતા સૂક્ષ્મજીવોને pathogens કહેવાય છે. તેઓ હવા, પાણી, ખોરાક, સીધો સંપર્ક અથવા વાહક જીવ દ્વારા ફેલાઈ શકે છે. સ્વચ્છતા અને યોગ્ય રોકથામ જરૂરી છે.",
+          "examples": [
+            "મચ્છર કેટલાક રોગકારકોને એક વ્યક્તિથી બીજી વ્યક્તિ સુધી પહોંચાડવામાં વાહક બની શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Pathogen શું છે?",
+            "સંક્રમણ ફેલાવાના બે માર્ગ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-microorganisms-t04",
+          "title": "Food Preservation",
+          "aliases": [
+            "ખોરાકનું સંરક્ષણ",
+            "ફૂડ પ્રિઝર્વેશન",
+            "Preserving Food"
+          ],
+          "learning_objectives": [
+            "Understand food preservation at GSEB Standard 8 level."
+          ],
+          "explanation": "ખોરાકમાં સૂક્ષ્મજીવોની વૃદ્ધિ ધીમી અથવા રોકવા માટે ઠંડક, સુકવણી, મીઠું, ખાંડ, તેલ-વિનેગર, ગરમી અથવા યોગ્ય પેકિંગ જેવી રીતો ઉપયોગી છે.",
+          "examples": [
+            "દૂધને યોગ્ય ગરમી આપીને અને પછી ઠંડું રાખવાથી બગાડ ધીમો થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "મીઠું ખોરાકના સંરક્ષણમાં કેવી રીતે મદદ કરે છે?",
+            "ખોરાક સાચવવાની ત્રણ રીત લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-microorganisms-t05",
+          "title": "Nitrogen Cycle",
+          "aliases": [
+            "નાઇટ્રોજન ચક્ર",
+            "નાઈટ્રોજન ચક્ર",
+            "Nitrogen Fixation Cycle"
+          ],
+          "learning_objectives": [
+            "Understand nitrogen cycle at GSEB Standard 8 level."
+          ],
+          "explanation": "વાતાવરણમાં નાઇટ્રોજન ઘણું છે, પરંતુ છોડ તેને સીધું મોટા પ્રમાણમાં ઉપયોગ કરી શકતા નથી. કેટલાક બેક્ટેરિયા નાઇટ્રોજનને ઉપયોગી સંયોજનોમાં ફેરવે છે અને વિઘટન તથા અન્ય પ્રક્રિયાઓ નાઇટ્રોજનને પર્યાવરણમાં ફરી ચક્રિત કરે છે.",
+          "examples": [
+            "Rhizobium દાળવર્ગીય છોડની મૂળગાંઠોમાં નાઇટ્રોજન સ્થિરકરણમાં મદદ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Nitrogen fixation શું છે?",
+            "Rhizobium ક્યાં જોવા મળે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-coal-petroleum",
+      "number": "3",
+      "title": "Coal and Petroleum",
+      "topics": [
+        {
+          "topic_id": "ch03-coal-petroleum-t01",
+          "title": "Fossil Fuels",
+          "aliases": [
+            "Coal and Petroleum",
+            "કોલસો અને પેટ્રોલિયમ",
+            "અશ્મિ ઇંધણ",
+            "ફોસિલ ફ્યુઅલ",
+            "Fossil Fuel"
+          ],
+          "learning_objectives": [
+            "Understand fossil fuels at GSEB Standard 8 level."
+          ],
+          "explanation": "કોલસો, પેટ્રોલિયમ અને કુદરતી ગેસ લાંબા ભૂગર્ભીય સમયગાળામાં પ્રાચીન સજીવોના અવશેષોથી બનેલા અશ્મિ ઇંધણ છે. તેઓ મર્યાદિત હોવાથી સંયમપૂર્વક વાપરવા જોઈએ.",
+          "examples": [
+            "પેટ્રોલિયમ માનવ જીવનકાળમાં ફરી ઝડપથી બનતું નથી, તેથી તેને non-renewable resource ગણાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "અશ્મિ ઇંધણના ત્રણ ઉદાહરણ આપો.",
+            "તેને મર્યાદિત સંસાધન કેમ કહેવાય?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-coal-petroleum-t02",
+          "title": "Coal and Its Products",
+          "aliases": [
+            "કોલસો અને તેના ઉત્પાદનો",
+            "કોલ ટાર",
+            "કોક",
+            "Coal Products"
+          ],
+          "learning_objectives": [
+            "Understand coal and its products at GSEB Standard 8 level."
+          ],
+          "explanation": "કોલસાની પ્રક્રિયાથી coke, coal tar અને coal gas જેવા ઉત્પાદનો મેળવી શકાય છે. તેમના ગુણધર્મો અને ઉપયોગ અલગ હોય છે.",
+          "examples": [
+            "Coke મુખ્યત્વે કાર્બનથી સમૃદ્ધ ઘન પદાર્થ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "કોલસાના બે ઉત્પાદનો લખો.",
+            "Coke નો એક ઉપયોગ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-coal-petroleum-t03",
+          "title": "Petroleum Refining",
+          "aliases": [
+            "પેટ્રોલિયમનું શુદ્ધીકરણ",
+            "પેટ્રોલિયમ રિફાઇનિંગ",
+            "રિફાઇનરી",
+            "Petroleum Refinery",
+            "Refining Petroleum"
+          ],
+          "learning_objectives": [
+            "Understand petroleum refining at GSEB Standard 8 level."
+          ],
+          "explanation": "Crude petroleum અલગ અલગ hydrocarbonનું મિશ્રણ છે. Refineryમાં તેને વિવિધ fractionsમાં અલગ કરીને petrol, diesel, kerosene, lubricants વગેરે મેળવવામાં આવે છે.",
+          "examples": [
+            "ઉકળતા તાપમાનના તફાવતના આધારે crude oilના ભાગોને અલગ કરી શકાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Refinery શું કરે છે?",
+            "Petroleumમાંથી મળતા ત્રણ products લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-coal-petroleum-t04",
+          "title": "Natural Gas and Conservation",
+          "aliases": [
+            "કુદરતી ગેસ અને સંરક્ષણ",
+            "કુદરતી ગેસ",
+            "CNG",
+            "Natural Gas",
+            "Conservation of Fossil Fuels"
+          ],
+          "learning_objectives": [
+            "Understand natural gas and conservation at GSEB Standard 8 level."
+          ],
+          "explanation": "કુદરતી ગેસ ઊર્જાનો મહત્વનો સ્ત્રોત છે અને CNG તરીકે વાહનોમાં પણ વપરાય છે. અશ્મિ ઇંધણ મર્યાદિત હોવાથી ઊર્જા બચત અને વિકલ્પ ઊર્જાનો ઉપયોગ મહત્વનો છે.",
+          "examples": [
+            "જરૂર ન હોય ત્યારે વાહનનું engine બંધ રાખવું ઇંધણ બચતનું સરળ ઉદાહરણ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "CNG નું પૂરું નામ લખો.",
+            "અશ્મિ ઇંધણ બચાવવાની બે રીત લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-combustion-flame",
+      "number": "4",
+      "title": "Combustion and Flame",
+      "topics": [
+        {
+          "topic_id": "ch04-combustion-flame-t01",
+          "title": "Combustion and Ignition Temperature",
+          "aliases": [
+            "Combustion and Flame",
+            "દહન અને જ્યોત",
+            "દહન અને પ્રજ્વલન તાપમાન",
+            "દહન",
+            "પ્રજ્વલન તાપમાન",
+            "Combustion",
+            "Ignition Temperature"
+          ],
+          "learning_objectives": [
+            "Understand combustion and ignition temperature at GSEB Standard 8 level."
+          ],
+          "explanation": "કોઈ પદાર્થ ઓક્સિજન સાથે પ્રતિક્રિયા કરીને ગરમી અને ઘણી વાર પ્રકાશ આપે ત્યારે તેને દહન કહે છે. પદાર્થને સળગવાનું શરૂ કરવા માટે જે ન્યૂનતમ તાપમાન જોઈએ તે ignition temperature છે.",
+          "examples": [
+            "કાગળને સળગવા પહેલાં પૂરતી ગરમી મળવી જરૂરી છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "દહન શું છે?",
+            "Ignition temperature શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch04-combustion-flame-t02",
+          "title": "Types of Combustion",
+          "aliases": [
+            "દહનના પ્રકાર",
+            "ઝડપી દહન",
+            "સ્વયંસ્ફુરિત દહન",
+            "વિસ્ફોટ",
+            "Rapid Combustion",
+            "Spontaneous Combustion",
+            "Explosion"
+          ],
+          "learning_objectives": [
+            "Understand types of combustion at GSEB Standard 8 level."
+          ],
+          "explanation": "દહન ઝડપ અને પરિસ્થિતિ પ્રમાણે rapid combustion, spontaneous combustion અને explosion જેવી રીતે વર્ગીકૃત થઈ શકે છે.",
+          "examples": [
+            "Gas stoveમાં gas સળગાવતાં rapid combustion થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Rapid combustion અને explosion વચ્ચે તફાવત લખો.",
+            "Spontaneous combustionનો અર્થ શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch04-combustion-flame-t03",
+          "title": "Structure of a Flame",
+          "aliases": [
+            "જ્યોતની રચના",
+            "જ્યોતના વિભાગો",
+            "ફ્લેમ ઝોન્સ",
+            "Flame",
+            "Flame Structure",
+            "Zones of Flame"
+          ],
+          "learning_objectives": [
+            "Understand structure of a flame at GSEB Standard 8 level."
+          ],
+          "explanation": "જ્યોતમાં અલગ zones હોય છે. હવાના પુરવઠા અને બળતણના દહનના પ્રમાણ પ્રમાણે zonesનું તાપમાન અને દેખાવ બદલાય છે; સંપૂર્ણ દહનવાળો વિસ્તાર સામાન્ય રીતે વધુ ગરમ હોય છે.",
+          "examples": [
+            "મોમબત્તીની જ્યોતનો બહારનો ભાગ વધુ સંપૂર્ણ દહન ધરાવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "જ્યોતના zones કેમ અલગ દેખાય છે?",
+            "સંપૂર્ણ દહનનો વિસ્તાર વધારે ગરમ કેમ હોઈ શકે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch04-combustion-flame-t04",
+          "title": "Fuel Efficiency and Pollution",
+          "aliases": [
+            "ઇંધણ કાર્યક્ષમતા અને પ્રદૂષણ",
+            "ઇંધણનું ઉષ્મીય મૂલ્ય",
+            "કેલોરિફિક વેલ્યુ",
+            "Fuel Efficiency",
+            "Calorific Value"
+          ],
+          "learning_objectives": [
+            "Understand fuel efficiency and pollution at GSEB Standard 8 level."
+          ],
+          "explanation": "સારા ઇંધણમાં યોગ્ય calorific value, સરળ ઉપલબ્ધતા અને ઓછું પ્રદૂષણ મહત્વના ગુણ છે. અપૂર્ણ દહનથી carbon monoxide જેવી હાનિકારક વાયુઓ બની શકે છે.",
+          "examples": [
+            "સારી રીતે adjusted gas burner વધુ સંપૂર્ણ દહન આપી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Calorific value શું દર્શાવે છે?",
+            "અપૂર્ણ દહન કેમ જોખમી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-conservation",
+      "number": "5",
+      "title": "Conservation of Plants and Animals",
+      "topics": [
+        {
+          "topic_id": "ch05-conservation-t01",
+          "title": "Deforestation and Its Effects",
+          "aliases": [
+            "Conservation of Plants and Animals",
+            "વનસ્પતિઓ અને પ્રાણીઓનું સંરક્ષણ",
+            "વનવિનાશ અને તેની અસરો",
+            "વનવિનાશ",
+            "Deforestation",
+            "Effects of Deforestation"
+          ],
+          "learning_objectives": [
+            "Understand deforestation and its effects at GSEB Standard 8 level."
+          ],
+          "explanation": "મોટા પ્રમાણમાં વૃક્ષો દૂર થવાથી માટી ધોવાણ, પાણીના ચક્રમાં ફેરફાર, habitatsનું નુકસાન, કાર્બન ડાયોક્સાઇડમાં વધારો અને જૈવવિવિધતામાં ઘટાડો થઈ શકે છે.",
+          "examples": [
+            "વૃક્ષોની મૂળ માટીને પકડી રાખવામાં મદદ કરે છે; વનવિનાશથી erosion વધી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "વનવિનાશની ત્રણ અસરો લખો.",
+            "વનવિનાશ પાણીના ચક્રને કેવી રીતે અસર કરી શકે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch05-conservation-t02",
+          "title": "Protected Areas",
+          "aliases": [
+            "સંરક્ષિત વિસ્તારો",
+            "વન્યજીવ અભયારણ્ય",
+            "રાષ્ટ્રીય ઉદ્યાન",
+            "બાયોસ્ફિયર રિઝર્વ",
+            "Wildlife Sanctuary",
+            "National Park",
+            "Biosphere Reserve"
+          ],
+          "learning_objectives": [
+            "Understand protected areas at GSEB Standard 8 level."
+          ],
+          "explanation": "Wildlife sanctuary, national park અને biosphere reserve જેવી વ્યવસ્થાઓમાં species અને habitatનું વિવિધ સ્તરે સંરક્ષણ કરવામાં આવે છે.",
+          "examples": [
+            "National parkમાં કુદરતી પરિસ્થિતિ અને wildlifeને કાનૂની સુરક્ષા મળે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Sanctuary અને national parkનો હેતુ શું છે?",
+            "Biosphere reserve શું બચાવે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch05-conservation-t03",
+          "title": "Endemic Endangered and Extinct Species",
+          "aliases": [
+            "સ્થાનિક લુપ્તપ્રાય અને લુપ્ત પ્રજાતિઓ",
+            "સ્થાનિક પ્રજાતિ",
+            "લુપ્તપ્રાય પ્રજાતિ",
+            "લુપ્ત પ્રજાતિ",
+            "Endemic Species",
+            "Endangered Species",
+            "Extinct Species"
+          ],
+          "learning_objectives": [
+            "Understand endemic endangered and extinct species at GSEB Standard 8 level."
+          ],
+          "explanation": "Endemic species કોઈ ચોક્કસ ભૂગોળીય વિસ્તારમાં સ્વાભાવિક રીતે સીમિત હોય છે. Endangered speciesના લુપ્ત થવાનો જોખમ ઊંચો હોય છે, જ્યારે extinct species હવે જીવંત રૂપે મળતી નથી.",
+          "examples": [
+            "કોઈ ટાપુ પર જ મળતી species endemic હોઈ શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Endemic અને endangeredનો તફાવત લખો.",
+            "Extinctનો અર્થ શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch05-conservation-t04",
+          "title": "Red Data Book and Reforestation",
+          "aliases": [
+            "રેડ ડેટા બુક અને પુનઃવનીકરણ",
+            "રેડ ડેટા બુક",
+            "પુનઃવનીકરણ",
+            "Red Data Book",
+            "Reforestation"
+          ],
+          "learning_objectives": [
+            "Understand red data book and reforestation at GSEB Standard 8 level."
+          ],
+          "explanation": "જોખમમાં આવેલી species વિશે નોંધ રાખતી યાદીઓ conservation planningમાં મદદ કરે છે. Reforestationનો અર્થ નાશ પામેલા અથવા કાપાયેલા વનોમાં ફરીથી યોગ્ય વૃક્ષ આવરણ ઉભું કરવું છે.",
+          "examples": [
+            "સ્થાનિક species સાથે પુનઃવનીકરણ ecosystem પુનઃસ્થાપનમાં મદદ કરી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Reforestation શું છે?",
+            "Red Data Book જેવી યાદીઓ શા માટે ઉપયોગી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-reproduction-animals",
+      "number": "6",
+      "title": "Reproduction in Animals",
+      "topics": [
+        {
+          "topic_id": "ch06-reproduction-animals-t01",
+          "title": "Sexual Reproduction",
+          "aliases": [
+            "Reproduction in Animals",
+            "પ્રાણીઓમાં પ્રજનન",
+            "લૈંગિક પ્રજનન",
+            "જાતીય પ્રજનન",
+            "Sexual Reproduction in Animals"
+          ],
+          "learning_objectives": [
+            "Understand sexual reproduction at GSEB Standard 8 level."
+          ],
+          "explanation": "લૈંગિક પ્રજનનમાં male અને female gametesનું યોગદાન હોય છે. તેમના સંયોજનથી zygote બને છે અને ત્યાર પછી નવા જીવના વિકાસની શરૂઆત થાય છે.",
+          "examples": [
+            "Sperm અને ovumના સંયોજનથી zygote બને છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Gamete શું છે?",
+            "Zygote કેવી રીતે બને છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch06-reproduction-animals-t02",
+          "title": "Fertilisation",
+          "aliases": [
+            "નિષેચન",
+            "ફર્ટિલાઇઝેશન",
+            "આંતરિક નિષેચન",
+            "બાહ્ય નિષેચન",
+            "Fertilization"
+          ],
+          "learning_objectives": [
+            "Understand fertilisation at GSEB Standard 8 level."
+          ],
+          "explanation": "Male અને female gameteના fusionને fertilisation કહે છે. કેટલાક પ્રાણીઓમાં fertilisation શરીરની અંદર થાય છે અને કેટલાકમાં બહારના પર્યાવરણમાં.",
+          "examples": [
+            "માનવમાં internal fertilisation થાય છે; કેટલાક જળચર પ્રાણીઓમાં external fertilisation જોવા મળે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Internal અને external fertilisationનો તફાવત લખો.",
+            "Fertilisationનું પરિણામ શું બને છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch06-reproduction-animals-t03",
+          "title": "Embryo Development",
+          "aliases": [
+            "ભ્રૂણ વિકાસ",
+            "એમ્બ્રિયો",
+            "ગર્ભસ્થ શિશુ",
+            "Embryo",
+            "Embryonic Development"
+          ],
+          "learning_objectives": [
+            "Understand embryo development at GSEB Standard 8 level."
+          ],
+          "explanation": "Zygote વારંવાર કોષવિભાજન કરીને embryo બનાવે છે. વિકાસ આગળ વધતાં અંગો અને શરીરની રચના સ્પષ્ટ થતી જાય છે.",
+          "examples": [
+            "માનવમાં embryo ગર્ભાશયમાં વિકાસ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Embryo શું છે?",
+            "Zygote અને embryo વચ્ચેનો સંબંધ સમજાવો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch06-reproduction-animals-t04",
+          "title": "Metamorphosis",
+          "aliases": [
+            "કાયાંતરણ",
+            "મેટામોર્ફોસિસ",
+            "Metamorphosis in Animals"
+          ],
+          "learning_objectives": [
+            "Understand metamorphosis at GSEB Standard 8 level."
+          ],
+          "explanation": "કેટલાક પ્રાણીઓમાં બાળ અવસ્થા અને પુખ્ત અવસ્થા વચ્ચે શરીરની રચનામાં મોટો બદલાવ થાય છે; તેને metamorphosis કહે છે.",
+          "examples": [
+            "દેડકામાં tadpoleથી adult frog સુધી મોટો આકારાત્મક બદલાવ થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Metamorphosis શું છે?",
+            "એક metamorphosisનું ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch06-reproduction-animals-t05",
+          "title": "Asexual Reproduction in Animals",
+          "aliases": [
+            "પ્રાણીઓમાં અલૈંગિક પ્રજનન",
+            "અલૈંગિક પ્રજનન",
+            "બડિંગ",
+            "દ્વિભાજન",
+            "Asexual Reproduction",
+            "Budding",
+            "Binary Fission"
+          ],
+          "learning_objectives": [
+            "Understand asexual reproduction in animals at GSEB Standard 8 level."
+          ],
+          "explanation": "અલૈંગિક પ્રજનનમાં એક જ parentથી સંતાન ઉત્પન્ન થાય છે અને gametesના fusionની જરૂર નથી. Budding અને binary fission તેના ઉદાહરણ છે.",
+          "examples": [
+            "Hydraમાં budding અને Amoebaમાં binary fission જોવા મળે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Asexual reproductionમાં કેટલા parents જરૂરી છે?",
+            "Hydra અને Amoebaમાં કઈ રીત જોવા મળે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-adolescence",
+      "number": "7",
+      "title": "Reaching the Age of Adolescence",
+      "topics": [
+        {
+          "topic_id": "ch07-adolescence-t01",
+          "title": "Adolescence and Puberty",
+          "aliases": [
+            "Reaching the Age of Adolescence",
+            "કિશોરાવસ્થા તરફ",
+            "કિશોરાવસ્થા અને યૌવનારંભ",
+            "કિશોરાવસ્થા",
+            "યૌવનારંભ",
+            "પ્યુબર્ટી",
+            "Adolescence",
+            "Puberty"
+          ],
+          "learning_objectives": [
+            "Understand adolescence and puberty at GSEB Standard 8 level."
+          ],
+          "explanation": "બાળપણથી પુખ્તાવસ્થાની વચ્ચેનો પરિવર્તનકાળ adolescence છે. Puberty દરમિયાન શરીરમાં વૃદ્ધિ, પ્રજનન ક્ષમતા અને દેખાવમાં ઘણા ફેરફારો શરૂ થાય છે.",
+          "examples": [
+            "ઊંચાઈમાં ઝડપી વધારો puberty દરમિયાન જોવા મળતા ફેરફારોમાંનો એક છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Adolescence શું છે?",
+            "Puberty દરમિયાન થતા બે ફેરફાર લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch07-adolescence-t02",
+          "title": "Hormones and Endocrine Glands",
+          "aliases": [
+            "અંતઃસ્રાવી ગ્રંથિઓ અને હોર્મોન્સ",
+            "હોર્મોન્સ",
+            "એન્ડોક્રાઇન ગ્રંથિઓ",
+            "Hormone",
+            "Hormones",
+            "Endocrine Gland",
+            "Endocrine Glands"
+          ],
+          "learning_objectives": [
+            "Understand hormones and endocrine glands at GSEB Standard 8 level."
+          ],
+          "explanation": "Endocrine glands hormones નામના chemical messengers છોડે છે. Hormones શરીરના વિકાસ, metabolism અને reproductive maturation જેવી પ્રક્રિયાઓને સંકલિત કરે છે.",
+          "examples": [
+            "Pituitary gland અન્ય કેટલીક endocrine glandsની ક્રિયાને પ્રભાવિત કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Hormone શું છે?",
+            "Endocrine glandનું એક ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch07-adolescence-t03",
+          "title": "Secondary Sexual Characters",
+          "aliases": [
+            "ગૌણ લૈંગિક લક્ષણો",
+            "સેકન્ડરી સેક્સ્યુઅલ કેરેક્ટર્સ",
+            "Secondary Sexual Character"
+          ],
+          "learning_objectives": [
+            "Understand secondary sexual characters at GSEB Standard 8 level."
+          ],
+          "explanation": "Puberty દરમિયાન reproductive organs સિવાય શરીરમાં દેખાતા વિશિષ્ટ ફેરફારો secondary sexual characters કહેવાય છે.",
+          "examples": [
+            "આવાજમાં ફેરફાર અને શરીરના ચોક્કસ ભાગોમાં વાળનો વિકાસ આવા ફેરફારોના ઉદાહરણ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Secondary sexual characters શું છે?",
+            "એક ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch07-adolescence-t04",
+          "title": "Adolescent Health and Hygiene",
+          "aliases": [
+            "કિશોર આરોગ્ય અને સ્વચ્છતા",
+            "સંતુલિત આહાર",
+            "કિશોર સ્વચ્છતા",
+            "Adolescent Health",
+            "Adolescent Hygiene",
+            "Health and Hygiene"
+          ],
+          "learning_objectives": [
+            "Understand adolescent health and hygiene at GSEB Standard 8 level."
+          ],
+          "explanation": "કિશોરાવસ્થામાં સંતુલિત આહાર, વ્યક્તિગત સ્વચ્છતા, વ્યાયામ અને હાનિકારક પદાર્થોથી દૂર રહેવું શરીર અને મનના સ્વસ્થ વિકાસ માટે મહત્વનું છે.",
+          "examples": [
+            "Iron અને protein ધરાવતા સંતુલિત આહારનો સમાવેશ વૃદ્ધિ દરમિયાન ઉપયોગી છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "કિશોરાવસ્થામાં સંતુલિત આહાર કેમ જરૂરી છે?",
+            "વ્યક્તિગત સ્વચ્છતાની બે ટેવો લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-force-pressure",
+      "number": "8",
+      "title": "Force and Pressure",
+      "topics": [
+        {
+          "topic_id": "ch08-force-pressure-t01",
+          "title": "Effects and Types of Force",
+          "aliases": [
+            "Force and Pressure",
+            "બળ અને દબાણ",
+            "બળની અસરો અને પ્રકારો",
+            "બળ",
+            "ફોર્સ",
+            "Force",
+            "Effects of Force",
+            "Types of Force"
+          ],
+          "learning_objectives": [
+            "Understand effects and types of force at GSEB Standard 8 level."
+          ],
+          "explanation": "Force push અથવા pull તરીકે સમજાવી શકાય છે. તે વસ્તુની ગતિ, દિશા, ઝડપ અથવા આકાર બદલાવી શકે છે. વિવિધ પરિસ્થિતિમાં અલગ પ્રકારના force કાર્ય કરે છે.",
+          "examples": [
+            "ફૂટબોલને kick મારવાથી તેની ગતિ અને દિશા બદલાઈ શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Forceની બે અસરો લખો.",
+            "Push અને pullના એક-એક ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch08-force-pressure-t02",
+          "title": "Contact and Non-contact Forces",
+          "aliases": [
+            "સંપર્ક અને અસંપર્ક બળ",
+            "સંપર્ક બળ",
+            "અસંપર્ક બળ",
+            "Contact Force",
+            "Contact Forces",
+            "Non-contact Force",
+            "Non-contact Forces",
+            "Non Contact Force"
+          ],
+          "learning_objectives": [
+            "Understand contact and non-contact forces at GSEB Standard 8 level."
+          ],
+          "explanation": "Contact force માટે વસ્તુઓ વચ્ચે ભૌતિક સંપર્ક જરૂરી છે, જ્યારે non-contact force દૂરથી પણ કાર્ય કરી શકે છે.",
+          "examples": [
+            "Friction contact force છે; magnetic force non-contact force છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Contact અને non-contact forceનો તફાવત લખો.",
+            "Magnetic force કયા પ્રકારનું force છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch08-force-pressure-t03",
+          "title": "Pressure",
+          "aliases": [
+            "દબાણ",
+            "પ્રેશર",
+            "Pressure Force"
+          ],
+          "learning_objectives": [
+            "Understand pressure at GSEB Standard 8 level."
+          ],
+          "explanation": "Pressure એટલે એકમ વિસ્તાર પર લાગતું force. સમાન force નાની સપાટી પર લાગશે તો pressure વધુ અને મોટી સપાટી પર લાગશે તો pressure ઓછું થાય છે.",
+          "examples": [
+            "તીક્ષ્ણ સોયનું contact area નાનું હોવાથી તે વધુ pressure પેદા કરી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Pressureનું સંબંધ force અને area સાથે સમજાવો.",
+            "પાતળી ધાર કાપવામાં કેમ મદદ કરે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch08-force-pressure-t04",
+          "title": "Pressure in Liquids and Gases",
+          "aliases": [
+            "પ્રવાહી અને વાયુમાં દબાણ",
+            "દ્રવ દબાણ",
+            "વાયુ દબાણ",
+            "વાતાવરણીય દબાણ",
+            "Liquid Pressure",
+            "Gas Pressure",
+            "Atmospheric Pressure"
+          ],
+          "learning_objectives": [
+            "Understand pressure in liquids and gases at GSEB Standard 8 level."
+          ],
+          "explanation": "Liquids અને gases તેમના સંપર્કમાં આવેલી સપાટીઓ પર pressure લગાવે છે. ઊંડાઈ અને અન્ય પરિસ્થિતિઓ પ્રમાણે liquid pressure બદલાઈ શકે છે; atmosphere પણ pressure લગાવે છે.",
+          "examples": [
+            "પાણી ભરેલી બોટલના નીચલા છિદ્રમાંથી પાણી વધુ જોરથી નીકળી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Liquid pressure ઊંડાઈ સાથે કેવી રીતે બદલાય છે?",
+            "Atmospheric pressure શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch09-friction",
+      "number": "9",
+      "title": "Friction",
+      "topics": [
+        {
+          "topic_id": "ch09-friction-t01",
+          "title": "Friction and Its Causes",
+          "aliases": [
+            "Friction",
+            "ઘર્ષણ અને તેના કારણો",
+            "ઘર્ષણ",
+            "ફ્રિક્શન",
+            "Causes of Friction"
+          ],
+          "learning_objectives": [
+            "Understand friction and its causes at GSEB Standard 8 level."
+          ],
+          "explanation": "બે સપાટીઓ વચ્ચે relative motion અથવા motionની tendencyને વિરોધ કરતું force friction છે. સપાટીઓની અનિયમિતતાઓ અને પરસ્પર interaction તેના કારણોમાં આવે છે.",
+          "examples": [
+            "પુસ્તકને ટેબલ પર ધકેલીએ ત્યારે friction તેની ગતિનો વિરોધ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Friction શું કરે છે?",
+            "સપાટી ખરબચડી હોય તો friction પર શું અસર પડી શકે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch09-friction-t02",
+          "title": "Static Sliding and Rolling Friction",
+          "aliases": [
+            "સ્થિર સરકતું અને લોટતું ઘર્ષણ",
+            "સ્થિર ઘર્ષણ",
+            "સરકતું ઘર્ષણ",
+            "લોટતું ઘર્ષણ",
+            "Static Friction",
+            "Sliding Friction",
+            "Rolling Friction"
+          ],
+          "learning_objectives": [
+            "Understand static sliding and rolling friction at GSEB Standard 8 level."
+          ],
+          "explanation": "Motion શરૂ થાય તે પહેલાં static friction કાર્ય કરે છે. સપાટીઓ સરકે ત્યારે sliding friction અને વસ્તુ roll થાય ત્યારે rolling friction કાર્ય કરે છે. સામાન્ય રીતે rolling friction ઓછું હોવાથી wheels ઉપયોગી બને છે.",
+          "examples": [
+            "ભારે બોક્સ નીચે rollers મૂકવાથી તેને ખસેડવું સરળ થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Rolling friction કેમ ઉપયોગી છે?",
+            "Static અને sliding frictionનો તફાવત લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch09-friction-t03",
+          "title": "Increasing and Reducing Friction",
+          "aliases": [
+            "ઘર્ષણ વધારવું અને ઘટાડવું",
+            "ઘર્ષણ ઘટાડવું",
+            "ઘર્ષણ વધારવું",
+            "લ્યુબ્રિકન્ટ",
+            "Increasing Friction",
+            "Reducing Friction",
+            "Reduce Friction",
+            "Lubricant",
+            "Lubricants"
+          ],
+          "learning_objectives": [
+            "Understand increasing and reducing friction at GSEB Standard 8 level."
+          ],
+          "explanation": "જ્યાં grip જોઈએ ત્યાં rough surfaces અથવા treads friction વધારી શકે છે. Machinesમાં lubrication, polishing અથવા ball bearings friction ઘટાડવામાં મદદ કરે છે.",
+          "examples": [
+            "Tyre tread રસ્તા સાથે grip વધારવામાં મદદ કરે છે; oil machine parts વચ્ચે friction ઘટાડે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ઘર્ષણ વધારવાની એક રીત લખો.",
+            "ઘર્ષણ ઘટાડવાની બે રીત લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch09-friction-t04",
+          "title": "Fluid Friction",
+          "aliases": [
+            "પ્રવાહી ઘર્ષણ",
+            "ફ્લુઇડ ફ્રિક્શન",
+            "ડ્રેગ",
+            "Drag",
+            "Fluid Resistance"
+          ],
+          "learning_objectives": [
+            "Understand fluid friction at GSEB Standard 8 level."
+          ],
+          "explanation": "વસ્તુ હવા અથવા પાણી જેવા fluidમાંથી પસાર થાય ત્યારે fluid તેના motionનો વિરોધ કરે છે; તેને drag અથવા fluid friction કહી શકાય છે. Streamlined shape drag ઘટાડવામાં મદદ કરે છે.",
+          "examples": [
+            "વિમાન અને માછલીના streamlined આકાર fluid resistance ઘટાડવામાં મદદ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Drag શું છે?",
+            "Streamlined shapeનો લાભ શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch10-sound",
+      "number": "10",
+      "title": "Sound",
+      "topics": [
+        {
+          "topic_id": "ch10-sound-t01",
+          "title": "Production of Sound",
+          "aliases": [
+            "Sound",
+            "ધ્વનિ",
+            "ધ્વનિનું ઉત્પાદન",
+            "ધ્વનિ કેવી રીતે બને",
+            "કંપન",
+            "Sound Production",
+            "Vibration",
+            "Vibrations"
+          ],
+          "learning_objectives": [
+            "Understand production of sound at GSEB Standard 8 level."
+          ],
+          "explanation": "Sound સામાન્ય રીતે vibrating objectથી ઉત્પન્ન થાય છે. કંપન આસપાસના mediumમાં disturbance પેદા કરે છે, જે આગળ ફેલાઈને કાન સુધી પહોંચી શકે છે.",
+          "examples": [
+            "Tuning forkને વાગાડ્યા પછી તેના prongs vibrate કરે છે અને sound ઉત્પન્ન થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Sound ઉત્પન્ન થવાનું મુખ્ય કારણ શું છે?",
+            "Vibrationનું એક ઉદાહરણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch10-sound-t02",
+          "title": "Human Voice",
+          "aliases": [
+            "માનવ અવાજ",
+            "વોઇસ બોક્સ",
+            "લેરિંક્સ",
+            "વોકલ કોર્ડ્સ",
+            "Voice Box",
+            "Larynx",
+            "Vocal Cord",
+            "Vocal Cords"
+          ],
+          "learning_objectives": [
+            "Understand human voice at GSEB Standard 8 level."
+          ],
+          "explanation": "માનવમાં larynx અથવા voice boxમાં vocal cords હોય છે. હવા પસાર થતાં vocal cords vibrate કરે છે અને અવાજ ઉત્પન્ન થાય છે.",
+          "examples": [
+            "વોકલ કોર્ડ્સના vibrationની રીત બદલવાથી અવાજના ગુણોમાં ફેરફાર થાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Voice box ક્યાં હોય છે?",
+            "Vocal cords શું કરે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch10-sound-t03",
+          "title": "Frequency and Pitch",
+          "aliases": [
+            "આવૃત્તિ અને તારત્વ",
+            "આવૃત્તિ",
+            "ફ્રીક્વન્સી",
+            "તારત્વ",
+            "પિચ",
+            "Frequency",
+            "Pitch"
+          ],
+          "learning_objectives": [
+            "Understand frequency and pitch at GSEB Standard 8 level."
+          ],
+          "explanation": "એક સેકન્ડમાં થતા vibrationsની સંખ્યા frequency કહેવાય છે અને તેની unit hertz છે. Frequency વધારે હોય ત્યારે સામાન્ય રીતે pitch ઊંચો અનુભવાય છે.",
+          "examples": [
+            "200 Hzનો અવાજ 100 Hzના અવાજ કરતાં સામાન્ય રીતે વધુ ઊંચી pitch ધરાવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Frequencyની unit શું છે?",
+            "Frequency અને pitch વચ્ચે શું સંબંધ છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch10-sound-t04",
+          "title": "Amplitude and Loudness",
+          "aliases": [
+            "કંપવિસ્તાર અને પ્રબળતા",
+            "કંપવિસ્તાર",
+            "એમ્પ્લિટ્યુડ",
+            "પ્રબળતા",
+            "લાઉડનેસ",
+            "Amplitude",
+            "Loudness"
+          ],
+          "learning_objectives": [
+            "Understand amplitude and loudness at GSEB Standard 8 level."
+          ],
+          "explanation": "Vibrationનું amplitude તેના displacementના કદ સાથે જોડાયેલું છે. મોટું amplitude સામાન્ય રીતે વધુ loud sound સાથે સંબંધિત હોય છે.",
+          "examples": [
+            "ધીમે વાગાડેલો drum ઓછા amplitudeથી અને જોરથી વાગાડેલો drum મોટા amplitudeથી vibrate કરી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Amplitude શું દર્શાવે છે?",
+            "Amplitude વધે ત્યારે loudness પર સામાન્ય અસર શું થાય?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch10-sound-t05",
+          "title": "Human Ear and Noise Pollution",
+          "aliases": [
+            "માનવ કાન અને ધ્વનિ પ્રદૂષણ",
+            "માનવ કાન",
+            "ધ્વનિ પ્રદૂષણ",
+            "નોઇઝ પોલ્યુશન",
+            "Human Ear",
+            "Noise Pollution"
+          ],
+          "learning_objectives": [
+            "Understand human ear and noise pollution at GSEB Standard 8 level."
+          ],
+          "explanation": "કાન sound vibrationsને સ્વીકારી nervous signalsમાં ફેરવવાની પ્રક્રિયામાં મદદ કરે છે. અતિશય અનિચ્છનીય અવાજ noise pollution છે અને લાંબા સમય સુધી વધુ અવાજ આરોગ્યને નુકસાન પહોંચાડી શકે છે.",
+          "examples": [
+            "Hornનો અનાવશ્યક ઉપયોગ અને ખૂબ ઊંચા loudspeakers noise pollution વધારી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Noise pollutionના બે સ્ત્રોત લખો.",
+            "અતિશય અવાજથી બચવાની બે રીત લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

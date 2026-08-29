@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "commit": "cc3858365b73ed2c0ea97255b8725e501c242672",
+  "generated_at": "2026-07-19T00:07:49.042275+00:00",
+  "rc_ready": true,
+  "rollback_passed": true,
+  "bundle_verified": true,
+  "acceptance_decision": "approved",
+  "release_dir": "D:\\Ai_Tutor_Buddy\\release",
+  "artifact_paths": [
+    "D:\\Ai_Tutor_Buddy\\release\\rc_audit.json",
+    "D:\\Ai_Tutor_Buddy\\release\\rollback_drill.json",
+    "D:\\Ai_Tutor_Buddy\\release\\release_manifest.json",
+    "D:\\Ai_Tutor_Buddy\\release\\operator_acceptance.json",
+    "D:\\Ai_Tutor_Buddy\\release\\RELEASE_FREEZE",
+    "D:\\Ai_Tutor_Buddy\\release\\release_execution_summary.json"
+  ]
+}

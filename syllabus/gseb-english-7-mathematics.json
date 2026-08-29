@@ -1,0 +1,2084 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 7,
+  "subject": "Mathematics",
+  "textbook": "Standard 7 Mathematics — Semesters 1 and 2",
+  "source": {
+    "title": "Mathematics Standard 7 — Semesters I and II",
+    "publisher": "Gujarat State Board of School Textbooks / GCERT",
+    "edition": "First Edition 2013",
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-09",
+    "official": true,
+    "notes": "Official publication identity and textbook structure verified for scope. All explanations, examples, questions and solution logic are original teacher-authored material; textbook prose is not reproduced. Verified source-copy SHA256: Semester 1 bf48c72fed2f57d756e8a26bcf08f80a2e05f417a3404e2a83d474997e76fea4; Semester 2 2511e167c59b7e2132e5f9e99720cb2fc6e8e4f585da6c8b3277eaebe145c195."
+  },
+  "chapters": [
+    {
+      "chapter_id": "s1-c1",
+      "number": "S1-1",
+      "title": "Semester 1 — Pie Graph",
+      "topics": [
+        {
+          "topic_id": "s1-c1-reading",
+          "title": "Reading and interpreting pie graphs",
+          "aliases": [
+            "pie graph",
+            "pie chart reading",
+            "interpreting a pie chart",
+            "circle graph"
+          ],
+          "learning_objectives": [
+            "Read a sector as a part of the whole.",
+            "Compare categories using sector sizes."
+          ],
+          "explanation": "A pie graph represents one whole as a circle divided into sectors. The complete circle is 360 degrees and represents 100 percent. A larger sector represents a larger share; comparisons must use the same whole.",
+          "examples": [
+            "In a survey of 40 students, a half-circle sector represents 20 students.",
+            "A 90-degree sector occupies one quarter of a pie graph."
+          ],
+          "exercises": [
+            "A pie graph shows 120 students; the sports sector is 90 degrees. How many students chose sports?",
+            "In a pie graph, Art is 25 percent and Music is 35 percent. Which is larger and by how many percentage points?"
+          ],
+          "solutions": [
+            "Sports represents 90/360 = 1/4 of the total, so 120 × 1/4 = 30 students.",
+            "Music is larger. The difference is 35 − 25 = 10 percentage points."
+          ],
+          "practice_questions": [
+            "A 72-degree sector in a pie graph represents what fraction and percentage of the whole?",
+            "A class pie graph has Reading 40 percent, Games 30 percent and Music 20 percent. What percentage is left for Art?"
+          ],
+          "practice_solutions": [
+            "72/360 = 1/5, so it represents 20 percent.",
+            "The listed shares total 90 percent, so Art represents 100 − 90 = 10 percent."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c1-conversion",
+          "title": "Converting data into percentages and sector angles",
+          "aliases": [
+            "sector angle formula",
+            "percentage to angle",
+            "frequency to angle"
+          ],
+          "learning_objectives": [
+            "Convert a frequency into a part of 360 degrees.",
+            "Move between fractions, percentages and sector angles."
+          ],
+          "explanation": "For category frequency f out of total T, sector angle = (f/T) × 360 degrees. Percentage = (f/T) × 100. Check that all sector angles total 360 degrees and all percentages total 100.",
+          "examples": [
+            "15 out of 60 gives (15/60) × 360 = 90 degrees.",
+            "35 percent gives 0.35 × 360 = 126 degrees."
+          ],
+          "exercises": [
+            "Find the sector angle for 18 books out of a total of 72 books.",
+            "A sector measures 144 degrees. Find its percentage of the circle."
+          ],
+          "solutions": [
+            "(18/72) × 360 = 90 degrees.",
+            "(144/360) × 100 = 40 percent."
+          ],
+          "practice_questions": [
+            "Convert 3/8 of a circle into a sector angle and percentage.",
+            "The frequencies are 12, 18 and 30. Find the sector angle for the category with frequency 18."
+          ],
+          "practice_solutions": [
+            "(3/8) × 360 = 135 degrees and (3/8) × 100 = 37.5 percent.",
+            "The total is 60. The required angle is (18/60) × 360 = 108 degrees."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c1-construction",
+          "title": "Constructing and checking a pie graph",
+          "aliases": [
+            "draw a pie graph",
+            "construct pie chart",
+            "pie graph application"
+          ],
+          "learning_objectives": [
+            "Construct sectors from a data table.",
+            "Verify a pie graph before interpreting it."
+          ],
+          "explanation": "To construct a pie graph, find the total, calculate every sector angle, draw a circle, mark a starting radius and measure consecutive sectors with a protractor. Add labels or a legend, and verify that the angles sum to 360 degrees.",
+          "examples": [
+            "Data 2, 3 and 5 out of 10 becomes sectors of 72, 108 and 180 degrees.",
+            "Four equal categories each use a 90-degree sector."
+          ],
+          "exercises": [
+            "Prepare the sector angles for travel choices Bus 20, Walk 10 and Cycle 10.",
+            "A proposed pie graph has sectors 80, 110, 95 and 75 degrees. Is it complete?"
+          ],
+          "solutions": [
+            "The total is 40. Bus = 180 degrees, Walk = 90 degrees and Cycle = 90 degrees.",
+            "Yes. 80 + 110 + 95 + 75 = 360 degrees."
+          ],
+          "practice_questions": [
+            "List the construction steps for data A = 6, B = 3 and C = 3, including all angles.",
+            "A graph has angles 150, 120 and 100 degrees. Explain the correction needed."
+          ],
+          "practice_solutions": [
+            "Total 12: A = 180 degrees, B = 90 degrees, C = 90 degrees. Draw the circle and measure these sectors from consecutive radii, then label them.",
+            "The angles total 370 degrees, which is 10 degrees too much. Recheck the data-to-angle calculations so the corrected sectors total 360 degrees."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c2",
+      "number": "S1-2",
+      "title": "Semester 1 — Integers",
+      "topics": [
+        {
+          "topic_id": "s1-c2-line",
+          "title": "Integers, opposites and the number line",
+          "aliases": [
+            "integer number line",
+            "opposite integers",
+            "absolute value"
+          ],
+          "learning_objectives": [
+            "Locate and order integers on a number line.",
+            "Use opposites and absolute value."
+          ],
+          "explanation": "Integers include negative whole numbers, zero and positive whole numbers. Values increase to the right on a number line. Opposite integers are equally far from zero, and absolute value is the non-negative distance from zero.",
+          "examples": [
+            "−6 lies left of −2, so −6 < −2.",
+            "The opposite of 9 is −9 and |−9| = 9."
+          ],
+          "exercises": [
+            "Arrange −3, 5, 0 and −8 in ascending order.",
+            "Find the opposite and absolute value of −14."
+          ],
+          "solutions": [
+            "Ascending order is −8, −3, 0, 5.",
+            "The opposite is 14 and |−14| = 14."
+          ],
+          "practice_questions": [
+            "Which is greater, −11 or −7? Explain using the number line.",
+            "Write the integer that is 4 units left of 1 and give its absolute value."
+          ],
+          "practice_solutions": [
+            "−7 is greater because it lies to the right of −11.",
+            "Four units left of 1 is −3, and |−3| = 3."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c2-add-sub",
+          "title": "Addition and subtraction of integers",
+          "aliases": [
+            "integer addition",
+            "integer subtraction",
+            "adding negative numbers"
+          ],
+          "learning_objectives": [
+            "Add integers with equal or different signs.",
+            "Rewrite subtraction as addition of the opposite."
+          ],
+          "explanation": "For equal signs, add absolute values and keep the sign. For different signs, subtract the smaller absolute value from the larger and keep the sign of the larger absolute value. To subtract an integer, add its opposite: a − b = a + (−b).",
+          "examples": [
+            "−7 + (−5) = −12.",
+            "8 − (−3) = 8 + 3 = 11."
+          ],
+          "exercises": [
+            "Calculate −18 + 11.",
+            "Calculate −6 − 9."
+          ],
+          "solutions": [
+            "The signs differ; 18 − 11 = 7 and the larger absolute value is negative, so the answer is −7.",
+            "−6 − 9 = −6 + (−9) = −15."
+          ],
+          "practice_questions": [
+            "A lift moves from floor 4 down 9 floors. Represent and find the final floor.",
+            "Evaluate −25 − (−13)."
+          ],
+          "practice_solutions": [
+            "4 + (−9) = −5, so it reaches floor −5.",
+            "−25 − (−13) = −25 + 13 = −12."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c2-mult-div",
+          "title": "Multiplication and division of integers",
+          "aliases": [
+            "integer multiplication",
+            "sign rules",
+            "integer division"
+          ],
+          "learning_objectives": [
+            "Apply sign rules to integer products.",
+            "Apply sign rules to exact integer quotients."
+          ],
+          "explanation": "In multiplication or division, equal signs give a positive result and unlike signs give a negative result. Multiply or divide the absolute values first, then apply the sign. Division by zero is not defined.",
+          "examples": [
+            "(−7) × (−4) = 28.",
+            "54 ÷ (−6) = −9."
+          ],
+          "exercises": [
+            "Evaluate (−12) × 5.",
+            "Evaluate (−84) ÷ (−7)."
+          ],
+          "solutions": [
+            "Unlike signs give a negative product: 12 × 5 = 60, so the answer is −60.",
+            "Equal signs give a positive quotient: 84 ÷ 7 = 12."
+          ],
+          "practice_questions": [
+            "Find (−3) × (−8) × 2.",
+            "A debt changes by −₹15 each day for 6 days. Represent the total change."
+          ],
+          "practice_solutions": [
+            "The first two factors give 24; 24 × 2 = 48.",
+            "6 × (−15) = −₹90, so the total change is a debt increase of ₹90."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c2-properties",
+          "title": "Properties and distributive calculation with integers",
+          "aliases": [
+            "integer properties",
+            "distributive property",
+            "commutative associative integers"
+          ],
+          "learning_objectives": [
+            "Identify closure, commutative and associative properties.",
+            "Use the distributive property for efficient calculation."
+          ],
+          "explanation": "Integer addition and multiplication are closed, commutative and associative. Zero is the additive identity and 1 is the multiplicative identity. Multiplication distributes over addition and subtraction: a(b + c) = ab + ac.",
+          "examples": [
+            "17 + (−5) = (−5) + 17 shows commutativity of addition.",
+            "23 × 99 = 23(100 − 1) = 2300 − 23 = 2277."
+          ],
+          "exercises": [
+            "Name the property shown by (−4 × 6) × 5 = −4 × (6 × 5).",
+            "Use distribution to calculate −18 × 101."
+          ],
+          "solutions": [
+            "It is the associative property of multiplication.",
+            "−18(100 + 1) = −1800 − 18 = −1818."
+          ],
+          "practice_questions": [
+            "Is subtraction of integers commutative? Use 7 and 3 to justify.",
+            "Simplify 35 × (−12) + 35 × 2 using a property."
+          ],
+          "practice_solutions": [
+            "No. 7 − 3 = 4, while 3 − 7 = −4, so changing the order changes the result.",
+            "Factor 35: 35[(−12) + 2] = 35 × (−10) = −350."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c3",
+      "number": "S1-3",
+      "title": "Semester 1 — Square and Square Root",
+      "topics": [
+        {
+          "topic_id": "s1-c3-squares",
+          "title": "Squares and perfect-square patterns",
+          "aliases": [
+            "perfect squares",
+            "square numbers",
+            "unit digit square"
+          ],
+          "learning_objectives": [
+            "Recognize perfect squares.",
+            "Use patterns to rule out impossible unit digits."
+          ],
+          "explanation": "The square of n is n × n. A perfect square is the square of an integer. A square can end in 0, 1, 4, 5, 6 or 9, but never in 2, 3, 7 or 8; the unit-digit test can reject a number but does not prove it is a square.",
+          "examples": [
+            "13² = 169, so 169 is a perfect square.",
+            "A number ending in 7 cannot be a perfect square."
+          ],
+          "exercises": [
+            "Is 196 a perfect square? Give its square root if it is.",
+            "Can 1238 be a perfect square? Justify using the unit digit."
+          ],
+          "solutions": [
+            "Yes. 14 × 14 = 196, so √196 = 14.",
+            "No. A perfect square cannot have 8 as its unit digit."
+          ],
+          "practice_questions": [
+            "List the perfect squares from 1² through 10².",
+            "Explain why the fact that 225 ends in 5 is not by itself enough to prove it is a square."
+          ],
+          "practice_solutions": [
+            "1, 4, 9, 16, 25, 36, 49, 64, 81 and 100.",
+            "Ending in 5 is only a necessary unit-digit pattern. Direct calculation is needed; here 15² = 225 confirms it."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c3-methods",
+          "title": "Efficient methods for squaring numbers",
+          "aliases": [
+            "square ending in 5",
+            "find square quickly",
+            "algebraic squaring"
+          ],
+          "learning_objectives": [
+            "Square numbers ending in 5 efficiently.",
+            "Use expansion around a convenient base."
+          ],
+          "explanation": "For a number ending in 5, multiply the part before 5 by its next integer and append 25. Around a base, use (a ± b)² = a² ± 2ab + b².",
+          "examples": [
+            "35²: 3 × 4 = 12, append 25, giving 1225.",
+            "48² = (50 − 2)² = 2500 − 200 + 4 = 2304."
+          ],
+          "exercises": [
+            "Find 85² using the ending-in-5 rule.",
+            "Find 103² using expansion around 100."
+          ],
+          "solutions": [
+            "8 × 9 = 72; append 25, so 85² = 7225.",
+            "(100 + 3)² = 10000 + 600 + 9 = 10609."
+          ],
+          "practice_questions": [
+            "Calculate 65² without long multiplication.",
+            "Calculate 97² using a convenient base."
+          ],
+          "practice_solutions": [
+            "6 × 7 = 42; append 25, giving 4225.",
+            "(100 − 3)² = 10000 − 600 + 9 = 9409."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c3-roots",
+          "title": "Square roots by prime factorisation",
+          "aliases": [
+            "square root prime factorization",
+            "prime factors square root",
+            "finding square root"
+          ],
+          "learning_objectives": [
+            "Find square roots of perfect squares by pairing prime factors.",
+            "Identify when prime factors do not form complete pairs."
+          ],
+          "explanation": "Write the number as a product of primes, group equal factors in pairs and take one factor from every pair. A positive integer is a perfect square exactly when every prime exponent is even.",
+          "examples": [
+            "144 = 2⁴ × 3², so √144 = 2² × 3 = 12.",
+            "180 = 2² × 3² × 5 has an unpaired 5, so it is not a perfect square."
+          ],
+          "exercises": [
+            "Find √900 by prime factorisation.",
+            "Find the smallest integer that must multiply 72 to make a perfect square."
+          ],
+          "solutions": [
+            "900 = 2² × 3² × 5², so √900 = 2 × 3 × 5 = 30.",
+            "72 = 2³ × 3². One factor 2 is unpaired, so multiply by 2; 72 × 2 = 144."
+          ],
+          "practice_questions": [
+            "Find √1764 using prime factors.",
+            "Find the smallest integer by which 675 must be divided to obtain a perfect square."
+          ],
+          "practice_solutions": [
+            "1764 = 2² × 3² × 7², so √1764 = 2 × 3 × 7 = 42.",
+            "675 = 3³ × 5². Divide by the unpaired factor 3 to get 225 = 15²."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c3-fractions",
+          "title": "Squares and square roots of fractions",
+          "aliases": [
+            "square of fraction",
+            "square root fraction",
+            "rational square roots"
+          ],
+          "learning_objectives": [
+            "Square a fraction in lowest terms.",
+            "Find a fraction's principal square root when numerator and denominator are perfect squares."
+          ],
+          "explanation": "For a/b in lowest terms, (a/b)² = a²/b². If a and b are non-negative perfect squares and b is not zero, √(a/b) = √a/√b. The principal square root is non-negative.",
+          "examples": [
+            "(3/5)² = 9/25.",
+            "√(49/81) = 7/9."
+          ],
+          "exercises": [
+            "Find the square of −7/12.",
+            "Find √(121/169)."
+          ],
+          "solutions": [
+            "(−7/12)² = 49/144; the square is positive.",
+            "√121/√169 = 11/13."
+          ],
+          "practice_questions": [
+            "Is 36/121 a perfect square of a rational number? Identify the root.",
+            "Find √(0.81) by writing the decimal as a fraction."
+          ],
+          "practice_solutions": [
+            "Yes. 36/121 = (6/11)², so its principal square root is 6/11.",
+            "0.81 = 81/100, so √0.81 = 9/10 = 0.9."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-r1",
+      "number": "S1-R1",
+      "title": "Semester 1 — Revision 1",
+      "topics": [
+        {
+          "topic_id": "s1-r1-numerical",
+          "title": "Revision of integer and square skills",
+          "aliases": [
+            "semester 1 revision integers",
+            "revision 1 numerical skills"
+          ],
+          "learning_objectives": [
+            "Combine integer operations correctly.",
+            "Connect squares with their square roots."
+          ],
+          "explanation": "Revision problems should be solved by identifying the operation first, applying sign or square rules, and checking the result. Use brackets to make the intended order clear.",
+          "examples": [
+            "−8 + 3 × 4 = −8 + 12 = 4.",
+            "√625 = 25 because 25² = 625."
+          ],
+          "exercises": [
+            "Evaluate −15 − (−6) + 4.",
+            "Find 45² using the ending-in-5 method."
+          ],
+          "solutions": [
+            "−15 + 6 + 4 = −5.",
+            "4 × 5 = 20; append 25, so 45² = 2025."
+          ],
+          "practice_questions": [
+            "Evaluate (−7) × 6 − (−10).",
+            "Find the smallest number that must multiply 48 to make a perfect square."
+          ],
+          "practice_solutions": [
+            "−42 + 10 = −32.",
+            "48 = 2⁴ × 3. Multiply by 3 to get 144, a perfect square."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-r1-data",
+          "title": "Revision of pie-graph reasoning",
+          "aliases": [
+            "semester 1 revision pie graph",
+            "revision 1 data interpretation"
+          ],
+          "learning_objectives": [
+            "Convert shares to sector angles.",
+            "Check and interpret a complete pie graph."
+          ],
+          "explanation": "For every revision pie-graph question, identify the whole, convert with the correct 360-degree or 100-percent factor, and check that all categories account for the full circle.",
+          "examples": [
+            "30 percent corresponds to 108 degrees.",
+            "A 45-degree sector represents 12.5 percent."
+          ],
+          "exercises": [
+            "In a total of 80 students, 24 choose chess. Find the pie-sector angle.",
+            "Three sectors are 125, 95 and 80 degrees. Find the fourth sector."
+          ],
+          "solutions": [
+            "(24/80) × 360 = 108 degrees.",
+            "The known total is 300 degrees, so the fourth sector is 360 − 300 = 60 degrees."
+          ],
+          "practice_questions": [
+            "A 126-degree sector represents how many of 200 items?",
+            "Categories are 20 percent, 15 percent, 35 percent and the remainder. Find the remainder's angle."
+          ],
+          "practice_solutions": [
+            "126/360 = 35 percent, and 35 percent of 200 is 70 items.",
+            "The remainder is 30 percent, so its angle is 0.30 × 360 = 108 degrees."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c4",
+      "number": "S1-4",
+      "title": "Semester 1 — Profit and Loss",
+      "topics": [
+        {
+          "topic_id": "s1-c4-profit",
+          "title": "Cost price, selling price and profit or loss percent",
+          "aliases": [
+            "profit percentage",
+            "loss percentage",
+            "cost selling price"
+          ],
+          "learning_objectives": [
+            "Distinguish cost price from selling price.",
+            "Calculate profit or loss percentages on cost price."
+          ],
+          "explanation": "Profit = selling price − cost price when selling price is greater. Loss = cost price − selling price when cost price is greater. Profit percent or loss percent is calculated on cost price: amount/CP × 100.",
+          "examples": [
+            "CP ₹500, SP ₹575 gives profit ₹75 and profit 15 percent.",
+            "CP ₹800, SP ₹680 gives loss ₹120 and loss 15 percent."
+          ],
+          "exercises": [
+            "An article costs ₹1,200 and sells for ₹1,380. Find profit and profit percent.",
+            "A bicycle bought for ₹4,500 is sold at a 12 percent loss. Find its selling price."
+          ],
+          "solutions": [
+            "Profit = ₹180; profit percent = 180/1200 × 100 = 15 percent.",
+            "Loss = 12 percent of ₹4,500 = ₹540; SP = ₹4,500 − ₹540 = ₹3,960."
+          ],
+          "practice_questions": [
+            "An item sells for ₹2,760 at a 15 percent profit. Find its cost price.",
+            "A shopkeeper loses ₹96 on an item costing ₹640. Find the loss percent."
+          ],
+          "practice_solutions": [
+            "SP = 115 percent of CP, so CP = 2760 × 100/115 = ₹2,400.",
+            "Loss percent = 96/640 × 100 = 15 percent."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c4-discount",
+          "title": "Commission, brokerage and discount",
+          "aliases": [
+            "commission",
+            "brokerage",
+            "rebate",
+            "discount marked price"
+          ],
+          "learning_objectives": [
+            "Calculate a percentage commission or brokerage.",
+            "Find discount and sale price from marked price."
+          ],
+          "explanation": "Commission and brokerage are usually a stated percentage of the transaction value. Discount or rebate = marked price − sale price, and discount percent = discount/marked price × 100.",
+          "examples": [
+            "A 4 percent commission on ₹25,000 is ₹1,000.",
+            "A 10 percent discount on ₹800 gives a sale price of ₹720."
+          ],
+          "exercises": [
+            "Find 2.5 percent brokerage on a sale of ₹48,000.",
+            "A bag marked ₹1,600 is sold for ₹1,360. Find its discount percent."
+          ],
+          "solutions": [
+            "Brokerage = 2.5/100 × 48,000 = ₹1,200.",
+            "Discount = ₹240; discount percent = 240/1600 × 100 = 15 percent."
+          ],
+          "practice_questions": [
+            "After a 20 percent discount, a book costs ₹480. Find its marked price.",
+            "An agent earns ₹3,600 at 6 percent commission. Find the transaction value."
+          ],
+          "practice_solutions": [
+            "₹480 is 80 percent of marked price, so marked price = 480 × 100/80 = ₹600.",
+            "Transaction value = 3600 × 100/6 = ₹60,000."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c4-vat",
+          "title": "Value-added tax in purchase calculations",
+          "aliases": [
+            "VAT",
+            "value added tax",
+            "tax on sale price"
+          ],
+          "learning_objectives": [
+            "Calculate tax on the taxable price.",
+            "Find the final bill after discount and tax in the correct order."
+          ],
+          "explanation": "Value-added tax is computed as a percentage of the taxable price. If a discount is applied first, subtract it from the marked price, then calculate tax on the discounted price. Final bill = taxable price + tax.",
+          "examples": [
+            "At 5 percent tax, a taxable price of ₹2,000 gives tax ₹100 and bill ₹2,100.",
+            "₹1,000 less 10 percent discount is ₹900; 4 percent tax is ₹36, so the bill is ₹936."
+          ],
+          "exercises": [
+            "Find the final bill for goods priced ₹3,500 with 8 percent tax and no discount.",
+            "A fan marked ₹2,400 gets 15 percent discount, then 5 percent tax. Find the final bill."
+          ],
+          "solutions": [
+            "Tax = ₹280, so final bill = ₹3,780.",
+            "Discounted price = ₹2,040; tax = ₹102; final bill = ₹2,142."
+          ],
+          "practice_questions": [
+            "A bill including 10 percent tax is ₹1,650. Find the pre-tax price.",
+            "Explain why adding 10 percent discount and 10 percent tax does not always return to the marked price; demonstrate with ₹1,000."
+          ],
+          "practice_solutions": [
+            "The bill is 110 percent of pre-tax price, so pre-tax price = 1650 × 100/110 = ₹1,500.",
+            "After 10 percent discount, ₹1,000 becomes ₹900. Ten percent tax on ₹900 is ₹90, giving ₹990, not ₹1,000, because the percentages use different bases."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c5",
+      "number": "S1-5",
+      "title": "Semester 1 — Parallel Lines",
+      "topics": [
+        {
+          "topic_id": "s1-c5-basics",
+          "title": "Parallel lines, transversals and angle pairs",
+          "aliases": [
+            "parallel line definition",
+            "transversal",
+            "corresponding alternate angles"
+          ],
+          "learning_objectives": [
+            "Identify parallel lines and a transversal.",
+            "Name corresponding, alternate and co-interior angle pairs."
+          ],
+          "explanation": "Parallel lines in a plane never meet and remain the same perpendicular distance apart. A transversal intersects two or more lines. Its intersections create corresponding, alternate interior, alternate exterior and co-interior angle pairs.",
+          "examples": [
+            "Railway-track rails model parallel lines; a sleeper acts like a transversal.",
+            "Angles in the same relative corner at the two intersections are corresponding angles."
+          ],
+          "exercises": [
+            "State whether two distinct horizontal lines in the same plane are parallel and explain.",
+            "Describe the location of alternate interior angles made by a transversal."
+          ],
+          "solutions": [
+            "Yes. Distinct horizontal lines have the same direction and do not meet in the plane.",
+            "They lie between the two lines and on opposite sides of the transversal."
+          ],
+          "practice_questions": [
+            "How are co-interior angles positioned?",
+            "Can two intersecting lines be parallel? Give the defining reason."
+          ],
+          "practice_solutions": [
+            "They lie between the two lines on the same side of the transversal.",
+            "No. Parallel lines in one plane do not meet, whereas intersecting lines share a point."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c5-relations",
+          "title": "Angle relations for parallel lines",
+          "aliases": [
+            "parallel line angle properties",
+            "corresponding angles",
+            "co interior supplementary"
+          ],
+          "learning_objectives": [
+            "Use equal-angle relations for parallel lines.",
+            "Use supplementary co-interior angles."
+          ],
+          "explanation": "When a transversal cuts parallel lines, corresponding angles are equal, alternate interior angles are equal and co-interior angles sum to 180 degrees. Conversely, any one of these conditions can help establish that the lines are parallel.",
+          "examples": [
+            "If a corresponding angle is 68 degrees, its matching corresponding angle is 68 degrees.",
+            "If one co-interior angle is 112 degrees, the other is 68 degrees."
+          ],
+          "exercises": [
+            "Two parallel lines are cut by a transversal. One alternate interior angle is 47 degrees. Find the other.",
+            "One co-interior angle is 3x degrees and the other is 2x degrees. Find x."
+          ],
+          "solutions": [
+            "Alternate interior angles are equal, so the other angle is 47 degrees.",
+            "3x + 2x = 180, so 5x = 180 and x = 36 degrees."
+          ],
+          "practice_questions": [
+            "Corresponding angles are (4x + 5) degrees and 81 degrees. Find x.",
+            "Two co-interior angles are 95 degrees and 85 degrees. What can be concluded about the lines?"
+          ],
+          "practice_solutions": [
+            "4x + 5 = 81, so 4x = 76 and x = 19.",
+            "They sum to 180 degrees, so by the converse co-interior-angle condition the two lines are parallel."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c5-construction",
+          "title": "Constructing a parallel line",
+          "aliases": [
+            "draw parallel line",
+            "construct parallel through point",
+            "parallel line construction"
+          ],
+          "learning_objectives": [
+            "Construct a parallel through an external point using equal corresponding angles.",
+            "Verify the construction geometrically."
+          ],
+          "explanation": "Given a line and a point outside it, draw a transversal through the point, copy at the point the angle formed by the original line and transversal, and extend the new ray. Equal corresponding or alternate angles verify that the new line is parallel.",
+          "examples": [
+            "Copying a 55-degree corresponding angle produces a parallel ray.",
+            "A set square can slide along a ruler while keeping its direction to draw parallel lines."
+          ],
+          "exercises": [
+            "Describe a ruler-and-protractor construction of a line through P parallel to line l.",
+            "A construction gives equal alternate interior angles of 72 degrees. State the conclusion."
+          ],
+          "solutions": [
+            "Draw a transversal through P meeting l, measure the angle at l, reproduce the equal corresponding angle at P, and extend its ray; the ray through P is parallel to l.",
+            "By the converse alternate-interior-angle property, the two lines are parallel."
+          ],
+          "practice_questions": [
+            "Why must the reference edge remain fixed when sliding a set square to draw a parallel?",
+            "A student copies 64 degrees as 66 degrees. Is exact parallelism established? Explain."
+          ],
+          "practice_solutions": [
+            "The fixed reference keeps the set square's drawing edge in the same direction, which is necessary for parallel lines.",
+            "No. The required corresponding angles are not equal, so the construction does not prove exact parallelism."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-c6",
+      "number": "S1-6",
+      "title": "Semester 1 — Polynomials",
+      "topics": [
+        {
+          "topic_id": "s1-c6-terms",
+          "title": "Terms, coefficients and like terms",
+          "aliases": [
+            "polynomial terms",
+            "like unlike terms",
+            "coefficient"
+          ],
+          "learning_objectives": [
+            "Identify terms, coefficients and constant terms.",
+            "Classify monomials, binomials and trinomials."
+          ],
+          "explanation": "A polynomial is a sum or difference of terms whose variable exponents are non-negative whole numbers. Like terms have the same variable part and exponents. A one-term polynomial is a monomial, two terms a binomial and three terms a trinomial.",
+          "examples": [
+            "In 5x² − 3x + 7, the coefficients are 5 and −3, and the constant is 7.",
+            "4a and −9a are like terms, but 4a and 4a² are unlike."
+          ],
+          "exercises": [
+            "List the terms and coefficients of 6y² + 2y − 11.",
+            "Classify 7p − 4 and state whether 3p can combine with 7p."
+          ],
+          "solutions": [
+            "Terms are 6y², 2y and −11; variable coefficients are 6 and 2, and the constant is −11.",
+            "7p − 4 is a binomial. The term 3p is like 7p, so they can be combined."
+          ],
+          "practice_questions": [
+            "Which pairs are like terms: 2ab, −5ab, 3a²b and 7ba?",
+            "Explain why x⁻¹ + 2 is not a polynomial in x under this definition."
+          ],
+          "practice_solutions": [
+            "2ab, −5ab and 7ba are like terms because ba = ab; 3a²b is unlike them.",
+            "The exponent −1 is negative, but polynomial variable exponents must be non-negative whole numbers."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c6-monomial",
+          "title": "Addition and subtraction of monomials",
+          "aliases": [
+            "add monomials",
+            "subtract monomials",
+            "combine like terms"
+          ],
+          "learning_objectives": [
+            "Combine like monomials by operating on coefficients.",
+            "Keep unlike monomials separate."
+          ],
+          "explanation": "Like monomials can be added or subtracted by adding or subtracting their coefficients while keeping the variable part unchanged. Unlike terms cannot be merged into a single term.",
+          "examples": [
+            "7x + (−3x) = 4x.",
+            "5a²b − 8a²b = −3a²b."
+          ],
+          "exercises": [
+            "Simplify −9m + 14m.",
+            "Simplify 12xy − (−5xy)."
+          ],
+          "solutions": [
+            "(−9 + 14)m = 5m.",
+            "12xy + 5xy = 17xy."
+          ],
+          "practice_questions": [
+            "Simplify 3p² + 4p − p² and explain which terms combine.",
+            "Subtract 11ab from −2ab."
+          ],
+          "practice_solutions": [
+            "3p² − p² = 2p², while 4p is unlike; result 2p² + 4p.",
+            "−2ab − 11ab = −13ab."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-c6-add-sub",
+          "title": "Addition and subtraction of binomials and trinomials",
+          "aliases": [
+            "add polynomials",
+            "subtract polynomials",
+            "binomial trinomial operations"
+          ],
+          "learning_objectives": [
+            "Align like terms before combining polynomials.",
+            "Distribute a subtraction sign to every term."
+          ],
+          "explanation": "To add polynomials, group like terms and combine coefficients. To subtract a polynomial, change the sign of every term in the polynomial being subtracted and then combine like terms.",
+          "examples": [
+            "(2x + 3) + (5x − 4) = 7x − 1.",
+            "(4a² + a − 2) − (a² − 3a + 5) = 3a² + 4a − 7."
+          ],
+          "exercises": [
+            "Add 3y² − 2y + 6 and 5y² + 7y − 4.",
+            "Subtract 2p² − 5p + 1 from 6p² + p − 8."
+          ],
+          "solutions": [
+            "(3 + 5)y² + (−2 + 7)y + (6 − 4) = 8y² + 5y + 2.",
+            "6p² + p − 8 − (2p² − 5p + 1) = 4p² + 6p − 9."
+          ],
+          "practice_questions": [
+            "Find the sum of −4x + 9 and 7x − 12.",
+            "If A = 3m² − 2m + 4 and B = m² + 5m − 6, find A − B."
+          ],
+          "practice_solutions": [
+            "(−4 + 7)x + (9 − 12) = 3x − 3.",
+            "A − B = 3m² − 2m + 4 − m² − 5m + 6 = 2m² − 7m + 10."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s1-r2",
+      "number": "S1-R2",
+      "title": "Semester 1 — Revision 2",
+      "topics": [
+        {
+          "topic_id": "s1-r2-applied",
+          "title": "Revision of finance and geometry",
+          "aliases": [
+            "semester 1 revision profit parallel lines",
+            "revision 2 applied mathematics"
+          ],
+          "learning_objectives": [
+            "Solve a multistep percentage problem.",
+            "Apply parallel-line angle relations."
+          ],
+          "explanation": "Choose the correct base for each percentage and label all angle relationships before calculating. A diagram or short formula line prevents common revision mistakes.",
+          "examples": [
+            "A 20 percent discount on ₹500 gives ₹400.",
+            "Co-interior angles of 104 degrees and 76 degrees total 180 degrees."
+          ],
+          "exercises": [
+            "An article costing ₹750 is sold at 8 percent profit. Find its selling price.",
+            "Corresponding angles are 5x degrees and 75 degrees. Find x."
+          ],
+          "solutions": [
+            "Profit = ₹60, so selling price = ₹810.",
+            "5x = 75, so x = 15."
+          ],
+          "practice_questions": [
+            "A marked price of ₹2,000 receives 10 percent discount and then 5 percent tax. Find the bill.",
+            "One angle of a parallel-line co-interior pair is 63 degrees. Find the other."
+          ],
+          "practice_solutions": [
+            "Discounted price = ₹1,800; tax = ₹90; final bill = ₹1,890.",
+            "The angles total 180 degrees, so the other is 180 − 63 = 117 degrees."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-r2-algebra-data",
+          "title": "Revision of algebra and data representation",
+          "aliases": [
+            "semester 1 revision polynomial pie graph",
+            "revision 2 algebra data"
+          ],
+          "learning_objectives": [
+            "Combine polynomial terms accurately.",
+            "Relate a data share to a pie-sector angle."
+          ],
+          "explanation": "In mixed revision, preserve algebraic signs and identify the whole in data questions. Check a polynomial by regrouping like terms and check a pie graph by summing angles to 360 degrees.",
+          "examples": [
+            "(3x + 2) + (x − 7) = 4x − 5.",
+            "One fifth of a pie graph is 72 degrees."
+          ],
+          "exercises": [
+            "Simplify (5a² − 3a + 1) − (2a² + a − 4).",
+            "Find the angle for 28 of 80 observations."
+          ],
+          "solutions": [
+            "3a² − 4a + 5.",
+            "(28/80) × 360 = 126 degrees."
+          ],
+          "practice_questions": [
+            "The sectors are 96, 84, 120 and x degrees. Find x.",
+            "Add −2p² + 6p − 3 and 7p² − p + 8."
+          ],
+          "practice_solutions": [
+            "x = 360 − (96 + 84 + 120) = 60 degrees.",
+            "5p² + 5p + 5."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c1",
+      "number": "S2-1",
+      "title": "Semester 2 — Power and Exponent",
+      "topics": [
+        {
+          "topic_id": "s2-c1-basics",
+          "title": "Powers, bases and exponents",
+          "aliases": [
+            "power and exponent",
+            "power and indices",
+            "base exponent",
+            "exponential form"
+          ],
+          "learning_objectives": [
+            "Write repeated multiplication in exponential form.",
+            "Evaluate powers with integer bases."
+          ],
+          "explanation": "In aⁿ, a is the base and n is the exponent or index. It means a multiplied by itself n times for positive whole-number n. Parentheses matter with negative bases: (−2)⁴ is positive, while −2⁴ means the negative of 2⁴.",
+          "examples": [
+            "5 × 5 × 5 = 5³ = 125.",
+            "(−3)² = 9, but −3² = −9 by order of operations."
+          ],
+          "exercises": [
+            "Write 7 × 7 × 7 × 7 in exponential form and evaluate it.",
+            "Evaluate (−4)³."
+          ],
+          "solutions": [
+            "It is 7⁴ = 2401.",
+            "(−4)³ = (−4)(−4)(−4) = −64."
+          ],
+          "practice_questions": [
+            "Identify the base and exponent in (−6)⁵.",
+            "Write 81 as a power with base 3."
+          ],
+          "practice_solutions": [
+            "The base is −6 and the exponent is 5.",
+            "81 = 3⁴."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c1-product-quotient",
+          "title": "Product and quotient laws of exponents",
+          "aliases": [
+            "product of powers",
+            "quotient of powers",
+            "same base exponent laws"
+          ],
+          "learning_objectives": [
+            "Multiply powers with the same nonzero base.",
+            "Divide powers with the same nonzero base."
+          ],
+          "explanation": "For the same base, aᵐ × aⁿ = aᵐ⁺ⁿ. For nonzero a and m at least n, aᵐ ÷ aⁿ = aᵐ⁻ⁿ. These rules follow by counting and cancelling repeated factors; they do not allow adding exponents when bases differ.",
+          "examples": [
+            "2³ × 2⁵ = 2⁸ = 256.",
+            "7⁶ ÷ 7² = 7⁴ = 2401."
+          ],
+          "exercises": [
+            "Simplify 5⁴ × 5³.",
+            "Simplify 3⁹ ÷ 3⁵ and evaluate."
+          ],
+          "solutions": [
+            "5⁴⁺³ = 5⁷.",
+            "3⁹⁻⁵ = 3⁴ = 81."
+          ],
+          "practice_questions": [
+            "Simplify x⁷ × x² ÷ x⁴ for nonzero x.",
+            "Explain why 2³ × 5³ cannot be simplified by adding exponents under the same-base law."
+          ],
+          "practice_solutions": [
+            "x⁷⁺²⁻⁴ = x⁵.",
+            "The bases differ, so the same-base law does not apply. Instead, use (2 × 5)³ = 10³."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c1-power-law",
+          "title": "Power of a power, product and quotient",
+          "aliases": [
+            "power of a power",
+            "power of product",
+            "power of quotient"
+          ],
+          "learning_objectives": [
+            "Multiply exponents for a power of a power.",
+            "Distribute an exponent across a product or quotient."
+          ],
+          "explanation": "The laws are (aᵐ)ⁿ = aᵐⁿ, (ab)ⁿ = aⁿbⁿ and (a/b)ⁿ = aⁿ/bⁿ when b is nonzero. Apply the outer exponent to every factor inside parentheses.",
+          "examples": [
+            "(2³)⁴ = 2¹².",
+            "(3x)² = 9x²."
+          ],
+          "exercises": [
+            "Simplify (y⁴)³.",
+            "Evaluate (6/5)²."
+          ],
+          "solutions": [
+            "(y⁴)³ = y¹².",
+            "(6/5)² = 36/25."
+          ],
+          "practice_questions": [
+            "Simplify (2a³)².",
+            "Rewrite 4³ × 5³ as one power and evaluate."
+          ],
+          "practice_solutions": [
+            "(2a³)² = 2²a⁶ = 4a⁶.",
+            "4³ × 5³ = (4 × 5)³ = 20³ = 8000."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c2",
+      "number": "S2-2",
+      "title": "Semester 2 — Simple Interest",
+      "topics": [
+        {
+          "topic_id": "s2-c2-formula",
+          "title": "Principal, rate, time, interest and amount",
+          "aliases": [
+            "simple interest formula",
+            "principal rate time",
+            "interest amount"
+          ],
+          "learning_objectives": [
+            "Identify P, R, T, I and A.",
+            "Calculate simple interest and amount."
+          ],
+          "explanation": "For annual simple interest, I = P × R × T / 100, where P is principal, R is annual rate percent and T is time in years. Amount A = P + I. The interest is calculated on the original principal throughout.",
+          "examples": [
+            "On ₹2,000 at 5 percent for 3 years, I = ₹300 and A = ₹2,300.",
+            "₹4,500 at 8 percent for 2 years gives I = ₹720."
+          ],
+          "exercises": [
+            "Find simple interest and amount on ₹6,000 at 7 percent per year for 4 years.",
+            "Find the amount on ₹3,200 at 6.25 percent per year for 2 years."
+          ],
+          "solutions": [
+            "I = 6000 × 7 × 4/100 = ₹1,680; A = ₹7,680.",
+            "I = 3200 × 6.25 × 2/100 = ₹400; A = ₹3,600."
+          ],
+          "practice_questions": [
+            "A loan of ₹7,500 earns ₹1,350 simple interest in 3 years. State the amount repaid.",
+            "Explain the difference between principal and amount using P = ₹5,000 and I = ₹600."
+          ],
+          "practice_solutions": [
+            "A = P + I = ₹7,500 + ₹1,350 = ₹8,850.",
+            "Principal is the original ₹5,000; amount is principal plus interest, ₹5,600."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c2-time",
+          "title": "Converting months and days for simple interest",
+          "aliases": [
+            "simple interest months",
+            "simple interest days",
+            "time conversion interest"
+          ],
+          "learning_objectives": [
+            "Convert months to years before using an annual rate.",
+            "Convert days using the stated year convention."
+          ],
+          "explanation": "When the rate is per year, express time in years. Months/12 gives years. For days, use days/365 unless a 360-day year is explicitly stated. Keep the same time unit as the rate.",
+          "examples": [
+            "9 months = 9/12 = 3/4 year.",
+            "At a 365-day convention, 73 days = 73/365 = 1/5 year."
+          ],
+          "exercises": [
+            "Find simple interest on ₹4,800 at 10 percent per year for 9 months.",
+            "Using a 365-day year, find simple interest on ₹10,000 at 7.3 percent for 50 days."
+          ],
+          "solutions": [
+            "T = 9/12 year; I = 4800 × 10 × 9/(100 × 12) = ₹360.",
+            "T = 50/365; I = 10000 × 7.3 × 50/(100 × 365) = ₹100."
+          ],
+          "practice_questions": [
+            "Find the amount on ₹9,000 at 8 percent per year for 15 months.",
+            "Why is using T = 6 directly wrong for a 6-month loan at an annual rate?"
+          ],
+          "practice_solutions": [
+            "T = 15/12 = 1.25 years; I = ₹900; amount = ₹9,900.",
+            "The rate is yearly, so 6 months must be 6/12 = 0.5 year; using 6 would incorrectly mean 6 years."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c2-missing",
+          "title": "Finding a missing principal, rate or time",
+          "aliases": [
+            "find principal simple interest",
+            "find rate simple interest",
+            "find time simple interest"
+          ],
+          "learning_objectives": [
+            "Rearrange the simple-interest formula.",
+            "Check the recovered value in the original formula."
+          ],
+          "explanation": "From I = PRT/100: P = 100I/(RT), R = 100I/(PT), and T = 100I/(PR). Substitute known quantities with consistent units, then verify by recalculating I.",
+          "examples": [
+            "If I = ₹600, R = 5 and T = 3, P = 60000/15 = ₹4,000.",
+            "If I = ₹480 on ₹3,000 for 4 years, R = 48000/12000 = 4 percent."
+          ],
+          "exercises": [
+            "Simple interest is ₹900 at 6 percent for 5 years. Find the principal.",
+            "₹5,000 earns ₹1,000 in 4 years. Find the annual rate."
+          ],
+          "solutions": [
+            "P = 100 × 900/(6 × 5) = ₹3,000.",
+            "R = 100 × 1000/(5000 × 4) = 5 percent per year."
+          ],
+          "practice_questions": [
+            "How long will ₹8,000 take to earn ₹1,920 at 8 percent simple interest?",
+            "Check whether ₹2,500 at 12 percent for 2 years gives ₹600 interest."
+          ],
+          "practice_solutions": [
+            "T = 100 × 1920/(8000 × 8) = 3 years.",
+            "I = 2500 × 12 × 2/100 = ₹600, so the statement is correct."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c3",
+      "number": "S2-3",
+      "title": "Semester 2 — Brackets",
+      "topics": [
+        {
+          "topic_id": "s2-c3-order",
+          "title": "Types of brackets and order of operations",
+          "aliases": [
+            "brackets order",
+            "BODMAS",
+            "parentheses braces square brackets"
+          ],
+          "learning_objectives": [
+            "Recognize grouping symbols.",
+            "Apply the agreed order of operations."
+          ],
+          "explanation": "Brackets group operations and show what must be handled together. Work from the innermost grouping outward, then multiplication or division, then addition or subtraction, respecting left-to-right order at the same level.",
+          "examples": [
+            "18 − (5 + 4) = 18 − 9 = 9.",
+            "3[2 + 5] = 3 × 7 = 21."
+          ],
+          "exercises": [
+            "Evaluate 24 ÷ (3 + 5) × 2.",
+            "Evaluate 7 + 3(8 − 5)."
+          ],
+          "solutions": [
+            "24 ÷ 8 × 2 = 3 × 2 = 6.",
+            "7 + 3 × 3 = 7 + 9 = 16."
+          ],
+          "practice_questions": [
+            "Insert brackets in 8 + 4 × 3 to make the result 36.",
+            "Evaluate 40 − [6 + 2(5 − 1)]."
+          ],
+          "practice_solutions": [
+            "(8 + 4) × 3 = 12 × 3 = 36.",
+            "40 − [6 + 2 × 4] = 40 − 14 = 26."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c3-signs",
+          "title": "Removing brackets with signs",
+          "aliases": [
+            "remove brackets",
+            "negative before bracket",
+            "sign change brackets"
+          ],
+          "learning_objectives": [
+            "Remove a plus sign before a bracket.",
+            "Change every term's sign after a minus sign."
+          ],
+          "explanation": "A plus before a bracket leaves enclosed signs unchanged. A minus before a bracket changes every enclosed plus to minus and every minus to plus because the entire grouped expression is being subtracted.",
+          "examples": [
+            "9 + (x − 4) = 9 + x − 4.",
+            "12 − (3x − 5) = 12 − 3x + 5."
+          ],
+          "exercises": [
+            "Remove brackets and simplify 7a − (2a + 9).",
+            "Simplify 15 + (4x − 6) − (x + 2)."
+          ],
+          "solutions": [
+            "7a − 2a − 9 = 5a − 9.",
+            "15 + 4x − 6 − x − 2 = 3x + 7."
+          ],
+          "practice_questions": [
+            "Simplify 5m − (−3m + 8).",
+            "Explain the error in 10 − (2x + 3) = 10 − 2x + 3."
+          ],
+          "practice_solutions": [
+            "5m + 3m − 8 = 8m − 8.",
+            "The minus applies to both terms; +3 must become −3. The correct expression is 10 − 2x − 3 = 7 − 2x."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c3-nested",
+          "title": "Simplifying nested brackets",
+          "aliases": [
+            "nested brackets",
+            "brackets within brackets",
+            "simplify grouped expression"
+          ],
+          "learning_objectives": [
+            "Simplify the innermost bracket first.",
+            "Track signs across more than one grouping level."
+          ],
+          "explanation": "Nested brackets are simplified from the innermost pair outward. At each level, calculate numerical parts or remove the bracket using its preceding sign, then combine like terms before moving outward.",
+          "examples": [
+            "20 − [8 − (3 + 1)] = 20 − [8 − 4] = 16.",
+            "2{3x − [x − 4]} = 2(2x + 4) = 4x + 8."
+          ],
+          "exercises": [
+            "Evaluate 30 − {12 − [7 − (4 − 1)]}.",
+            "Simplify 3[a − {2a − (a + 5)}]."
+          ],
+          "solutions": [
+            "Innermost: 4 − 1 = 3; then 7 − 3 = 4; then 12 − 4 = 8; result 30 − 8 = 22.",
+            "2a − (a + 5) = a − 5; a − (a − 5) = 5; result 3 × 5 = 15."
+          ],
+          "practice_questions": [
+            "Simplify 4{2x − [3 − (x − 1)]}.",
+            "Evaluate 50 ÷ {2[3 + (7 − 5)]}."
+          ],
+          "practice_solutions": [
+            "3 − (x − 1) = 4 − x; 2x − (4 − x) = 3x − 4; result 12x − 16.",
+            "7 − 5 = 2; 3 + 2 = 5; denominator = 2 × 5 = 10; result 50 ÷ 10 = 5."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-r1",
+      "number": "S2-R1",
+      "title": "Semester 2 — Revision 1",
+      "topics": [
+        {
+          "topic_id": "s2-r1-powers",
+          "title": "Revision of powers and brackets",
+          "aliases": [
+            "semester 2 revision powers brackets",
+            "revision 1 exponent brackets"
+          ],
+          "learning_objectives": [
+            "Apply exponent laws without mixing their conditions.",
+            "Use brackets and signs in the correct order."
+          ],
+          "explanation": "First decide whether bases match or an outer exponent applies, then simplify grouped expressions from inside outward. Rewrite one intermediate line to make exponent and sign choices visible.",
+          "examples": [
+            "2⁵ ÷ 2² = 2³ = 8.",
+            "18 − [4 + 2(3)] = 8."
+          ],
+          "exercises": [
+            "Simplify (3²)³ ÷ 3⁴.",
+            "Evaluate 25 − {9 − [6 − (2 + 1)]}."
+          ],
+          "solutions": [
+            "3⁶ ÷ 3⁴ = 3² = 9.",
+            "2 + 1 = 3; 6 − 3 = 3; 9 − 3 = 6; 25 − 6 = 19."
+          ],
+          "practice_questions": [
+            "Simplify (2x²)³ for an algebraic x.",
+            "Simplify 8a − [3a − (2a − 5)]."
+          ],
+          "practice_solutions": [
+            "(2x²)³ = 2³x⁶ = 8x⁶.",
+            "3a − (2a − 5) = a + 5; 8a − (a + 5) = 7a − 5."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-r1-interest",
+          "title": "Revision of simple-interest applications",
+          "aliases": [
+            "semester 2 revision simple interest",
+            "revision 1 finance"
+          ],
+          "learning_objectives": [
+            "Choose the correct time conversion.",
+            "Recover a missing simple-interest variable."
+          ],
+          "explanation": "Write P, R and T with units before substituting. Convert time to years for an annual rate, calculate I, and add P only when the requested quantity is amount.",
+          "examples": [
+            "Six months is 0.5 year.",
+            "At ₹4,000, 5 percent and 2 years, interest is ₹400."
+          ],
+          "exercises": [
+            "Find the amount on ₹12,000 at 9 percent for 8 months.",
+            "Interest is ₹1,200 on ₹6,000 for 4 years. Find the rate."
+          ],
+          "solutions": [
+            "T = 8/12; I = ₹720; amount = ₹12,720.",
+            "R = 100 × 1200/(6000 × 4) = 5 percent."
+          ],
+          "practice_questions": [
+            "At 7.5 percent, how long will ₹8,000 take to earn ₹1,800?",
+            "Find the principal that earns ₹450 at 6 percent in 18 months."
+          ],
+          "practice_solutions": [
+            "T = 100 × 1800/(8000 × 7.5) = 3 years.",
+            "T = 1.5 years; P = 100 × 450/(6 × 1.5) = ₹5,000."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c4",
+      "number": "S2-4",
+      "title": "Semester 2 — Equation",
+      "topics": [
+        {
+          "topic_id": "s2-c4-concepts",
+          "title": "Equality, equations and solutions",
+          "aliases": [
+            "equation meaning",
+            "equality",
+            "solution of equation"
+          ],
+          "learning_objectives": [
+            "Distinguish an expression from an equation.",
+            "Test whether a value satisfies an equation."
+          ],
+          "explanation": "An equation states that two expressions are equal. A solution is a value that makes both sides equal after substitution. An expression such as 3x + 2 has no equality sign; 3x + 2 = 11 is an equation.",
+          "examples": [
+            "x = 3 satisfies 2x + 1 = 7 because both sides equal 7.",
+            "5a − 4 is an expression, not an equation."
+          ],
+          "exercises": [
+            "Does y = 4 satisfy 3y − 2 = 10?",
+            "Classify 7p + 1 and 7p + 1 = 22 as expression or equation."
+          ],
+          "solutions": [
+            "Yes. 3(4) − 2 = 10, equal to the right side.",
+            "7p + 1 is an expression; 7p + 1 = 22 is an equation."
+          ],
+          "practice_questions": [
+            "Test x = −2 in 4x + 5 = −3.",
+            "Give one equation whose solution is m = 6 and verify it."
+          ],
+          "practice_solutions": [
+            "4(−2) + 5 = −8 + 5 = −3, so it satisfies the equation.",
+            "For example, m + 4 = 10. Substituting 6 gives 10 = 10, so m = 6 is a solution."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c4-properties",
+          "title": "Properties that preserve equality",
+          "aliases": [
+            "equation properties",
+            "balance method",
+            "same operation both sides"
+          ],
+          "learning_objectives": [
+            "Perform the same operation on both sides.",
+            "Explain why balance steps preserve a solution."
+          ],
+          "explanation": "An equation stays balanced when the same number is added to or subtracted from both sides, or both sides are multiplied or divided by the same nonzero number. These equality properties isolate the variable without changing the solution set.",
+          "examples": [
+            "From x + 7 = 12, subtract 7 from both sides to get x = 5.",
+            "From 4x = 28, divide both sides by 4 to get x = 7."
+          ],
+          "exercises": [
+            "State the equality operation used to change y − 9 = 13 into y = 22.",
+            "Why can both sides of 5x = 30 be divided by 5?"
+          ],
+          "solutions": [
+            "Add 9 to both sides.",
+            "Dividing equal quantities by the same nonzero number preserves equality; it gives x = 6."
+          ],
+          "practice_questions": [
+            "What restriction applies when dividing both sides of an equation?",
+            "Show a valid first step for −3a + 8 = 20."
+          ],
+          "practice_solutions": [
+            "The divisor must not be zero, because division by zero is undefined.",
+            "Subtract 8 from both sides: −3a = 12."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c4-solving",
+          "title": "Solving one-variable linear equations",
+          "aliases": [
+            "solve linear equation",
+            "one variable equation",
+            "transposition equation"
+          ],
+          "learning_objectives": [
+            "Solve equations containing more than one operation.",
+            "Verify a solution by substitution."
+          ],
+          "explanation": "Undo operations in reverse order while applying each change to both sides. Simplify each side first if needed, isolate the variable, and substitute the result into the original equation as a check.",
+          "examples": [
+            "3x + 5 = 20 gives 3x = 15, so x = 5.",
+            "2(y − 4) = 14 gives y − 4 = 7, so y = 11."
+          ],
+          "exercises": [
+            "Solve 5x − 7 = 3x + 9.",
+            "Solve 4(2a − 1) = 20."
+          ],
+          "solutions": [
+            "Subtract 3x and add 7: 2x = 16, so x = 8.",
+            "Divide by 4: 2a − 1 = 5; add 1: 2a = 6; hence a = 3."
+          ],
+          "practice_questions": [
+            "Solve (m/3) + 6 = 11.",
+            "Solve 7 − 2p = 19 and verify."
+          ],
+          "practice_solutions": [
+            "m/3 = 5, so m = 15.",
+            "−2p = 12, so p = −6. Check: 7 − 2(−6) = 19."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c4-word",
+          "title": "Forming equations from word problems",
+          "aliases": [
+            "equation word problems",
+            "form an equation",
+            "age number problems"
+          ],
+          "learning_objectives": [
+            "Translate a verbal relationship into an equation.",
+            "Interpret the solution in the problem context."
+          ],
+          "explanation": "Choose a variable for the unknown, translate each stated relationship carefully, solve the equation and answer with units or context. Check that the value satisfies every condition in the original statement.",
+          "examples": [
+            "A number plus 8 is 21: let x be the number; x + 8 = 21, so x = 13.",
+            "Three equal tickets plus a ₹20 fee cost ₹170: 3t + 20 = 170, so t = ₹50."
+          ],
+          "exercises": [
+            "Twice a number decreased by 5 is 27. Form an equation and find the number.",
+            "A rectangle's length is 4 cm more than its width and its perimeter is 36 cm. Find both dimensions."
+          ],
+          "solutions": [
+            "Let x be the number. 2x − 5 = 27, so 2x = 32 and x = 16.",
+            "Let width w; length w + 4. Then 2w + 2(w + 4) = 36, so 4w = 28, w = 7 cm and length = 11 cm."
+          ],
+          "practice_questions": [
+            "Riya has ₹35 more than Aman. Together they have ₹215. Find each amount.",
+            "The sum of three consecutive integers is 72. Find them."
+          ],
+          "practice_solutions": [
+            "Let Aman's amount be x; Riya has x + 35. Then 2x + 35 = 215, so x = ₹90 and Riya has ₹125.",
+            "Let the integers be n, n + 1, n + 2. Then 3n + 3 = 72, so n = 23; the integers are 23, 24 and 25."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c5",
+      "number": "S2-5",
+      "title": "Semester 2 — Volume",
+      "topics": [
+        {
+          "topic_id": "s2-c5-formulas",
+          "title": "Volume of cubes and cuboids",
+          "aliases": [
+            "cube volume",
+            "cuboid volume",
+            "length breadth height"
+          ],
+          "learning_objectives": [
+            "Use V = lbh for a cuboid.",
+            "Use V = a³ for a cube."
+          ],
+          "explanation": "Volume measures three-dimensional space. A cuboid of length l, breadth b and height h has V = l × b × h. A cube of side a has V = a³. Volume is written in cubic units.",
+          "examples": [
+            "A 5 cm by 3 cm by 4 cm cuboid has volume 60 cm³.",
+            "A cube of side 6 m has volume 216 m³."
+          ],
+          "exercises": [
+            "Find the volume of a cuboid 12 cm × 8 cm × 5 cm.",
+            "A cube has side 9 cm. Find its volume."
+          ],
+          "solutions": [
+            "V = 12 × 8 × 5 = 480 cm³.",
+            "V = 9³ = 729 cm³."
+          ],
+          "practice_questions": [
+            "A cuboid has volume 360 cm³, length 12 cm and breadth 5 cm. Find its height.",
+            "Compare the volumes of cubes with sides 3 cm and 6 cm."
+          ],
+          "practice_solutions": [
+            "h = 360/(12 × 5) = 6 cm.",
+            "The volumes are 27 cm³ and 216 cm³; doubling the side makes volume 8 times as large."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c5-units",
+          "title": "Cubic units and capacity conversion",
+          "aliases": [
+            "volume units",
+            "litre cubic centimetre",
+            "capacity conversion"
+          ],
+          "learning_objectives": [
+            "Convert between cm³, mL and litres.",
+            "Convert cubic measures using linear conversion factors cubed."
+          ],
+          "explanation": "One cubic centimetre equals 1 millilitre, and 1000 cm³ equals 1 litre. Since 1 m = 100 cm, 1 m³ = 100³ cm³ = 1,000,000 cm³ = 1000 litres.",
+          "examples": [
+            "2500 cm³ = 2500 mL = 2.5 L.",
+            "0.4 m³ = 400 L."
+          ],
+          "exercises": [
+            "Convert 7.25 L into cm³.",
+            "Convert 0.018 m³ into litres."
+          ],
+          "solutions": [
+            "7.25 L = 7250 cm³.",
+            "0.018 × 1000 = 18 L."
+          ],
+          "practice_questions": [
+            "A tank holds 1,500,000 cm³. Express its capacity in litres and m³.",
+            "Explain why 2 m³ is not 200 cm³."
+          ],
+          "practice_solutions": [
+            "It holds 1500 L, which is 1.5 m³.",
+            "Volume conversion cubes the length factor: 1 m³ = 100³ cm³, so 2 m³ = 2,000,000 cm³."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c5-applications",
+          "title": "Volume applications and counting cubes",
+          "aliases": [
+            "volume application",
+            "number of cubes",
+            "tank capacity"
+          ],
+          "learning_objectives": [
+            "Find how many equal cubes fill a cuboid.",
+            "Use volume and capacity in practical problems."
+          ],
+          "explanation": "When identical cubes fill a cuboid exactly, number of cubes = cuboid volume/cube volume. Equivalently, multiply the number that fit along each dimension. Keep all dimensions in the same unit.",
+          "examples": [
+            "A 6 × 4 × 2 cm cuboid holds 48 cubes of side 1 cm.",
+            "A 20 cm cube has capacity 8000 cm³ = 8 L."
+          ],
+          "exercises": [
+            "How many 2 cm cubes fill a box 10 cm × 8 cm × 6 cm?",
+            "A tank measures 2 m × 1.5 m × 1 m. Find its capacity in litres."
+          ],
+          "solutions": [
+            "Box volume = 480 cm³; cube volume = 8 cm³; number = 480/8 = 60.",
+            "Volume = 3 m³, so capacity = 3000 L."
+          ],
+          "practice_questions": [
+            "A 12 cm cube is cut into cubes of side 3 cm. How many small cubes result?",
+            "Water fills three quarters of a 80 L cuboid tank. How many litres are in it?"
+          ],
+          "practice_solutions": [
+            "There are 12/3 = 4 cubes per edge, so 4³ = 64 cubes.",
+            "Three quarters of 80 L is 60 L."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c6",
+      "number": "S2-6",
+      "title": "Semester 2 — Construction of Triangle",
+      "topics": [
+        {
+          "topic_id": "s2-c6-sss",
+          "title": "Constructing a triangle by SSS",
+          "aliases": [
+            "SSS triangle construction",
+            "three sides triangle",
+            "compass triangle"
+          ],
+          "learning_objectives": [
+            "Construct a triangle from three side lengths.",
+            "Explain why intersecting arcs locate the third vertex."
+          ],
+          "explanation": "For side-side-side construction, draw one side as the base. With its endpoints as centres, draw arcs whose radii are the other two side lengths. Their intersection is the third vertex; join it to both endpoints.",
+          "examples": [
+            "For sides 5, 6 and 7 cm, draw the 7 cm base and arcs of radii 5 and 6 cm.",
+            "Two possible arc intersections on opposite sides of the base give mirror-image congruent triangles."
+          ],
+          "exercises": [
+            "Describe the SSS construction for sides 4 cm, 5 cm and 6 cm.",
+            "Why are compass arcs used from both endpoints of the base?"
+          ],
+          "solutions": [
+            "Draw a 6 cm base. From one endpoint draw a 4 cm arc and from the other a 5 cm arc; join their intersection to both endpoints.",
+            "A point on one arc has the required distance from one endpoint; the intersection with the second arc satisfies both required distances at once."
+          ],
+          "practice_questions": [
+            "Construct conceptually a triangle with sides 7 cm, 7 cm and 4 cm, naming the base choice.",
+            "How would you verify an SSS construction after drawing it?"
+          ],
+          "practice_solutions": [
+            "Draw the 4 cm side as base, then draw 7 cm arcs from both endpoints; their intersection forms the equal sides.",
+            "Measure all three sides and confirm that they match the given lengths; the arcs should intersect exactly at the third vertex."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c6-inequality",
+          "title": "Triangle inequality and constructibility",
+          "aliases": [
+            "triangle inequality",
+            "can triangle be constructed",
+            "sum of two sides"
+          ],
+          "learning_objectives": [
+            "Test whether three lengths can form a triangle.",
+            "Connect arc intersection with the inequality condition."
+          ],
+          "explanation": "Three positive lengths form a non-degenerate triangle only when the sum of every pair is greater than the third length. It is enough to check that the two shorter lengths sum to more than the longest.",
+          "examples": [
+            "3, 4 and 5 form a triangle because 3 + 4 > 5.",
+            "2, 3 and 5 do not form a triangle because 2 + 3 equals 5, producing a straight line."
+          ],
+          "exercises": [
+            "Can sides 6 cm, 8 cm and 15 cm form a triangle?",
+            "Find the possible whole-number values of x if x, 5 and 8 are triangle sides and x < 8."
+          ],
+          "solutions": [
+            "No. The two shorter sides total 14 cm, which is less than 15 cm.",
+            "Triangle inequality gives x + 5 > 8, so x > 3; with x < 8, whole-number values are 4, 5, 6 and 7."
+          ],
+          "practice_questions": [
+            "Can 7.5 cm, 4 cm and 3.5 cm form a non-degenerate triangle?",
+            "Explain what happens to the construction arcs when the two shorter sides sum to less than the base."
+          ],
+          "practice_solutions": [
+            "No. 4 + 3.5 = 7.5, equal to the longest side, so the result is degenerate.",
+            "The arcs cannot meet, because their radii together are too short to bridge the distance between the base endpoints."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c6-right",
+          "title": "Constructing a right triangle from hypotenuse and one side",
+          "aliases": [
+            "RHS triangle construction",
+            "right triangle hypotenuse side",
+            "Thales circle construction"
+          ],
+          "learning_objectives": [
+            "Construct a right triangle using a hypotenuse and one leg.",
+            "Check the right angle and stated lengths."
+          ],
+          "explanation": "Draw the given hypotenuse. Construct the circle with the hypotenuse as diameter; any point on this circle makes a right angle at that point. Draw an arc from the appropriate endpoint with radius equal to the given leg, use its intersection with the circle and join the sides.",
+          "examples": [
+            "For hypotenuse 10 cm and one leg 6 cm, the remaining leg is 8 cm after construction.",
+            "A point on a semicircle with the diameter's endpoints joined subtends a 90-degree angle."
+          ],
+          "exercises": [
+            "Describe a construction for a right triangle with hypotenuse 13 cm and one side 5 cm.",
+            "After constructing hypotenuse 10 cm and leg 8 cm, find the expected third side for verification."
+          ],
+          "solutions": [
+            "Draw the 13 cm hypotenuse, make a semicircle on it, draw a 5 cm arc from the required endpoint to meet the semicircle, then join the intersection to both endpoints.",
+            "By the Pythagorean check, the third side is √(10² − 8²) = √36 = 6 cm."
+          ],
+          "practice_questions": [
+            "Why is the given longest side used as the diameter in this construction?",
+            "Can a right triangle have hypotenuse 7 cm and a leg 8 cm? Explain."
+          ],
+          "practice_solutions": [
+            "The side opposite the right angle is the hypotenuse, and using it as the diameter guarantees a 90-degree angle at a point on the semicircle.",
+            "No. A leg must be shorter than the hypotenuse; an 8 cm arc cannot give the required right triangle with a 7 cm hypotenuse."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-r2",
+      "number": "S2-R2",
+      "title": "Semester 2 — Revision 2",
+      "topics": [
+        {
+          "topic_id": "s2-r2-algebra",
+          "title": "Revision of equations, powers and brackets",
+          "aliases": [
+            "semester 2 revision algebra",
+            "revision 2 equations powers"
+          ],
+          "learning_objectives": [
+            "Combine exponent and bracket rules.",
+            "Solve and verify a linear equation."
+          ],
+          "explanation": "For mixed algebra, simplify powers and brackets before solving an equation. Preserve equality by applying the same operation to both sides, then verify by substitution.",
+          "examples": [
+            "(2²)³ = 2⁶ = 64.",
+            "3x − 4 = 11 gives x = 5."
+          ],
+          "exercises": [
+            "Simplify 2[3x − (x + 4)].",
+            "Solve 4(y − 2) + 3 = 19."
+          ],
+          "solutions": [
+            "2(2x − 4) = 4x − 8.",
+            "4y − 8 + 3 = 19, so 4y = 24 and y = 6."
+          ],
+          "practice_questions": [
+            "Simplify 5³ × 5² ÷ 5⁴.",
+            "Form and solve: five more than twice a number is 29."
+          ],
+          "practice_solutions": [
+            "5³⁺²⁻⁴ = 5¹ = 5.",
+            "Let x be the number: 2x + 5 = 29, so 2x = 24 and x = 12."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-r2-measurement",
+          "title": "Revision of volume and construction",
+          "aliases": [
+            "semester 2 revision volume triangle",
+            "revision 2 measurement geometry"
+          ],
+          "learning_objectives": [
+            "Solve a capacity or packing problem.",
+            "Test and describe a valid triangle construction."
+          ],
+          "explanation": "Use cubic units for volume and compare the two shorter sides with the longest before a triangle construction. Convert all measurements to consistent units before calculating.",
+          "examples": [
+            "A 1 m³ tank holds 1000 L.",
+            "Sides 5, 5 and 8 cm satisfy the triangle inequality."
+          ],
+          "exercises": [
+            "Find the capacity in litres of a box 100 cm × 40 cm × 50 cm.",
+            "Can 4 cm, 9 cm and 12 cm form a triangle?"
+          ],
+          "solutions": [
+            "Volume = 200,000 cm³ = 200 L.",
+            "Yes. The two shorter sides total 13 cm, greater than 12 cm."
+          ],
+          "practice_questions": [
+            "How many 5 cm cubes fill a 25 cm × 20 cm × 10 cm box?",
+            "Give the first two construction steps for an SSS triangle of sides 6, 7 and 9 cm."
+          ],
+          "practice_solutions": [
+            "Counts per dimension are 5, 4 and 2, so total cubes = 5 × 4 × 2 = 40.",
+            "Draw the 9 cm side as base. From its endpoints draw arcs of radii 6 cm and 7 cm; their intersection will be the third vertex."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c7",
+      "number": "S2-7",
+      "title": "Semester 2 — Introduction to Computer – 2",
+      "topics": [
+        {
+          "topic_id": "s2-c7-writer",
+          "title": "Writer basics and file operations",
+          "aliases": [
+            "OpenOffice Writer",
+            "Writer file operations",
+            "word processor basics"
+          ],
+          "learning_objectives": [
+            "Identify the purpose of a word processor.",
+            "Create, open, save and close a document safely."
+          ],
+          "explanation": "Writer is a word-processing application used to create and edit documents. A safe workflow is create or open, edit, save with a meaningful name and location, and close only after confirming the save. Save As creates another name, location or format.",
+          "examples": [
+            "Ctrl+S saves changes to the current document.",
+            "Save As can preserve the original while creating a second version."
+          ],
+          "exercises": [
+            "Explain the difference between Save and Save As in Writer.",
+            "List a safe sequence for creating and storing a new class-notes document."
+          ],
+          "solutions": [
+            "Save updates the current file; Save As lets the user choose a different name, location or format and creates that chosen file.",
+            "Open Writer, create the content, choose Save, select the correct folder, enter a meaningful filename, confirm the format, and verify that the document is saved before closing."
+          ],
+          "practice_questions": [
+            "A student edits notes but closes without saving. What risk occurs and which shortcut helps avoid it?",
+            "When should a student use Open rather than New?"
+          ],
+          "practice_solutions": [
+            "Unsaved edits may be lost. Ctrl+S should be used regularly.",
+            "Use Open to continue working on an existing document; use New to start a separate blank document."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c7-editing",
+          "title": "Writer toolbars, selection and editing",
+          "aliases": [
+            "Writer toolbar",
+            "text selection",
+            "cut copy paste undo"
+          ],
+          "learning_objectives": [
+            "Use selection before an editing command.",
+            "Distinguish cut, copy, paste, undo and redo."
+          ],
+          "explanation": "Most editing commands act on selected text or at the cursor. Cut removes selected content and places it on the clipboard; Copy leaves it in place; Paste inserts clipboard content. Undo reverses the latest action and Redo restores an undone action.",
+          "examples": [
+            "Copy and Paste duplicates a paragraph without deleting the original.",
+            "Undo can reverse an accidental deletion before further work complicates recovery."
+          ],
+          "exercises": [
+            "Which command moves a selected sentence to another paragraph: Cut or Copy? Describe the steps.",
+            "Explain the difference between Undo and Redo."
+          ],
+          "solutions": [
+            "Use Cut on the selected sentence, place the cursor at the destination and use Paste; Cut removes it from the original location.",
+            "Undo reverses a recent action; Redo reapplies an action that was undone."
+          ],
+          "practice_questions": [
+            "A student wants the same heading in two places. Which clipboard commands should be used?",
+            "Why must text normally be selected before applying Bold from a toolbar?"
+          ],
+          "practice_solutions": [
+            "Select the heading, Copy it, place the cursor in the second location and Paste it.",
+            "Selection tells Writer exactly which characters should receive bold formatting; otherwise the command may only affect text typed afterward."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c7-formatting",
+          "title": "Formatting, insertion and tables in Writer",
+          "aliases": [
+            "Writer formatting",
+            "insert image Writer",
+            "Writer table"
+          ],
+          "learning_objectives": [
+            "Apply direct character and paragraph formatting purposefully.",
+            "Insert an object or table and preserve document clarity."
+          ],
+          "explanation": "Character formatting changes features such as font, size and emphasis; paragraph formatting controls alignment, spacing and indentation. Insert commands add items such as images or tables. Tables organize related data into rows and columns and should include clear headings.",
+          "examples": [
+            "A centred bold title is paragraph alignment plus character emphasis.",
+            "A 3-column table can organize Item, Quantity and Price."
+          ],
+          "exercises": [
+            "Which formatting would you apply to distinguish a document title from body text?",
+            "Describe how to organize five students' names and marks in a table."
+          ],
+          "solutions": [
+            "Use a larger readable font, bold emphasis and suitable paragraph alignment for the title while keeping body text consistent and less prominent.",
+            "Insert a table with two columns labelled Student and Marks, then use one row per student and keep the numeric entries aligned consistently."
+          ],
+          "practice_questions": [
+            "Why should several unrelated font styles be avoided in one school document?",
+            "An inserted image covers text. Name two layout checks the student should make."
+          ],
+          "practice_solutions": [
+            "Too many styles reduce consistency and readability; a small hierarchy of title, heading and body styles communicates structure better.",
+            "Check image size and text wrapping or anchoring, then confirm margins and page flow so neither text nor image is hidden."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c7-impress",
+          "title": "Impress presentations and slide shows",
+          "aliases": [
+            "OpenOffice Impress",
+            "presentation wizard",
+            "slide show basics"
+          ],
+          "learning_objectives": [
+            "Recognize the main parts of a presentation editor.",
+            "Create, save and run a simple slide show."
+          ],
+          "explanation": "Impress is used to create slide presentations. A presentation normally uses a clear title, short points and relevant visuals. Create or choose a layout, add slides in logical order, save the file, then run the slide show and check readability from a distance.",
+          "examples": [
+            "A title slide introduces the topic and presenter.",
+            "A content slide with three short points is easier to read than a dense paragraph."
+          ],
+          "exercises": [
+            "Plan a three-slide presentation about water conservation, giving each slide a purpose.",
+            "Why should a presentation be saved before starting the slide show?"
+          ],
+          "solutions": [
+            "Slide 1: title and purpose; Slide 2: main causes of water waste with concise points; Slide 3: practical conservation actions and a closing message.",
+            "Saving protects recent edits if the application or device fails and ensures the latest version can be reopened after presenting."
+          ],
+          "practice_questions": [
+            "Name two checks to perform in slide-show mode before presenting to class.",
+            "Explain why copying an entire textbook page onto one slide is poor presentation design."
+          ],
+          "practice_solutions": [
+            "Check that text is readable and not cut off, and check that slides appear in the intended order; also verify relevant visuals and transitions if used.",
+            "A full page creates excessive small text and weak visual hierarchy. Summarizing a few key ideas allows the audience to listen and understand."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "s2-c8",
+      "number": "S2-8",
+      "title": "Semester 2 — Vedic Mathematics",
+      "topics": [
+        {
+          "topic_id": "s2-c8-ending",
+          "title": "Products with equal tens digits and unit digits totalling ten",
+          "aliases": [
+            "Vedic multiplication units sum ten",
+            "same tens digit method",
+            "ekadhikena purvena"
+          ],
+          "learning_objectives": [
+            "Recognize when the special two-digit pattern applies.",
+            "Compute the product using its two parts and verify conventionally."
+          ],
+          "explanation": "For two two-digit numbers with the same tens digit a and unit digits whose sum is 10, multiply a by a + 1 for the left part and multiply the unit digits for the two-digit right part. Write a leading zero when the unit product has one digit.",
+          "examples": [
+            "43 × 47: left 4 × 5 = 20, right 3 × 7 = 21, so 2021.",
+            "91 × 99: left 9 × 10 = 90, right 1 × 9 = 09, so 9009."
+          ],
+          "exercises": [
+            "Use the method to find 64 × 66.",
+            "Use the method to find 72 × 78."
+          ],
+          "solutions": [
+            "Left: 6 × 7 = 42; right: 4 × 6 = 24; product = 4224.",
+            "Left: 7 × 8 = 56; right: 2 × 8 = 16; product = 5616."
+          ],
+          "practice_questions": [
+            "Does the method apply directly to 34 × 44? Explain.",
+            "Find 83 × 87 and verify by expansion."
+          ],
+          "practice_solutions": [
+            "No. The tens digits differ, even though the units total 8 rather than 10; the required pattern is not satisfied.",
+            "Left 8 × 9 = 72, right 3 × 7 = 21, giving 7221. Expansion: (80 + 3)(80 + 7) = 6400 + 800 + 21 = 7221."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c8-near100",
+          "title": "Near-100 multiplication by the Nikhilam method",
+          "aliases": [
+            "Nikhilam",
+            "near 100 multiplication",
+            "deficiency from base"
+          ],
+          "learning_objectives": [
+            "Represent factors by deviations from 100.",
+            "Form left and right parts with correct two-digit adjustment."
+          ],
+          "explanation": "For numbers near 100, write each as 100 plus or minus its deviation. The left part is either number adjusted by the other deviation; the right part is the product of deviations and must occupy two digits for base 100. If the right part is negative or at least 100, borrow or carry into the left part.",
+          "examples": [
+            "97 × 96: deviations −3, −4; left 97 − 4 = 93, right 12, so 9312.",
+            "103 × 104: deviations +3, +4; left 107, right 12, so 10712."
+          ],
+          "exercises": [
+            "Use the near-100 method to find 98 × 94.",
+            "Use the near-100 method to find 107 × 106."
+          ],
+          "solutions": [
+            "Deviations −2, −6; left 98 − 6 = 92, right 12; product = 9212.",
+            "Deviations +7, +6; left 113, right 42; product = 11342."
+          ],
+          "practice_questions": [
+            "Find 102 × 97, handling the negative right part correctly.",
+            "Why must the right part use two places when the base is 100?"
+          ],
+          "practice_solutions": [
+            "Deviations +2 and −3; preliminary left 99, right −6. Borrow 1 hundred: left 98, right 94; product = 9894.",
+            "Because 100 has two zeros, the deviation product represents the last two decimal places; padding, carrying or borrowing preserves place value."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-c8-cross",
+          "title": "Cross multiplication for two-digit products",
+          "aliases": [
+            "vertical and crosswise",
+            "cross multiplication",
+            "urdhva tiryak multiplication"
+          ],
+          "learning_objectives": [
+            "Use units, cross-products and tens stages.",
+            "Manage carries accurately and verify the result."
+          ],
+          "explanation": "For (10a + b)(10c + d), compute bd for the units, ad + bc for the middle cross-sum and ac for the left part, carrying from right to left at each stage. This is the usual distributive expansion organized by place value.",
+          "examples": [
+            "23 × 14: units 3×4 = 12, write 2 carry 1; cross 2×4 + 3×1 + 1 = 12, write 2 carry 1; left 2×1 + 1 = 3, giving 322.",
+            "31 × 22 gives units 2, cross 8 and left 6, so 682."
+          ],
+          "exercises": [
+            "Use cross multiplication to find 42 × 36.",
+            "Use cross multiplication to find 57 × 24."
+          ],
+          "solutions": [
+            "Units 2×6 = 12: write 2 carry 1. Cross 4×6 + 2×3 + 1 = 31: write 1 carry 3. Left 4×3 + 3 = 15. Product = 1512.",
+            "Units 7×4 = 28: write 8 carry 2. Cross 5×4 + 7×2 + 2 = 36: write 6 carry 3. Left 5×2 + 3 = 13. Product = 1368."
+          ],
+          "practice_questions": [
+            "Find 68 × 73 by the crosswise method.",
+            "Verify 46 × 52 by distributive expansion after finding it crosswise."
+          ],
+          "practice_solutions": [
+            "Units 8×3 = 24: write 4 carry 2. Cross 6×3 + 8×7 + 2 = 76: write 6 carry 7. Left 6×7 + 7 = 49. Product = 4964.",
+            "Crosswise gives 2392. Check: (40 + 6)(50 + 2) = 2000 + 80 + 300 + 12 = 2392."
+          ],
+          "marks_pattern": "Show the rule or formula, the working steps and the final result with correct units where applicable.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

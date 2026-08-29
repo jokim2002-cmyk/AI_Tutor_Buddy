@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 8,
+  "subject": "Vedic Mathematics",
+  "textbook": "Vedic Mathematics (Pilot) Standard 8",
+  "source": {
+    "title": "વૈદિક ગણિત (અજમાયશી) ધોરણ 8",
+    "publisher": "Gujarat State School Textbook Board",
+    "edition": "First edition 2023; reprint 2024",
+    "source_url": "",
+    "official": true
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-squares",
+      "number": "1",
+      "title": "સંખ્યાઓનો વર્ગ",
+      "topics": [
+        {
+          "topic_id": "ch01-squares-overview",
+          "title": "Squares",
+          "aliases": [
+            "સંખ્યાઓનો વર્ગ",
+            "વર્ગ",
+            "Squares",
+            "Square of a Number"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Squares.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "કોઈ સંખ્યાને એની જ સાથે ગુણીએ ત્યારે મળતું પરિણામ તેનો વર્ગ કહેવાય. Vedic-style mental methodsનો હેતુ ચોક્કસ પ્રકારની સંખ્યાઓ માટે ગણતરી ઝડપથી અને સમજપૂર્વક કરાવવાનો છે; જવાબને સામાન્ય ગુણાકારથી ચકાસી શકાય.",
+          "examples": [
+            "12² = 12 × 12 = 144.",
+            "25² = 625."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "18² શોધો.",
+            "35² શોધો.",
+            "49² સામાન્ય ગુણાકારથી ચકાસો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-square-roots",
+      "number": "2",
+      "title": "સંખ્યાઓનું વર્ગમૂળ",
+      "topics": [
+        {
+          "topic_id": "ch02-square-roots-overview",
+          "title": "Square Roots",
+          "aliases": [
+            "સંખ્યાઓનું વર્ગમૂળ",
+            "વર્ગમૂળ",
+            "Square Roots",
+            "Square Root"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Square Roots.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "જે સંખ્યાનો વર્ગ આપેલી સંખ્યા બને તે તેનું વર્ગમૂળ કહેવાય. પૂર્ણ વર્ગ ઓળખવા માટે જાણીતા squares, અંતિમ અંક અને અંદાજનો ઉપયોગ કરી શકાય છે.",
+          "examples": [
+            "√144 = 12 કારણ કે 12² = 144.",
+            "√625 = 25 કારણ કે 25² = 625."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "√169 શોધો.",
+            "√784 શોધો.",
+            "900 નું વર્ગમૂળ શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-cubes",
+      "number": "3",
+      "title": "સંખ્યાઓનો ઘન",
+      "topics": [
+        {
+          "topic_id": "ch03-cubes-overview",
+          "title": "Cubes",
+          "aliases": [
+            "સંખ્યાઓનો ઘન",
+            "ઘન",
+            "Cubes",
+            "Cube of a Number"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Cubes.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "કોઈ સંખ્યાને ત્રણ વખત પોતે જ ગુણીએ ત્યારે તેનો ઘન મળે છે. n³ = n × n × n. નાના cubes યાદ રાખવાથી અને place-value patterns સમજવાથી mental calculation સરળ બને છે.",
+          "examples": [
+            "4³ = 4 × 4 × 4 = 64.",
+            "10³ = 1000."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "6³ શોધો.",
+            "12³ શોધો.",
+            "5³ અને 7³ સરખાવો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-divisibility",
+      "number": "4",
+      "title": "વિભાજ્યતા",
+      "topics": [
+        {
+          "topic_id": "ch04-divisibility-overview",
+          "title": "Divisibility",
+          "aliases": [
+            "વિભાજ્યતા",
+            "વિભાજ્યતાના નિયમો",
+            "Divisibility",
+            "Divisibility Rules"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Divisibility.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "વિભાજ્યતાના નિયમો દ્વારા લાંબો ભાગાકાર કર્યા વગર જાણી શકાય કે સંખ્યા કોઈ નિર્ધારિત સંખ્યાથી પૂર્ણ ભાગે છે કે નહીં. અલગ divisors માટે અલગ digit-pattern rules હોય છે.",
+          "examples": [
+            "246 2થી વિભાજ્ય છે કારણ કે તેનો છેલ્લો અંક સમ છે.",
+            "123 નો અંકસરવાળો 6 છે, તેથી તે 3થી વિભાજ્ય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "456 3થી વિભાજ્ય છે કે નહીં?",
+            "735 5 અને 3થી વિભાજ્ય છે કે નહીં?",
+            "1008 માટે 2 અને 9ના નિયમ ચકાસો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-algebraic-add-subtract",
+      "number": "5",
+      "title": "પદાવલિઓના સરવાળા અને બાદબાકી",
+      "topics": [
+        {
+          "topic_id": "ch05-algebraic-add-subtract-overview",
+          "title": "Addition and Subtraction of Algebraic Expressions",
+          "aliases": [
+            "પદાવલિઓના સરવાળા અને બાદબાકી",
+            "પદાવલિનો સરવાળો",
+            "પદાવલિની બાદબાકી",
+            "Addition of Algebraic Expressions",
+            "Subtraction of Algebraic Expressions",
+            "Algebraic Expressions"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Addition and Subtraction of Algebraic Expressions.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "Algebraic expressionsનો સરવાળો અથવા બાદબાકી કરતી વખતે માત્ર like termsને જોડીએ છીએ. Like termsમાં variables અને તેમની powers સમાન હોય છે; તેમના coefficients પર જ addition/subtraction થાય છે.",
+          "examples": [
+            "3x + 5x = 8x.",
+            "7a - 2a + 4 = 5a + 4."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4x + 9x સરળ કરો.",
+            "8a - 3a + 2 સરળ કરો.",
+            "2x + 3y + 5x - y સરળ કરો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-polynomial-multiplication",
+      "number": "6",
+      "title": "બહુપદીઓના ગુણાકાર",
+      "topics": [
+        {
+          "topic_id": "ch06-polynomial-multiplication-overview",
+          "title": "Multiplication of Polynomials",
+          "aliases": [
+            "બહુપદીઓના ગુણાકાર",
+            "બહુપદીનો ગુણાકાર",
+            "Multiplication of Polynomials",
+            "Polynomial Multiplication",
+            "Polynomials"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Multiplication of Polynomials.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "બહુપદીઓના ગુણાકારમાં distributive propertyનો ઉપયોગ થાય છે. એક polynomialના દરેક termને બીજા polynomialના દરેક જરૂરી termથી ગુણ્યા પછી like terms જોડાય છે.",
+          "examples": [
+            "x(x + 3) = x² + 3x.",
+            "(x + 2)(x + 3) = x² + 5x + 6."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "2x(x + 4) વિસ્તારો.",
+            "(x + 1)(x + 5) ગુણો.",
+            "(a + 2)(a - 2) સરળ કરો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-factorisation",
+      "number": "7",
+      "title": "અવયવીકરણ",
+      "topics": [
+        {
+          "topic_id": "ch07-factorisation-overview",
+          "title": "Factorisation",
+          "aliases": [
+            "અવયવીકરણ",
+            "અવયવ",
+            "Factorisation",
+            "Factorization",
+            "Factors"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Factorisation.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "Factorisation એટલે expressionને એવા factorsના ગુણાકાર રૂપમાં લખવું કે જેમને ફરી ગુણીએ તો મૂળ expression મળે. Common factor અને જાણીતી identities factorisation માટે ઉપયોગી છે.",
+          "examples": [
+            "6x + 9 = 3(2x + 3).",
+            "x² - 9 = (x - 3)(x + 3)."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4x + 12 factorise કરો.",
+            "x² - 16 factorise કરો.",
+            "6a² + 9aમાંથી common factor બહાર લો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-linear-equations",
+      "number": "8",
+      "title": "સુરેખ સમીકરણનો ઉકેલ",
+      "topics": [
+        {
+          "topic_id": "ch08-linear-equations-overview",
+          "title": "Solving Linear Equations",
+          "aliases": [
+            "સુરેખ સમીકરણનો ઉકેલ",
+            "સુરેખ સમીકરણ",
+            "Linear Equations",
+            "Linear Equation",
+            "Solving Linear Equations"
+          ],
+          "learning_objectives": [
+            "Understand the main method and meaning of Solving Linear Equations.",
+            "Use the method accurately and verify the result with standard mathematics."
+          ],
+          "explanation": "Linear equationમાં variableની highest power 1 હોય છે. ઉકેલ માટે equationની બંને બાજુ સમાન operation કરીને variableને એકલું કરવામાં આવે છે અને અંતે substitutionથી જવાબ ચકાસી શકાય છે.",
+          "examples": [
+            "x + 5 = 12 માટે x = 7.",
+            "3x = 21 માટે x = 7."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "x - 8 = 15 ઉકેલો.",
+            "4x = 36 ઉકેલો.",
+            "2x + 3 = 17 ઉકેલો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

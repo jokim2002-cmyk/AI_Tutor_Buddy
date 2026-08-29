@@ -1,0 +1,713 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 8,
+  "subject": "Social Science",
+  "textbook": "Std-8 Social Science GujaratiMedium",
+  "source": {
+    "title": "Std-8 Social Science GujaratiMedium",
+    "publisher": "Gujarat State School Textbook Board",
+    "edition": "First edition 2021; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=1_eypOls_nhu7DsySaQP6Jgwv3Tg8qKX-",
+    "official": true
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-europeans-british-rule",
+      "number": "1",
+      "title": "ભારતમાં યુરોપિયનો અને અંગ્રેજ શાસનની સ્થાપના",
+      "topics": [
+        {
+          "topic_id": "ch01-overview",
+          "title": "Europeans in India and Establishment of British Rule",
+          "aliases": [
+            "ભારતમાં યુરોપિયનો અને અંગ્રેજ શાસનની સ્થાપના",
+            "ભારતમાં યુરોપિયનો",
+            "અંગ્રેજ શાસનની સ્થાપના",
+            "Europeans in India",
+            "British rule in India",
+            "Establishment of British rule"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Europeans in India and Establishment of British Rule.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "આ અધ્યાય ભારતમાં યુરોપિયન વેપારી શક્તિઓના આગમન, તેમના વેપારી હિતો અને ધીમે ધીમે વધતા રાજકીય પ્રભાવને સમજાવે છે. મુખ્ય વિચાર એ છે કે વેપાર માટે આવેલા યુરોપિયન સમૂહોમાં અંગ્રેજ ઈસ્ટ ઇન્ડિયા કંપનીએ સૈન્ય, કૂટનીતિ અને રાજકીય તકનો ઉપયોગ કરીને પોતાનું શાસન મજબૂત બનાવ્યું.",
+          "examples": [
+            "સમુદ્રી વેપાર માર્ગો અને બંદરો પર નિયંત્રણ યુરોપિયન શક્તિઓ માટે મહત્વનું હતું.",
+            "વેપારી કંપનીનો પ્રભાવ રાજકીય સત્તામાં કેવી રીતે બદલાયો તે સમયક્રમથી સમજાવી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "યુરોપિયન શક્તિઓ ભારત તરફ કેમ આકર્ષાઈ?",
+            "વેપાર અને રાજકીય સત્તા વચ્ચે શું સંબંધ બન્યો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-british-rule-1757-1857",
+      "number": "2",
+      "title": "ભારતમાં બ્રિટિશ શાસન (ઈ.સ. 1757થી ઈ.સ. 1857)",
+      "topics": [
+        {
+          "topic_id": "ch02-overview",
+          "title": "British Rule in India from 1757 to 1857",
+          "aliases": [
+            "ભારતમાં બ્રિટિશ શાસન",
+            "ઈ.સ. 1757થી ઈ.સ. 1857",
+            "British Rule 1757 to 1857",
+            "British expansion in India",
+            "Company rule"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of British Rule in India from 1757 to 1857.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "આ સમયગાળામાં ઈસ્ટ ઇન્ડિયા કંપનીએ લશ્કરી વિજય, સંધિઓ, આવકની નીતિઓ અને વહીવટી ફેરફારો દ્વારા ભારતીય પ્રદેશો પર પોતાનું નિયંત્રણ વધાર્યું. આ શાસનના રાજકીય, આર્થિક અને સામાજિક પરિણામો આગળના અસંતોષ માટે મહત્વપૂર્ણ બન્યા.",
+          "examples": [
+            "કંપનીએ સ્થાનિક રાજ્યો સાથે યુદ્ધ અને સંધિ બંનેનો ઉપયોગ કર્યો.",
+            "જમીન આવક નીતિઓનો ખેડૂત અને સ્થાનિક અર્થવ્યવસ્થા પર પ્રભાવ પડ્યો."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "1757 પછી કંપનીનું શાસન કેવી રીતે વિસ્તર્યું?",
+            "બ્રિટિશ નીતિઓથી ભારતીય સમાજમાં અસંતોષ કેમ વધ્યો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-first-war-independence",
+      "number": "3",
+      "title": "ભારતનો પ્રથમ સ્વાતંત્ર્યસંગ્રામ",
+      "topics": [
+        {
+          "topic_id": "ch03-overview",
+          "title": "India's First War of Independence",
+          "aliases": [
+            "ભારતનો પ્રથમ સ્વાતંત્ર્યસંગ્રામ",
+            "પ્રથમ સ્વાતંત્ર્યસંગ્રામ",
+            "1857 revolt",
+            "Revolt of 1857",
+            "First War of Independence"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of India's First War of Independence.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "1857નો વિદ્રોહ અનેક રાજકીય, આર્થિક, સૈન્ય અને સામાજિક અસંતોષનો સંયુક્ત વિસ્ફોટ હતો. અલગ-અલગ પ્રદેશોમાં નેતાઓ અને સૈનિકોએ બ્રિટિશ સત્તા સામે વિરોધ કર્યો; તેની સફળતા મર્યાદિત રહી છતાં ભારતીય સ્વાતંત્ર્ય ઇતિહાસમાં તેનો વિશેષ મહત્ત્વ છે.",
+          "examples": [
+            "સૈનિક અસંતોષ સાથે રાજાઓ, ખેડૂતો અને અન્ય વર્ગોની ફરિયાદો પણ જોડાઈ.",
+            "વિદ્રોહ પછી બ્રિટિશ શાસનવ્યવસ્થામાં મોટા ફેરફારો થયા."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "1857ના વિદ્રોહના મુખ્ય કારણોના પ્રકાર લખો.",
+            "1857ના સંઘર્ષનું ઐતિહાસિક મહત્ત્વ શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-cities-cottage-industries",
+      "number": "4",
+      "title": "અંગ્રેજ સમયનાં શહેરો, ગૃહઉદ્યોગો અને ઉદ્યોગો",
+      "topics": [
+        {
+          "topic_id": "ch04-overview",
+          "title": "Cities, Cottage Industries and Industries during British Rule",
+          "aliases": [
+            "અંગ્રેજ સમયનાં શહેરો",
+            "ગૃહઉદ્યોગો અને ઉદ્યોગો",
+            "Cottage industries",
+            "Cities during British rule",
+            "Industries during British rule"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Cities, Cottage Industries and Industries during British Rule.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "બ્રિટિશ સમય દરમિયાન બંદરો, વેપારી શહેરો અને ઔદ્યોગિક કેન્દ્રોની રચનામાં ફેરફાર આવ્યો. પરંપરાગત ગૃહઉદ્યોગો પર મશીનથી બનેલા આયાતી માલ અને નવી વેપાર નીતિઓનો દબાણ પડ્યો, જ્યારે કેટલાક આધુનિક ઉદ્યોગો અને નગર કેન્દ્રો વિકસ્યા.",
+          "examples": [
+            "હસ્તકલા આધારિત ગૃહઉદ્યોગ અને કારખાના આધારિત ઉત્પાદન વચ્ચે તફાવત સમજાવી શકાય.",
+            "બંદર શહેરો વેપારના કેન્દ્ર તરીકે ઝડપથી વિકસ્યા."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ગૃહઉદ્યોગ પર બ્રિટિશ વેપાર નીતિઓની શું અસર પડી?",
+            "શહેરોના વિકાસમાં બંદરો અને રેલવેની શું ભૂમિકા હતી?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-education-society-british-rule",
+      "number": "5",
+      "title": "અંગ્રેજ શાસન સમયની શિક્ષણ અને સમાજવ્યવસ્થા",
+      "topics": [
+        {
+          "topic_id": "ch05-overview",
+          "title": "Education and Social System during British Rule",
+          "aliases": [
+            "અંગ્રેજ શાસન સમયની શિક્ષણ અને સમાજવ્યવસ્થા",
+            "અંગ્રેજ સમયનું શિક્ષણ",
+            "Education during British rule",
+            "Social reform during British rule"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Education and Social System during British Rule.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "બ્રિટિશ શાસન દરમિયાન શિક્ષણની પદ્ધતિ, શાળાઓ અને ઉચ્ચ શિક્ષણમાં નવા પ્રકારના ફેરફારો આવ્યા. સાથે સમાજસુધારકોએ સ્ત્રી શિક્ષણ, સામાજિક કુરિવાજો અને સમાનતા જેવા પ્રશ્નો પર કામ કર્યું.",
+          "examples": [
+            "નવી શિક્ષણ પદ્ધતિથી આધુનિક વિષયો અને પ્રિન્ટ સંસ્કૃતિનો વ્યાપ વધ્યો.",
+            "સમાજસુધાર ચળવળોએ શિક્ષણને પરિવર્તનનું સાધન માન્યું."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "બ્રિટિશ સમયમાં શિક્ષણમાં કયા પ્રકારના ફેરફારો આવ્યા?",
+            "સમાજસુધાર અને શિક્ષણ વચ્ચે શું સંબંધ હતો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-freedom-movements",
+      "number": "6",
+      "title": "સ્વાતંત્ર્ય-ચળવળો (ઈ.સ. 1885થી ઈ.સ. 1947)",
+      "topics": [
+        {
+          "topic_id": "ch06-overview",
+          "title": "Freedom Movements from 1885 to 1947",
+          "aliases": [
+            "સ્વાતંત્ર્ય-ચળવળો",
+            "સ્વાતંત્ર્ય ચળવળ",
+            "ભારતીય સ્વાતંત્ર્ય ચળવળ",
+            "Freedom Movement",
+            "Indian freedom movement",
+            "National movement"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Freedom Movements from 1885 to 1947.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "1885થી 1947 વચ્ચે ભારતીય રાષ્ટ્રીય ચળવળ અનેક તબક્કામાં વિકસતી ગઈ. રાજકીય સંગઠન, જનઆંદોલન, સત્યાગ્રહ, બહિષ્કાર, અસહકાર અને વિવિધ નેતાઓના પ્રયાસોથી સ્વરાજની માંગ વ્યાપક बनी.",
+          "examples": [
+            "જનભાગીદારી વધતા સ્વાતંત્ર્ય ચળવળ શહેરોથી ગામડાં સુધી પહોંચી.",
+            "અહિંસક વિરોધ અને રાજકીય વાટાઘાટ બંને મહત્વના સાધન બન્યા."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "રાષ્ટ્રીય ચળવળના મુખ્ય તબક્કા સમજાવો.",
+            "જનભાગીદારી સ્વાતંત્ર્ય ચળવળ માટે કેમ મહત્વની હતી?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-art-modern-india",
+      "number": "7",
+      "title": "આધુનિક ભારતમાં કલા",
+      "topics": [
+        {
+          "topic_id": "ch07-overview",
+          "title": "Art in Modern India",
+          "aliases": [
+            "આધુનિક ભારતમાં કલા",
+            "ભારતીય કલા",
+            "Modern Indian Art",
+            "Art in India"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Art in Modern India.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "આધુનિક ભારતીય કલા પર પરંપરાગત વારસા, પ્રાદેશિક શૈલીઓ, ઔપનિવેશિક સંપર્ક અને નવી રાષ્ટ્રીય ચેતનાનો પ્રભાવ પડ્યો. ચિત્રકલા, સ્થાપત્ય, નાટ્ય, સંગીત અને અન્ય કલારૂપો સમાજ અને સમયની બદલાતી અભિવ્યક્તિ દર્શાવે છે.",
+          "examples": [
+            "કલા ઐતિહાસિક ઘટના અને સામાજિક ઓળખ બંને વ્યક્ત કરી શકે છે.",
+            "પરંપરા અને આધુનિકતાનું સંમિશ્રણ અનેક ભારતીય કલારૂપોમાં જોવા મળે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "આધુનિક ભારતીય કલા પર કયા પ્રભાવ પડ્યા?",
+            "કલા સમાજ અને ઇતિહાસનું પ્રતિબિંબ કેવી રીતે બને છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-india-after-independence",
+      "number": "8",
+      "title": "સ્વાતંત્ર્ય પછીનું ભારત",
+      "topics": [
+        {
+          "topic_id": "ch08-overview",
+          "title": "India after Independence",
+          "aliases": [
+            "સ્વાતંત્ર્ય પછીનું ભારત",
+            "આઝાદી પછીનું ભારત",
+            "India after 1947",
+            "Post-independence India"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of India after Independence.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "1947 પછી ભારતે રાષ્ટ્રીય એકતા, લોકશાહી સંસ્થાઓ, વિકાસ, સામાજિક ન્યાય અને વિવિધતામાં એકતા જેવા પડકારોનો સામનો કર્યો. સ્વતંત્ર રાષ્ટ્ર તરીકે ભારતે બંધારણીય લોકશાહી અને આયોજનબદ્ધ વિકાસનો માર્ગ અપનાવ્યો.",
+          "examples": [
+            "રજવાડાંઓનું એકીકરણ રાષ્ટ્રીય એકતા માટે મહત્વનું હતું.",
+            "લોકશાહી ચૂંટણી અને બંધારણીય સંસ્થાઓ નવી રાજકીય વ્યવસ્થાના આધાર બન્યા."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "સ્વાતંત્ર્ય પછી ભારત સામે કયા મોટા પડકારો હતા?",
+            "રાષ્ટ્રીય એકતા અને લોકશાહી વચ્ચે શું સંબંધ છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch09-resources",
+      "number": "9",
+      "title": "સંસાધન",
+      "topics": [
+        {
+          "topic_id": "ch09-overview",
+          "title": "Resources",
+          "aliases": [
+            "સંસાધન",
+            "સંસાધનો",
+            "કુદરતી સંસાધન",
+            "માનવસર્જિત સંસાધન",
+            "Natural Resources",
+            "Human-made Resources",
+            "Resource conservation"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Resources.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "માનવ જરૂરિયાત પૂર્ણ કરવા ઉપયોગી અને મૂલ્ય ધરાવતી વસ્તુ, શક્તિ અથવા ક્ષમતા સંસાધન બની શકે છે. સંસાધનો કુદરતી, માનવસર્જિત અને માનવ સંસાધન જેવા પ્રકારોમાં સમજાય છે; તેમનો જવાબદાર અને ટકાઉ ઉપયોગ જરૂરી છે.",
+          "examples": [
+            "પાણી અને જમીન કુદરતી સંસાધન છે, જ્યારે રસ્તા અને મશીનો માનવસર્જિત સંસાધન છે.",
+            "સંસાધન સંરક્ષણ ભવિષ્યની પેઢીઓ માટે ઉપલબ્ધતા જાળવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "કુદરતી અને માનવસર્જિત સંસાધનમાં તફાવત લખો.",
+            "સંસાધન સંરક્ષણ કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch10-mineral-energy-resources",
+      "number": "10",
+      "title": "ખનિજ અને ઊર્જા-સંસાધન",
+      "topics": [
+        {
+          "topic_id": "ch10-overview",
+          "title": "Mineral and Energy Resources",
+          "aliases": [
+            "ખનિજ અને ઊર્જા-સંસાધન",
+            "ખનિજ સંસાધન",
+            "ઊર્જા સંસાધન",
+            "Minerals",
+            "Energy Resources",
+            "Metallic Minerals",
+            "Non-Metallic Minerals"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Mineral and Energy Resources.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ખનિજ પૃથ્વીના પદાર્થો છે જે ઉદ્યોગ અને જીવનમાં વિવિધ ઉપયોગ ધરાવે છે. ઊર્જા સંસાધનોમાં પરંપરાગત અને નવીનીકરણીય બંને પ્રકારનો સમાવેશ થાય છે; ખનિજ અને ઊર્જાના સમજદાર ઉપયોગ માટે સંરક્ષણ મહત્વનું છે.",
+          "examples": [
+            "લોહ અને તાંબું ધાત્વિક ખનિજોના ઉદાહરણ છે.",
+            "સૂર્ય અને પવન નવીનીકરણીય ઊર્જાના સ્ત્રોત છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ધાત્વિક અને અધાત્વિક ખનિજોમાં તફાવત લખો.",
+            "નવીનીકરણીય ઊર્જા કેમ મહત્વની છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch11-agriculture",
+      "number": "11",
+      "title": "ખેતી",
+      "topics": [
+        {
+          "topic_id": "ch11-overview",
+          "title": "Agriculture",
+          "aliases": [
+            "ખેતી",
+            "કૃષિ",
+            "Agriculture",
+            "Agricultural systems",
+            "Types of farming",
+            "Soil and agriculture"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Agriculture.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ખેતી જમીન, પાણી, આબોહવા, માટી, મજૂરી, ટેકનોલોજી અને બજાર જેવા પરિબળો પર આધારિત આર્થિક પ્રવૃત્તિ છે. અલગ પ્રદેશોમાં કુદરતી અને માનવીય પરિસ્થિતિ મુજબ ખેતીના પ્રકાર અને પાકપદ્ધતિઓ બદલાય છે.",
+          "examples": [
+            "વરસાદ અને સિંચાઈ પાકની પસંદગી પર સીધી અસર કરે છે.",
+            "માટીનો પ્રકાર અને તાપમાન પાકના ઉત્પાદન માટે મહત્વપૂર્ણ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ખેતીને અસર કરતા ચાર પરિબળ લખો.",
+            "સિંચાઈ ખેતી માટે કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch12-industries",
+      "number": "12",
+      "title": "ઉદ્યોગો",
+      "topics": [
+        {
+          "topic_id": "ch12-overview",
+          "title": "Industries",
+          "aliases": [
+            "ઉદ્યોગો",
+            "ઉદ્યોગ",
+            "Industries",
+            "Industry",
+            "Raw material based industries",
+            "Ownership based industries"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Industries.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ઉદ્યોગોમાં કાચા માલને પ્રક્રિયા કરીને ઉપયોગી વસ્તુઓ અથવા સેવાઓમાં ફેરવવામાં આવે છે. ઉદ્યોગોને કાચા માલ, કદ, માલિકી અને ઉત્પાદનના સ્વરૂપ પ્રમાણે વર્ગીકૃત કરી શકાય છે; સ્થાન પસંદગીમાં બજાર, પરિવહન, વીજળી, મજૂરી અને મૂડી મહત્વ ધરાવે છે.",
+          "examples": [
+            "કપાસ આધારિત કાપડ ઉદ્યોગ કાચા માલ આધારિત ઉદ્યોગનું ઉદાહરણ છે.",
+            "પરિવહન સુવિધા તૈયાર માલને બજાર સુધી પહોંચાડવામાં મદદ કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ઉદ્યોગોના વર્ગીકરણના બે આધાર લખો.",
+            "ઉદ્યોગના સ્થાનને અસર કરતા પરિબળો કયા છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch13-human-resources",
+      "number": "13",
+      "title": "માનવ-સંસાધન",
+      "topics": [
+        {
+          "topic_id": "ch13-overview",
+          "title": "Human Resources",
+          "aliases": [
+            "માનવ-સંસાધન",
+            "માનવ સંસાધન",
+            "Human Resources",
+            "Population Distribution",
+            "Population Density",
+            "વસ્તી વિતરણ",
+            "વસ્તી ગીચતા"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Human Resources.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "લોકોની જ્ઞાન, કુશળતા, આરોગ્ય અને કાર્યક્ષમતા માનવ સંસાધનનું મૂળ છે. વસ્તીનું વિતરણ અને ગીચતા પ્રદેશ પ્રમાણે બદલાય છે; શિક્ષણ અને આરોગ્યમાં રોકાણ માનવ સંસાધનની ગુણવત્તા વધારે છે.",
+          "examples": [
+            "વસ્તી ગીચતા એટલે એક નિર્ધારિત વિસ્તારમાં રહેતા લોકોની સંખ્યાનું માપ.",
+            "શિક્ષણ કુશળતા વધારીને વ્યક્તિને વધુ ઉત્પાદક બનાવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "માનવ સંસાધન શું છે?",
+            "વસ્તી વિતરણ અને વસ્તી ગીચતા વચ્ચે શું તફાવત છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch14-disaster-management",
+      "number": "14",
+      "title": "આપત્તિ-વ્યવસ્થાપન",
+      "topics": [
+        {
+          "topic_id": "ch14-overview",
+          "title": "Disaster Management",
+          "aliases": [
+            "આપત્તિ-વ્યવસ્થાપન",
+            "આપત્તિ વ્યવસ્થાપન",
+            "Disaster Management",
+            "Natural Disaster",
+            "કુદરતી આપત્તિ",
+            "Forest Fire",
+            "દવ",
+            "Landslide",
+            "ભૂસ્ખલન",
+            "Locust Hazard",
+            "તીડ"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Disaster Management.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "આપત્તિ વ્યવસ્થાપનનો હેતુ જોખમ ઓળખવો, નુકસાન ઘટાડવું, તૈયારી રાખવી, આપત્તિ સમયે યોગ્ય પ્રતિસાદ આપવો અને પછી પુનઃસ્થાપન કરવું છે. કુદરતી અને માનવસર્જિત બંને પ્રકારની આપત્તિઓ માટે પૂર્વતૈયારી અને સુરક્ષા જાગૃતિ મહત્વની છે.",
+          "examples": [
+            "ભૂસ્ખલનવાળા વિસ્તારમાં ઢાળની સ્થિરતા અને ચેતવણી વ્યવસ્થા જોખમ ઘટાડે છે.",
+            "વનાગ્નિ સમયે વહેલી જાણ અને નિયંત્રિત પ્રતિસાદ નુકસાન ઘટાડે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "આપત્તિ વ્યવસ્થાપનના મુખ્ય તબક્કા લખો.",
+            "પૂર્વતૈયારીથી આપત્તિનું નુકસાન કેવી રીતે ઘટે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch15-indian-constitution",
+      "number": "15",
+      "title": "ભારતીય બંધારણ",
+      "topics": [
+        {
+          "topic_id": "ch15-overview",
+          "title": "Indian Constitution",
+          "aliases": [
+            "ભારતીય બંધારણ",
+            "બંધારણ",
+            "Indian Constitution",
+            "Constitution of India",
+            "Fundamental Rights",
+            "મૂળભૂત અધિકારો",
+            "Fundamental Duties",
+            "મૂળભૂત ફરજો"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Indian Constitution.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ભારતીય બંધારણ દેશની શાસનવ્યવસ્થા, સંસ્થાઓ, નાગરિક અધિકારો અને ફરજો માટે મૂળભૂત માળખું આપે છે. લોકશાહી, ન્યાય, સ્વતંત્રતા, સમાનતા અને બંધુત્વ જેવા મૂલ્યો બંધારણીય વ્યવસ્થાના કેન્દ્રમાં છે.",
+          "examples": [
+            "મૂળભૂત અધિકારો નાગરિકોની સ્વતંત્રતા અને સમાનતાનું રક્ષણ કરે છે.",
+            "મૂળભૂત ફરજો જવાબદાર નાગરિકત્વ તરફ દોરી જાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "બંધારણ દેશ માટે કેમ જરૂરી છે?",
+            "અધિકાર અને ફરજ વચ્ચે શું સંબંધ છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch16-parliament-law",
+      "number": "16",
+      "title": "સંસદ અને કાયદો",
+      "topics": [
+        {
+          "topic_id": "ch16-overview",
+          "title": "Parliament and Law",
+          "aliases": [
+            "સંસદ અને કાયદો",
+            "સંસદ",
+            "Parliament",
+            "Parliament and Law",
+            "Lok Sabha",
+            "લોકસભા",
+            "Rajya Sabha",
+            "રાજ્યસભા",
+            "President and Parliament"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Parliament and Law.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ભારતીય સંસદ કાયદા બનાવવાની મુખ્ય રાષ્ટ્રીય સંસ્થા છે. સંસદીય વ્યવસ્થામાં લોકસભા, રાજ્યસભા અને રાષ્ટ્રપતિની બંધારણીય ભૂમિકાઓ જોડાયેલી છે; ચર્ચા, પ્રશ્નો અને કાયદાકીય પ્રક્રિયા દ્વારા લોકશાહી જવાબદારી જળવાય છે.",
+          "examples": [
+            "લોકસભાના સભ્યો સીધી ચૂંટણીથી ચૂંટાય છે.",
+            "કાયદો બનવા માટે પ્રસ્તાવિત વિધેયકને નિર્ધારિત સંસદીય પ્રક્રિયા પસાર કરવી પડે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "લોકસભા અને રાજ્યસભામાં એક મુખ્ય તફાવત લખો.",
+            "સંસદ કાયદા બનાવવા ઉપરાંત કઈ લોકશાહી ભૂમિકા ભજવે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch17-judiciary",
+      "number": "17",
+      "title": "ન્યાયતંત્ર",
+      "topics": [
+        {
+          "topic_id": "ch17-overview",
+          "title": "Judiciary",
+          "aliases": [
+            "ન્યાયતંત્ર",
+            "Judiciary",
+            "Supreme Court",
+            "સર્વોચ્ચ અદાલત",
+            "High Court",
+            "વડી અદાલત",
+            "District Court",
+            "જિલ્લા અદાલત",
+            "Independent Judiciary"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Judiciary.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "ન્યાયતંત્ર કાયદાનું અર્થઘટન કરે છે, વિવાદોનો નિકાલ કરે છે અને કાનૂની અધિકારોનું રક્ષણ કરે છે. ભારતની અદાલતી વ્યવસ્થા વિવિધ સ્તરોમાં ગોઠવાયેલી છે અને ન્યાયતંત્રની સ્વતંત્રતા નિષ્પક્ષ ન્યાય માટે મહત્વપૂર્ણ છે.",
+          "examples": [
+            "સર્વોચ્ચ અદાલત દેશની સર્વોચ્ચ ન્યાયિક સંસ્થા છે.",
+            "અદાલતો નાગરિક અને ફોજદારી પ્રકારના વિવિધ કેસોની સુનાવણી કરે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ન્યાયતંત્રની સ્વતંત્રતા કેમ જરૂરી છે?",
+            "અદાલતોના અલગ સ્તરોનો હેતુ શું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch18-social-justice-diversity",
+      "number": "18",
+      "title": "સામાજિક ન્યાય અને સામાજિક વિવિધતા",
+      "topics": [
+        {
+          "topic_id": "ch18-overview",
+          "title": "Social Justice and Social Diversity",
+          "aliases": [
+            "સામાજિક ન્યાય અને સામાજિક વિવિધતા",
+            "સામાજિક ન્યાય",
+            "સામાજિક વિવિધતા",
+            "Social Justice",
+            "Social Diversity",
+            "Human Rights",
+            "માનવ અધિકાર",
+            "Child Rights",
+            "બાળ અધિકાર"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Social Justice and Social Diversity.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "સામાજિક ન્યાયનો અર્થ સમાજના દરેક વ્યક્તિને સન્માન, સમાન તક અને અધિકારો મળવા સાથે જોડાયેલો છે. સામાજિક વિવિધતા ભાષા, ધર્મ, સંસ્કૃતિ, જીવનપદ્ધતિ અને અન્ય ઓળખોમાં ભિન્નતા દર્શાવે છે; લોકશાહી સમાજમાં વિવિધતાનો સન્માન જરૂરી છે.",
+          "examples": [
+            "શિક્ષણનો સમાન અવસર સામાજિક ન્યાયનો મહત્વપૂર્ણ ભાગ છે.",
+            "માનવ અધિકાર દરેક વ્યક્તિની મૂળભૂત ગૌરવ અને સુરક્ષાથી સંબંધિત છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "સામાજિક ન્યાય શું છે?",
+            "વિવિધતાનો સન્માન લોકશાહી માટે કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch19-government-socioeconomic-role",
+      "number": "19",
+      "title": "સામાજિક-આર્થિક ક્ષેત્રે સરકારની ભૂમિકા",
+      "topics": [
+        {
+          "topic_id": "ch19-overview",
+          "title": "Role of Government in the Socio-Economic Sector",
+          "aliases": [
+            "સામાજિક-આર્થિક ક્ષેત્રે સરકારની ભૂમિકા",
+            "સરકારની ભૂમિકા",
+            "Role of Government",
+            "Government in Education",
+            "Government in Health",
+            "શિક્ષણમાં સરકારની ભૂમિકા",
+            "આરોગ્યમાં સરકારની ભૂમિકા",
+            "Public Services"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Role of Government in the Socio-Economic Sector.",
+            "Explain the topic using simple examples and key terms."
+          ],
+          "explanation": "સરકાર સામાજિક અને આર્થિક વિકાસ માટે શિક્ષણ, આરોગ્ય, જાહેર સેવાઓ, કલ્યાણ અને નિયમન જેવા ક્ષેત્રોમાં કાર્ય કરે છે. સરકારનો હેતુ માત્ર સેવાઓ પૂરી પાડવો નહીં પરંતુ નબળા વર્ગોને તકો, સુરક્ષા અને વિકાસમાં ભાગીદારી સુનિશ્ચિત કરવો પણ છે.",
+          "examples": [
+            "સરકારી શાળાઓ અને આરોગ્ય સેવાઓ જાહેર કલ્યાણના ઉદાહરણ છે.",
+            "નિયમન અને કલ્યાણ યોજનાઓ આર્થિક વિકાસને વધુ સમાન બનાવવા મદદ કરી શકે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "શિક્ષણ અને આરોગ્યમાં સરકારની ભૂમિકા સમજાવો.",
+            "જાહેર સેવાઓ સામાજિક ન્યાય સાથે કેવી રીતે જોડાય છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1027 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 7,
+  "subject": "Mathematics",
+  "textbook": "Std-7 Mathematics — Gujarati Medium",
+  "source": {
+    "title": "Std-7_Maths_Gujaratimedium.pdf",
+    "publisher": "Gujarat State School Textbook Board",
+    "edition": "Revised edition 2023; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=1a8YB-FIBNEfXKMnZm8TE1Ap-BU6cgUXx",
+    "acquired_on": "2026-08-08",
+    "official": true,
+    "notes": "Official GSSTB-linked textbook PDF independently verified. Chapter structure is source-aligned; tutoring explanations/examples/practice below are original teacher-authored material, not copied textbook prose."
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-integers",
+      "number": "1",
+      "title": "પૂર્ણાંક સંખ્યાઓ (Integers)",
+      "topics": [
+        {
+          "topic_id": "ch01-t01-integers",
+          "title": "Integers",
+          "learning_objectives": [
+            "Identify positive integers, negative integers and zero.",
+            "Compare integers using a number line.",
+            "Recognise opposites such as 5 and -5."
+          ],
+          "explanation": "પૂર્ણાંક સંખ્યાઓ (integers)માં 0, ધન પૂર્ણાંક 1, 2, 3, ... અને ઋણ પૂર્ણાંક -1, -2, -3, ... આવે છે. સંખ્યા રેખા પર જમણી બાજુની સંખ્યા મોટી હોય છે અને ડાબી બાજુની સંખ્યા નાની હોય છે. ઉદાહરણ તરીકે -2, -5 કરતાં મોટું છે કારણ કે -2 સંખ્યા રેખા પર -5ની જમણી બાજુ છે.",
+          "examples": [
+            "5 અને -5 એકબીજાના opposites છે; બંને 0થી સમાન અંતરે છે.",
+            "-3 < 1, કારણ કે -3 સંખ્યા રેખા પર 1ની ડાબી બાજુ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "નાનીથી મોટી ક્રમમાં ગોઠવો: 4, -2, 0, -7, 3.",
+            "-6 અને 6 વચ્ચે શું સંબંધ છે?",
+            "કયું મોટું છે: -4 કે -9? કારણ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંક સંખ્યાઓ",
+            "પૂર્ણાંકો"
+          ]
+        },
+        {
+          "topic_id": "ch01-t02-addition",
+          "title": "Addition of Integers",
+          "learning_objectives": [
+            "Add integers with the same sign.",
+            "Add integers with different signs.",
+            "Use sign and magnitude correctly."
+          ],
+          "explanation": "પૂર્ણાંકોના સરવાળામાં બંને સંખ્યાનું ચિહ્ન એકસરખું હોય તો તેમની absolute values ઉમેરો અને એ જ ચિહ્ન રાખો. ચિહ્ન અલગ હોય તો મોટી absolute valueમાંથી નાની absolute value બાદ કરો અને મોટી absolute value ધરાવતી સંખ્યાનું ચિહ્ન રાખો.",
+          "examples": [
+            "(-4) + (-3) = -7.",
+            "(-8) + 13 = 5, કારણ કે 13 - 8 = 5 અને 13ની absolute value મોટી છે.",
+            "7 + (-10) = -3."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-12) + (-5) શોધો.",
+            "18 + (-25) શોધો.",
+            "(-9) + 14 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો સરવાળો",
+            "પૂર્ણાંક સંખ્યાઓનો સરવાળો"
+          ]
+        },
+        {
+          "topic_id": "ch01-t03-subtraction",
+          "title": "Subtraction of Integers",
+          "learning_objectives": [
+            "Convert subtraction into addition of the additive inverse.",
+            "Subtract positive and negative integers correctly."
+          ],
+          "explanation": "પૂર્ણાંકોમાં બાદબાકી કરવા માટે a - b ને a + (-b) તરીકે લખી શકાય છે. એટલે જે સંખ્યા બાદ કરવાની છે તેનું ચિહ્ન બદલીને સરવાળો કરો. ખાસ ધ્યાન રાખો કે negative સંખ્યા બાદ કરવાથી તે positive ઉમેરવા જેવું બને છે.",
+          "examples": [
+            "7 - (-4) = 7 + 4 = 11.",
+            "(-5) - 3 = (-5) + (-3) = -8.",
+            "(-6) - (-2) = (-6) + 2 = -4."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "12 - (-7) શોધો.",
+            "(-15) - 6 શોધો.",
+            "(-10) - (-13) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોની બાદબાકી",
+            "પૂર્ણાંક સંખ્યાઓની બાદબાકી"
+          ]
+        },
+        {
+          "topic_id": "ch01-t04-multiplication",
+          "title": "Multiplication of Integers",
+          "learning_objectives": [
+            "Apply sign rules for multiplication.",
+            "Multiply positive, negative and zero integers."
+          ],
+          "explanation": "પૂર્ણાંકોના ગુણાકારમાં ચિહ્નનો નિયમ સરળ છે: બંને ચિહ્ન સમાન હોય તો જવાબ positive, અને ચિહ્ન અલગ હોય તો જવાબ negative. કોઈપણ પૂર્ણાંકનો 0 સાથે ગુણાકાર 0 થાય છે.",
+          "examples": [
+            "(-6) × 4 = -24.",
+            "(-5) × (-3) = 15.",
+            "9 × 0 = 0."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-8) × 7 શોધો.",
+            "(-12) × (-4) શોધો.",
+            "15 × (-6) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો ગુણાકાર",
+            "પૂર્ણાંક સંખ્યાઓનો ગુણાકાર"
+          ]
+        },
+        {
+          "topic_id": "ch01-t05-properties",
+          "title": "Properties of Integer Operations",
+          "learning_objectives": [
+            "Recognise closure, commutative and associative properties.",
+            "Use additive and multiplicative identities.",
+            "Apply the distributive property."
+          ],
+          "explanation": "પૂર્ણાંકોમાં સરવાળો અને ગુણાકાર closure, commutative અને associative properties ધરાવે છે. 0 additive identity છે કારણ કે a + 0 = a, અને 1 multiplicative identity છે કારણ કે a × 1 = a. Distributive property મુજબ a × (b + c) = a×b + a×c. બાદબાકી અને ભાગાકાર સામાન્ય રીતે commutative કે associative નથી.",
+          "examples": [
+            "(-3) + 5 = 5 + (-3), એટલે addition commutative છે.",
+            "4 × [(-2) + 3] = (4×-2) + (4×3) = 4.",
+            "8 - 3 ≠ 3 - 8, એટલે subtraction commutative નથી."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "6 × [(-4) + 7] distributive propertyથી શોધો.",
+            "(-9) + 0 = ? કઈ identity property છે?",
+            "શું division commutative છે? 12 ÷ 3 અને 3 ÷ 12થી તપાસો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોની ક્રિયાઓના ગુણધર્મો",
+            "પૂર્ણાંક સંખ્યાઓના ગુણધર્મો"
+          ]
+        },
+        {
+          "topic_id": "ch01-t06-division",
+          "title": "Division of Integers",
+          "learning_objectives": [
+            "Apply sign rules for division.",
+            "Recognise that division by zero is undefined.",
+            "Recognise that integer division is not always closed."
+          ],
+          "explanation": "પૂર્ણાંકોના ભાગાકારમાં પણ ગુણાકાર જેવા sign rules લાગુ પડે છે: સમાન ચિહ્નોનો quotient positive અને અલગ ચિહ્નોનો quotient negative. 0થી ભાગાકાર કરી શકાતો નથી. બે પૂર્ણાંકોનો ભાગાકાર હંમેશા પૂર્ણાંક મળે જ એવું નથી; ઉદાહરણ તરીકે 5 ÷ 2 પૂર્ણાંક નથી.",
+          "examples": [
+            "(-24) ÷ 6 = -4.",
+            "(-24) ÷ (-6) = 4.",
+            "0 ÷ 5 = 0, પરંતુ 5 ÷ 0 undefined છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(-42) ÷ 7 શોધો.",
+            "56 ÷ (-8) શોધો.",
+            "(-63) ÷ (-9) શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored",
+          "aliases": [
+            "પૂર્ણાંકોનો ભાગાકાર",
+            "પૂર્ણાંક સંખ્યાઓનો ભાગાકાર"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-fractions-decimals",
+      "number": "2",
+      "title": "અપૂર્ણાંક અને દશાંશ સંખ્યાઓ (Fractions and Decimals)",
+      "topics": [
+        {
+          "topic_id": "ch02-t01-overview",
+          "title": "Fractions and Decimals",
+          "aliases": [
+            "અપૂર્ણાંક અને દશાંશ સંખ્યાઓ"
+          ],
+          "learning_objectives": [
+            "Understand fractions as parts of a whole and decimals as place-value numbers.",
+            "Recognise when fraction and decimal operations are needed."
+          ],
+          "explanation": "અપૂર્ણાંકમાં ઉપરની સંખ્યા અંશ અને નીચેની સંખ્યા છેદ દર્શાવે છે. દશાંશ સંખ્યામાં decimal point પછીના અંકો દશાંશ, શતાંશ, સહસ્રાંશ વગેરે સ્થાનમૂલ્ય દર્શાવે છે. આ અધ્યાયમાં અપૂર્ણાંક અને દશાંશ સંખ્યાઓના ગુણાકાર અને ભાગાકાર પર ધ્યાન આપીએ છીએ.",
+          "examples": [
+            "3/4 એટલે કોઈ પૂર્ણ વસ્તુના 4 સમાન ભાગમાંથી 3 ભાગ.",
+            "0.25 એટલે 25/100, જેને 1/4 તરીકે પણ લખી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "5/8 માં અંશ અને છેદ ઓળખો.",
+            "0.7 ને દશાંશ સ્થાનમૂલ્યથી સમજાવો.",
+            "0.5 ને અપૂર્ણાંકમાં લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t02-fraction-times-whole",
+          "title": "Multiplication of a Fraction by a Whole Number",
+          "aliases": [
+            "અપૂર્ણાંકનો પૂર્ણ સંખ્યા સાથે ગુણાકાર",
+            "અપૂર્ણાંકનો પૂર્ણાંક સાથે ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply a fraction by a whole number.",
+            "Reduce the resulting fraction when possible."
+          ],
+          "explanation": "અપૂર્ણાંકનો પૂર્ણ સંખ્યા સાથે ગુણાકાર કરવા માટે પૂર્ણ સંખ્યાને અંશ સાથે ગુણો અને છેદ એ જ રાખો. પછી શક્ય હોય તો જવાબને સાદા રૂપમાં લાવો.",
+          "examples": [
+            "3/5 × 4 = 12/5 = 2 2/5.",
+            "2/7 × 3 = 6/7."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 5/6 × 3 = (5×3)/6 = 15/6 = 5/2 = 2 1/2."
+          ],
+          "practice_questions": [
+            "4/9 × 3 શોધો.",
+            "7/10 × 5 શોધો.",
+            "2/3 × 8 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t03-fraction-times-fraction",
+          "title": "Multiplication of a Fraction by a Fraction",
+          "aliases": [
+            "અપૂર્ણાંકનો અપૂર્ણાંક સાથે ગુણાકાર",
+            "બે અપૂર્ણાંકોનો ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply two fractions.",
+            "Simplify before or after multiplication."
+          ],
+          "explanation": "બે અપૂર્ણાંકોના ગુણાકારમાં અંશને અંશ સાથે અને છેદને છેદ સાથે ગુણો. ગણતરી સરળ બનાવવા માટે ગુણાકાર પહેલાં common factors કાપી શકાય છે.",
+          "examples": [
+            "2/3 × 5/7 = 10/21.",
+            "3/4 × 2/9 = 6/36 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 4/5 × 15/8. પહેલા 4 અને 8 ને 4થી, તથા 15 અને 5 ને 5થી simplify કરીએ: 1/1 × 3/2 = 3/2."
+          ],
+          "practice_questions": [
+            "3/8 × 4/5 શોધો.",
+            "7/9 × 3/14 શોધો.",
+            "5/6 × 9/10 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t04-division-fractions",
+          "title": "Division of Fractions",
+          "aliases": [
+            "અપૂર્ણાંકોનો ભાગાકાર",
+            "અપૂર્ણાંકનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Understand division of fractions through reciprocals.",
+            "Choose the correct reciprocal of the divisor."
+          ],
+          "explanation": "અપૂર્ણાંકોના ભાગાકારમાં મુખ્ય નિયમ છે: જે સંખ્યાથી ભાગીએ છીએ તેનો reciprocal લો અને પછી ગુણાકાર કરો. Reciprocal એટલે અંશ અને છેદની જગ્યા બદલી દેવી. Zero નો reciprocal નથી.",
+          "examples": [
+            "3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8.",
+            "1/2 ÷ 3 = 1/2 × 1/3 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "2/3 ÷ 4/5 શોધો.",
+            "5/7 ÷ 2 શોધો.",
+            "6 ÷ 3/4 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t05-whole-divided-by-fraction",
+          "title": "Division of Whole Number by a Fraction",
+          "aliases": [
+            "પૂર્ણ સંખ્યાનો અપૂર્ણાંક વડે ભાગાકાર",
+            "પૂર્ણાંકનો અપૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a whole number by a fraction using the reciprocal."
+          ],
+          "explanation": "પૂર્ણ સંખ્યાને અપૂર્ણાંકથી ભાગવા માટે પૂર્ણ સંખ્યાને divisor અપૂર્ણાંકના reciprocal સાથે ગુણો. પૂર્ણ સંખ્યા n ને n/1 તરીકે વિચારી શકાય.",
+          "examples": [
+            "6 ÷ 3/4 = 6 × 4/3 = 8.",
+            "5 ÷ 2/3 = 5 × 3/2 = 15/2."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 8 ÷ 4/5 = 8 × 5/4 = 40/4 = 10."
+          ],
+          "practice_questions": [
+            "7 ÷ 1/2 શોધો.",
+            "9 ÷ 3/5 શોધો.",
+            "4 ÷ 8/9 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t06-fraction-divided-by-whole",
+          "title": "Division of a Fraction by a Whole Number",
+          "aliases": [
+            "અપૂર્ણાંકનો પૂર્ણ સંખ્યા વડે ભાગાકાર",
+            "અપૂર્ણાંકનો પૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a fraction by a non-zero whole number."
+          ],
+          "explanation": "અપૂર્ણાંકને પૂર્ણ સંખ્યાથી ભાગવા માટે પૂર્ણ સંખ્યાનો reciprocal 1/n લો અને અપૂર્ણાંક સાથે ગુણો. એટલે a/b ÷ n = a/b × 1/n.",
+          "examples": [
+            "3/4 ÷ 2 = 3/4 × 1/2 = 3/8.",
+            "5/6 ÷ 5 = 5/6 × 1/5 = 1/6."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 7/9 ÷ 14 = 7/9 × 1/14 = 7/126 = 1/18."
+          ],
+          "practice_questions": [
+            "2/5 ÷ 3 શોધો.",
+            "8/9 ÷ 4 શોધો.",
+            "11/12 ÷ 2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t07-fraction-divided-by-fraction",
+          "title": "Division of a Fraction by Another Fraction",
+          "aliases": [
+            "અપૂર્ણાંકનો બીજા અપૂર્ણાંક વડે ભાગાકાર",
+            "બે અપૂર્ણાંકોનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide one fraction by another fraction.",
+            "Simplify the final answer."
+          ],
+          "explanation": "એક અપૂર્ણાંકને બીજા અપૂર્ણાંકથી ભાગવા માટે પહેલા અપૂર્ણાંકને બીજા અપૂર્ણાંકના reciprocal સાથે ગુણો. પછી મળેલા અપૂર્ણાંકને શક્ય હોય ત્યાં સુધી simplify કરો.",
+          "examples": [
+            "2/3 ÷ 5/6 = 2/3 × 6/5 = 12/15 = 4/5.",
+            "7/8 ÷ 7/4 = 7/8 × 4/7 = 1/2."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 9/10 ÷ 3/5 = 9/10 × 5/3. 9 અને 3 simplify કરીને 3, તથા 5 અને 10 simplify કરીને 1/2 મળે; તેથી જવાબ 3/2."
+          ],
+          "practice_questions": [
+            "3/7 ÷ 2/5 શોધો.",
+            "5/12 ÷ 10/9 શોધો.",
+            "4/15 ÷ 8/25 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t08-decimal-multiplication",
+          "title": "Multiplication of Decimal Numbers",
+          "aliases": [
+            "દશાંશ સંખ્યાઓનો ગુણાકાર",
+            "દશાંશનો ગુણાકાર"
+          ],
+          "learning_objectives": [
+            "Multiply decimal numbers accurately.",
+            "Place the decimal point using total decimal places."
+          ],
+          "explanation": "દશાંશ સંખ્યાઓના ગુણાકારમાં પહેલા decimal point ને થોડા સમય માટે અવગણીને પૂર્ણ સંખ્યાની જેમ ગુણાકાર કરો. પછી બંને factorsમાં decimal પછી કુલ જેટલા અંકો હતા એટલા અંક જમણી બાજુથી ગણીને જવાબમાં decimal point મૂકો.",
+          "examples": [
+            "2.4 × 1.5: 24 × 15 = 360; કુલ 2 decimal places હોવાથી જવાબ 3.60 = 3.6.",
+            "0.7 × 0.3 = 0.21."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 1.25 × 0.4. 125 × 4 = 500. કુલ 3 decimal places હોવાથી 0.500 = 0.5."
+          ],
+          "practice_questions": [
+            "3.2 × 1.4 શોધો.",
+            "0.6 × 0.08 શોધો.",
+            "2.75 × 1.2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t09-decimal-times-powers-ten",
+          "title": "Multiplication of Decimal Numbers by 10, 100 and 1000",
+          "aliases": [
+            "દશાંશ સંખ્યાનો 10 100 1000 વડે ગુણાકાર",
+            "દશાંશને 10 100 1000 થી ગુણો"
+          ],
+          "learning_objectives": [
+            "Multiply decimals by powers of ten using place value."
+          ],
+          "explanation": "દશાંશ સંખ્યાને 10, 100 અથવા 1000થી ગુણીએ ત્યારે decimal point અનુક્રમે 1, 2 અથવા 3 સ્થાન જમણી તરફ ખસે છે. જરૂર પડે તો અંતે zero ઉમેરો.",
+          "examples": [
+            "2.35 × 10 = 23.5.",
+            "2.35 × 100 = 235.",
+            "0.48 × 1000 = 480."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4.27 × 10 શોધો.",
+            "0.063 × 100 શોધો.",
+            "5.009 × 1000 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t10-decimal-division",
+          "title": "Division of Decimal Numbers",
+          "aliases": [
+            "દશાંશ સંખ્યાઓનો ભાગાકાર",
+            "દશાંશનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide decimal numbers using place value and equivalent scaling."
+          ],
+          "explanation": "દશાંશ ભાગાકારમાં divisor કઈ જાતનો છે તે જુઓ. પૂર્ણ સંખ્યા divisor હોય તો સામાન્ય long division સાથે decimal point યોગ્ય સ્થાન પર મૂકો. divisor પણ decimal હોય તો બંને સંખ્યાને 10, 100, 1000 વગેરેના સમાન ગુણકથી ગુણ કરીને divisor ને પૂર્ણ સંખ્યા બનાવો.",
+          "examples": [
+            "12.6 ÷ 3 = 4.2.",
+            "4.5 ÷ 0.5 = 45 ÷ 5 = 9."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "8.4 ÷ 2 શોધો.",
+            "6.25 ÷ 0.5 શોધો.",
+            "3.6 ÷ 1.2 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t11-decimal-divide-powers-ten",
+          "title": "Division by 10, 100 and 1000",
+          "aliases": [
+            "દશાંશ સંખ્યાનો 10 100 1000 વડે ભાગાકાર",
+            "દશાંશને 10 100 1000 થી ભાગો"
+          ],
+          "learning_objectives": [
+            "Divide decimals by powers of ten using place value."
+          ],
+          "explanation": "કોઈ સંખ્યાને 10, 100 અથવા 1000થી ભાગીએ ત્યારે decimal point અનુક્રમે 1, 2 અથવા 3 સ્થાન ડાબી તરફ ખસે છે. ડાબી બાજુ સ્થાન ન હોય તો જરૂરી zero ઉમેરો.",
+          "examples": [
+            "31.5 ÷ 10 = 3.15.",
+            "31.5 ÷ 100 = 0.315.",
+            "31.5 ÷ 1000 = 0.0315."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "48.2 ÷ 10 શોધો.",
+            "7.5 ÷ 100 શોધો.",
+            "63 ÷ 1000 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t12-decimal-divided-by-whole",
+          "title": "Division of Decimal Number by a Whole Number",
+          "aliases": [
+            "દશાંશ સંખ્યાનો પૂર્ણ સંખ્યા વડે ભાગાકાર",
+            "દશાંશનો પૂર્ણાંક વડે ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Divide a decimal number by a non-zero whole number."
+          ],
+          "explanation": "દશાંશ સંખ્યાને પૂર્ણ સંખ્યાથી ભાગતી વખતે સામાન્ય long division કરો. Dividendના decimal pointની સીધી ઉપર quotientમાં decimal point મૂકો. જરૂર પડે તો dividendની જમણી બાજુ zero ઉમેરી શકાય.",
+          "examples": [
+            "6.4 ÷ 2 = 3.2.",
+            "25.5 ÷ 5 = 5.1."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 7.35 ÷ 3 = 2.45, કારણ કે 2.45 × 3 = 7.35."
+          ],
+          "practice_questions": [
+            "9.6 ÷ 4 શોધો.",
+            "18.75 ÷ 5 શોધો.",
+            "4.32 ÷ 8 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch02-t13-decimal-divided-by-decimal",
+          "title": "Division of Decimal Number by Another Decimal Number",
+          "aliases": [
+            "દશાંશ સંખ્યાનો બીજી દશાંશ સંખ્યા વડે ભાગાકાર",
+            "બે દશાંશ સંખ્યાઓનો ભાગાકાર"
+          ],
+          "learning_objectives": [
+            "Convert a decimal divisor to a whole number before division."
+          ],
+          "explanation": "એક દશાંશ સંખ્યાને બીજી દશાંશ સંખ્યાથી ભાગવા માટે divisorમાં decimal પછી જેટલા અંક હોય એટલા સ્થાન decimal point જમણી તરફ ખસેડો. Dividendમાં પણ decimal point એટલા જ સ્થાન ખસેડવો જરૂરી છે. પછી સામાન્ય ભાગાકાર કરો.",
+          "examples": [
+            "25.5 ÷ 0.5 = 255 ÷ 5 = 51.",
+            "3.75 ÷ 1.5 = 37.5 ÷ 15 = 2.5."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 2.04 ÷ 0.12 = 204 ÷ 12 = 17."
+          ],
+          "practice_questions": [
+            "4.8 ÷ 0.6 શોધો.",
+            "7.2 ÷ 1.2 શોધો.",
+            "0.84 ÷ 0.07 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-data-handling",
+      "number": "3",
+      "title": "માહિતીનું નિયમન (Data Handling)",
+      "topics": [
+        {
+          "topic_id": "ch03-t01-overview",
+          "title": "Data Handling",
+          "aliases": [
+            "માહિતીનું નિયમન",
+            "માહિતીનું સંચાલન"
+          ],
+          "learning_objectives": [
+            "Organise numerical data so that it is easier to read and compare.",
+            "Choose suitable representative values and graphical displays."
+          ],
+          "explanation": "માહિતીનું નિયમન એટલે એકત્ર કરેલી સંખ્યાત્મક માહિતી ગોઠવવી, તેનો સાર કાઢવો અને તેને સરળ રીતે સમજાય એવી રીતે રજૂ કરવી. આ માટે સરેરાશ, વિસ્તાર, બહુલક, મધ્યક, tally/frequency table અને bar graph જેવા સાધનો ઉપયોગી છે.",
+          "examples": [
+            "એક વર્ગના વિદ્યાર્થીઓના ગુણ ગોઠવીને average, mode અને median શોધી શકાય.",
+            "વિવિધ દિવસોના વેચાણને bar graphમાં દર્શાવીને તરત સરખામણી કરી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Data handling શા માટે ઉપયોગી છે?",
+            "એકત્ર કરેલી માહિતી રજૂ કરવાની બે રીત લખો.",
+            "Representative value શું બતાવે છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t02-representative-values",
+          "title": "Representative Values",
+          "aliases": [
+            "પ્રતિનિધિ મૂલ્યો",
+            "પ્રતિનિધિ મૂલ્ય",
+            "Representative Value"
+          ],
+          "learning_objectives": [
+            "Understand why one value can be used to summarise a data set.",
+            "Distinguish common representative values such as mean, median and mode."
+          ],
+          "explanation": "ઘણી સંખ્યાઓની સંપૂર્ણ યાદી જોવાને બદલે ક્યારેક એક એવી સંખ્યા જોઈએ છે જે આખા data setનું સામાન્ય ચિત્ર આપે. આવી સંખ્યાને representative value કહી શકાય. Mean, median અને mode અલગ રીતે dataનું પ્રતિનિધિત્વ કરે છે.",
+          "examples": [
+            "5 બાળકોના ગુણ 40, 45, 50, 55, 60 હોય તો mean 50 આખા સમૂહનું મધ્યમ સ્તર બતાવે છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Representative valueનો હેતુ શું છે?",
+            "Mean, median અને modeમાંથી કયા representative values છે?",
+            "એક data set માટે એકથી વધુ representative values કેમ હોઈ શકે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t03-arithmetic-mean",
+          "title": "Arithmetic Mean",
+          "aliases": [
+            "ગાણિતિક સરેરાશ",
+            "સરેરાશ",
+            "અંકગણિતીય સરેરાશ",
+            "Mean",
+            "Average"
+          ],
+          "learning_objectives": [
+            "Calculate arithmetic mean from ungrouped data.",
+            "Use mean to compare small data sets."
+          ],
+          "explanation": "Arithmetic mean અથવા સરેરાશ શોધવા માટે બધા observationsનો સરવાળો કરો અને observationsની સંખ્યાથી ભાગો. સૂત્ર: Mean = observationsનો કુલ સરવાળો ÷ observationsની સંખ્યા.",
+          "examples": [
+            "4, 5, 3, 4, 4 નો mean = (4+5+3+4+4) ÷ 5 = 20 ÷ 5 = 4.",
+            "10, 20, 30 નો mean = 60 ÷ 3 = 20."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 12, 15, 9, 14. કુલ = 50 અને observations = 4, તેથી mean = 50 ÷ 4 = 12.5."
+          ],
+          "practice_questions": [
+            "6, 8, 10, 12 નો mean શોધો.",
+            "15, 20, 25, 30, 35 નો mean શોધો.",
+            "4 સંખ્યાઓનો સરવાળો 72 હોય તો mean કેટલો?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t04-range",
+          "title": "Range",
+          "aliases": [
+            "વિસ્તાર",
+            "માહિતીનો વિસ્તાર",
+            "રેન્જ"
+          ],
+          "learning_objectives": [
+            "Calculate the range of a data set.",
+            "Use range as a simple measure of spread."
+          ],
+          "explanation": "Range data કેટલું ફેલાયેલું છે તેનો સરળ માપ છે. Range = સૌથી મોટી કિંમત − સૌથી નાની કિંમત. Range મોટો હોય તો values વધારે ફેલાયેલી હોય છે.",
+          "examples": [
+            "23, 26, 28, 32, 35 માટે range = 35 − 23 = 12.",
+            "5, 5, 6, 6 માટે range = 6 − 5 = 1."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "12, 18, 9, 25, 14 નો range શોધો.",
+            "સૌથી મોટી value 80 અને નાની value 35 હોય તો range કેટલો?",
+            "Range 0 ક્યારે મળે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t05-mode",
+          "title": "Mode",
+          "aliases": [
+            "બહુલક",
+            "મોડ",
+            "સૌથી વધુ વાર આવતું મૂલ્ય"
+          ],
+          "learning_objectives": [
+            "Identify the mode of a data set.",
+            "Recognise data sets with one mode, more than one mode or no mode."
+          ],
+          "explanation": "Mode અથવા બહુલક એ value છે જે data setમાં સૌથી વધુ વાર આવે છે. જો બે values સમાન સૌથી વધારે વાર આવે તો data setને બે modes હોઈ શકે. કોઈ value repeat ન થાય તો mode ન પણ હોય.",
+          "examples": [
+            "2, 3, 3, 4, 5 માં mode = 3.",
+            "1, 1, 2, 2, 3 માં 1 અને 2 બંને modes છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "4, 6, 6, 7, 8, 6, 9 નો mode શોધો.",
+            "2, 3, 4, 5 માં mode છે કે નહીં?",
+            "1, 2, 2, 3, 3 માં modes લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t06-frequency-tally",
+          "title": "Frequency Tables and Tally Marks",
+          "aliases": [
+            "આવૃત્તિ કોષ્ટક અને ટેલી માર્ક્સ",
+            "આવૃત્તિ કોષ્ટક",
+            "ટેલી માર્ક્સ",
+            "Tally Marks",
+            "Tally Mark",
+            "Frequency Table",
+            "Frequency Tables"
+          ],
+          "learning_objectives": [
+            "Organise repeated observations using tally marks.",
+            "Convert tally marks into frequencies."
+          ],
+          "explanation": "ઘણી observationsમાં દરેક value કેટલી વાર આવે છે તે ગણવા frequency table ઉપયોગી છે. Tally marksમાં સામાન્ય રીતે પાંચમી ગણતરી પહેલાંની ચાર vertical marksને કાપતી diagonal markથી બતાવવામાં આવે છે, જેથી ગણતરી ઝડપથી થઈ શકે.",
+          "examples": [
+            "Data: 2, 2, 3, 3, 3, 4. Frequencies: 2→2, 3→3, 4→1."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "1, 2, 2, 2, 3, 3, 4 માટે frequency table બનાવો.",
+            "Tally marksમાં 12 observations કેવી રીતે જૂથબદ્ધ કરશો?",
+            "Frequency અને observation વચ્ચે શું ફરક છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t07-median",
+          "title": "Median",
+          "aliases": [
+            "મધ્યક",
+            "મીડિયન"
+          ],
+          "learning_objectives": [
+            "Find the median of ordered data.",
+            "Handle odd and even numbers of observations."
+          ],
+          "explanation": "Median અથવા મધ્યક dataને ascending અથવા descending orderમાં ગોઠવ્યા પછી મધ્યમાં આવતી value છે. Observationsની સંખ્યા odd હોય તો એક middle value મળે. Even હોય તો બે middle valuesનો mean median બને છે.",
+          "examples": [
+            "3, 5, 7, 9, 11 માં median = 7.",
+            "2, 4, 6, 8 માં median = (4+6) ÷ 2 = 5."
+          ],
+          "exercises": [],
+          "solutions": [
+            "ઉદાહરણ: 9, 2, 7, 5, 4 ને પહેલા 2, 4, 5, 7, 9 ગોઠવો; મધ્યની value 5 છે, તેથી median = 5."
+          ],
+          "practice_questions": [
+            "1, 3, 5, 7, 9, 11, 13 નો median શોધો.",
+            "4, 8, 10, 12 નો median શોધો.",
+            "Median શોધતાં પહેલાં data ગોઠવવું કેમ જરૂરી છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t08-bar-graph-scale",
+          "title": "Bar Graphs and Choosing a Scale",
+          "aliases": [
+            "લંબઆલેખ અને પ્રમાણમાપ",
+            "બાર ગ્રાફ અને સ્કેલ",
+            "પ્રમાણમાપ પસંદ કરવું",
+            "Bar Graph",
+            "Bar Graphs",
+            "Bar Graph Scale",
+            "Choosing a Scale"
+          ],
+          "learning_objectives": [
+            "Read and draw a bar graph.",
+            "Choose a sensible scale for the axis."
+          ],
+          "explanation": "Bar graphમાં સમાન પહોળાઈના bars data values દર્શાવે છે. Axis પર યોગ્ય scale પસંદ કરવાથી graph વાંચવો સરળ બને છે. Scale એવી હોવી જોઈએ કે values graphમાં સ્પષ્ટ રીતે fit થાય અને દરેક unitનો અર્થ સતત રહે.",
+          "examples": [
+            "જો values 100થી 600 વચ્ચે હોય તો 1 division = 100 જેવી scale યોગ્ય હોઈ શકે.",
+            "જો values 10, 20, 30, 40 હોય તો 1 division = 10 પસંદ કરી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "50, 100, 150, 200 values માટે એક યોગ્ય scale સૂચવો.",
+            "Bar graphમાં barsની પહોળાઈ સમાન કેમ રાખીએ?",
+            "Scale 1 division = 5 હોય તો 30 માટે કેટલા divisions જોઈએ?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "ch03-t09-double-bar-graph",
+          "title": "Double Bar Graph",
+          "aliases": [
+            "દ્વિ લંબઆલેખ",
+            "ડબલ બાર ગ્રાફ",
+            "દ્વિ-લંબ આલેખ",
+            "Double Bar Graphs"
+          ],
+          "learning_objectives": [
+            "Compare two related data series using a double bar graph.",
+            "Read legends and compare paired bars."
+          ],
+          "explanation": "Double bar graphમાં દરેક category માટે બે bars બાજુબાજુ મુકાય છે જેથી બે related data seriesની સીધી સરખામણી થઈ શકે. અલગ series ઓળખવા legend જરૂરી છે અને બંને series માટે એક જ scale રાખવી જોઈએ.",
+          "examples": [
+            "એક જ મહિનામાં બે શહેરોના વરસાદની સરખામણી double bar graphથી કરી શકાય.",
+            "બે termsમાં વિદ્યાર્થીઓના marks category પ્રમાણે compare કરી શકાય."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Double bar graph ક્યારે single bar graph કરતાં વધારે ઉપયોગી છે?",
+            "Legendનો ઉપયોગ શું છે?",
+            "બે series માટે અલગ scale રાખવી યોગ્ય છે? કારણ આપો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-simple-equations",
+      "number": "4",
+      "title": "સાદા સમીકરણ (Simple Equations)",
+      "topics": [
+        {
+          "topic_id": "ch04-t01-overview",
+          "title": "Simple Equations",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સાદા સમીકરણ"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-lines-angles",
+      "number": "5",
+      "title": "રેખા અને ખૂણા (Lines and Angles)",
+      "topics": [
+        {
+          "topic_id": "ch05-t01-overview",
+          "title": "Lines and Angles",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "રેખા અને ખૂણા"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-triangle-properties",
+      "number": "6",
+      "title": "ત્રિકોણ અને તેના ગુણધર્મો (The Triangle and Its Properties)",
+      "topics": [
+        {
+          "topic_id": "ch06-t01-overview",
+          "title": "The Triangle and Its Properties",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ત્રિકોણ અને તેના ગુણધર્મો"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-comparing-quantities",
+      "number": "7",
+      "title": "રાશિઓની તુલના (Comparing Quantities)",
+      "topics": [
+        {
+          "topic_id": "ch07-t01-overview",
+          "title": "Comparing Quantities",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "રાશિઓની તુલના"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-rational-numbers",
+      "number": "8",
+      "title": "સંમેય સંખ્યાઓ (Rational Numbers)",
+      "topics": [
+        {
+          "topic_id": "ch08-t01-overview",
+          "title": "Rational Numbers",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સંમેય સંખ્યાઓ"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch09-perimeter-area",
+      "number": "9",
+      "title": "પરિમિતિ અને ક્ષેત્રફળ (Perimeter and Area)",
+      "topics": [
+        {
+          "topic_id": "ch09-t01-overview",
+          "title": "Perimeter and Area",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "પરિમિતિ અને ક્ષેત્રફળ"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch10-algebraic-expressions",
+      "number": "10",
+      "title": "બીજગણિતીય પદાવલિ (Algebraic Expressions)",
+      "topics": [
+        {
+          "topic_id": "ch10-t01-overview",
+          "title": "Algebraic Expressions",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "બીજગણિતીય પદાવલિ"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch11-exponents-powers",
+      "number": "11",
+      "title": "ઘાત અને ઘાતાંક (Exponents and Powers)",
+      "topics": [
+        {
+          "topic_id": "ch11-t01-overview",
+          "title": "Exponents and Powers",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ઘાત અને ઘાતાંક"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch12-symmetry",
+      "number": "12",
+      "title": "સમમિતિ (Symmetry)",
+      "topics": [
+        {
+          "topic_id": "ch12-t01-overview",
+          "title": "Symmetry",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "સમમિતિ"
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch13-solid-shapes",
+      "number": "13",
+      "title": "ઘન આકારોનું પ્રત્યક્ષીકરણ (Visualising Solid Shapes)",
+      "topics": [
+        {
+          "topic_id": "ch13-t01-overview",
+          "title": "Visualising Solid Shapes",
+          "learning_objectives": [],
+          "explanation": "",
+          "examples": [],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [],
+          "marks_pattern": "",
+          "content_origin": "metadata_only",
+          "aliases": [
+            "ઘન આકારોનું પ્રત્યક્ષીકરણ"
+          ]
+        }
+      ]
+    }
+  ]
+}

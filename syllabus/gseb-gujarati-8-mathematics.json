@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "Gujarati",
+  "standard": 8,
+  "subject": "Mathematics",
+  "textbook": "Std-8 Mathematics — Gujarati Medium",
+  "source": {
+    "title": "Std-8 Mathematics — Gujarati Medium",
+    "publisher": "Gujarat State School Textbook Board, Gandhinagar",
+    "edition": "Revised edition 2023; reprint 2026",
+    "source_url": "https://drive.google.com/uc?id=13OdcLSVunl8sBbU0J41J1_5Z9C1uEhMf",
+    "acquired_on": "2026-08-08",
+    "official": true,
+    "notes": "Official GSSTB-linked textbook used only for chapter alignment. Tutor explanations, examples and practice are original teacher-authored content; textbook prose is not copied."
+  },
+  "chapters": [
+    {
+      "chapter_id": "ch01-rational-numbers",
+      "number": "1",
+      "title": "સંમેય સંખ્યાઓ",
+      "topics": [
+        {
+          "topic_id": "ch01-rational-numbers-overview",
+          "title": "Rational Numbers",
+          "aliases": [
+            "સંમેય સંખ્યાઓ",
+            "Rational Number",
+            "સંમેય સંખ્યા"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Rational Numbers.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "સંમેય સંખ્યા એવી સંખ્યા છે જેને p/q સ્વરૂપે લખી શકાય છે, જ્યાં p અને q પૂર્ણાંક હોય અને q શૂન્ય ન હોય. સંમેય સંખ્યાઓ પર સરવાળો, બાદબાકી, ગુણાકાર અને શૂન્ય સિવાયની સંખ્યાથી ભાગાકાર કરી શકાય છે. ગણતરીમાં ચિહ્નો અને સામાન્ય છેદ ધ્યાનથી રાખવા જરૂરી છે.",
+          "examples": [
+            "3/4 + (-1/2) = 3/4 - 2/4 = 1/4.",
+            "-2/3 × 9/4 = -18/12 = -3/2."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "5/6 - 1/4 શોધો.",
+            "-3/5 નો reciprocal લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch02-linear-equations-one-variable",
+      "number": "2",
+      "title": "એક ચલ સુરેખ સમીકરણ",
+      "topics": [
+        {
+          "topic_id": "ch02-linear-equations-one-variable-overview",
+          "title": "Linear Equations in One Variable",
+          "aliases": [
+            "એક ચલ સુરેખ સમીકરણ",
+            "Linear Equation in One Variable",
+            "Linear Equation",
+            "એક ચલનું સુરેખ સમીકરણ",
+            "સુરેખ સમીકરણ"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Linear Equations in One Variable.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "એક ચલ ધરાવતું સુરેખ સમીકરણ એવું સમીકરણ છે જેમાં ચલની સૌથી મોટી ઘાત 1 હોય છે. ઉકેલ મેળવતાં સમીકરણની બંને બાજુ સમાન ક્રિયા કરીએ છીએ જેથી ચલને એક બાજુ એકલું કરી શકાય.",
+          "examples": [
+            "3x + 5 = 20 ⇒ 3x = 15 ⇒ x = 5.",
+            "2x - 7 = 9 ⇒ 2x = 16 ⇒ x = 8."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "5x + 3 = 28 ઉકેલો.",
+            "7x - 4 = 24 ઉકેલો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch03-understanding-quadrilaterals",
+      "number": "3",
+      "title": "ચતુષ્કોણની સમજ",
+      "topics": [
+        {
+          "topic_id": "ch03-understanding-quadrilaterals-overview",
+          "title": "Understanding Quadrilaterals",
+          "aliases": [
+            "ચતુષ્કોણની સમજ",
+            "Quadrilaterals",
+            "Quadrilateral",
+            "ચતુષ્કોણ",
+            "ચતુષ્કોણો",
+            "Understanding Quadrilateral"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Understanding Quadrilaterals.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "ચતુષ્કોણ ચાર બાજુ અને ચાર ખૂણાવાળો બહુકોણ છે. ચતુષ્કોણના આંતરિક ખૂણાઓનો કુલ સરવાળો 360° થાય છે. ચોરસ, લંબચોરસ, સમચતુષ્કોણ અને સમાંતરબાજુ ચતુષ્કોણ જેવા પ્રકારોમાં બાજુઓ અને ખૂણાઓના અલગ ગુણધર્મો હોય છે.",
+          "examples": [
+            "ચતુષ્કોણના ત્રણ ખૂણા 80°, 90° અને 100° હોય તો ચોથો ખૂણો = 360° - 270° = 90°."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "ચતુષ્કોણના આંતરિક ખૂણાઓનો સરવાળો કેટલો?",
+            "ચોરસ અને લંબચોરસ વચ્ચે બે સમાનતાઓ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch04-data-handling",
+      "number": "4",
+      "title": "માહિતીનું નિયમન",
+      "topics": [
+        {
+          "topic_id": "ch04-data-handling-overview",
+          "title": "Data Handling",
+          "aliases": [
+            "માહિતીનું નિયમન",
+            "Data",
+            "માહિતી",
+            "માહિતીનું સંચાલન"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Data Handling.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "Data handlingમાં માહિતી એકત્ર કરવી, ગોઠવવી, કોષ્ટક અથવા આલેખમાં રજૂ કરવી અને તેમાંથી અર્થ કાઢવો શામેલ છે. યોગ્ય રજૂઆતથી મોટા data setની સરખામણી અને રૂઝાન સમજવા સરળ બને છે.",
+          "examples": [
+            "વિદ્યાર્થીઓના ગુણને frequency tableમાં ગોઠવી શકાય છે.",
+            "વર્ગવાર સંખ્યાઓને bar graph દ્વારા સરખાવી શકાય છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "Frequency table શું બતાવે છે?",
+            "Data રજૂ કરવાની બે graphical રીતોના નામ લખો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch05-squares-square-roots",
+      "number": "5",
+      "title": "વર્ગ અને વર્ગમૂળ",
+      "topics": [
+        {
+          "topic_id": "ch05-squares-square-roots-overview",
+          "title": "Squares and Square Roots",
+          "aliases": [
+            "વર્ગ અને વર્ગમૂળ",
+            "Square and Square Root",
+            "Square Roots",
+            "Squares",
+            "વર્ગ",
+            "વર્ગમૂળ",
+            "Square Root",
+            "Square"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Squares and Square Roots.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "કોઈ સંખ્યાને તેની જાત સાથે ગુણીએ ત્યારે તેનો વર્ગ મળે છે. કોઈ સંખ્યાનો વર્ગમૂળ એવી સંખ્યા છે જેના વર્ગથી મૂળ સંખ્યા મળે. Perfect square ઓળખવા factorisation અથવા અન્ય યોગ્ય રીત ઉપયોગી છે.",
+          "examples": [
+            "12² = 144, તેથી √144 = 12.",
+            "25² = 625, તેથી √625 = 25."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "18² શોધો.",
+            "√784 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch06-cubes-cube-roots",
+      "number": "6",
+      "title": "ઘન અને ઘનમૂળ",
+      "topics": [
+        {
+          "topic_id": "ch06-cubes-cube-roots-overview",
+          "title": "Cubes and Cube Roots",
+          "aliases": [
+            "ઘન અને ઘનમૂળ",
+            "Cube and Cube Root",
+            "Cube Roots",
+            "Cubes",
+            "ઘન",
+            "ઘનમૂળ",
+            "Cube Root",
+            "Cube"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Cubes and Cube Roots.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "કોઈ સંખ્યાને ત્રણ વખત ગુણીએ ત્યારે તેનો ઘન મળે છે: a³ = a×a×a. કોઈ સંખ્યાનો ઘનમૂળ એવી સંખ્યા છે જેના ઘનથી મૂળ સંખ્યા મળે.",
+          "examples": [
+            "4³ = 64, તેથી ∛64 = 4.",
+            "10³ = 1000, તેથી ∛1000 = 10."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "7³ શોધો.",
+            "∛1728 શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch07-comparing-quantities",
+      "number": "7",
+      "title": "રાશિઓની તુલના",
+      "topics": [
+        {
+          "topic_id": "ch07-comparing-quantities-overview",
+          "title": "Comparing Quantities",
+          "aliases": [
+            "રાશિઓની તુલના",
+            "Percentage",
+            "Percentages",
+            "Profit and Loss",
+            "Discount",
+            "રાશિની તુલના",
+            "ટકા",
+            "ટકાવારી",
+            "Comparing Quantity"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Comparing Quantities.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "રાશિઓની તુલના ratio અને percentage જેવી રીતોથી કરી શકાય છે. ટકા એટલે દર 100 માંથી ભાગ. ખરીદી-વેચાણ, નફો-નુકસાન, discount અને વ્યાજ જેવી રોજિંદી ગણતરીઓમાં percentage ખૂબ ઉપયોગી છે.",
+          "examples": [
+            "40 માંથી 10 = 10/40 × 100 = 25%.",
+            "₹500 પર 10% discount = ₹50, તેથી વેચાણ કિંમત ₹450."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "80 નું 15% શોધો.",
+            "₹1200 પર 20% discount પછી કિંમત શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch08-algebraic-expressions-identities",
+      "number": "8",
+      "title": "બીજક પદાવલિઓ અને નિત્યસમ",
+      "topics": [
+        {
+          "topic_id": "ch08-algebraic-expressions-identities-overview",
+          "title": "Algebraic Expressions and Identities",
+          "aliases": [
+            "બીજક પદાવલિઓ અને નિત્યસમ",
+            "Algebraic Expressions",
+            "Identities",
+            "બીજક પદાવલી",
+            "બીજક પદાવલિ",
+            "નિત્યસમ",
+            "Algebraic Expression",
+            "Identity"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Algebraic Expressions and Identities.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "બીજક પદાવલિમાં ચલ, અચલ અને ગણિતીય ક્રિયાઓ હોય છે. Identity એવું સમીકરણ છે જે તેમાંના ચલના સ્વીકાર્ય દરેક મૂલ્ય માટે સાચું રહે છે. જાણીતી identities વડે વિસ્તરણ અને ગણતરી સરળ બને છે.",
+          "examples": [
+            "(a+b)² = a² + 2ab + b².",
+            "(a-b)² = a² - 2ab + b²."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "(x+5)² identity વડે વિસ્તારો.",
+            "(2a-b)² વિસ્તારો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch09-mensuration",
+      "number": "9",
+      "title": "માપન",
+      "topics": [
+        {
+          "topic_id": "ch09-mensuration-overview",
+          "title": "Mensuration",
+          "aliases": [
+            "માપન",
+            "Measurement",
+            "Area and Volume",
+            "માપ",
+            "ક્ષેત્રફળ",
+            "ઘનફળ",
+            "Area",
+            "Volume"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Mensuration.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "Mensurationમાં આકારોની લંબાઈ, પરિમિતિ, ક્ષેત્રફળ, સપાટી ક્ષેત્રફળ અને ઘનફળ જેવી માપની ગણતરી થાય છે. પ્રશ્ન ઉકેલતાં યોગ્ય એકમ અને યોગ્ય સૂત્ર પસંદ કરવું જરૂરી છે.",
+          "examples": [
+            "લંબચોરસનું ક્ષેત્રફળ = લંબાઈ × પહોળાઈ.",
+            "ઘનનું ઘનફળ = બાજુ³."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "લંબાઈ 12 cm અને પહોળાઈ 5 cm હોય તો લંબચોરસનું ક્ષેત્રફળ શોધો.",
+            "બાજુ 4 cm ધરાવતા ઘનનું ઘનફળ શોધો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch10-exponents-powers",
+      "number": "10",
+      "title": "ઘાત અને ઘાતાંક",
+      "topics": [
+        {
+          "topic_id": "ch10-exponents-powers-overview",
+          "title": "Exponents and Powers",
+          "aliases": [
+            "ઘાત અને ઘાતાંક",
+            "Exponents",
+            "Powers",
+            "ઘાત",
+            "ઘાતાંક",
+            "Exponent",
+            "Power"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Exponents and Powers.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "ઘાતાંક repeated multiplicationને ટૂંકમાં લખવાની રીત છે. aⁿ માં a આધાર અને n ઘાતાંક છે. સમાન આધારવાળી ઘાતીય સંખ્યાઓમાં ગુણાકાર અને ભાગાકાર માટે ઘાતાંકના નિયમો ઉપયોગી છે.",
+          "examples": [
+            "2³ × 2⁴ = 2⁷.",
+            "5⁶ ÷ 5² = 5⁴."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "3² × 3⁵ સરળ કરો.",
+            "10⁷ ÷ 10³ સરળ કરો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch11-direct-inverse-proportions",
+      "number": "11",
+      "title": "સમપ્રમાણ અને વ્યસ્ત પ્રમાણ",
+      "topics": [
+        {
+          "topic_id": "ch11-direct-inverse-proportions-overview",
+          "title": "Direct and Inverse Proportions",
+          "aliases": [
+            "સમપ્રમાણ અને વ્યસ્ત પ્રમાણ",
+            "Direct Proportion",
+            "Inverse Proportion",
+            "Proportion",
+            "સમપ્રમાણ",
+            "વ્યસ્ત પ્રમાણ",
+            "Direct and Inverse Proportion"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Direct and Inverse Proportions.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "Direct proportionમાં એક રાશિ વધે ત્યારે બીજી રાશિ સમાન અનુપાતમાં વધે છે. Inverse proportionમાં એક રાશિ વધે ત્યારે બીજી ઘટે છે જેથી તેમનું product સ્થિર રહે.",
+          "examples": [
+            "એક વસ્તુની કિંમત ₹20 હોય તો 5 વસ્તુની કિંમત ₹100 — direct proportion.",
+            "સમાન કામ માટે કામદારો વધે તો જરૂરી દિવસો ઘટે — inverse proportion."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "3 પેન ₹45 હોય તો 8 પેનની કિંમત શોધો.",
+            "4 કામદારો કામ 12 દિવસે કરે તો સમાન દરે 8 કામદારો કેટલા દિવસ લેશે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch12-factorisation",
+      "number": "12",
+      "title": "અવયવીકરણ",
+      "topics": [
+        {
+          "topic_id": "ch12-factorisation-overview",
+          "title": "Factorisation",
+          "aliases": [
+            "અવયવીકરણ",
+            "Factors",
+            "Factorization",
+            "અવયવ",
+            "અવયવીકરણ",
+            "Factor"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Factorisation.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "Factorisation એટલે બીજક પદાવલિને એવા factorsના ગુણાકાર સ્વરૂપમાં લખવી કે જેમનો ગુણાકાર મૂળ પદાવલિ આપે. Common factor કાઢવો અને identitiesનો ઉપયોગ કરવો સામાન્ય રીતો છે.",
+          "examples": [
+            "6x + 12 = 6(x+2).",
+            "x² - 9 = (x-3)(x+3)."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "8x + 20 નું factorisation કરો.",
+            "a² - 25 નું factorisation કરો."
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "ch13-introduction-graphs",
+      "number": "13",
+      "title": "આલેખનો પરિચય",
+      "topics": [
+        {
+          "topic_id": "ch13-introduction-graphs-overview",
+          "title": "Introduction to Graphs",
+          "aliases": [
+            "આલેખનો પરિચય",
+            "Graphs",
+            "Graph",
+            "Coordinate Graph",
+            "આલેખ",
+            "નિર્દેશાંક આલેખ",
+            "Introduction to Graph"
+          ],
+          "learning_objectives": [
+            "Understand the main ideas of Introduction to Graphs.",
+            "Solve basic Std 8 level questions using the correct method."
+          ],
+          "explanation": "Graph સંખ્યાત્મક સંબંધને દૃશ્યરૂપે રજૂ કરે છે. Coordinate planeમાં horizontal axisને x-axis અને vertical axisને y-axis કહે છે. બિંદુ (x, y) લખતાં પહેલા x-coordinate અને પછી y-coordinate લખાય છે.",
+          "examples": [
+            "બિંદુ (3,2) originથી 3 એકમ જમણે અને 2 એકમ ઉપર છે.",
+            "(0,5) y-axis પર આવેલું બિંદુ છે."
+          ],
+          "exercises": [],
+          "solutions": [],
+          "practice_questions": [
+            "બિંદુ (-2,4) માટે x અને y coordinates લખો.",
+            "(5,0) કયા axis પર આવેલું છે?"
+          ],
+          "marks_pattern": "",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

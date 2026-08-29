@@ -1,0 +1,1526 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 8,
+  "subject": "English",
+  "textbook": "English First Language Standard 8 (Semester 1 & Semester 2)",
+  "source": {
+    "title": "English First Language Standard 8 (Semester 1 & Semester 2)",
+    "publisher": "Gujarat State Board of School Textbooks",
+    "edition": "First Edition 2013; Reprint 2025",
+    "pdf_sha256": {
+      "STD 8 ENGLISH F.L-SEM 1.pdf": "005371fa0f7e843aa4430bfec96b18d769c911220338aff4df60eecde37e12c8",
+      "STD 8 ENGLISH F.L-SEM 2.pdf": "b844f26ed757d5bc9de6ea97ee42e89ca628496a28a7e229dc1b654d25978421"
+    },
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-24",
+    "official": true,
+    "notes": "Official GSSTB Standard 8 English First Language Semester 1 and Semester 2 textbooks. All explanations, examples, questions, hints, and solution logic are original teacher-authored material grounded in the curriculum; copyrighted textbook passages are not reproduced."
+  },
+  "chapters": [
+    {
+      "chapter_id": "sem1-u01",
+      "number": "1",
+      "title": "Semester 1 Unit 1 - Landscapes",
+      "aliases": [
+        "Landscapes",
+        "Unit 1 Landscapes",
+        "Semester 1 Unit 1",
+        "Nature and Land Art"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u01-t1",
+          "title": "Land Art and Environmental Appreciation",
+          "aliases": [
+            "Land Art",
+            "environmental appreciation",
+            "landscape art",
+            "nature in art",
+            "Landscapes"
+          ],
+          "learning_objectives": [
+            "Explain how natural materials are transformed into Land Art.",
+            "Apply concepts of environmental appreciation in descriptive responses."
+          ],
+          "explanation": "Land Art refers to artistic creations formed directly in the natural landscape using organic elements like stones, soil, leaves, and water. Unlike museum artwork, Land Art changes naturally over time due to weather, teaching students to value nature's beauty and ephemeral character.",
+          "examples": [
+            "Creating a spiral pathway using pebbles on a riverbank is an example of Land Art.",
+            "Arranging fallen autumn leaves in concentric color patterns displays natural landscape appreciation."
+          ],
+          "exercises": [
+            "What is Land Art?",
+            "Is Land Art meant to last forever in a museum? Explain."
+          ],
+          "solutions": [
+            "Land Art is artwork created directly in nature using natural materials like rocks, sand, and plants.",
+            "No. Land Art is left in natural surroundings and naturally changes or disappears over time through weather and erosion."
+          ],
+          "practice_questions": [
+            "Name two natural materials commonly used in Land Art.",
+            "Why does Land Art encourage environmental awareness?"
+          ],
+          "practice_solutions": [
+            "Two natural materials are stones and fallen leaves. Other natural items like driftwood or sand are also correct.",
+            "It connects artistic expression directly with nature, encouraging people to observe and preserve natural environments."
+          ],
+          "marks_pattern": "State the core concept, provide supporting detail, and write in clear Grade 8 English.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u01-t2",
+          "title": "Descriptive Adjectives and Prepositions of Place",
+          "aliases": [
+            "descriptive adjectives",
+            "prepositions of place",
+            "grammar landscapes",
+            "describing scenery"
+          ],
+          "learning_objectives": [
+            "Identify descriptive adjectives and prepositions of place in sentences.",
+            "Use prepositions and vivid adjectives to construct descriptive landscape paragraphs."
+          ],
+          "explanation": "Descriptive adjectives provide specific details about sensory qualities (such as vibrant, rugged, or serene). Prepositions of place (such as beyond, beneath, across, and beside) locate objects in space. Combining them creates clear, vivid descriptive writing.",
+          "examples": [
+            "The rugged mountain rose majestic beyond the quiet valley. ('rugged' and 'serene' are descriptive adjectives; 'beyond' is a preposition of place).",
+            "Wildflowers grew densely beside the winding river. ('wild' and 'winding' describe nouns; 'beside' indicates location)."
+          ],
+          "exercises": [
+            "Identify the preposition of place in: The cabin stood beneath the tall pine trees.",
+            "Complete with an appropriate descriptive adjective: The ___ waterfall roared down the cliff. (powerful)"
+          ],
+          "solutions": [
+            "The preposition of place is beneath.",
+            "powerful"
+          ],
+          "practice_questions": [
+            "Which word is a descriptive adjective in: The peaceful stream flowed gently?",
+            "Complete: A stone bridge stretched ___ the rushing stream. (across)"
+          ],
+          "practice_solutions": [
+            "peaceful",
+            "across"
+          ],
+          "marks_pattern": "Identify or apply the exact grammar element correctly in context.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u01-t3",
+          "title": "Poetic Imagery and Nature Themes",
+          "aliases": [
+            "poetic imagery",
+            "nature themes",
+            "sensory words",
+            "metaphor in nature poetry"
+          ],
+          "learning_objectives": [
+            "Explain how poets use sensory imagery to evoke natural settings.",
+            "Identify visual and auditory imagery in nature-themed poetry."
+          ],
+          "explanation": "Poetic imagery appeals to the senses (sight, sound, touch, smell) to build vivid mental pictures. Nature poems often contrast quiet reflection with dynamic natural forces to convey feelings of wonder, peace, or resilience.",
+          "examples": [
+            "Visual imagery: 'Golden sunlight filtered through dense green canopy.'",
+            "Auditory imagery: 'The gentle rustle of dry leaves in the soft evening breeze.'"
+          ],
+          "exercises": [
+            "What sense does auditory imagery appeal to?",
+            "Identify the imagery type in: The icy wind stung our cheeks."
+          ],
+          "solutions": [
+            "Auditory imagery appeals to the sense of hearing.",
+            "Tactile imagery (sense of touch/feeling)."
+          ],
+          "practice_questions": [
+            "Why do poets use sensory details when writing about nature?",
+            "Give an example of visual imagery describing a mountain peak."
+          ],
+          "practice_solutions": [
+            "Sensory details allow readers to experience the scene vividly in their imagination.",
+            "Example: 'The snow-capped peak glistened under the bright morning sun.' Any clear visual description is correct."
+          ],
+          "marks_pattern": "State the literary device or sensory category with a supporting textual example.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem1-u02",
+      "number": "2",
+      "title": "Semester 1 Unit 2 - Man's Relationship with Animals",
+      "aliases": [
+        "Man's Relationship with Animals",
+        "Unit 2 Man's Relationship with Animals",
+        "Animal Welfare",
+        "Humans and Animals"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u02-t1",
+          "title": "Compassion, Animal Welfare and Coexistence",
+          "aliases": [
+            "compassion for animals",
+            "animal welfare",
+            "coexistence",
+            "human animal bond"
+          ],
+          "learning_objectives": [
+            "Describe the ethical responsibilities humans have toward domesticated and wild animals.",
+            "Analyse how stories highlight empathy and care for animals."
+          ],
+          "explanation": "Humans rely on animals for companionship, agriculture, and ecosystem stability. Ethical coexistence requires treating animals with kindness, respecting wildlife habitats, and preventing unnecessary harm or exploitation.",
+          "examples": [
+            "Providing clean water, shelter, and medical care for farm animals reflects animal welfare principles.",
+            "Rescuing an injured bird and contacting wildlife rehabilitators shows practical compassion."
+          ],
+          "exercises": [
+            "Why is human compassion toward animals essential for ecological balance?",
+            "Is animal welfare only concerned with household pets? Explain."
+          ],
+          "solutions": [
+            "Compassion fosters habitat protection and humane treatment, ensuring healthy ecosystems and biodiversity.",
+            "No. Animal welfare includes farm animals, working animals, stray animals, and wild species in their natural habitats."
+          ],
+          "practice_questions": [
+            "State one action an individual can take to support stray animal care.",
+            "How does habitat destruction harm human-animal coexistence?"
+          ],
+          "practice_solutions": [
+            "Providing clean water bowls during summer or supporting local animal shelters. Any practical humane action is valid.",
+            "It forces wild animals into human settlements looking for food, increasing conflict and endangering both species."
+          ],
+          "marks_pattern": "Provide clear moral/ecological rationale with realistic supporting examples.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u02-t2",
+          "title": "Past Continuous Tense and Event Sequence",
+          "aliases": [
+            "past continuous tense",
+            "was were verb-ing",
+            "event sequence",
+            "grammar past continuous"
+          ],
+          "learning_objectives": [
+            "Form and use the past continuous tense correctly.",
+            "Combine simple past and past continuous tenses to describe interrupted actions."
+          ],
+          "explanation": "The past continuous tense (was/were + verb-ing) describes an ongoing action in the past. When combined with the simple past, the past continuous shows a background activity interrupted by a sudden event.",
+          "examples": [
+            "The dog was barking loudly when the mail carrier arrived. ('was barking' is past continuous, 'arrived' is simple past).",
+            "We were walking along the trail when we spotted a deer."
+          ],
+          "exercises": [
+            "Fill in the blank with past continuous: The veterinarian ___ (examine) the wounded falcon.",
+            "Complete: While the children ___ (play) in the courtyard, a small kitten wandered in."
+          ],
+          "solutions": [
+            "was examining",
+            "were playing"
+          ],
+          "practice_questions": [
+            "Change to past continuous: She feeds the birds.",
+            "Identify the past continuous verb in: The horses were grazing peacefully in the meadow."
+          ],
+          "practice_solutions": [
+            "She was feeding the birds.",
+            "were grazing"
+          ],
+          "marks_pattern": "Use exact auxiliary (was/were) and present participle (-ing) form.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u02-t3",
+          "title": "Dialogue Writing and Speech Conventions",
+          "aliases": [
+            "dialogue writing",
+            "quotation marks",
+            "speech conventions",
+            "direct speech rules"
+          ],
+          "learning_objectives": [
+            "Format direct dialogue correctly using quotation marks and punctuation.",
+            "Write natural conversational exchanges reflecting character traits."
+          ],
+          "explanation": "Dialogue shows characters interacting directly. Correct dialogue formatting uses quotation marks around spoken words, commas before closing quotes when followed by speech tags, and new paragraphs for speaker changes.",
+          "examples": [
+            "\"Please handle the puppy gently,\" advised the shelter doctor.",
+            "Rohan asked, \"Will the injured turtle recover soon?\""
+          ],
+          "exercises": [
+            "Punctuate correctly: Where is the horse asked the rider",
+            "When writing a dialogue, should a new paragraph be used when the speaker changes?"
+          ],
+          "solutions": [
+            "\"Where is the horse?\" asked the rider.",
+            "Yes. Starting a new line or paragraph for each speaker clarifies who is talking."
+          ],
+          "practice_questions": [
+            "Fix the error: \"I found a lost dog\" said Priya.",
+            "Why are speech tags like 'replied' or 'exclaimed' useful in dialogue?"
+          ],
+          "practice_solutions": [
+            "\"I found a lost dog,\" said Priya.",
+            "They indicate who is speaking and convey the emotional tone or delivery of the utterance."
+          ],
+          "marks_pattern": "Punctuate correctly with appropriate quotes, capitalization, and speech tags.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem1-u03",
+      "number": "3",
+      "title": "Semester 1 Unit 3 - Friendship and Duty",
+      "aliases": [
+        "Friendship and Duty",
+        "Unit 3 Friendship and Duty",
+        "After Twenty Years",
+        "Duty vs Friendship"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u03-t1",
+          "title": "Moral Dilemma: Friendship Versus Professional Duty",
+          "aliases": [
+            "friendship vs duty",
+            "moral dilemma",
+            "After Twenty Years story theme",
+            "loyalty and law"
+          ],
+          "learning_objectives": [
+            "Analyse conflict between personal loyalty to a friend and official duty to uphold the law.",
+            "Evaluate character choices in narrative literature."
+          ],
+          "explanation": "A moral dilemma occurs when two fundamental values come into conflict. In classic narratives like O. Henry's 'After Twenty Years', a police officer discovers that his childhood friend has become a wanted criminal. Doing one's duty requires enforcing the law, even when personal friendship makes the decision painful.",
+          "examples": [
+            "Jimmy Wells keeps his appointment to see his old friend Bob, but performs his duty by having a fellow officer carry out the arrest.",
+            "A student supervisor reporting a close friend for cheating prioritises honesty over personal favor."
+          ],
+          "exercises": [
+            "What is the main moral conflict in Friendship and Duty?",
+            "Did Police Officer Jimmy Wells betray his duty to protect his criminal friend Bob? Explain."
+          ],
+          "solutions": [
+            "The conflict between personal loyalty to a friend and moral/legal obligation to fulfill public duty.",
+            "No. Jimmy fulfilled his official duty by ensuring Bob was arrested, though he spared himself the pain of making the arrest personally."
+          ],
+          "practice_questions": [
+            "Why did Jimmy Wells send another officer to arrest Bob instead of arresting him himself?",
+            "What theme does the story convey about law and duty?"
+          ],
+          "practice_solutions": [
+            "He could not bring himself to arrest his old friend personally because of their childhood bond.",
+            "Duty and legal obligations must be upheld impartially, even when personal feelings are involved."
+          ],
+          "marks_pattern": "State moral choice, explain reasoning clearly, and reference character actions.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u03-t2",
+          "title": "Conjunctions and Sentence Synthesis",
+          "aliases": [
+            "conjunctions",
+            "coordinating conjunctions",
+            "subordinating conjunctions",
+            "sentence synthesis"
+          ],
+          "learning_objectives": [
+            "Distinguish between coordinating (FANBOYS) and subordinating conjunctions.",
+            "Combine short sentences into compound and complex sentences using logical conjunctions."
+          ],
+          "explanation": "Conjunctions connect words, phrases, or clauses. Coordinating conjunctions (and, but, or, so, for, nor, yet) join equal clauses. Subordinating conjunctions (although, because, since, while, unless) connect a dependent clause to an independent main clause.",
+          "examples": [
+            "Jimmy recognized his friend, but he had to carry out his duty. ('but' is a coordinating conjunction).",
+            "Bob waited at the doorway because they had made a promise twenty years ago. ('because' is a subordinating conjunction)."
+          ],
+          "exercises": [
+            "Identify the conjunction in: Though Bob had traveled far, he remained punctual.",
+            "Combine into one sentence using 'although': He loved his friend. He arrested him."
+          ],
+          "solutions": [
+            "Though",
+            "Although he loved his friend, he arrested him. (or: He arrested his friend, although he loved him.)"
+          ],
+          "practice_questions": [
+            "Fill in the blank: You must obey the rules ___ you will face consequences. (or / otherwise)",
+            "Is 'because' a coordinating or subordinating conjunction?"
+          ],
+          "practice_solutions": [
+            "otherwise",
+            "Subordinating conjunction."
+          ],
+          "marks_pattern": "Select the exact logical conjunction and punctuate the combined sentence correctly.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u03-t3",
+          "title": "Character Analysis and Irony",
+          "aliases": [
+            "character analysis",
+            "dramatic irony",
+            "situational irony",
+            "story twist"
+          ],
+          "learning_objectives": [
+            "Identify situational irony and twist endings in short stories.",
+            "Write structured character trait analyses based on text evidence."
+          ],
+          "explanation": "Situational irony occurs when the outcome of an event is strikingly different from what was expected. A twist ending relies on ironic contrast—such as a loyal childhood friend turning out to be the arresting officer.",
+          "examples": [
+            "A fire station burning down is a real-world example of situational irony.",
+            "In 'After Twenty Years', Bob boasts of his success, unaware that the patrolman he spoke with was his childhood friend."
+          ],
+          "exercises": [
+            "What is situational irony?",
+            "What ironic discovery does Bob make at the end of the story?"
+          ],
+          "solutions": [
+            "Situational irony happens when an outcome turns out to be the exact opposite of what characters or readers expect.",
+            "He discovers that the patrolman he met earlier was his old friend Jimmy, who identified him as a criminal."
+          ],
+          "practice_questions": [
+            "Give one character trait of Officer Jimmy Wells.",
+            "How does ironical resolution make a short story memorable?"
+          ],
+          "practice_solutions": [
+            "Dutiful (or principled, observant, loyal yet law-abiding). Any accurate adjective supported by text is correct.",
+            "It creates a strong emotional impact and forces the reader to re-examine earlier clues in the story."
+          ],
+          "marks_pattern": "Define irony or state character trait with evidence from narrative structure.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem1-u04",
+      "number": "4",
+      "title": "Semester 1 Unit 4 - At the Theatre",
+      "aliases": [
+        "At the Theatre",
+        "Unit 4 At the Theatre",
+        "Theatre Etiquette",
+        "Audience Manners"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u04-t1",
+          "title": "Theatre Etiquette and Public Consideration",
+          "aliases": [
+            "theatre etiquette",
+            "public manners",
+            "audience behavior",
+            "consideration for others"
+          ],
+          "learning_objectives": [
+            "Identify essential rules of etiquette in public performance spaces.",
+            "Analyze humorous satire criticizing disruptive audience behavior."
+          ],
+          "explanation": "Theatre etiquette requires audiences to maintain quiet, avoid distractions like loud whispering or mobile phone use, and respect performers and fellow spectators. Humorous poems often exaggerate annoying habits to teach civic consideration gently.",
+          "examples": [
+            "Silencing mobile devices before a dramatic play begins shows good theatre etiquette.",
+            "Talking loudly during a scene spoils the dramatic experience for surrounding spectators."
+          ],
+          "exercises": [
+            "Why is silent attention important during a live stage performance?",
+            "Is whispering loudly during a play considered good audience behavior? Explain."
+          ],
+          "solutions": [
+            "Silent attention allows actors to focus on their performance and enables fellow audience members to hear and enjoy the play.",
+            "No. Whispering loudly distracts nearby viewers and ruins the acoustic atmosphere of live theatre."
+          ],
+          "practice_questions": [
+            "State two positive audience habits when attending a theater or concert.",
+            "How does satire help correct bad public manners?"
+          ],
+          "practice_solutions": [
+            "Arriving on time and switching off phone ringers. (Other valid habits: applauding at appropriate moments, remaining seated).",
+            "Satire uses humor and mild exaggeration to make people aware of annoying behaviors without sounding overly preachy."
+          ],
+          "marks_pattern": "Explain public etiquette rules and social impact clearly.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u04-t2",
+          "title": "Adverbs of Manner and Degree",
+          "aliases": [
+            "adverbs of manner",
+            "adverbs of degree",
+            "modifying verbs",
+            "grammar adverbs"
+          ],
+          "learning_objectives": [
+            "Distinguish between adverbs of manner (how) and adverbs of degree (how much).",
+            "Apply adverbs accurately to enhance sentence precision."
+          ],
+          "explanation": "Adverbs of manner describe how an action is performed (e.g., quietly, rudely, gracefully). Adverbs of degree describe the intensity or extent of an action, adjective, or another adverb (e.g., extremely, quite, very, completely).",
+          "examples": [
+            "The actors performed brilliantly. ('brilliantly' is an adverb of manner showing how they performed).",
+            "The auditorium was completely full. ('completely' is an adverb of degree modifying the adjective 'full')."
+          ],
+          "exercises": [
+            "Identify the adverb of manner in: The audience applauded enthusiastically.",
+            "Identify the adverb of degree in: The play was remarkably entertaining."
+          ],
+          "solutions": [
+            "enthusiastically",
+            "remarkably"
+          ],
+          "practice_questions": [
+            "Complete with an adverb of manner: The child whispered ___ during the film. (quietly)",
+            "What question does an adverb of degree answer?"
+          ],
+          "practice_solutions": [
+            "quietly",
+            "It answers 'to what extent?' or 'how much?'."
+          ],
+          "marks_pattern": "Identify or insert exact adverb category matching context.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u04-t3",
+          "title": "Modal Auxiliaries for Rules and Formal Politeness",
+          "aliases": [
+            "modal auxiliaries",
+            "modals of necessity",
+            "modals of permission",
+            "should must ought to"
+          ],
+          "learning_objectives": [
+            "Use modal verbs (must, should, ought to, may, can) to express obligation, advice, and polite requests.",
+            "Differentiate between strict rules and polite suggestions."
+          ],
+          "explanation": "Modal auxiliaries modify main verbs to express necessity, obligation, permission, or advice. 'Must' signals strict requirement, 'should' or 'ought to' expresses duty or advice, and 'may' or 'could' indicates polite requests or permission.",
+          "examples": [
+            "Visitors must switch off mobile phones inside the hall. ('must' indicates compulsory rule).",
+            "You should keep your voice low. ('should' offers appropriate advice)."
+          ],
+          "exercises": [
+            "Fill with modal of strict rule: Audience members ___ not enter after the doors close. (must / should)",
+            "Fill with modal of polite advice: We ___ arrive ten minutes early to find our seats. (should / must)"
+          ],
+          "solutions": [
+            "must",
+            "should"
+          ],
+          "practice_questions": [
+            "Which modal shows polite permission: May I sit here or Must I sit here?",
+            "Complete: You ___ respect the performers by not taking flash photos."
+          ],
+          "practice_solutions": [
+            "May I sit here",
+            "should (or must / ought to)"
+          ],
+          "marks_pattern": "Select modal verb reflecting correct strength of obligation or formality.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem1-u05",
+      "number": "5",
+      "title": "Semester 1 Unit 5 - The Tiger's Claw",
+      "aliases": [
+        "The Tiger's Claw",
+        "Unit 5 The Tiger's Claw",
+        "Talkative Man stories",
+        "R.K. Narayan Malgudi"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u05-t1",
+          "title": "Suspense, Storytelling and Malgudi Narrative Technique",
+          "aliases": [
+            "suspense in storytelling",
+            "Talkative Man narrative",
+            "Malgudi fiction",
+            "exaggeration in stories"
+          ],
+          "learning_objectives": [
+            "Explain how R.K. Narayan builds suspense and humor in 'The Tiger's Claw'.",
+            "Evaluate narrative credibility and the character of the Talkative Man."
+          ],
+          "explanation": "In R.K. Narayan's fictional town of Malgudi, the 'Talkative Man' is a famous storyteller who narrates dramatic personal adventures. In 'The Tiger's Claw', he describes surviving a midnight encounter with a tiger in a remote railway station shed, blending suspense, danger, and humorous exaggeration.",
+          "examples": [
+            "Trapped in a dark station room while a tiger claws under the door creates intense narrative suspense.",
+            "The narrator presenting three tiger claws as physical proof adds humor and dramatic flair to his tall story."
+          ],
+          "exercises": [
+            "Who is the narrator in R.K. Narayan's story 'The Tiger's Claw'?",
+            "Is the Talkative Man's account completely believable, or does it include dramatic exaggeration? Explain."
+          ],
+          "solutions": [
+            "The Talkative Man.",
+            "It includes dramatic exaggeration. He presents thrilling details and physical souvenirs to convince listeners of an extraordinary escape."
+          ],
+          "practice_questions": [
+            "Where does the main conflict of 'The Tiger's Claw' take place?",
+            "How does a secluded dark setting heighten suspense in a mystery story?"
+          ],
+          "practice_solutions": [
+            "In a small station room/shed in a forest area at Koppal station.",
+            "Isolation and darkness limit visibility and escape options, making danger feel immediate and tense."
+          ],
+          "marks_pattern": "Analyze setting, narrative voice, and balance between suspense and humor.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u05-t2",
+          "title": "Compound Sentences and Coordinating Conjunctions",
+          "aliases": [
+            "compound sentences",
+            "coordinating conjunctions FANBOYS",
+            "independent clauses",
+            "sentence structure"
+          ],
+          "learning_objectives": [
+            "Identify compound sentences composed of two independent clauses.",
+            "Punctuate compound sentences correctly with commas and coordinating conjunctions."
+          ],
+          "explanation": "A compound sentence contains at least two independent clauses joined by a coordinating conjunction (for, and, nor, but, or, yet, so) or a semicolon. Each clause has its own subject and predicate and can stand alone as a complete sentence.",
+          "examples": [
+            "The wind howled outside, but the traveler remained inside the dark shed. (Two independent clauses joined by ', but').",
+            "The tiger growled fiercely, so the man climbed onto the wooden crate."
+          ],
+          "exercises": [
+            "Is this a simple or compound sentence: The tiger struck the door, but the wood held firm.",
+            "Join into a compound sentence using 'and': The lantern flickered out. Shadows filled the room."
+          ],
+          "solutions": [
+            "Compound sentence.",
+            "The lantern flickered out, and shadows filled the room."
+          ],
+          "practice_questions": [
+            "Identify the coordinating conjunction: He was terrified, yet he managed to stand silent.",
+            "What punctuation mark precedes a coordinating conjunction in a compound sentence?"
+          ],
+          "practice_solutions": [
+            "yet",
+            "A comma."
+          ],
+          "marks_pattern": "Identify clause independence and correct conjunction/comma usage.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u05-t3",
+          "title": "Active and Passive Voice in Action Narratives",
+          "aliases": [
+            "active voice",
+            "passive voice",
+            "voice in storytelling",
+            "grammar active passive"
+          ],
+          "learning_objectives": [
+            "Transform sentences between active and passive voice.",
+            "Explain when active voice is preferable for fast-paced narrative action."
+          ],
+          "explanation": "In active voice, the subject performs the action (e.g., 'The tiger clawed the door'). In passive voice, the subject receives the action (e.g., 'The door was clawed by the tiger'). Active voice creates direct, dynamic narration, while passive voice shifts focus to the object or action result.",
+          "examples": [
+            "Active: The Talkative Man brandished his heavy stick.",
+            "Passive: The heavy stick was brandished by the Talkative Man."
+          ],
+          "exercises": [
+            "Change to passive voice: The beast broke the wooden latch.",
+            "Change to active voice: Three claws were severed by the sharp knife."
+          ],
+          "solutions": [
+            "The wooden latch was broken by the beast.",
+            "The sharp knife severed three claws."
+          ],
+          "practice_questions": [
+            "Why do action stories predominantly use active voice?",
+            "Identify the voice: A loud noise was heard in the dark."
+          ],
+          "practice_solutions": [
+            "Active voice is more direct, energetic, and immediate, making action scenes vivid and fast-paced.",
+            "Passive voice."
+          ],
+          "marks_pattern": "Correctly interchange subject and object with proper tense form of verb 'to be'.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem1-u06",
+      "number": "6",
+      "title": "Semester 1 Unit 6 - The Tarnetar Fair",
+      "aliases": [
+        "The Tarnetar Fair",
+        "Unit 6 The Tarnetar Fair",
+        "Folk Fairs of Gujarat",
+        "Cultural Heritage"
+      ],
+      "unit": "Semester 1",
+      "topics": [
+        {
+          "topic_id": "s1-u06-t1",
+          "title": "Cultural Heritage, Folk Traditions and Tarnetar Fair",
+          "aliases": [
+            "Tarnetar Fair history",
+            "Gujarat folk culture",
+            "embroidered umbrellas",
+            "Trinetreshwar temple fair"
+          ],
+          "learning_objectives": [
+            "Describe the cultural significance, origin, and features of the Tarnetar Fair.",
+            "Appreciate local crafts, embroidered umbrellas, and traditional music of Gujarat."
+          ],
+          "explanation": "The Tarnetar Fair is a world-famous annual cultural event held near the Trinetreshwar Mahadev temple in Surendranagar district, Gujarat. Known for vibrant folk dance, traditional music, and exquisitely embroidered colorful umbrellas crafted by local artisans, it celebrates community heritage and matchmaking customs.",
+          "examples": [
+            "Young men carrying intricately hand-embroidered umbrellas embellished with mirror-work is a unique highlight of Tarnetar.",
+            "Ras and Garba performances accompanied by traditional dhol beats showcase authentic Gujarati folk arts."
+          ],
+          "exercises": [
+            "Where is the Tarnetar Fair held in Gujarat?",
+            "Are the umbrellas displayed at Tarnetar Fair plain rain umbrellas? Explain."
+          ],
+          "solutions": [
+            "Near the Trinetreshwar Mahadev temple in Tarnetar, Surendranagar district.",
+            "No. They are artistic, hand-embroidered umbrellas decorated with colorful threadwork, mirror-work, and traditional motifs."
+          ],
+          "practice_questions": [
+            "State two major attractions of the Tarnetar Fair.",
+            "Why are cultural fairs important for preserving regional heritage?"
+          ],
+          "practice_solutions": [
+            "Embroidered umbrellas and traditional folk dance/music performances. (Also acceptable: sports competitions, rural crafts).",
+            "They bring communities together, keep ancient artistic traditions alive, and pass cultural knowledge to younger generations."
+          ],
+          "marks_pattern": "State location, key cultural symbols, and societal importance accurately.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u06-t2",
+          "title": "Relative Clauses and Relative Pronouns",
+          "aliases": [
+            "relative clauses",
+            "relative pronouns who which that where",
+            "complex descriptive sentences"
+          ],
+          "learning_objectives": [
+            "Identify relative pronouns (who, which, that, where, whose) and relative clauses.",
+            "Combine sentences using relative clauses to add descriptive detail."
+          ],
+          "explanation": "A relative clause adds extra information about a noun using a relative pronoun. 'Who' refers to people, 'which' to animals/things, 'that' to people/things in defining clauses, and 'where' to places.",
+          "examples": [
+            "Tarnetar is a village where a famous annual fair takes place. ('where a famous annual fair takes place' is a relative clause).",
+            "The artisans who craft the colorful umbrellas spend months on intricate embroidery."
+          ],
+          "exercises": [
+            "Combine using 'who': The dancers performed energetic Garba. They wore colorful costumes.",
+            "Fill in with 'which' or 'where': This is the ancient temple ___ thousands of pilgrims visit."
+          ],
+          "solutions": [
+            "The dancers who wore colorful costumes performed energetic Garba.",
+            "where (or which)"
+          ],
+          "practice_questions": [
+            "Identify the relative clause in: The umbrella which had silver mirror-work won first prize.",
+            "Which relative pronoun is used for places?"
+          ],
+          "practice_solutions": [
+            "which had silver mirror-work",
+            "where"
+          ],
+          "marks_pattern": "Choose relative pronoun corresponding to noun antecedent.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s1-u06-t3",
+          "title": "Descriptive Essay Structure and Sensory Details",
+          "aliases": [
+            "descriptive essay",
+            "sensory writing",
+            "essay organization",
+            "writing about festivals"
+          ],
+          "learning_objectives": [
+            "Organize a descriptive essay into clear introduction, body, and conclusion paragraphs.",
+            "Incorporate vivid sensory details (sights, sounds, colors) into festival descriptions."
+          ],
+          "explanation": "A descriptive essay creates a vivid picture of a event, place, or experience. It opens with an engaging introduction establishing the topic, develops sensory and factual details across coherent body paragraphs, and ends with a thoughtful concluding impression.",
+          "examples": [
+            "Opening paragraph introducing the location and history of Tarnetar Fair.",
+            "Body paragraph combining sights (bright costumes, shining mirrors) and sounds (rhythmic drums, cheerful chatter)."
+          ],
+          "exercises": [
+            "What should the opening paragraph of a festival description contain?",
+            "Give one sensory detail appealing to hearing suitable for describing a fair."
+          ],
+          "solutions": [
+            "It should state the name of the festival/fair, its location, time of year, and overall theme.",
+            "Example: The loud booming of traditional dhols and joyful clapping of Garba dancers."
+          ],
+          "practice_questions": [
+            "Why are sensory details crucial in descriptive writing?",
+            "What is the purpose of the concluding paragraph in a descriptive essay?"
+          ],
+          "practice_solutions": [
+            "They make the scene vivid and allow the reader to imagine experiencing the place firsthand.",
+            "It summarizes the overall impression, significance, or personal reflection on the event."
+          ],
+          "marks_pattern": "Structure response into logical paragraph stages with sensory vocabulary.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u01",
+      "number": "7",
+      "title": "Semester 2 Unit 1 - Writing About Writing",
+      "aliases": [
+        "Writing About Writing",
+        "Unit 1 Writing About Writing",
+        "Semester 2 Unit 1",
+        "Process of Writing"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u01-t1",
+          "title": "The Writing Process: Brainstorming, Drafting and Revision",
+          "aliases": [
+            "writing process",
+            "brainstorming",
+            "drafting",
+            "revising and editing",
+            "stages of writing"
+          ],
+          "learning_objectives": [
+            "Identify the key stages of the writing process (prewriting, drafting, revising, editing, publishing).",
+            "Apply prewriting and revising techniques to refine original written work."
+          ],
+          "explanation": "Effective writing is a multi-step process rather than a single attempt. Prewriting involves generating ideas through mind maps or outlines; drafting focuses on putting thoughts into sentences; revising improves structure and clarity; editing corrects grammar and spelling; and publishing presents the final work.",
+          "examples": [
+            "Making a quick bullet-point list of main points before writing an essay is prewriting/brainstorming.",
+            "Reading a draft aloud to reword awkward sentences and fix punctuation is revising and editing."
+          ],
+          "exercises": [
+            "List the five standard steps of the writing process in order.",
+            "Is drafting the final step where spelling is perfected? Explain."
+          ],
+          "solutions": [
+            "Prewriting (Brainstorming), Drafting, Revising, Editing, and Publishing.",
+            "No. Drafting is creating the initial version. Polishing spelling and grammar occurs during the editing phase."
+          ],
+          "practice_questions": [
+            "What is the main goal during the prewriting stage?",
+            "How does revising differ from proofreading/editing?"
+          ],
+          "practice_solutions": [
+            "To gather ideas, organize thoughts, and plan the structure before writing full sentences.",
+            "Revising alters ideas, organization, and paragraph flow; editing fixes mechanics, grammar, and spelling."
+          ],
+          "marks_pattern": "Sequence stages correctly and distinguish structural revision from mechanical editing.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u01-t2",
+          "title": "Audience, Purpose and Tone in Writing",
+          "aliases": [
+            "audience and purpose",
+            "writing tone",
+            "formal vs informal tone",
+            "register"
+          ],
+          "learning_objectives": [
+            "Adapt tone, vocabulary, and sentence length according to target audience and purpose.",
+            "Distinguish between formal academic writing and informal personal communication."
+          ],
+          "explanation": "Every piece of writing has a target audience (who will read it) and a purpose (to inform, persuade, entertain, or explain). Formal writing avoids slang and contractions, whereas informal writing uses conversational phrasing.",
+          "examples": [
+            "Formal letter to a school principal: 'I am writing to request permission to organize a science exhibition.'",
+            "Informal message to a friend: 'Hey! Hope you can make it to our project meet tomorrow!'"
+          ],
+          "exercises": [
+            "Identify the tone (Formal or Informal): 'Respected Sir, Kindly grant me leave for two days due to fever.'",
+            "Why should slang be avoided in official school applications?"
+          ],
+          "solutions": [
+            "Formal tone.",
+            "Slang is inappropriate for official communication, which requires respectful, clear, and professional language."
+          ],
+          "practice_questions": [
+            "State three common purposes of writing.",
+            "Convert to formal tone: 'Gonna need more time for this job.'"
+          ],
+          "practice_solutions": [
+            "To inform, to persuade, and to entertain. (Also acceptable: to explain, to describe).",
+            "'Additional time will be required to complete this task.'"
+          ],
+          "marks_pattern": "Identify audience/purpose and demonstrate appropriate register adjustment.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u01-t3",
+          "title": "Strong Action Verbs and Sentence Variety",
+          "aliases": [
+            "strong action verbs",
+            "sentence variety",
+            "combining short sentences",
+            "active phrasing"
+          ],
+          "learning_objectives": [
+            "Replace weak or repetitive verbs with vivid action verbs.",
+            "Vary sentence structures (simple, compound, complex) to maintain reader interest."
+          ],
+          "explanation": "Strong action verbs make writing dynamic and clear without overusing adverbs (e.g., 'sprinted' instead of 'ran very fast'). Varying sentence length prevents monotony and builds rhythmic flow.",
+          "examples": [
+            "Weak: 'He went quickly into the room.' -> Strong: 'He dashed into the room.'",
+            "Varied flow: 'The storm raged. Waves crashed against the pier, yet the lighthouse stood firm.'"
+          ],
+          "exercises": [
+            "Replace the underlined phrase with a strong action verb: She walked slowly and heavily across the mud. (trudged / plodded)",
+            "Why should a writer avoid making every sentence the exact same length?"
+          ],
+          "solutions": [
+            "trudged (or plodded)",
+            "Varying sentence length creates a pleasant reading rhythm and keeps the reader engaged."
+          ],
+          "practice_questions": [
+            "Improve: 'The man made a decision to leave.'",
+            "Provide a strong action verb for 'look intently'."
+          ],
+          "practice_solutions": [
+            "'The man decided to leave.'",
+            "stare / gaze / scrutinize"
+          ],
+          "marks_pattern": "Substitute concise action verbs and refine sentence rhythm.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u02",
+      "number": "8",
+      "title": "Semester 2 Unit 2 - Let Me Sum Up",
+      "aliases": [
+        "Let Me Sum Up",
+        "Unit 2 Let Me Sum Up",
+        "Summarizing Skills",
+        "Note Making"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u02-t1",
+          "title": "Main Ideas, Key Details and Summary Paragraphs",
+          "aliases": [
+            "main idea vs key details",
+            "summary paragraph",
+            "condensing text",
+            "summarizing techniques"
+          ],
+          "learning_objectives": [
+            "Identify topic sentences and central themes in informative passages.",
+            "Write concise summaries in original words without including minor decorative details."
+          ],
+          "explanation": "A summary presents the main idea and essential supporting points of a text in a condensed form. Effective summarizing requires omitting minor details, personal opinions, and redundant examples while preserving original meaning.",
+          "examples": [
+            "Original 200-word article about solar energy -> 40-word summary highlighting cost reduction and environmental benefits.",
+            "Distinguishing the central argument ('Trees prevent soil erosion') from minor details ('Pine trees grow in cold regions')."
+          ],
+          "exercises": [
+            "What is the main objective when writing a summary?",
+            "Should a summary include your personal opinions about the passage? Explain."
+          ],
+          "solutions": [
+            "To capture the central ideas and essential facts of a text concisely in your own words.",
+            "No. A summary must remain objective and accurately reflect only the original author's main points."
+          ],
+          "practice_questions": [
+            "State two elements that should be left out when summarizing a text.",
+            "How long should a typical paragraph summary be relative to the original text?"
+          ],
+          "practice_solutions": [
+            "Minor illustrations, decorative anecdotes, and personal opinions.",
+            "Usually about one-third or less of the length of the original text."
+          ],
+          "marks_pattern": "Identify main idea accurately while demonstrating concise paraphrasing.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u02-t2",
+          "title": "Note-Making, Heading Structure and Abbreviations",
+          "aliases": [
+            "note making",
+            "headings and subheadings",
+            "abbreviations in notes",
+            "bulleted summaries"
+          ],
+          "learning_objectives": [
+            "Organize information logically using headings, subheadings, and bullet points.",
+            "Use standard abbreviations and symbols effectively in note-making."
+          ],
+          "explanation": "Note-making condenses long texts into structured, easy-to-read reference points. It relies on clear numbering/lettering hierarchies (Headings, Subheadings, Points), concise phrases, and recognized abbreviations (e.g., info., &., e.g., govt.).",
+          "examples": [
+            "1. Benefits of Exercise:\n   a. Physical Health\n      i. Improves heart function\n      ii. Builds stamina\n   b. Mental Wellbeing",
+            "Common abbreviations: 'dept.' for department, 'min.' for minimum, 'max.' for maximum."
+          ],
+          "exercises": [
+            "Why are full complete sentences generally avoided in structured note-making?",
+            "Write the standard abbreviation for: 'government' and 'for example'."
+          ],
+          "solutions": [
+            "Notes aim to record key information concisely; short phrases save time and highlight essential points.",
+            "govt. and e.g."
+          ],
+          "practice_questions": [
+            "What is the purpose of subheadings in note-making?",
+            "Provide standard symbols for 'and' and 'greater than'."
+          ],
+          "practice_solutions": [
+            "They group related sub-points logically under main thematic headings.",
+            "& for 'and', > for 'greater than'."
+          ],
+          "marks_pattern": "Format outline hierarchically with clear headings, bullets, and valid abbreviations.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u02-t3",
+          "title": "Transition Words and Logical Cohesion",
+          "aliases": [
+            "transition words",
+            "connectors",
+            "logical cohesion",
+            "linking words"
+          ],
+          "learning_objectives": [
+            "Identify transition words signaling contrast, sequence, cause-effect, and summary.",
+            "Use appropriate connectors to unite ideas across paragraph boundaries."
+          ],
+          "explanation": "Transition words connect ideas logically within and between paragraphs. Connectors indicate sequence (firstly, next, finally), contrast (however, on the other hand), cause/effect (consequently, therefore), or summary (in conclusion, overall).",
+          "examples": [
+            "Sequence: 'First, gather materials; next, prepare the soil; finally, plant the seed.'",
+            "Contrast: 'Solar panels reduce electricity bills; however, initial installation costs are high.'"
+          ],
+          "exercises": [
+            "Select the correct connector: The weather was rainy; ___, the outdoor match was postponed. (consequently / however)",
+            "Which transition word signals a concluding summary: Furthermore or In summary?"
+          ],
+          "solutions": [
+            "consequently",
+            "In summary"
+          ],
+          "practice_questions": [
+            "Fill in the blank with a contrast connector: She was tired, ___ she continued working.",
+            "What is the function of the transition word 'furthermore'?"
+          ],
+          "practice_solutions": [
+            "yet (or however / nevertheless)",
+            "It introduces an additional supporting point or idea."
+          ],
+          "marks_pattern": "Select exact transition word matching logical relationship.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u03",
+      "number": "9",
+      "title": "Semester 2 Unit 3 - Points of View",
+      "aliases": [
+        "Points of View",
+        "Unit 3 Points of View",
+        "Narrative Perspective",
+        "First vs Third Person"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u03-t1",
+          "title": "Narrative Perspective: First-Person and Third-Person",
+          "aliases": [
+            "first-person point of view",
+            "third-person point of view",
+            "narrator perspective",
+            "narrative voice"
+          ],
+          "learning_objectives": [
+            "Identify first-person (I/we) and third-person (he/she/they) narrative perspectives.",
+            "Analyze how narrator perspective shapes story information and reader empathy."
+          ],
+          "explanation": "Point of view determines who tells the story. A first-person narrator is a character inside the story who uses 'I' or 'we', sharing immediate personal thoughts. A third-person narrator stands outside the action, using 'he', 'she', 'they', or character names.",
+          "examples": [
+            "First-person: 'I opened the creaky door and held my breath as I looked inside.'",
+            "Third-person: 'Raman opened the creaky door and held his breath as he looked inside.'"
+          ],
+          "exercises": [
+            "Identify the narrative point of view: 'We packed our bags and headed toward the hilltop.'",
+            "Can a first-person narrator describe private thoughts of other characters when absent? Explain."
+          ],
+          "solutions": [
+            "First-person point of view.",
+            "No. A first-person narrator can only share their own observations and thoughts, not what others privately think."
+          ],
+          "practice_questions": [
+            "Which pronouns indicate a third-person narrative perspective?",
+            "Change from first-person to third-person: 'I saw the shadow and panicked.'"
+          ],
+          "practice_solutions": [
+            "He, she, it, they, and character proper names.",
+            "'He (or she) saw the shadow and panicked.'"
+          ],
+          "marks_pattern": "Identify pronoun indicators and explain perspective limitations accurately.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u03-t2",
+          "title": "Character Viewpoints and Divergent Perspectives",
+          "aliases": [
+            "character viewpoints",
+            "divergent perspectives",
+            "multiple viewpoints",
+            "empathy in storytelling"
+          ],
+          "learning_objectives": [
+            "Compare how different characters perceive the same event.",
+            "Understand how background, goals, and emotions create contrasting viewpoints."
+          ],
+          "explanation": "Different characters interpret the same situation differently based on their values, past experiences, and goals. Exploring multiple perspectives builds critical thinking, empathy, and narrative depth.",
+          "examples": [
+            "A sudden rainstorm brings joy to a farmer whose crops need water, but disappointment to a cricket player whose match is canceled.",
+            "In a fable, the wolf and the shepherd view the flock of sheep from opposite perspectives."
+          ],
+          "exercises": [
+            "Why might two characters describe the exact same accident in different ways?",
+            "In a debate about school uniform policy, name two contrasting viewpoints."
+          ],
+          "solutions": [
+            "Because their physical location, emotional state, personal bias, and focus of attention differ.",
+            "One viewpoint favors uniforms for equality and simplicity; another opposes them to encourage personal expression."
+          ],
+          "practice_questions": [
+            "How does exploring multiple character perspectives enrich a story?",
+            "Give an example of a situation where a child and an adult have different viewpoints."
+          ],
+          "practice_solutions": [
+            "It presents a balanced, realistic picture and helps readers understand different motivations.",
+            "Example: Buying a toy—the child views it as a source of fun, while the parent views it in terms of cost and durability."
+          ],
+          "marks_pattern": "State contrasting viewpoints clearly with underlying reasons.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u03-t3",
+          "title": "Pronoun Agreement and Perspective Shift",
+          "aliases": [
+            "pronoun agreement",
+            "perspective shift",
+            "pronoun antecedent",
+            "grammar pronouns"
+          ],
+          "learning_objectives": [
+            "Ensure consistent pronoun-antecedent agreement in gender and number.",
+            "Avoid accidental, confusing shifts in narrative perspective within a paragraph."
+          ],
+          "explanation": "Pronouns must agree in number (singular/plural) and person (1st, 2nd, 3rd) with their antecedents. Writers must avoid shifting unnecessarily between 'I', 'you', and 'one' within the same paragraph.",
+          "examples": [
+            "Correct agreement: 'Each student brought their own notebook.' or 'Every student brought his or her notebook.'",
+            "Confusing shift: 'When a person enters the library, you should remain quiet.' -> Corrected: 'When a person enters the library, he or she should remain quiet.'"
+          ],
+          "exercises": [
+            "Fix the pronoun shift: If a student works hard, you will succeed.",
+            "Identify the pronoun antecedent error: The committee gave their decision."
+          ],
+          "solutions": [
+            "If a student works hard, he or she will succeed. (or: If students work hard, they will succeed.)",
+            "'committee' is a singular collective noun; it should be 'its decision' (or use plural noun 'committee members')."
+          ],
+          "practice_questions": [
+            "Why is shifting from 'I' to 'you' mid-paragraph problematic?",
+            "Fill in the blank with correct pronoun: Every player must do ___ best. (his or her / their)"
+          ],
+          "practice_solutions": [
+            "It confuses the reader regarding who is experiencing or performing the action.",
+            "his or her (or their in modern singular usage)"
+          ],
+          "marks_pattern": "Identify pronoun error and correct number/person consistency.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u04",
+      "number": "10",
+      "title": "Semester 2 Unit 4 - My Point of View",
+      "aliases": [
+        "My Point of View",
+        "Unit 4 My Point of View",
+        "Persuasive Writing",
+        "Opinion Essays"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u04-t1",
+          "title": "Formulating Opinion Claims and Persuasive Arguments",
+          "aliases": [
+            "opinion claims",
+            "persuasive arguments",
+            "opinion essay",
+            "stating a thesis"
+          ],
+          "learning_objectives": [
+            "Formulate clear, debatable thesis claims expressing a personal point of view.",
+            "Support claims with logical reasoning, facts, and relevant examples."
+          ],
+          "explanation": "Expressing an effective point of view requires a clear claim (thesis statement) supported by valid reasons and evidence. Unlike a blind assertion, a persuasive argument anticipates questions and explains why a stance is sound.",
+          "examples": [
+            "Clear claim: 'Daily physical activity should be mandatory in schools because it improves concentration and reduces stress.'",
+            "Supporting reason: 'Studies show that exercise increases blood flow to the brain, enhancing focus during lessons.'"
+          ],
+          "exercises": [
+            "What is a thesis claim in persuasive writing?",
+            "Is the statement 'Chocolate tastes good' a strong persuasive thesis claim? Explain."
+          ],
+          "solutions": [
+            "A thesis claim is the central statement asserting the writer's position on a debatable topic.",
+            "No. It is a simple personal preference rather than a reasoned, debatable argument supported by facts."
+          ],
+          "practice_questions": [
+            "State two components of a persuasive paragraph.",
+            "Write a clear claim statement about tree plantation."
+          ],
+          "practice_solutions": [
+            "A clear opinion claim and supporting evidence or reasons.",
+            "Example: 'Every community should plant native trees annually to combat urban heat and restore local wildlife.'"
+          ],
+          "marks_pattern": "State clear claim with logical supporting grounds.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u04-t2",
+          "title": "Respectful Disagreement and Counter-Argument",
+          "aliases": [
+            "respectful disagreement",
+            "counter-argument",
+            "rebuttal",
+            "debate language"
+          ],
+          "learning_objectives": [
+            "Acknowledge opposing viewpoints respectfully using counter-argument phrases.",
+            "Provide constructive rebuttals without resorting to personal insults."
+          ],
+          "explanation": "Mature persuasive writing addresses counter-arguments—opposing views held by others—and responds with polite, evidence-based rebuttals. Phrasing like 'While some may argue..., evidence suggests...' demonstrates fairness and strengthens the writer's credibility.",
+          "examples": [
+            "Counter-argument & Rebuttal: 'While critics argue that smartphones distract students, controlled educational apps can actually enhance learning when supervised.'",
+            "Polite disagreement: 'I understand your point regarding cost; however, the long-term benefits outweigh the initial expense.'"
+          ],
+          "exercises": [
+            "Why is addressing a counter-argument helpful in persuasive writing?",
+            "Which phrase indicates respectful disagreement: 'You are completely wrong' or 'While I understand your point, I disagree because...'"
+          ],
+          "solutions": [
+            "It shows that the writer has considered different perspectives, making their overall argument stronger and fairer.",
+            "'While I understand your point, I disagree because...'"
+          ],
+          "practice_questions": [
+            "What is a rebuttal in a debate?",
+            "Complete: While some believe homework should be abolished, ___."
+          ],
+          "practice_solutions": [
+            "A response that explains why an opposing counter-argument is flawed or incomplete.",
+            "Example: '...moderate practice reinforces classroom learning effectively.' Any logical rebuttal is valid."
+          ],
+          "marks_pattern": "Identify counter-argument and craft polite, logical rebuttal.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u04-t3",
+          "title": "Modal Verbs of Stance and Opinion Expressions",
+          "aliases": [
+            "modal verbs of stance",
+            "opinion expressions",
+            "expressing probability",
+            "in my opinion"
+          ],
+          "learning_objectives": [
+            "Use stance markers (in my view, strongly believe, research indicates) appropriately.",
+            "Calibrate argument strength using modal verbs (should, must, could, might)."
+          ],
+          "explanation": "Writers use stance expressions to indicate how strongly they hold a position. Strong modals like 'must' or 'should' express firm recommendations, while conditional modals like 'could' or 'might' indicate possibility or moderate suggestions.",
+          "examples": [
+            "Firm stance: 'We must take immediate steps to reduce plastic waste.'",
+            "Moderate proposal: 'Schools could introduce recycling competitions to encourage students.'"
+          ],
+          "exercises": [
+            "Identify the stance expression in: In my view, library books should be free for all students.",
+            "Which modal shows stronger recommendation: 'We might plant trees' or 'We ought to plant trees'?"
+          ],
+          "solutions": [
+            "In my view",
+            "'We ought to plant trees'"
+          ],
+          "practice_questions": [
+            "Fill in the blank with a strong stance phrase: ___, outdoor sports build team spirit.",
+            "Why is overusing extreme words like 'always' or 'never' risky in opinion essays?"
+          ],
+          "practice_solutions": [
+            "I firmly believe (or In my opinion / Without a doubt)",
+            "Extreme words make claims easy to disprove with a single counter-example."
+          ],
+          "marks_pattern": "Select opinion marker or modal matching intended persuasive force.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u05",
+      "number": "11",
+      "title": "Semester 2 Unit 5 - What's the Evidence?",
+      "aliases": [
+        "What's the Evidence?",
+        "Unit 5 What's the Evidence?",
+        "Fact vs Opinion",
+        "Evidence-Based Thinking"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u05-t1",
+          "title": "Distinguishing Fact from Opinion",
+          "aliases": [
+            "fact vs opinion",
+            "verifiable facts",
+            "subjective opinions",
+            "evaluating statements"
+          ],
+          "learning_objectives": [
+            "Distinguish between objective, verifiable facts and subjective personal opinions.",
+            "Evaluate statements found in articles and informational texts for factual accuracy."
+          ],
+          "explanation": "A fact is a statement that can be proven true or false through objective evidence, measurements, or official records. An opinion is a personal belief, feeling, or judgment that cannot be empirically proven true for everyone.",
+          "examples": [
+            "Fact: 'Gujarat has a coastline extending over 1,600 kilometers.' (Verifiable geographical measurement).",
+            "Opinion: 'Gujarat has the most beautiful coastline in India.' (Subjective personal aesthetic judgment)."
+          ],
+          "exercises": [
+            "Classify as Fact or Opinion: 'Water boils at 100 degrees Celsius at sea level.'",
+            "Classify as Fact or Opinion: 'Science is the most interesting school subject.'"
+          ],
+          "solutions": [
+            "Fact",
+            "Opinion"
+          ],
+          "practice_questions": [
+            "What test can be applied to determine if a statement is a fact?",
+            "Convert this opinion into a factual statement: 'The summer heat in Ahmedabad is unbearable.'"
+          ],
+          "practice_solutions": [
+            "Check if the statement can be verified or measured using reliable, objective data.",
+            "Example: 'Temperatures in Ahmedabad frequently exceed 40 degrees Celsius during summer.'"
+          ],
+          "marks_pattern": "Classify statement accurately and state proof/verification criterion.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u05-t2",
+          "title": "Types of Textual Evidence and Citation",
+          "aliases": [
+            "textual evidence",
+            "citation",
+            "supporting details",
+            "quotations and statistics"
+          ],
+          "learning_objectives": [
+            "Identify different forms of evidence (statistics, expert testimony, direct quotes, factual observations).",
+            "Integrate textual evidence smoothly into explanatory responses."
+          ],
+          "explanation": "Evidence supports claims and makes arguments trustworthy. Common evidence types include statistical data (numbers/percentages), expert statements (quotes from authority figures), and direct observations recorded from primary sources.",
+          "examples": [
+            "Statistical evidence: 'According to the survey, 85% of residents support local recycling.'",
+            "Expert evidence: 'Dr. Mehta, a marine biologist, stated that coral reefs protect coastal shores.'"
+          ],
+          "exercises": [
+            "What type of evidence uses numbers and percentages?",
+            "Why is quoting an expert more reliable than quoting an unverified rumor?"
+          ],
+          "solutions": [
+            "Statistical evidence.",
+            "Experts possess specialized knowledge, training, and verified research background in their field."
+          ],
+          "practice_questions": [
+            "Identify the evidence type: 'The report indicated that rain fell on 14 out of 30 days in July.'",
+            "How should direct quotations from a text be punctuated?"
+          ],
+          "practice_solutions": [
+            "Statistical / factual data.",
+            "Enclosed in double quotation marks with source attribution."
+          ],
+          "marks_pattern": "Categorize evidence type correctly and explain credibility value.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u05-t3",
+          "title": "Cause and Effect Relationships and Connectors",
+          "aliases": [
+            "cause and effect",
+            "cause effect connectors",
+            "because as a result",
+            "reasoning"
+          ],
+          "learning_objectives": [
+            "Identify cause (why something happens) and effect (the result) in passages.",
+            "Use cause-and-effect connectors (because, since, as a result, consequently, leads to) accurately."
+          ],
+          "explanation": "A cause is the reason behind an event; an effect is the outcome or result that follows. Connecting words like 'because' and 'since' introduce the cause, while 'therefore', 'consequently', and 'as a result' introduce the effect.",
+          "examples": [
+            "Heavy rainfall flooded the low-lying roads. (Cause: Heavy rainfall; Effect: flooded roads).",
+            "Because the dam was well-maintained, it safely held the monsoon floodwaters."
+          ],
+          "exercises": [
+            "Identify the cause in: The match was canceled due to dense fog.",
+            "Complete with a result connector: She studied diligently every evening; ___, she scored top marks. (consequently / because)"
+          ],
+          "solutions": [
+            "dense fog",
+            "consequently"
+          ],
+          "practice_questions": [
+            "What is the difference between a cause and an effect?",
+            "Join using 'since': The bridge was damaged. Traffic was diverted."
+          ],
+          "practice_solutions": [
+            "A cause is the event or reason that triggers an action; an effect is the resulting outcome.",
+            "Since the bridge was damaged, traffic was diverted."
+          ],
+          "marks_pattern": "Isolate cause from effect and apply exact causal transition word.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sem2-u06",
+      "number": "12",
+      "title": "Semester 2 Unit 6 - Careful Analysis",
+      "aliases": [
+        "Careful Analysis",
+        "Unit 6 Careful Analysis",
+        "Textual Analysis",
+        "Literary Devices"
+      ],
+      "unit": "Semester 2",
+      "topics": [
+        {
+          "topic_id": "s2-u06-t1",
+          "title": "Literary Devices: Metaphor, Simile and Personification",
+          "aliases": [
+            "literary devices",
+            "metaphor",
+            "simile",
+            "personification",
+            "figurative language"
+          ],
+          "learning_objectives": [
+            "Identify and distinguish metaphor, simile, and personification in prose and poetry.",
+            "Explain how figurative language enhances meaning and emotional depth."
+          ],
+          "explanation": "Figurative language creates imaginative comparisons. A simile compares two things using 'like' or 'as' ('as brave as a lion'). A metaphor states a direct comparison without using 'like' or 'as' ('time is a thief'). Personification gives human actions or feelings to non-human things ('the wind whispered through the trees').",
+          "examples": [
+            "Simile: 'His voice was as smooth as velvet.'",
+            "Metaphor: 'Knowledge is a key that unlocks new opportunities.'",
+            "Personification: 'The angry storm pounded against the window shutter.'"
+          ],
+          "exercises": [
+            "Classify as Simile, Metaphor, or Personification: 'The moon played hide and seek behind the clouds.'",
+            "Classify as Simile or Metaphor: 'Her smile was bright like sunshine.'"
+          ],
+          "solutions": [
+            "Personification",
+            "Simile"
+          ],
+          "practice_questions": [
+            "Turn this simile into a metaphor: 'He was like a lion in battle.'",
+            "What human quality is given in: 'The alarm clock screamed at 6 AM'?"
+          ],
+          "practice_solutions": [
+            "'He was a lion in battle.'",
+            "The human ability to scream."
+          ],
+          "marks_pattern": "Identify exact device name and explain figurative comparison.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u06-t2",
+          "title": "Analyzing Character Motivations and Central Themes",
+          "aliases": [
+            "character motivations",
+            "central themes",
+            "literary analysis",
+            "subtext"
+          ],
+          "learning_objectives": [
+            "Analyze character motivations based on actions, dialogue, and choices.",
+            "Formulate thesis statements summarizing central themes of stories."
+          ],
+          "explanation": "Character motivation is the underlying reason (fear, love, ambition, duty) driving a character's choices. A theme is the unifying central message or insight about human life that an author conveys through the narrative.",
+          "examples": [
+            "In a story, a character's motivation to study hard might stem from a desire to support their family.",
+            "Theme: 'True courage is facing danger despite feeling fear.'"
+          ],
+          "exercises": [
+            "What is character motivation?",
+            "Is a theme simply a one-word topic like 'war', or a complete central message? Explain."
+          ],
+          "solutions": [
+            "The internal or external reason that prompts a character to act in a certain way.",
+            "A theme is a complete central message or lesson (e.g., 'Honesty builds lasting trust'), whereas 'war' is just a topic."
+          ],
+          "practice_questions": [
+            "How can a reader deduce a character's hidden motivation?",
+            "State a central theme about perseverance."
+          ],
+          "practice_solutions": [
+            "By observing the character's decisions under pressure, spoken dialogue, and reactions to obstacles.",
+            "Example: 'Continuous effort and resilience overcome initial setbacks.' Any clear thematic statement is valid."
+          ],
+          "marks_pattern": "Connect character actions/choices to underlying internal motive or thematic takeaway.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "s2-u06-t3",
+          "title": "Complex Sentences and Analytical Vocabulary",
+          "aliases": [
+            "complex sentences",
+            "analytical vocabulary",
+            "subordinating conjunctions",
+            "critical response"
+          ],
+          "learning_objectives": [
+            "Construct complex sentences using dependent and independent clauses.",
+            "Use precise analytical verbs (analyzes, illustrates, signifies, highlights) in literary essays."
+          ],
+          "explanation": "A complex sentence combines one independent clause with at least one dependent clause introduced by a subordinating conjunction (e.g., because, although, since, whereas). Analytical verbs (such as illustrates, signifies, demonstrates) elevate critical writing.",
+          "examples": [
+            "Complex sentence: 'Although the journey was treacherous, the explorer pressed onward.' ('Although...' is dependent clause).",
+            "Analytical vocabulary: 'The author's choice of setting highlights the protagonist's isolation.'"
+          ],
+          "exercises": [
+            "Identify the dependent clause in: Because the river overflowed, the villagers evacuated to higher ground.",
+            "Replace 'shows' with a more precise analytical verb: The poem shows the beauty of autumn. (illustrates / depicts)"
+          ],
+          "solutions": [
+            "Because the river overflowed",
+            "illustrates (or depicts / portrays)"
+          ],
+          "practice_questions": [
+            "Combine into a complex sentence using 'since': The evidence is clear. The hypothesis is proven.",
+            "Name two strong analytical verbs used in literary commentary."
+          ],
+          "practice_solutions": [
+            "Since the evidence is clear, the hypothesis is proven.",
+            "Illustrates, signifies, demonstrates, highlights, conveys. Any two valid verbs."
+          ],
+          "marks_pattern": "Identify dependent clause accurately and apply sophisticated analytical phrasing.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}

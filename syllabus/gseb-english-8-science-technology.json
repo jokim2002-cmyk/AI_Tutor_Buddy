@@ -1,0 +1,1626 @@
+{
+  "schema_version": 1,
+  "board": "GSEB",
+  "medium": "English",
+  "standard": 8,
+  "subject": "Science & Technology",
+  "textbook": "Science Class VIII",
+  "source": {
+    "title": "Science Class VIII",
+    "publisher": "Gujarat State Board of School Textbooks / NCERT",
+    "edition": "First Edition 2019; Revised Edition 2023; Reprint 2025",
+    "pdf_sha256": {
+      "STD_8_Science_EnglishMedium.pdf": "56a48fef35515f3ed54196986624857adeec5e44868b8daccf1c4a841a8be1c6"
+    },
+    "source_url": "https://gsstb.gujarat.gov.in/Home/gsstb/Std1to8",
+    "acquired_on": "2026-08-24",
+    "official": true,
+    "notes": "Source type: Teacher-authored/adapted textbook content. Standard 8 Science; edition First Edition 2019; Revised Edition 2023; Reprint 2025. Verified source SHA256: 56a48fef35515f3ed54196986624857adeec5e44868b8daccf1c4a841a8be1c6."
+  },
+  "chapters": [
+    {
+      "chapter_id": "sci8-c01",
+      "number": "1",
+      "title": "Chapter 1 - Crop Production and Management",
+      "aliases": [
+        "Crop Production and Management",
+        "Chapter 1 Crop Production",
+        "Agricultural Practices"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c01-t1",
+          "title": "Agricultural Practices and Preparation of Soil",
+          "aliases": [
+            "agricultural practices",
+            "tilling and ploughing",
+            "preparation of soil",
+            "Crop Production and Management"
+          ],
+          "learning_objectives": [
+            "Differentiate between Kharif and Rabi crops based on sowing season.",
+            "Explain the steps in preparing soil for crop cultivation (tilling, levelling, crumbs)."
+          ],
+          "explanation": "Crops grown in rainy season (June to Sept) are Kharif crops (e.g. paddy, maize, cotton). Crops grown in winter (Oct to March) are Rabi crops (e.g. wheat, gram, mustard). Soil preparation turns and loosens topsoil so roots penetrate deep and breathe easily.",
+          "examples": [
+            "Paddy requires abundant water and is grown during the rainy season as a Kharif crop.",
+            "Ploughing loosens soil and turns nutrient-rich lower soil layers to the top for plant absorption."
+          ],
+          "exercises": [
+            "Classify wheat and paddy into Kharif and Rabi crops.",
+            "Why is turning and loosening of soil essential before sowing seeds?"
+          ],
+          "solutions": [
+            "Paddy is a Kharif crop (grown in rainy season); wheat is a Rabi crop (grown in winter season).",
+            "Loosening soil allows roots to breathe deep underground, helps earthworms and microbes thrive, and brings nutrient-rich soil to the top layer."
+          ],
+          "practice_questions": [
+            "Name two agricultural tools used for loosening soil.",
+            "What are soil crumbs?"
+          ],
+          "practice_solutions": [
+            "Plough and hoe (or cultivator).",
+            "Big clumps of dry soil formed after initial ploughing that need breaking and levelling."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c01-t2",
+          "title": "Sowing, Manures and Fertilisers",
+          "aliases": [
+            "sowing seeds",
+            "manure vs fertiliser",
+            "seed selection",
+            "drip vs sprinkler",
+            "damaged seeds",
+            "damaged seeds be separated",
+            "why should damaged seeds be separated before sowing"
+          ],
+          "learning_objectives": [
+            "Distinguish between organic manure and chemical fertilisers.",
+            "Explain seed selection methods and correct depth/spacing in sowing."
+          ],
+          "explanation": "Healthy seeds sink in water while damaged hollow seeds float. Sowing places seeds at correct depth and uniform distance using seed drills. Organic manure improves soil texture and water retention, whereas chemical fertilisers supply concentrated NPK nutrients.",
+          "examples": [
+            "Damaged seeds become hollow and float on water during seed selection test.",
+            "Compost is an organic manure formed by decomposition of plant and animal waste."
+          ],
+          "exercises": [
+            "Why should damaged seeds be separated before sowing?",
+            "How can healthy seeds be separated from damaged ones at home?",
+            "Give two advantages of organic manure over chemical fertilisers."
+          ],
+          "solutions": [
+            "Damaged seeds are hollow and weak, so separating them ensures only healthy, high-yielding seeds are sown to prevent crop failure.",
+            "Put seeds in a container of water; healthy dense seeds sink to the bottom while hollow damaged seeds float.",
+            "Manure enhances soil water-holding capacity, improves texture, and fosters beneficial soil microbes without causing water pollution."
+          ],
+          "practice_questions": [
+            "Name three primary nutrients provided by chemical fertilisers.",
+            "Why should seeds be sown at proper distances from one another?"
+          ],
+          "practice_solutions": [
+            "Nitrogen, Phosphorus, and Potassium (NPK).",
+            "To prevent overcrowding and ensure all plants receive sufficient sunlight, nutrients, and water."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c01-t3",
+          "title": "Irrigation, Weeding, Harvesting and Storage",
+          "aliases": [
+            "irrigation systems",
+            "weed control weedicides",
+            "harvesting threshing winnowing",
+            "granaries storage"
+          ],
+          "learning_objectives": [
+            "Compare traditional and modern irrigation systems (drip and sprinkler).",
+            "Describe weed control, harvesting, threshing, winnowing, and safe grain storage."
+          ],
+          "explanation": "Irrigation supplies water at regular intervals. Drip irrigation delivers water drop-by-drop directly near roots (conserving water in dry regions). Weeds are unwanted plants removed manually or using weedicides (e.g. 2,4-D). Harvested grains are dried before storage in silos or granaries to prevent fungal attack.",
+          "examples": [
+            "Drip system is best suited for fruit plants and gardens in water-scarce areas.",
+            "Dried neem leaves are placed in grain containers to protect stored food grains from insects and pests."
+          ],
+          "exercises": [
+            "Which modern method of irrigation conserves water by delivering it drop by drop directly to roots?",
+            "Why must freshly harvested food grains be dried in the sun before storing?"
+          ],
+          "solutions": [
+            "Drip irrigation system.",
+            "Fresh grains contain high moisture; sun-drying reduces moisture content to prevent attack by fungi, bacteria, and insect pests."
+          ],
+          "practice_questions": [
+            "What are weeds and how do weedicides control them?",
+            "What is threshing?"
+          ],
+          "practice_solutions": [
+            "Weeds are undesirable wild plants growing alongside crops; weedicides are chemicals sprayed to kill weeds without harming crops.",
+            "The process of separating harvested grain seeds from the chaff using machines like combine harvesters."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c02",
+      "number": "2",
+      "title": "Chapter 2 - Microorganisms : Friend and Foe",
+      "aliases": [
+        "Microorganisms : Friend and Foe",
+        "Chapter 2 Microorganisms",
+        "Bacteria Fungi Protozoa Algae"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c02-t1",
+          "title": "Types and Habitats of Microorganisms",
+          "aliases": [
+            "types of microbes",
+            "bacteria fungi protozoa algae",
+            "viruses",
+            "Microorganisms : Friend and Foe"
+          ],
+          "learning_objectives": [
+            "Classify microorganisms into bacteria, fungi, protozoa, and algae.",
+            "Describe virus characteristics and microscopic habitats."
+          ],
+          "explanation": "Microorganisms are microscopic living organisms classified into 4 major groups: Bacteria (e.g. Lactobacillus), Fungi (e.g. Bread mould, Yeast), Protozoa (e.g. Amoeba, Paramecium), and Algae (e.g. Spirogyra). Viruses reproduce only inside living host cells.",
+          "examples": [
+            "Lactobacillus bacteria convert milk into curd.",
+            "Amoeba is a single-celled protozoan living in freshwater ponds."
+          ],
+          "exercises": [
+            "Name four major groups of microorganisms.",
+            "Why are viruses considered different from other microorganisms?"
+          ],
+          "solutions": [
+            "Bacteria, Fungi, Protozoa, and Algae.",
+            "Viruses remain inactive outside living organisms and can reproduce only inside host cells (plants, animals, or bacteria)."
+          ],
+          "practice_questions": [
+            "Name two disease-causing protozoans.",
+            "Where can microorganisms live?"
+          ],
+          "practice_solutions": [
+            "Plasmodium (causes malaria) and Entamoeba (causes dysentery).",
+            "In all environments: ice-cold climate, hot springs, deserts, marshy lands, and inside body of organisms."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c02-t2",
+          "title": "Friendly Microorganisms and Food Preservation",
+          "aliases": [
+            "yeast fermentation",
+            "antibiotics and vaccines",
+            "food preservation methods",
+            "pasteurisation"
+          ],
+          "learning_objectives": [
+            "Explain commercial and medicinal uses of yeast, antibiotics, and vaccines.",
+            "Describe food preservation techniques (pasteurisation, salting, chemical preservatives)."
+          ],
+          "explanation": "Yeast reproduces rapidly and produces CO2 gas during fermentation (converting sugars into alcohol/dough expansion). Antibiotics (e.g. Penicillin) kill disease-causing bacteria. Pasteurisation heats milk to 70°C for 15-30 seconds then chills rapidly to destroy microbes.",
+          "examples": [
+            "Alexander Fleming discovered penicillin from Penicillium mould in 1929.",
+            "Pasteurised milk can be consumed without boiling because harmful bacteria are destroyed by rapid heat-chill treatment."
+          ],
+          "exercises": [
+            "What is fermentation?",
+            "How does pasteurisation preserve milk?"
+          ],
+          "solutions": [
+            "Fermentation is the biological conversion of sugars into alcohol and carbon dioxide gas by yeast.",
+            "Milk is heated to 70°C for 15 to 30 seconds and suddenly chilled, killing microbes without altering taste."
+          ],
+          "practice_questions": [
+            "Name the bacterium responsible for turning milk into curd.",
+            "What is a vaccine?"
+          ],
+          "practice_solutions": [
+            "Lactobacillus.",
+            "A preparation of dead or weakened microbes injected to stimulate antibodies and build immunity against disease."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c02-t3",
+          "title": "Harmful Microorganisms, Pathogens and Nitrogen Cycle",
+          "aliases": [
+            "pathogens and communicable diseases",
+            "malaria dengue carriers",
+            "nitrogen fixation",
+            "nitrogen cycle"
+          ],
+          "learning_objectives": [
+            "Identify carriers of diseases (Anopheles mosquito for Malaria, Aedes for Dengue).",
+            "Explain biological nitrogen fixation (Rhizobium) and the atmospheric nitrogen cycle."
+          ],
+          "explanation": "Disease-causing microbes are pathogens. Communicable diseases spread via air, water, food, or vectors. Female Anopheles mosquito carries malaria parasite; female Aedes carries dengue virus. Rhizobium bacteria in root nodules of leguminous plants fix atmospheric nitrogen into usable nitrates.",
+          "examples": [
+            "Rhizobium bacteria live symbiotically in root nodules of beans and peas to fix atmospheric nitrogen.",
+            "Stagnant water in coolers and tires must be cleared to prevent breeding of Aedes dengue mosquitoes."
+          ],
+          "exercises": [
+            "Which insect carries the malaria parasite Plasmodium?",
+            "What role do Rhizobium bacteria play in leguminous crop soil?"
+          ],
+          "solutions": [
+            "Female Anopheles mosquito.",
+            "Rhizobium bacteria fix atmospheric gaseous nitrogen into soluble nitrogenous compounds (nitrates) in soil, enriching soil fertility."
+          ],
+          "practice_questions": [
+            "Name one plant disease caused by fungi.",
+            "Why does the percentage of nitrogen in atmosphere remain constant?"
+          ],
+          "practice_solutions": [
+            "Rust of wheat (or Citrus canker caused by bacteria).",
+            "Because nitrogen fixed by plants is consumed, returned to soil, and eventually converted back into gaseous N2 by denitrifying bacteria in a balanced cycle."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c03",
+      "number": "3",
+      "title": "Chapter 3 - Coal and Petroleum",
+      "aliases": [
+        "Coal and Petroleum",
+        "Chapter 3 Coal and Petroleum",
+        "Fossil Fuels"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c03-t1",
+          "title": "Inexhaustible and Exhaustible Natural Resources",
+          "aliases": [
+            "exhaustible vs inexhaustible resources",
+            "fossil fuels concept",
+            "natural resources classification",
+            "Coal and Petroleum",
+            "inexhaustible natural resources"
+          ],
+          "learning_objectives": [
+            "Classify natural resources into inexhaustible (sunlight, air) and exhaustible (coal, petroleum).",
+            "Explain how fossil fuels were formed over millions of years from dead organic remains."
+          ],
+          "explanation": "Inexhaustible resources (sunlight, wind, water) are present in unlimited quantity. Exhaustible resources (coal, petroleum, natural gas) are limited and take millions of years to form under high temperature and pressure underground.",
+          "examples": [
+            "Sunlight and air are inexhaustible natural resources.",
+            "Coal and petroleum are fossil fuels formed from compressed ancient plant and marine animal remains."
+          ],
+          "exercises": [
+            "Differentiate between inexhaustible and exhaustible natural resources with examples.",
+            "Why are coal, petroleum, and natural gas called fossil fuels?"
+          ],
+          "solutions": [
+            "Inexhaustible resources (e.g. sunlight) are unlimited; exhaustible resources (e.g. coal) are limited and can be depleted by human activities.",
+            "Because they were formed over millions of years from the buried fossil remains of ancient dead plants and animals."
+          ],
+          "practice_questions": [
+            "Is natural gas exhaustible or inexhaustible?",
+            "Why should fossil fuels be used judiciously?"
+          ],
+          "practice_solutions": [
+            "Exhaustible natural resource.",
+            "Their formation takes millions of years, reserves are limited, and burning them releases air pollutants like CO2."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c03-t2",
+          "title": "Coal, Carbonisation and Coal Products",
+          "aliases": [
+            "coal formation carbonisation",
+            "coke coal tar coal gas",
+            "destructive distillation of coal"
+          ],
+          "learning_objectives": [
+            "Explain carbonisation (conversion of dead vegetation into coal).",
+            "Describe coal products: coke, coal tar, and coal gas."
+          ],
+          "explanation": "Slow conversion of dead vegetation into coal under heat and pressure is carbonisation. Heating coal in absence of air produces:\n- Coke: Tough, porous, pure black carbon used in steel manufacture.\n- Coal Tar: Thick black liquid used for synthetic dyes, drugs, explosives, and naphthalene balls.\n- Coal Gas: Fuel used in industrial heating.",
+          "examples": [
+            "Coke is almost pure carbon used as a reducing agent in extraction of metals like iron.",
+            "Bitumen (a petroleum product) is now widely used in place of coal tar for surfacing roads."
+          ],
+          "exercises": [
+            "What is carbonisation?",
+            "State one major use of coke."
+          ],
+          "solutions": [
+            "The slow process of conversion of dead plant vegetation buried underground into coal over millions of years.",
+            "Coke is used in the manufacture of steel and extraction of metals as a reducing agent."
+          ],
+          "practice_questions": [
+            "Name the dark liquid obtained during processing of coal used for making naphthalene balls.",
+            "What gas is produced during processing of coal to get coke?"
+          ],
+          "practice_solutions": [
+            "Coal tar.",
+            "Coal gas."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c03-t3",
+          "title": "Petroleum Refining, Natural Gas and Conservation",
+          "aliases": [
+            "petroleum refining fractionating tower",
+            "CNG LPG",
+            "petroleum conservation PCRA guidelines"
+          ],
+          "learning_objectives": [
+            "Explain petroleum refining and identify fractions (petrol, diesel, kerosene, paraffin wax, bitumen).",
+            "Describe benefits of Compressed Natural Gas (CNG) and PCRA conservation tips."
+          ],
+          "explanation": "Petroleum is separated into fractions in a refining fractionating tower. CNG (Compressed Natural Gas) is a cleaner fuel with high calorific value and lower pollution. PCRA (Petroleum Conservation Research Association) advises driving at moderate constant speed, switching off engine at signals, and regular vehicle maintenance.",
+          "examples": [
+            "CNG is used as a less-polluting fuel for transport vehicles and power generation.",
+            "Paraffin wax obtained from petroleum refining is used for making candles and vaseline ointment."
+          ],
+          "exercises": [
+            "Why is CNG considered a better vehicle fuel than petrol or diesel?",
+            "List two fuel-saving tips recommended by PCRA while driving."
+          ],
+          "solutions": [
+            "CNG burns cleanly producing negligible smoke or toxic residues, causing significantly less air pollution.",
+            "Drive at a constant moderate speed, turn off engine at traffic signals, and ensure correct tire pressure."
+          ],
+          "practice_questions": [
+            "Where was the first oil well drilled in India?",
+            "What petroleum fraction is used for surfacing roads?"
+          ],
+          "practice_solutions": [
+            "In Makum, Assam (in 1867).",
+            "Bitumen."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c04",
+      "number": "4",
+      "title": "Chapter 4 - Combustion and Flame",
+      "aliases": [
+        "Combustion and Flame",
+        "Chapter 4 Combustion and Flame",
+        "Fire and Fuel"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c04-t1",
+          "title": "Combustion and Ignition Temperature",
+          "aliases": [
+            "combustion definition",
+            "combustible non-combustible",
+            "ignition temperature",
+            "inflammable substances",
+            "Combustion and Flame"
+          ],
+          "learning_objectives": [
+            "Define combustion as a chemical reaction of a substance with oxygen releasing heat and light.",
+            "Explain ignition temperature and inflammable substances."
+          ],
+          "explanation": "Combustion is a chemical process in which a substance reacts with oxygen to give off heat. The lowest temperature at which a substance catches fire is its ignition temperature. Substances with very low ignition temperature (e.g. petrol, LPG, alcohol) catch fire easily and are inflammable.",
+          "examples": [
+            "Magnesium ribbon burns in air with a dazzling white flame to form magnesium oxide.",
+            "A paper cup containing water does not burn over a candle because heat is transferred to water by conduction, keeping paper below its ignition temperature."
+          ],
+          "exercises": [
+            "What is ignition temperature?",
+            "Why does a piece of paper wrapped around an aluminium pipe not catch fire easily?"
+          ],
+          "solutions": [
+            "The minimum temperature to which a combustible substance must be heated in order to catch fire.",
+            "Aluminium conducts heat away from paper, preventing paper from reaching its ignition temperature."
+          ],
+          "practice_questions": [
+            "What three conditions are necessary for combustion to take place?",
+            "Name two inflammable liquids."
+          ],
+          "practice_solutions": [
+            "Fuel (combustible substance), oxygen (air supply), and heat (to reach ignition temperature).",
+            "Petrol and alcohol."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c04-t2",
+          "title": "How We Control Fire and Types of Combustion",
+          "aliases": [
+            "fire extinguisher CO2",
+            "rapid spontaneous explosion combustion",
+            "fire control safety"
+          ],
+          "learning_objectives": [
+            "Explain fire control principles (cutting off air supply, cooling below ignition temp).",
+            "Classify types of combustion: rapid, spontaneous, and explosion."
+          ],
+          "explanation": "Fire extinguishers work by cooling fuel below ignition temp (water) or cutting off oxygen supply (CO2 extinguisher). Water MUST NOT be used on electrical or oil fires. Rapid combustion burns quickly with light (LPG stove); Spontaneous combustion bursts into flame without apparent cause (white phosphorus); Explosion releases sudden gas, heat, light, and sound (fireworks).",
+          "examples": [
+            "CO2 is the best extinguisher for electrical equipment fires because it is heavier than air and non-conducting.",
+            "White phosphorus catches fire spontaneously in air at 35°C."
+          ],
+          "exercises": [
+            "Why should water NOT be used to extinguish an oil or electrical fire?",
+            "Differentiate between rapid and spontaneous combustion."
+          ],
+          "solutions": [
+            "Water conducts electricity causing shock hazards, and oil floats on water, spreading the oil fire further.",
+            "Rapid combustion requires an external ignition source (matchstick/spark); spontaneous combustion bursts into flame on its own without external heat."
+          ],
+          "practice_questions": [
+            "Why is CO2 an effective fire extinguisher?",
+            "Give one example of an explosion."
+          ],
+          "practice_solutions": [
+            "CO2 forms a blanket over fire cutting off oxygen supply, does not conduct electricity, and does not damage electrical equipment.",
+            "Ignition of firecrackers during festivals."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c04-t3",
+          "title": "Structure of Flame, Fuel Efficiency and Calorific Value",
+          "aliases": [
+            "zones of candle flame",
+            "calorific value kJ/kg",
+            "ideal fuel properties",
+            "acid rain global warming"
+          ],
+          "learning_objectives": [
+            "Describe the three zones of a candle flame (innermost dark, middle luminous, outer non-luminous).",
+            "Calculate calorific value of fuel (kJ/kg) and explain environmental harms of burning fuel."
+          ],
+          "explanation": "A candle flame has 3 zones:\n1) Innermost dark zone: unburnt wax vapour (least hot).\n2) Middle yellow luminous zone: partial combustion (moderately hot).\n3) Outer blue non-luminous zone: complete combustion (hottest part, used by goldsmiths).\nCalorific Value = Heat energy produced (kJ) / Mass of fuel (kg). Unburnt carbon causes smog; SO2/NO2 cause acid rain.",
+          "examples": [
+            "LPG has a high calorific value of 55,000 kJ/kg and burns without soot.",
+            "Goldsmiths blow the outermost non-luminous blue zone of a flame using a metallic blowpipe to melt gold/silver."
+          ],
+          "exercises": [
+            "Which zone of a candle flame is the hottest and used by goldsmiths?",
+            "In an experiment, 4.5 kg of fuel was completely burnt producing 180,000 kJ of heat. Calculate its calorific value."
+          ],
+          "solutions": [
+            "Outer non-luminous blue zone (zone of complete combustion).",
+            "Calorific Value = 180,000 kJ / 4.5 kg = 40,000 kJ/kg."
+          ],
+          "practice_questions": [
+            "Define calorific value of a fuel.",
+            "What harmful pollutant gas is produced by incomplete combustion of carbon fuels?"
+          ],
+          "practice_solutions": [
+            "The amount of heat energy produced on complete combustion of 1 kg of a fuel, expressed in kJ/kg.",
+            "Carbon monoxide (CO), a poisonous gas."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c05",
+      "number": "5",
+      "title": "Chapter 5 - Conservation of Plants and Animals",
+      "aliases": [
+        "Conservation of Plants and Animals",
+        "Chapter 5 Conservation",
+        "Wildlife Conservation"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c05-t1",
+          "title": "Deforestation, Causes and Consequences",
+          "aliases": [
+            "deforestation causes consequences",
+            "desertification",
+            "droughts and global warming",
+            "Conservation of Plants and Animals"
+          ],
+          "learning_objectives": [
+            "Explain causes of deforestation (urbanization, agriculture, timber).",
+            "Analyze consequences: soil erosion, desertification, reduced groundwater, and global warming."
+          ],
+          "explanation": "Deforestation is clearing of forests. Tree roots bind soil; without trees, topsoil is eroded exposing hard rocky layers (desertification). Fewer trees absorb less CO2, increasing atmospheric greenhouse effect and global warming.",
+          "examples": [
+            "Removal of top fertile soil by wind and rain exposes infertile lower soil leading to desertification.",
+            "Fewer trees reduce rainfall and lower the underground water table."
+          ],
+          "exercises": [
+            "What is desertification?",
+            "How does deforestation lead to global warming?"
+          ],
+          "solutions": [
+            "The gradual conversion of fertile land into barren desert due to severe soil erosion and loss of vegetation cover.",
+            "Trees absorb CO2 during photosynthesis; fewer trees leave more CO2 in the atmosphere, trapping heat and raising global temperatures."
+          ],
+          "practice_questions": [
+            "State two natural causes of deforestation.",
+            "Why does deforestation increase the frequency of floods?"
+          ],
+          "practice_solutions": [
+            "Forest fires and severe droughts.",
+            "Trees increase water infiltration into soil; without trees, surface runoff increases, causing floods."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c05-t2",
+          "title": "Biosphere Reserves, National Parks and Wildlife Sanctuaries",
+          "aliases": [
+            "protected areas biodiversity",
+            "biosphere reserve pachmarhi",
+            "national park vs sanctuary",
+            "flora and fauna"
+          ],
+          "learning_objectives": [
+            "Differentiate between Biosphere Reserves, National Parks, and Wildlife Sanctuaries.",
+            "Define flora (plants) and fauna (animals) of a specific geographic area."
+          ],
+          "explanation": "Protected Areas:\n- Wildlife Sanctuary: Protected area where animals are protected from hunting/poaching.\n- National Park: Strict reserve for wildlife to freely use habitats and natural resources (e.g. Satpura National Park).\n- Biosphere Reserve: Large protected land preserving biodiversity and traditional tribal lifestyle (e.g. Pachmarhi Biosphere Reserve).",
+          "examples": [
+            "Sal and Wild Mango are flora of Pachmarhi Biosphere Reserve; Chinkara and Bluebull are fauna.",
+            "Satpura National Park is famous for Project Tiger established to protect Bengal tigers."
+          ],
+          "exercises": [
+            "What is a Biosphere Reserve?",
+            "Differentiate between flora and fauna."
+          ],
+          "solutions": [
+            "A large protected area specified for conservation of biodiversity, natural ecosystems, and culture of tribal communities living there.",
+            "Flora refers to the plant species of a particular area; fauna refers to the animal species of that area."
+          ],
+          "practice_questions": [
+            "Name India's first Reserve Forest.",
+            "What is Project Tiger?"
+          ],
+          "practice_solutions": [
+            "Satpura National Park.",
+            "A government initiative launched to protect and increase the declining tiger population in India."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c05-t3",
+          "title": "Endemic Species, Red Data Book and Reforestation",
+          "aliases": [
+            "endemic species",
+            "endangered species red data book",
+            "migration of birds",
+            "reforestation recycling paper"
+          ],
+          "learning_objectives": [
+            "Identify endemic species (found exclusively in one area) and endangered species.",
+            "Explain the Red Data Book, bird migration, paper recycling, and reforestation."
+          ],
+          "explanation": "Endemic species are found exclusively in a specific region (e.g. Indian Giant Squirrel in Pachmarhi). Endangered species face extinction risk. Red Data Book keeps an international record of endangered plants/animals. Reforestation is restocking destroyed forests by planting new trees.",
+          "examples": [
+            "Migratory birds like Siberian Cranes fly thousands of kilometers to escape harsh cold winters.",
+            "Recycling 1 ton of paper saves about 17 full-grown trees, water, and energy."
+          ],
+          "exercises": [
+            "What are endemic species? Give one example.",
+            "What is the Red Data Book?"
+          ],
+          "solutions": [
+            "Species of plants and animals found exclusively in a particular geographical area and nowhere else (e.g. Flying squirrel of Pachmarhi).",
+            "The official source book which maintains an international record of all endangered plants and animal species."
+          ],
+          "practice_questions": [
+            "Why do migratory birds fly to far-off areas every year?",
+            "How many times can paper be recycled?"
+          ],
+          "practice_solutions": [
+            "To escape extreme cold weather and to lay eggs in suitable climatic conditions.",
+            "Paper can be recycled 5 to 7 times for reuse."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c06",
+      "number": "6",
+      "title": "Chapter 6 - Reproduction in Animals",
+      "aliases": [
+        "Reproduction in Animals",
+        "Chapter 6 Reproduction",
+        "Animal Reproduction"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c06-t1",
+          "title": "Modes of Reproduction: Sexual and Asexual",
+          "aliases": [
+            "sexual vs asexual reproduction",
+            "gametes fusion zygote",
+            "Reproduction in Animals"
+          ],
+          "learning_objectives": [
+            "Differentiate between sexual and asexual modes of reproduction.",
+            "Explain gamete fusion resulting in a single fertilized cell (zygote)."
+          ],
+          "explanation": "Reproduction ensures continuity of species. Sexual reproduction involves fusion of male and female gametes to form a zygote. Asexual reproduction involves only a single parent without gamete formation.",
+          "examples": [
+            "Humans, cows, and dogs reproduce sexually by fusion of sperm and egg.",
+            "Hydra and Amoeba reproduce asexually."
+          ],
+          "exercises": [
+            "Define reproduction and state its two main modes in animals.",
+            "What is a zygote?"
+          ],
+          "solutions": [
+            "Reproduction is the biological process by which organisms produce offspring of their own kind. Modes: Sexual and Asexual reproduction.",
+            "The single fertilized cell formed by the fusion of a male gamete (sperm) and female gamete (ovum)."
+          ],
+          "practice_questions": [
+            "How many parents are involved in asexual reproduction?",
+            "Why is reproduction essential for living organisms?"
+          ],
+          "practice_solutions": [
+            "Only one parent.",
+            "To ensure the survival and generation-to-generation continuity of a species."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c06-t2",
+          "title": "Male and Female Reproductive Organs, Fertilisation and Embryo",
+          "aliases": [
+            "male reproductive system sperm",
+            "female reproductive system ovum egg",
+            "internal vs external fertilisation",
+            "embryo and fetus"
+          ],
+          "learning_objectives": [
+            "Identify male (testes, sperm ducts, penis) and female (ovaries, oviducts/fallopian tubes, uterus) reproductive organs.",
+            "Differentiate between internal (humans, hens) and external (frogs, fish) fertilisation."
+          ],
+          "explanation": "Fertilisation is fusion of sperm (produced by testes) and ovum (produced by ovaries). Internal fertilisation occurs inside female body; External fertilisation occurs in water outside body (frogs, fish). Zygote divides repeatedly to form an embryo, which embeds in uterine wall and develops into a fetus.",
+          "examples": [
+            "In frogs, female lays eggs in water and male deposits sperms over them (external fertilisation).",
+            "In humans, fertilisation takes place inside the oviduct (fallopian tube)."
+          ],
+          "exercises": [
+            "Differentiate between internal and external fertilisation with examples.",
+            "Where does embryo development take place in human females?"
+          ],
+          "solutions": [
+            "Internal fertilisation occurs inside female body (e.g. humans, dogs); external fertilisation occurs outside body in water (e.g. frogs, fish).",
+            "In the uterus (uterine wall)."
+          ],
+          "practice_questions": [
+            "What is a fetus?",
+            "What is IVF (In Vitro Fertilisation)?"
+          ],
+          "practice_solutions": [
+            "The stage of embryo development where all distinct body parts (head, hands, legs) can be identified.",
+            "Fertilisation carried out artificially outside the body in a laboratory glass vessel when oviducts are blocked."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c06-t3",
+          "title": "Viviparous and Oviparous Animals, Metamorphosis and Asexual Modes",
+          "aliases": [
+            "viviparous vs oviparous",
+            "metamorphosis frog tadpole",
+            "budding hydra",
+            "binary fission amoeba"
+          ],
+          "learning_objectives": [
+            "Classify animals into Viviparous (give birth to young ones) and Oviparous (lay eggs).",
+            "Explain metamorphosis in frogs/silkworms and asexual modes: Budding (Hydra) and Binary Fission (Amoeba)."
+          ],
+          "explanation": "Viviparous animals give birth directly to young ones (humans, cats); Oviparous animals lay eggs (hens, frogs). Metamorphosis is drastic transformation of larva/tadpole into adult. Budding in Hydra develops a bulge (bud) that detaches. Binary fission in Amoeba divides parent cell into two equal daughter cells.",
+          "examples": [
+            "A tadpole hatches from a frog egg and undergoes metamorphosis to become an adult air-breathing frog.",
+            "A single Amoeba divides its nucleus and cytoplasm to form two daughter amoebae by binary fission."
+          ],
+          "exercises": [
+            "Differentiate between viviparous and oviparous animals.",
+            "Describe binary fission in Amoeba."
+          ],
+          "solutions": [
+            "Viviparous animals give birth to young ones directly (e.g. cows, humans); oviparous animals lay eggs (e.g. birds, frogs).",
+            "A single-celled Amoeba reproduces asexually by dividing its nucleus into two, followed by division of cytoplasm into two identical daughter cells."
+          ],
+          "practice_questions": [
+            "What is metamorphosis?",
+            "Name the asexual reproduction method in Hydra."
+          ],
+          "practice_solutions": [
+            "The process of drastic biological transformation from larval/tadpole stage to an adult form.",
+            "Budding."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c07",
+      "number": "7",
+      "title": "Chapter 7 - Reaching the Age of Adolescence",
+      "aliases": [
+        "Reaching the Age of Adolescence",
+        "Chapter 7 Adolescence",
+        "Puberty and Hormones"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c07-t1",
+          "title": "Adolescence, Puberty and Physical Changes",
+          "aliases": [
+            "adolescence definition",
+            "puberty onset",
+            "height growth adams apple",
+            "voice change",
+            "Reaching the Age of Adolescence"
+          ],
+          "learning_objectives": [
+            "Define adolescence (11 to 19 years) and puberty.",
+            "Describe physical changes during puberty: sudden height gain, Adam's apple growth, and body shape changes."
+          ],
+          "explanation": "Adolescence is the transition period from childhood to adulthood (teenagers aged 11 to 19). Puberty begins when reproductive organs mature. Changes include sudden height gain, widening of shoulders in boys / hips in girls, voice cracking, and prominent Adam's apple in boys.",
+          "examples": [
+            "Adam's apple is the protruding voice box (larynx) visible in boys' throats during puberty.",
+            "Growth spurts during early adolescence cause rapid lengthening of long arm and leg bones."
+          ],
+          "exercises": [
+            "What is adolescence and what age span does it cover?",
+            "What causes voice cracking and Adam's apple formation in adolescent boys?"
+          ],
+          "solutions": [
+            "The period of life leading to reproductive maturity, spanning roughly from age 11 to 19 years (teenagers).",
+            "The rapid enlargement of the voice box (larynx) in boys during puberty."
+          ],
+          "practice_questions": [
+            "At what age do girls and boys reach their maximum height?",
+            "What causes acne and pimples during adolescence?"
+          ],
+          "practice_solutions": [
+            "Around 18 years of age.",
+            "Increased activity of sweat glands and sebaceous (oil) glands during puberty."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c07-t2",
+          "title": "Secondary Sexual Characters, Hormones and Endocrine Glands",
+          "aliases": [
+            "secondary sexual characteristics",
+            "testosterone and estrogen",
+            "endocrine glands pituitary thyroid pancreas adrenal",
+            "hormonal control"
+          ],
+          "learning_objectives": [
+            "Identify secondary sexual characters controlled by sex hormones (testosterone in males, estrogen in females).",
+            "List major endocrine glands and their hormones (Pituitary, Thyroid, Pancreas, Adrenals)."
+          ],
+          "explanation": "Endocrine ductless glands secrete hormones directly into bloodstream. Pituitary master gland controls testes (testosterone for facial hair/sperm) and ovaries (estrogen for breast development). Other glands: Thyroid (thyroxine - goitre), Pancreas (insulin - diabetes), Adrenal (adrenalin - stress/anger).",
+          "examples": [
+            "Thyroid gland produces thyroxine; deficiency causes goitre (swollen neck).",
+            "Pancreas secretes insulin; deficiency causes diabetes mellitus."
+          ],
+          "exercises": [
+            "Name male and female sex hormones.",
+            "Which gland is called the master endocrine gland and why?"
+          ],
+          "solutions": [
+            "Male sex hormone: Testosterone; Female sex hormone: Estrogen.",
+            "Pituitary gland, because its hormones control and stimulate the secretions of all other endocrine glands."
+          ],
+          "practice_questions": [
+            "What hormone is produced by adrenal glands during stress or fear?",
+            "What deficiency causes goitre?"
+          ],
+          "practice_solutions": [
+            "Adrenalin.",
+            "Deficiency of iodine in diet, leading to lack of thyroxine hormone from thyroid gland."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c07-t3",
+          "title": "Reproductive Phase, Sex Determination and Personal Hygiene",
+          "aliases": [
+            "menarche and menopause",
+            "menstrual cycle",
+            "sex determination XX XY chromosomes",
+            "adolescent nutrition hygiene"
+          ],
+          "learning_objectives": [
+            "Explain menarche, menopause, and the 28-30 day menstrual cycle.",
+            "Describe sex determination in humans (XX female, XY male) and nutritional/hygiene needs during adolescence."
+          ],
+          "explanation": "Reproductive phase in females lasts from menarche (first menstruation at puberty) to menopause (stoppage around 45-50 years). Sex is determined by father's sperm: sperm with X chromosome fertilizes egg -> XX female; sperm with Y chromosome fertilizes egg -> XY male. Adolescents require balanced diet rich in iron (blood building) and personal hygiene.",
+          "examples": [
+            "All human unfertilized eggs contain one X chromosome; sex of child depends strictly on whether sperm carries X or Y.",
+            "Iron-rich foods like leafy vegetables, jaggery, and meat help build blood hemoglobin during adolescence."
+          ],
+          "exercises": [
+            "Explain how the sex of a unborn baby is determined in humans.",
+            "Differentiate between menarche and menopause."
+          ],
+          "solutions": [
+            "Females produce eggs with X chromosome. If sperm carrying X fertilizes egg -> XX (girl baby). If sperm carrying Y fertilizes egg -> XY (boy baby). Thus father's sperm determines sex.",
+            "Menarche is the first occurrence of menstruation at puberty; menopause is the permanent stoppage of menstruation around age 45-50."
+          ],
+          "practice_questions": [
+            "Why is iron essential in an adolescent's diet?",
+            "What is the duration of a typical menstrual cycle?"
+          ],
+          "practice_solutions": [
+            "Iron builds hemoglobin in red blood cells to support growing body and replace blood lost during menstruation.",
+            "About 28 to 30 days."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c08",
+      "number": "8",
+      "title": "Chapter 8 - Force and Pressure",
+      "aliases": [
+        "Force and Pressure",
+        "Chapter 8 Force and Pressure",
+        "Physics Forces"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c08-t1",
+          "title": "Force: A Push or Pull and Exploring Forces",
+          "aliases": [
+            "force definition push pull",
+            "magnitude and direction of force",
+            "state of motion",
+            "Force and Pressure"
+          ],
+          "learning_objectives": [
+            "Define force as a push or pull arising from interaction between two objects.",
+            "Explain effects of force on state of motion, speed, direction, and shape of objects."
+          ],
+          "explanation": "A force is a push or pull acting on an object. Force has both magnitude (measured in Newtons, N) and direction. Forces applied in same direction add up; forces in opposite directions subtract. Force can change speed, direction, state of rest, or shape.",
+          "examples": [
+            "Pushing a stalled car applies force in direction of movement.",
+            "Squeezing a plastic bottle changes its physical shape."
+          ],
+          "exercises": [
+            "What happens when two forces act on an object in opposite directions?",
+            "List three changes that a force can bring about in a moving object."
+          ],
+          "solutions": [
+            "The net effective force is the difference between the two forces, acting in the direction of the larger force.",
+            "Force can change the object's speed, change its direction of motion, or bring a moving object to rest."
+          ],
+          "practice_questions": [
+            "What is the SI unit of force?",
+            "Give an example where applied force changes only the shape of an object."
+          ],
+          "practice_solutions": [
+            "Newton (N).",
+            "Pressing a lump of dough on a plate or stretching a rubber band."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c08-t2",
+          "title": "Contact and Non-Contact Forces",
+          "aliases": [
+            "contact forces muscular friction",
+            "non-contact forces magnetic electrostatic gravitational",
+            "types of forces"
+          ],
+          "learning_objectives": [
+            "Classify forces into Contact Forces (muscular, friction) and Non-Contact Forces (magnetic, electrostatic, gravitational).",
+            "Describe gravitational attraction acting between any two masses."
+          ],
+          "explanation": "Contact forces require physical contact between objects (Muscular force, Friction). Non-contact forces act across a distance without physical contact (Magnetic force, Electrostatic force between charges, Gravitational pull of Earth).",
+          "examples": [
+            "Lifting a school bag requires muscular force (contact force).",
+            "An apple falling from a tree to the ground is pulled by gravity (non-contact force)."
+          ],
+          "exercises": [
+            "Classify the following into contact and non-contact forces: Muscular force, Magnetic force, Friction, Gravitational force.",
+            "A charged plastic comb attracts uncharged bits of paper. Name the force involved."
+          ],
+          "solutions": [
+            "Contact forces: Muscular force and Friction. Non-contact forces: Magnetic force and Gravitational force.",
+            "Electrostatic force (a non-contact force)."
+          ],
+          "practice_questions": [
+            "Why is gravity called a universal non-contact force?",
+            "Why does a rolling ball on ground gradually slow down and stop?"
+          ],
+          "practice_solutions": [
+            "Because every object in the universe exerts a gravitational pull on every other object without needing physical contact.",
+            "Due to the contact force of friction acting between the surface of ball and ground in opposite direction of motion."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c08-t3",
+          "title": "Pressure, Liquid & Gas Pressure and Atmospheric Pressure",
+          "aliases": [
+            "pressure formula P=F/A",
+            "liquid pressure increases depth",
+            "atmospheric pressure barometric",
+            "pascal unit"
+          ],
+          "learning_objectives": [
+            "Calculate pressure: Pressure = Force / Area (N/m^2 or Pascal, Pa).",
+            "Demonstrate liquid pressure (increases with depth, equal in all directions) and atmospheric pressure."
+          ],
+          "explanation": "Pressure is force acting perpendicularly per unit area: P = F / A. Smaller contact area produces higher pressure for same force (e.g. sharp knife, shoulder bag wide straps). Liquids exert pressure on container walls and base, increasing with depth. Atmosphere exerts immense pressure on Earth's surface.",
+          "examples": [
+            "Porter places a rounded cloth pad on his head to increase contact area, reducing pressure exerted by heavy luggage.",
+            "Dams are built with thicker bases at the bottom because water pressure increases with depth."
+          ],
+          "exercises": [
+            "Why do sharp knives cut vegetables much more easily than blunt knives?",
+            "A force of 100 N is applied on an area of 2 m^2. Calculate the pressure."
+          ],
+          "solutions": [
+            "A sharp knife has a much smaller contact area, generating much higher pressure for the same applied force.",
+            "Pressure = Force / Area = 100 N / 2 m^2 = 50 N/m^2 (or 50 Pascal)."
+          ],
+          "practice_questions": [
+            "Why do shoulder bags have broad straps instead of thin strings?",
+            "Why are human bodies not crushed by huge atmospheric pressure?"
+          ],
+          "practice_solutions": [
+            "Broad straps increase contact area over shoulders, thereby reducing pressure on shoulders.",
+            "Because internal fluid and blood pressure inside our body equals atmospheric pressure and balances it."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c09",
+      "number": "9",
+      "title": "Chapter 9 - Friction",
+      "aliases": [
+        "Friction",
+        "Chapter 9 Friction",
+        "Force of Friction"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c09-t1",
+          "title": "Force of Friction and Factors Affecting Friction",
+          "aliases": [
+            "cause of friction interlocking",
+            "roughness smooth surface",
+            "spring balance measurement",
+            "Friction"
+          ],
+          "learning_objectives": [
+            "Explain the cause of friction (interlocking of microscopic surface irregularities).",
+            "Demonstrate factors affecting friction (surface roughness, normal pressing force)."
+          ],
+          "explanation": "Friction opposes relative motion between two surfaces in contact. It is caused by interlocking of microscopic irregularities on contacting surfaces. Friction depends on nature of surfaces (rougher = higher friction) and force pressing surfaces together.",
+          "examples": [
+            "Striking a matchstick against the rough side of matchbox creates friction heat to ignite it.",
+            "Heavy box is harder to slide across rough concrete floor than smooth tiled floor."
+          ],
+          "exercises": [
+            "What is the fundamental cause of friction between two surfaces in contact?",
+            "Why is it harder to move a heavy box than a light box across the same floor?"
+          ],
+          "solutions": [
+            "The interlocking of microscopic irregularities present on the two contacting surfaces.",
+            "The heavy box presses harder against the floor, causing stronger interlocking of surface irregularities."
+          ],
+          "practice_questions": [
+            "In which direction does friction act relative to motion?",
+            "What instrument measures force applied on an object?"
+          ],
+          "practice_solutions": [
+            "In the direction opposite to the direction of motion.",
+            "Spring balance."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c09-t2",
+          "title": "Static, Sliding and Rolling Friction",
+          "aliases": [
+            "static friction",
+            "sliding friction",
+            "rolling friction comparison",
+            "ball bearings"
+          ],
+          "learning_objectives": [
+            "Differentiate between Static, Sliding, and Rolling friction.",
+            "Arrange friction types in order of magnitude: Static > Sliding > Rolling."
+          ],
+          "explanation": "Static friction acts when trying to move a stationary object. Sliding friction acts when an object slides over a surface. Rolling friction acts when an object rolls over a surface. Rolling friction is much smaller than sliding friction, which is why ball bearings are used in machinery.",
+          "examples": [
+            "Luggage fitted with wheels (trolley bag) rolls easily because rolling friction is very small.",
+            "Ball bearings in bicycle hubs convert sliding friction into smaller rolling friction."
+          ],
+          "exercises": [
+            "Arrange static, sliding, and rolling friction in decreasing order of magnitude.",
+            "Why is sliding friction smaller than static friction?"
+          ],
+          "solutions": [
+            "Static friction > Sliding friction > Rolling friction.",
+            "When sliding starts, surface irregularities do not get enough time to interlock deeply into one another as in static state."
+          ],
+          "practice_questions": [
+            "Why are suitcase bags equipped with wheels?",
+            "What mechanical device replaces sliding friction with rolling friction in fan motors?"
+          ],
+          "practice_solutions": [
+            "Wheels substitute rolling friction for sliding friction, drastically reducing effort to pull luggage.",
+            "Ball bearings."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c09-t3",
+          "title": "Friction: A Necessary Evil, Modifying Friction and Fluid Friction",
+          "aliases": [
+            "friction necessary evil",
+            "lubricants lubricants oil grease",
+            "treaded tires shoe soles",
+            "fluid friction drag streamlined shape"
+          ],
+          "learning_objectives": [
+            "Explain why friction is a 'necessary evil' (enables walking/writing, causes wear/heat).",
+            "Describe methods to increase (treaded tires) and decrease (lubricants, powder) friction, and streamlined shapes for fluid drag."
+          ],
+          "explanation": "Friction is essential (enables walking, holding objects, writing, braking) but causes wear and heat loss. Lubricants (oil, grease, talcum powder) reduce friction by creating a thin smooth layer between moving parts. Fluid friction (drag) in air/water is reduced by streamlined shapes (aeroplanes, birds, fish).",
+          "examples": [
+            "Sprinkling fine talcum powder on a carrom board reduces friction so carrom coins slide smoothly.",
+            "Aeroplanes and birds have streamlined bodies to minimize fluid drag while flying through air."
+          ],
+          "exercises": [
+            "Why are soles of shoes and tires of vehicles treaded?",
+            "What is fluid drag and how do birds and aeroplanes overcome it?"
+          ],
+          "solutions": [
+            "Treads create better grip and increase friction with ground to prevent slipping.",
+            "Fluid drag is frictional force exerted by fluids (air/water); streamlined body shapes reduce drag allowing smooth motion."
+          ],
+          "practice_questions": [
+            "Give one example where friction is desirable and one where it is undesirable.",
+            "What are lubricants?"
+          ],
+          "practice_solutions": [
+            "Desirable: Brakes stopping a bicycle. Undesirable: Wear and tear of machinery engine parts.",
+            "Substances like oil, grease, or graphite applied between moving machine parts to reduce friction."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c10",
+      "number": "10",
+      "title": "Chapter 10 - Sound",
+      "aliases": [
+        "Sound",
+        "Chapter 10 Sound",
+        "Physics Sound Wave"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c10-t1",
+          "title": "Sound Produced by Vibrating Bodies and Humans (Larynx)",
+          "aliases": [
+            "vibrating body produces sound",
+            "human voice box larynx vocal cords",
+            "musical instruments vibration",
+            "Sound"
+          ],
+          "learning_objectives": [
+            "Demonstrate that sound is produced by vibrating objects (stretched membrane, strings, vocal cords).",
+            "Describe human voice production by vocal cords across the larynx (voice box)."
+          ],
+          "explanation": "Sound is a form of energy produced by vibrating objects. In humans, sound is produced by the voice box or larynx located at the upper end of the windpipe. Two vocal cords stretch across larynx leaving a narrow slit for air; expelled lung air vibrates cords to produce sound.",
+          "examples": [
+            "Plucking a stretched rubber band makes it vibrate rapidly and produce sound.",
+            "Tightening a guitar string increases its vibration rate, producing a higher pitch."
+          ],
+          "exercises": [
+            "How is sound produced in human beings?",
+            "Which part of a sitar vibrates to produce musical sound?"
+          ],
+          "solutions": [
+            "Air forced from lungs through a narrow slit between stretched vocal cords in the larynx causes cords to vibrate and produce sound.",
+            "The stretched metal strings."
+          ],
+          "practice_questions": [
+            "Touch your throat while speaking loudly. What sensation do you feel?",
+            "Why do men, women, and children have different voices?"
+          ],
+          "practice_solutions": [
+            "Rapid vibrations of the larynx and vocal cords.",
+            "Because vocal cords have different lengths: men (20 mm), women (15 mm), and children (shorter)."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c10-t2",
+          "title": "Medium for Sound Propagation, Amplitude, Frequency and Pitch",
+          "aliases": [
+            "sound requires medium vacuum",
+            "amplitude loudness decibel",
+            "frequency hertz pitch shrillness",
+            "time period"
+          ],
+          "learning_objectives": [
+            "Explain that sound requires a material medium (solid, liquid, gas) and cannot travel in a vacuum.",
+            "Define Amplitude (determines Loudness in dB), Frequency (Hertz, Hz determines Pitch), and Time Period."
+          ],
+          "explanation": "Sound requires a medium (solid, liquid, or gas) to propagate; it CANNOT travel through vacuum. Frequency is oscillations per second (Hertz, Hz); Pitch/shrillness depends on frequency. Amplitude is maximum displacement; Loudness is proportional to (Amplitude)^2 and measured in decibels (dB).",
+          "examples": [
+            "An electric bell ringing inside a vacuum jar cannot be heard because there is no air medium for sound waves.",
+            "A baby's voice has higher frequency and higher pitch than an adult man's voice."
+          ],
+          "exercises": [
+            "Can sound travel through a vacuum? Explain with a simple bell jar thought experiment.",
+            "A pendulum oscillates 40 times in 4 seconds. Find its time period and frequency."
+          ],
+          "solutions": [
+            "No. As air is pumped out of a bell jar, ringing sound fades until complete vacuum produces silence, proving medium is required.",
+            "Frequency = 40 / 4 = 10 Hz. Time Period = 1 / Frequency = 1 / 10 = 0.1 seconds."
+          ],
+          "practice_questions": [
+            "How is loudness related to amplitude?",
+            "What is the unit of frequency?"
+          ],
+          "practice_solutions": [
+            "Loudness is directly proportional to the square of the amplitude of vibration.",
+            "Hertz (Hz)."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c10-t3",
+          "title": "Audible/Inaudible Sounds, Noise Pollution and Control Measures",
+          "aliases": [
+            "audible range 20Hz 20000Hz",
+            "infrasonic ultrasonic",
+            "noise vs music",
+            "noise pollution health measures"
+          ],
+          "learning_objectives": [
+            "State human audible frequency range (20 Hz to 20,000 Hz).",
+            "Explain causes, health hazards (hearing loss, hypertension), and mitigation measures of noise pollution."
+          ],
+          "explanation": "Human ear detects audible frequencies from 20 Hz to 20,000 Hz (20 kHz). Sounds below 20 Hz (infrasonic) or above 20,000 Hz (ultrasonic, e.g. bats, ultrasound medical equipment) are inaudible. Unpleasant loud noise causes noise pollution leading to insomnia, hypertension, and hearing impairment.",
+          "examples": [
+            "Bats use ultrasonic sounds (>20,000 Hz) for echolocation in the dark.",
+            "Planting trees along roadsides (green mufflers) absorbs noise and reduces traffic noise pollution."
+          ],
+          "exercises": [
+            "What is the frequency range of audible sound for human ears?",
+            "List three health problems caused by persistent noise pollution."
+          ],
+          "solutions": [
+            "20 Hz to 20,000 Hz (20 kHz).",
+            "Lack of sleep (insomnia), high blood pressure (hypertension), anxiety, and temporary or permanent hearing impairment."
+          ],
+          "practice_questions": [
+            "Differentiate between music and noise.",
+            "State two measures to control noise pollution in residential areas."
+          ],
+          "practice_solutions": [
+            "Music is pleasant to ears; noise is unwanted unpleasant loud sound.",
+            "Use silencers in automobile engines/factories, minimize loudspeaker use, and plant trees along roadsides."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c11",
+      "number": "11",
+      "title": "Chapter 11 - Chemical Effects of Electric Current",
+      "aliases": [
+        "Chemical Effects of Electric Current",
+        "Chapter 11 Chemical Effects",
+        "Electrochemistry"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c11-t1",
+          "title": "Do Liquids Conduct Electricity? (Low-Voltage Tester)",
+          "aliases": [
+            "liquid conductors electrolytes",
+            "LED tester magnetic compass tester",
+            "distilled vs tap water conductivity",
+            "Chemical Effects of Electric Current"
+          ],
+          "learning_objectives": [
+            "Classify liquids into good conductors (tap water, acid/salt solutions) and poor conductors (distilled water, oil, honey).",
+            "Construct safe low-voltage LED / magnetic compass testers (Safety: Low-voltage DC cell only, NEVER use mains AC)."
+          ],
+          "explanation": "SAFETY NOTICE: All electric conduction tests MUST use low-voltage dry cells (1.5V-9V DC). NEVER connect to household mains supply! Liquids with dissolved salts, acids, or bases conduct electricity (electrolytes). Distilled water is a poor conductor, but adding common salt makes it conducting.",
+          "examples": [
+            "Tap water conducts electricity because it contains dissolved mineral salts, whereas pure distilled water does not.",
+            "An LED or magnetic compass deflection tester detects weak electric currents in liquid solutions."
+          ],
+          "exercises": [
+            "Why does tap water conduct electricity while distilled water does not?",
+            "Safety check: What power source must be used for testing electrical conductivity of liquids in school labs?"
+          ],
+          "solutions": [
+            "Tap water contains dissolved mineral salts and ions that conduct electricity, whereas distilled water is free of dissolved salts.",
+            "Only low-voltage DC dry cells or batteries (1.5V to 9V). Household mains AC electricity must NEVER be used."
+          ],
+          "practice_questions": [
+            "How can distilled water be converted into a conducting liquid?",
+            "Why is an LED preferred over a small filament bulb for testing weak electric currents?"
+          ],
+          "practice_solutions": [
+            "By dissolving a small amount of common salt, acid (lemon juice), or base (caustic soda) in it.",
+            "An LED glows even when a very weak electric current flows through the circuit."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c11-t2",
+          "title": "Chemical Effects of Electric Current",
+          "aliases": [
+            "chemical effects current",
+            "gas bubbles at electrodes",
+            "copper sulphate electrolysis",
+            "electrodes anode cathode"
+          ],
+          "learning_objectives": [
+            "Demonstrate chemical effects when electric current passes through conducting solutions (gas bubbles, metal deposition, color change).",
+            "Explain electrolysis of water producing Oxygen gas at anode (+) and Hydrogen gas at cathode (-)."
+          ],
+          "explanation": "Passing electric current through a conducting solution causes chemical reactions (chemical effect of current). Effects include: formation of gas bubbles at electrodes (William Nicholson, 1800: oxygen at positive anode, hydrogen at negative cathode), deposition of metal on electrodes, and color change of solution.",
+          "examples": [
+            "Passing current through acidified water produces oxygen gas bubbles at positive electrode (+) and hydrogen at negative electrode (-).",
+            "Electric current through a cut potato connected to tester causes a greenish-blue spot around the positive terminal rod."
+          ],
+          "exercises": [
+            "What chemical observations indicate that electric current is passing through a liquid solution?",
+            "In electrolysis of water, at which electrode is oxygen gas evolved?"
+          ],
+          "solutions": [
+            "Bubbles of gas at electrodes, deposits of metal on electrodes, or changes in color of the solution.",
+            "At the positive electrode (anode)."
+          ],
+          "practice_questions": [
+            "Why does a greenish-blue spot appear around the wire connected to positive terminal when inserted in a potato?",
+            "What is electrolysis?"
+          ],
+          "practice_solutions": [
+            "Due to chemical action of electric current reacting with potato sap around the positive copper wire.",
+            "The decomposition of a chemical compound into ions by passing an electric current through its solution."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c11-t3",
+          "title": "Electroplating and Applications",
+          "aliases": [
+            "electroplating copper sulphate",
+            "chromium plating artificial jewelry",
+            "applications of electroplating",
+            "electroplating safety disposal"
+          ],
+          "learning_objectives": [
+            "Explain the electroplating process (depositing a desired metal onto another material using electricity).",
+            "Describe commercial applications of electroplating (chromium on car parts, gold/silver on ornaments, tin on iron cans)."
+          ],
+          "explanation": "Electroplating is depositing a layer of any desired metal on another material by means of electricity. To plate copper on iron plate: iron plate connected to negative terminal (-), pure copper plate to positive (+), CuSO4 solution as electrolyte. Applications: Chromium plating (shiny, scratch resistant), Tin plating (food cans), Zinc galvanization (rust prevention).",
+          "examples": [
+            "Car bumpers, bicycle handlebars, and water taps are electroplated with chromium to give a shiny appearance and resist scratches.",
+            "Iron used in bridges is coated with a layer of zinc (galvanized) to protect it from corrosion and rusting."
+          ],
+          "exercises": [
+            "What is electroplating?",
+            "In electroplating copper on an iron spoon, which electrode should the iron spoon be connected to?"
+          ],
+          "solutions": [
+            "The process of depositing a thin layer of a desired superior metal on another object using electric current.",
+            "To the negative terminal (cathode) of the battery."
+          ],
+          "practice_questions": [
+            "Why is chromium electroplated on bicycle handlebars instead of making the entire handlebar out of chromium?",
+            "Why are food cans electroplated with tin over iron?"
+          ],
+          "practice_solutions": [
+            "Chromium is very expensive; plating a thin layer over cheap iron gives shine and scratch resistance economically.",
+            "Tin is less reactive than iron, preventing food from coming into contact with iron and spoiling."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c12",
+      "number": "12",
+      "title": "Chapter 12 - Some Natural Phenomena",
+      "aliases": [
+        "Some Natural Phenomena",
+        "Chapter 12 Natural Phenomena",
+        "Lightning and Earthquakes"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c12-t1",
+          "title": "Charging by Rubbing and Types of Charges & Interaction",
+          "aliases": [
+            "static electric charge",
+            "positive and negative charges",
+            "charging by friction",
+            "like charges repel unlike attract",
+            "Some Natural Phenomena"
+          ],
+          "learning_objectives": [
+            "Demonstrate charging by rubbing (friction).",
+            "State the law of electrostatic charges: Like charges repel each other, unlike charges attract."
+          ],
+          "explanation": "When plastic comb is rubbed with dry hair or glass rod with silk, they acquire static electric charges. Two types of charges exist: Positive (+) and Negative (-). Like charges repel each other; unlike charges attract each other. Charges acquired by rubbing remain static until discharged.",
+          "examples": [
+            "A glass rod rubbed with silk acquires positive charge; a plastic straw rubbed with polythene acquires negative charge.",
+            "Two charged inflated balloons push away (repel) each other because both carry like charges."
+          ],
+          "exercises": [
+            "State the basic law of interaction between electric charges.",
+            "What type of charge is acquired by a glass rod when rubbed with silk cloth?"
+          ],
+          "solutions": [
+            "Like electric charges repel each other, while unlike electric charges attract each other.",
+            "Positive charge."
+          ],
+          "practice_questions": [
+            "What happens when a charged plastic straw is brought near another charged plastic straw?",
+            "Why do static charges produced by rubbing not flow in a circuit on their own?"
+          ],
+          "practice_solutions": [
+            "They repel each other because both carry like charges.",
+            "Because static charges remain stationary until a closed conducting path is provided."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c12-t2",
+          "title": "Electroscope, Lightning and Safety Precautions",
+          "aliases": [
+            "gold leaf electroscope tester",
+            "lightning discharge clouds",
+            "lightning conductor rod",
+            "lightning safety outdoor indoor"
+          ],
+          "learning_objectives": [
+            "Explain electroscope working to detect electric charges.",
+            "Describe lightning as huge atmospheric electric discharge and safety rules (lightning conductor, open field precautions)."
+          ],
+          "explanation": "An electroscope detects electric charge using metal foil leaves that diverge when charged. Lightning is massive electric discharge between clouds or cloud and earth. Safety: Stay indoors, avoid tall trees/open umbrellas/metal poles, squat low on ground if trapped outdoors. Lightning conductors protect tall buildings by transferring charge safely to earth.",
+          "examples": [
+            "Aluminum foil leaves of a home-made electroscope diverge when touched by a charged refills rod.",
+            "A metal lightning conductor rod fixed on top of a tall building carries lightning discharge safely down to ground."
+          ],
+          "exercises": [
+            "What is an electroscope?",
+            "What indoor safety precautions should be taken during a thunderstorm?"
+          ],
+          "solutions": [
+            "A device used to detect whether an object is carrying an electric charge or not.",
+            "Avoid using corded landline phones, stay away from running tap water/metal pipes, and unplug electrical appliances like TVs and computers."
+          ],
+          "practice_questions": [
+            "Why should one NOT stand under an isolated tall tree during a thunderstorm?",
+            "How does a lightning conductor protect tall buildings?"
+          ],
+          "practice_solutions": [
+            "Tall isolated objects are more likely to be struck by lightning discharge.",
+            "It provides a direct low-resistance metallic path for electric charge to pass safely into the ground without damaging the building."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c12-t3",
+          "title": "Earthquakes, Causes, Measurement and Safety Measures",
+          "aliases": [
+            "earthquake crust tectonic plates",
+            "seismic fault zones",
+            "richter scale seismograph",
+            "earthquake safety indoor outdoor"
+          ],
+          "learning_objectives": [
+            "Explain causes of earthquakes (tremors caused by disturbance deep inside Earth's crust / tectonic plates).",
+            "Describe seismic waves, Seismograph, Richter scale (logarithmic magnitude > 7 causes severe damage), and safety precautions."
+          ],
+          "explanation": "An earthquake is a sudden shaking of the Earth caused by movement of tectonic plates deep inside Earth's crust. Boundaries of plates are seismic/fault zones (e.g. Kashmir, Western Himalayas, Rann of Kutch). Magnitude is measured on logarithmic Richter scale (magnitude > 7 causes massive destruction). Safety: Take shelter under heavy table indoors; move to open clear ground outdoors.",
+          "examples": [
+            "A major destructive earthquake occurred in Gujarat (Bhuj region) on 26th January 2001.",
+            "Seismograph records seismic waves produced by tremors on a rotating drum paper."
+          ],
+          "exercises": [
+            "What causes an earthquake?",
+            "If you are indoors during an earthquake, what safety action should you take?"
+          ],
+          "solutions": [
+            "Tremors caused by deep disturbance in Earth's crust due to sliding or colliding of tectonic plates.",
+            "Take shelter under a sturdy table and stay there until shaking stops; protect your head with arms."
+          ],
+          "practice_questions": [
+            "What instrument records seismic waves of an earthquake?",
+            "Why is the Richter scale called non-linear/logarithmic?"
+          ],
+          "practice_solutions": [
+            "Seismograph.",
+            "An increase of 2 units in magnitude means 1000 times more destructive energy is released."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    },
+    {
+      "chapter_id": "sci8-c13",
+      "number": "13",
+      "title": "Chapter 13 - Light",
+      "aliases": [
+        "Light",
+        "Chapter 13 Light",
+        "Optics and Vision"
+      ],
+      "topics": [
+        {
+          "topic_id": "sci8-c13-t1",
+          "title": "Reflection of Light and Laws of Reflection",
+          "aliases": [
+            "laws of reflection",
+            "angle of incidence equal to reflection",
+            "incident ray reflected ray normal",
+            "lateral inversion",
+            "Light"
+          ],
+          "learning_objectives": [
+            "State Laws of Reflection: Angle of incidence (i) = Angle of reflection (r).",
+            "Describe incident ray, reflected ray, normal, and lateral inversion in plane mirrors."
+          ],
+          "explanation": "Light reflecting off a polished mirror obeys two Laws of Reflection:\n1) Angle of incidence (i) equals angle of reflection (r): angle i = angle r.\n2) Incident ray, normal at point of incidence, and reflected ray all lie in the same plane.\nIn plane mirror images, left appears right and right appears left (Lateral Inversion).",
+          "examples": [
+            "If a ray strikes a plane mirror at an incidence angle of 30°, the angle of reflection is also 30°.",
+            "Looking in a plane mirror, raising your right hand makes your mirror image appear to raise its left hand (lateral inversion)."
+          ],
+          "exercises": [
+            "State the two laws of reflection of light.",
+            "An incident ray strikes a plane mirror making an angle of 40° with the mirror surface. Find the angle of reflection."
+          ],
+          "solutions": [
+            "1) Angle of incidence equals angle of reflection (i = r). 2) Incident ray, normal, and reflected ray lie in the same plane.",
+            "Angle with mirror = 40° -> Angle of incidence i = 90° - 40° = 50°. Therefore, angle of reflection r = 50°."
+          ],
+          "practice_questions": [
+            "What is lateral inversion?",
+            "How far behind a plane mirror does your image appear if you stand 2 meters in front of it?"
+          ],
+          "practice_solutions": [
+            "The phenomenon where the left side of an object appears as the right side in its mirror image.",
+            "2 meters behind the mirror (image distance equals object distance)."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c13-t2",
+          "title": "Regular and Diffused Reflection, Multiple Images and Periscope",
+          "aliases": [
+            "regular vs diffused reflection",
+            "multiple images formula n=(360/theta)-1",
+            "kaleidoscope patterns",
+            "periscope parallel mirrors"
+          ],
+          "learning_objectives": [
+            "Differentiate between Regular reflection (smooth surface) and Diffused/Irregular reflection (rough surface).",
+            "Calculate multiple images formed by inclined mirrors: n = (360° / theta) - 1, and explain Kaleidoscope/Periscope."
+          ],
+          "explanation": "Regular reflection occurs on smooth surfaces (plane mirror) producing clear images. Diffused reflection occurs on rough irregular surfaces where parallel rays reflect in different directions. Two inclined mirrors form multiple images: Number of images n = (360° / theta) - 1. Periscope uses two parallel mirrors at 45°.",
+          "examples": [
+            "Two mirrors placed parallel (theta = 0°) form infinite images.",
+            "A kaleidoscope uses 3 inclined plane mirrors to create beautiful symmetric infinite-changing patterns."
+          ],
+          "exercises": [
+            "Differentiate between regular and diffused reflection. Does diffused reflection mean laws of reflection failed?",
+            "How many images are formed by two plane mirrors placed at right angles (90°) to each other?"
+          ],
+          "solutions": [
+            "Regular reflection happens on smooth surfaces forming clear images; diffused reflection happens on rough surfaces scattering rays. Laws of reflection hold true at every single point in both cases.",
+            "Number of images n = (360° / 90°) - 1 = 4 - 1 = 3 images."
+          ],
+          "practice_questions": [
+            "What optical device uses two parallel mirrors at 45° to see objects over obstacles or submarines?",
+            "How many images are formed when mirrors are inclined at 60°?"
+          ],
+          "practice_solutions": [
+            "Periscope.",
+            "n = (360° / 60°) - 1 = 6 - 1 = 5 images."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        },
+        {
+          "topic_id": "sci8-c13-t3",
+          "title": "Human Eye: Structure, Defects, Care and Visually Impaired Assistance",
+          "aliases": [
+            "human eye cornea iris pupil lens retina",
+            "myopia hypermetropia eye defects",
+            "persistence of vision",
+            "braille system louis braille"
+          ],
+          "learning_objectives": [
+            "Identify human eye parts (Cornea, Iris, Pupil, Ciliary muscles, Convex lens, Retina, Optic nerve, Blind spot).",
+            "Explain persistence of vision (1/16th second), eye care, and the Braille system for visually impaired."
+          ],
+          "explanation": "Human eye focuses light via convex lens onto Retina (containing Rods for dim light and Cones for color/bright light). Iris controls pupil size. Blind spot has no sensory cells. Persistence of vision retains image for 1/16th second. Louis Braille developed Braille system (63 dot patterns) enabling visually impaired persons to read and write.",
+          "examples": [
+            "Movies display 24 still pictures per second, blending into continuous moving video due to persistence of vision (1/16s).",
+            "Iris gives unique color to human eyes and regulates light entry by controlling pupil size."
+          ],
+          "exercises": [
+            "What is the function of Iris and Pupil in the human eye?",
+            "What is persistence of vision and how is it used in motion picture projection?"
+          ],
+          "solutions": [
+            "Iris regulates the amount of light entering the eye by adjusting the size of the central aperture called Pupil.",
+            "An image impression persists on retina for about 1/16th of a second; flashing still pictures faster than 16 per second creates the illusion of continuous movement."
+          ],
+          "practice_questions": [
+            "What is the blind spot in human eye?",
+            "Who invented the Braille system for visually impaired people and how many dot patterns does it contain?"
+          ],
+          "practice_solutions": [
+            "The junction of optic nerve and retina where no sensory rod or cone cells exist, making vision impossible at that point.",
+            "Louis Braille (in 1821); it uses 63 dot patterns or characters."
+          ],
+          "marks_pattern": "State the scientific idea, apply it to the given situation and support the final answer with a reason, calculation or labelled detail as appropriate.",
+          "content_origin": "teacher_authored"
+        }
+      ]
+    }
+  ]
+}
