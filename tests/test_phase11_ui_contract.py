@@ -20,6 +20,18 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("page.close_drawer()", UI)
         self.assertNotIn("NavigationRail(", UI)
 
+    def test_new_chat_starts_fresh_conversation_without_deleting_history(self):
+        self.assertIn("new_chat_button = ft.IconButton(", UI)
+        self.assertIn('tooltip="Start new chat"', UI)
+        self.assertIn("def start_new_chat", UI)
+        self.assertIn("conversation_store.create_conversation(", UI)
+        self.assertIn('title="New conversation"', UI)
+        self.assertIn("new_chat_button.on_click = start_new_chat", UI)
+        new_chat_block = UI.split("def start_new_chat", 1)[1].split("def refresh_cloud_status", 1)[0]
+        self.assertIn('show_view("tutor")', new_chat_block)
+        self.assertNotIn("delete", new_chat_block.casefold())
+        self.assertNotIn("list_messages", new_chat_block)
+
     def test_tutor_composer_attachment_and_voice_contracts_exist(self):
         for marker in (
             "multiline=True",

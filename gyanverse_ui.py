@@ -181,6 +181,10 @@ def main(page: ft.Page) -> None:
     status_text = ft.Text("Ready", size=13, color=COLOR_MUTED)
     cloud_status_text = ft.Text("Cloud: signed out", size=13, color=COLOR_MUTED)
     account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
+    new_chat_button = ft.IconButton(
+        icon=ft.Icons.ADD,
+        tooltip="Start new chat",
+    )
     body = ft.Container(expand=True, padding=0, bgcolor=COLOR_PANEL)
     menu_button = ft.IconButton(icon=ft.Icons.MENU, tooltip="Open menu")
 
@@ -196,6 +200,25 @@ def main(page: ft.Page) -> None:
             chapter=context.current_chapter,
         )
         session_id = active_conversation.conversation_id
+
+    def start_new_chat(_: object = None) -> None:
+        nonlocal active_conversation, session_id, latest_tutor_answer, active_audio, selected_attachments
+        ai_service.stop_playback()
+        active_conversation = conversation_store.create_conversation(
+            owner_id=current_owner_id,
+            student_id=context.student_id,
+            board=context.board,
+            standard=context.standard,
+            subject=context.current_subject,
+            chapter=context.current_chapter,
+            title="New conversation",
+        )
+        session_id = active_conversation.conversation_id
+        latest_tutor_answer = ""
+        active_audio = None
+        selected_attachments = []
+        status_text.value = "New chat started"
+        show_view("tutor")
 
     def refresh_cloud_status(message: str | None = None, *, error: bool = False) -> None:
         session = firebase_sessions.session
@@ -2235,6 +2258,7 @@ def main(page: ft.Page) -> None:
         await page.close_drawer()
 
     menu_button.on_click = open_drawer
+    new_chat_button.on_click = start_new_chat
     account_button.on_click = lambda _: show_view("settings")
     page.on_login = google_login_completed
     page.on_logout = google_logout_completed
@@ -2275,6 +2299,7 @@ def main(page: ft.Page) -> None:
                 menu_button,
                 ft.Column([title_text, context_text], spacing=0, expand=True),
                 ft.Column([status_text, cloud_status_text], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.END),
+                new_chat_button,
                 account_button,
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
