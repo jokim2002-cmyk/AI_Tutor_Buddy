@@ -990,6 +990,114 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertIn("Step-by-step Explanation", local_resp)
         self.assertIn("1.", local_resp)
 
+    def test_strict_scope_lock_out_of_scope_subject_asks_top_selector(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="Friendly Microorganisms and Commercial Uses",
+        )
+        resp = service.ask(
+            message="Explain English Chapter 1 - The Best Christmas Present in the World",
+            context=ctx,
+        )
+        self.assertIn("top selector first", resp)
+        self.assertIn("English Chapter 1", resp)
+
+    def test_strict_scope_lock_in_scope_chapter_answers_active_chapter(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Coal and Petroleum chapter overview grounded in GSEB Std 8 Science syllabus."
+        )
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="is chapter ko explain karo", context=ctx)
+
+        self.assertIn("Coal and Petroleum", resp)
+        self.assertNotIn("top selector first", resp)
+
+    def test_first_and_third_topic_difference_table(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        resp = service.ask(
+            message="chapter 3 first aur third topic difference table me do",
+            context=ctx,
+        )
+        self.assertIn("|", resp)
+        self.assertIn("Inexhaustible and Exhaustible Natural Resources", resp)
+        self.assertIn("Petroleum", resp)
+
+    def test_exact_five_useful_and_five_harmful_examples(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="",
+        )
+        resp = service.ask(
+            message="harmful aur useful examples exactly 5-5 do",
+            context=ctx,
+        )
+        self.assertIn("Useful Microorganisms (5 Examples)", resp)
+        self.assertIn("Harmful Microorganisms (5 Examples)", resp)
+        self.assertIn("5.", resp)
+
+    def test_specific_topic_irrigation_types_no_chapter_overview(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Irrigation",
+        )
+        resp = service.ask(
+            message="irrigation types explain karo",
+            context=ctx,
+        )
+        self.assertIn("Irrigation", resp)
+        self.assertNotIn("Chapter overview", resp)
+
+    def test_science_multi_chapter_test_paper_no_cross_subject_contamination(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Agricultural Practices and Preparation of Soil",
+        )
+        resp = service.ask(
+            message="Science 25m test paper banao full book",
+            context=ctx,
+        )
+        self.assertIn("Test Paper:", resp)
+        self.assertNotIn("physiographic", resp.lower())
+        self.assertNotIn("constitutional role", resp.lower())
+        self.assertNotIn("interpret the graph or data display", resp.lower())
+
+    def test_test_paper_answer_guide_matches_question_content(self) -> None:
+        from phase11_core import parse_test_paper_scope, render_test_paper, validate_generated_test_paper
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="Friendly Microorganisms and Commercial Uses",
+        )
+        syl = service.syllabus_repository.find(
+            board=ctx.board,
+            medium=ctx.medium,
+            standard=ctx.standard,
+            subject=ctx.current_subject,
+        )
+        scope = parse_test_paper_scope("Chapter 2 25m test paper with answers", ctx, syl)
+        _, paper_obj = render_test_paper(syl, scope, context=ctx, message="Chapter 2 25m test paper with answers")
+        self.assertTrue(validate_generated_test_paper(paper_obj, syl))
+        for q_item in paper_obj.questions:
+            self.assertTrue(q_item.solution_guide and len(q_item.solution_guide) > 5)
+
 
 if __name__ == "__main__":
     unittest.main()

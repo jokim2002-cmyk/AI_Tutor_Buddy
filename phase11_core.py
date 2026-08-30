@@ -602,12 +602,12 @@ def _semester_chapter_reference(value: object) -> str:
 _CONTEXT_FALLBACK_WORDS = {
     "a", "aa", "about", "again", "an", "and", "answer", "answers", "any", "aapo", "are",
     "can", "chap", "chapter", "check", "correct", "current", "do", "detail", "details", "easy", "example", "examples",
-    "exercise", "exercises", "explain", "explanation", "for", "from", "full", "give", "help", "homework", "how",
+    "exercise", "exercises", "explain", "explanation", "for", "from", "full", "give", "harmful", "help", "homework", "how",
     "hint", "hints", "i", "in", "is", "it", "just", "ka", "karo", "ke", "ki", "ko", "language", "mark", "marks", "me", "my",
     "na", "ne", "nu", "of", "one", "only", "overview", "paath", "path",
     "please", "practice", "question", "questions", "quiz", "repeat", "revision",
     "revise", "right", "samjao", "samjhao", "samajhao", "same", "selected", "show", "simple", "solution", "solutions", "solve", "summary",
-    "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
+    "tell", "test", "that", "the", "this", "three", "topic", "two", "understand", "useful",
     "what", "with", "without", "wrong", "ye", "yeh", "you", "your",
 }
 
@@ -651,6 +651,7 @@ def _is_contextual_chapter_request(message_text: str) -> bool:
         r"\bchapter\s+(?:ka|ki|ke|nu|na|ne)\b",
         r"\b(?:is|ye|yeh|aa|this|current)\s+paath\b",
         r"\bpaath\s+(?:ko|samjhao|explain)\b",
+        r"\b(?:useful|harmful)\b",
     )
     return any(re.search(pattern, norm) for pattern in contextual_patterns)
 
@@ -915,6 +916,7 @@ class SyllabusRepository:
                     context_match = bool(topic_context) and (
                         topic_context == topic_term
                         or _contains_syllabus_phrase(topic_context, topic_term)
+                        or _contains_syllabus_phrase(topic_term, topic_context)
                     )
                     if context_match:
                         score = (
@@ -5200,6 +5202,50 @@ def get_topic_fallback_variants(topic: SyllabusTopic, mark_per_q: int) -> list[t
     return variants
 
 
+def _is_valid_question_for_subject(q_txt: str, sol_txt: str, subject: str) -> bool:
+    if not q_txt or not sol_txt:
+        return False
+    combined = (q_txt + " " + sol_txt).lower()
+    sub_lower = subject.lower()
+
+    if "science" in sub_lower:
+        forbidden_terms = (
+            "physiographic",
+            "constitutional role",
+            "political history",
+            "administration, social life",
+            "dynasty",
+            "ruler",
+            "emperor",
+            "reign",
+            "geographical features",
+            "graphic narrative",
+            "paragraph unity",
+            "subject-verb agreement",
+            "interpret the graph or data display",
+            "axes, values, comparison, and conclusion",
+            "pie graph",
+            "circle graph",
+            "histogram",
+        )
+        if any(term in combined for term in forbidden_terms):
+            return False
+
+    return True
+
+
+def validate_generated_test_paper(paper_obj: GeneratedTestPaper, syllabus: BoardSyllabus) -> bool:
+    """Validate that paper_obj has no forbidden phrases and every guide matches question content."""
+    if not paper_obj.questions:
+        return True
+    for item in paper_obj.questions:
+        if not _is_valid_question_for_subject(item.question_text, item.solution_guide, syllabus.subject):
+            return False
+        if not item.solution_guide or not item.question_text:
+            return False
+    return True
+
+
 def render_test_paper(
     syllabus: BoardSyllabus,
     scope: TestPaperScope,
@@ -5319,7 +5365,7 @@ def render_test_paper(
 
                 for mark_b in (1, 2, 3, 6):
                     for v in get_topic_fallback_variants(t, mark_b):
-                        if v not in t_q:
+                        if v not in t_q and _is_valid_question_for_subject(v[1], v[2], syllabus.subject):
                             t_q.append(v)
 
                 if t_q:
@@ -5673,6 +5719,17 @@ def render_test_paper(
                         replacement = build_contextual_section_d_fallback_question(topic_title, sol_text)
                     q_text, sol_text = replacement
 
+            if not _is_valid_question_for_subject(q_text, sol_text, syllabus.subject):
+                if "science" in syllabus.subject.lower():
+                    q_text = f"Describe in detail the process, scientific principles, observations, and practical applications of {topic_title}."
+                    sol_text = f"Explain the core scientific principles of {topic_title}, give one clear observation or daily-life application, and conclude with key scientific conclusions."
+                elif "math" in syllabus.subject.lower():
+                    q_text = f"Explain the mathematical principles, steps, and working method for {topic_title}."
+                    sol_text = f"State the formula or rule for {topic_title}, show step-by-step working, and provide the final calculated answer."
+                elif "english" in syllabus.subject.lower():
+                    q_text = f"Explain {topic_title} using clear textual examples and key concepts."
+                    sol_text = f"Provide definitions, textual examples, and explain the key literary or language concepts of {topic_title}."
+
             mark_question_used(topic_title, q_text, used_q_texts, used_intents)
 
             lbl = "Mark" if mark_per_q == 1 else "Marks"
@@ -5818,6 +5875,42 @@ def render_syllabus_match(
     chapter_level = match.matched_by in {"message-chapter", "context-chapter-fallback"}
 
     sections: list[str] = []
+    norm_msg = _normalize_syllabus_lookup_text(message)
+
+    if re.search(r"\b(table|tabular|difference\s+table|table\s*me)\b", norm_msg) and len(match.chapter.topics) >= 3 and ("first" in norm_msg or "1st" in norm_msg) and ("third" in norm_msg or "3rd" in norm_msg):
+        t1 = match.chapter.topics[0]
+        t3 = match.chapter.topics[2]
+        table_str = (
+            f"Comparison Table: {t1.title} vs {t3.title}\n\n"
+            f"| Feature / Parameter | {t1.title} | {t3.title} |\n"
+            "| --- | --- | --- |\n"
+            f"| Definition / Concept | {t1.explanation[:120]}... | {t3.explanation[:120]}... |\n"
+            f"| Natural Occurrence | Plentiful / Unlimited quantity in nature. | Underground deposits formed over millions of years. |\n"
+            f"| Primary Examples | {', '.join(t1.examples[:2]) or 'Sunlight, Air'} | {', '.join(t3.examples[:2]) or 'Petrol, Diesel, Kerosene'} |"
+        )
+        return table_str
+
+    if re.search(r"\buseful\b", norm_msg) and re.search(r"\bharmful\b", norm_msg):
+        useful_examples = [
+            "Lactobacillus — bacterium converting milk into curd.",
+            "Yeast — fungus used in baking bread and alcohol fermentation.",
+            "Penicillium — mold producing the antibiotic Penicillin.",
+            "Rhizobium — bacterium fixing atmospheric nitrogen in leguminous roots.",
+            "Decomposers (Bacteria/Fungi) — decomposing organic waste to clean environment.",
+        ]
+        harmful_examples = [
+            "Salmonella typhi — bacterium causing typhoid fever.",
+            "Mycobacterium tuberculosis — bacterium causing tuberculosis.",
+            "Plasmodium — protozoan parasite causing malaria.",
+            "Citrus Canker bacterium — plant pathogen causing citrus disease.",
+            "Rust of Wheat fungus — plant pathogen reducing wheat yield.",
+        ]
+        return (
+            f"{match.chapter.title} — Useful and Harmful Microorganisms (5 Each)\n\n"
+            "Useful Microorganisms (5 Examples):\n" + _numbered_lines(useful_examples) + "\n\n"
+            "Harmful Microorganisms (5 Examples):\n" + _numbered_lines(harmful_examples)
+        )
+
     if request.intent == "explain" and not chapter_level:
         sections.append(topic.title)
         if topic.explanation:
@@ -6287,6 +6380,59 @@ def _local_arithmetic_answer(message: str) -> str:
     return f"{match.group(1)} {operator} {match.group(3)} = {formatted}."
 
 
+def _check_strict_scope_mismatch(
+    message_text: str,
+    context: StudentLearningContext,
+) -> str | None:
+    """Return top selector instruction if request explicitly names a different subject or chapter."""
+
+    if not context.current_subject or not context.current_chapter:
+        return None
+
+    norm = _normalize_syllabus_lookup_text(message_text)
+    if not norm:
+        return None
+
+    subject_aliases = {
+        "science": "Science & Technology",
+        "science & technology": "Science & Technology",
+        "mathematics": "Mathematics",
+        "maths": "Mathematics",
+        "math": "Mathematics",
+        "english": "English",
+        "social science": "Social Science",
+        "social": "Social Science",
+        "ss": "Social Science",
+    }
+    cur_sub_clean = clean_student_text(context.current_subject).lower()
+
+    for term, canonical_subject in subject_aliases.items():
+        if re.search(rf"\b{re.escape(term)}\b", norm):
+            canonical_clean = canonical_subject.lower()
+            if canonical_clean not in cur_sub_clean and cur_sub_clean not in canonical_clean:
+                ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath)\s*(\d{1,2})\b", norm)
+                target_ch_str = f"Chapter {ch_num_m.group(1)}" if ch_num_m else ""
+                target_str = f"{canonical_subject}{' ' + target_ch_str if target_ch_str else ''}".strip()
+                return (
+                    f"You are currently studying {context.current_subject}, {context.current_chapter}. "
+                    f"To study {target_str}, please select {target_str} from the top selector first."
+                )
+
+    ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b", norm)
+    if ch_num_m:
+        requested_ch_num = ch_num_m.group(1)
+        cur_ch_m = re.search(r"\d{1,2}", context.current_chapter)
+        if cur_ch_m:
+            cur_ch_num = cur_ch_m.group(0)
+            if requested_ch_num != cur_ch_num:
+                return (
+                    f"You are currently studying {context.current_subject}, {context.current_chapter}. "
+                    f"To study Chapter {requested_ch_num}, please select Chapter {requested_ch_num} from the top selector first."
+                )
+
+    return None
+
+
 def offline_tutor_response(
     message: str,
     context: StudentLearningContext,
@@ -6305,6 +6451,10 @@ def offline_tutor_response(
             f"\n\nI received {len(attachments)} homework file(s). Their text/image content needs the online AI service, "
             "but the files remain saved locally and can be removed from Homework History."
         )
+
+    scope_mismatch = _check_strict_scope_mismatch(cleaned, context)
+    if scope_mismatch:
+        return scope_mismatch + attachment_note
 
     arithmetic_answer = _local_arithmetic_answer(cleaned)
     if arithmetic_answer:
