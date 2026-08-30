@@ -888,6 +888,68 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertEqual(service.last_metrics.route, "local-syllabus")
         service._client.models.generate_content.assert_not_called()
 
+    def test_std8_science_chapter2_is_chapter_ko_explain_karo_uses_active_context(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="Friendly Microorganisms and Commercial Uses",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Here is Chapter 2 Microorganisms : Friend and Foe explained using syllabus grounding context."
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="is chapter ko explain karo", context=ctx)
+
+        self.assertIn("Microorganisms", resp)
+        self.assertNotIn("Which subject or chapter", resp)
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+        prompt_arg = service._client.models.generate_content.call_args[1]["contents"][0]
+        self.assertIn("Microorganisms", prompt_arg)
+
+    def test_std8_science_chapter2_ye_chapter_samjhao_uses_active_context(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="Friendly Microorganisms and Commercial Uses",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Microorganisms friend and foe chapter overview grounded in GSEB syllabus."
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="ye chapter samjhao", context=ctx)
+
+        self.assertIn("Microorganisms", resp)
+        self.assertNotIn("Which subject or chapter", resp)
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+    def test_missing_chapter_context_asks_clarification(self) -> None:
+        service = self.service(api_key="")
+        ctx = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="",
+            current_chapter="",
+            onboarding_complete=True,
+        )
+        resp = service.ask(message="is chapter ko explain karo", context=ctx)
+        self.assertIn("Which subject or chapter", resp)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -600,19 +600,35 @@ def _semester_chapter_reference(value: object) -> str:
 
 
 _CONTEXT_FALLBACK_WORDS = {
-    "a", "about", "again", "an", "and", "answer", "answers", "any", "are",
-    "can", "chapter", "check", "correct", "current", "do", "easy", "example", "examples",
-    "exercise", "exercises", "explain", "for", "from", "give", "help", "homework", "how",
-    "hint", "hints", "i", "in", "is", "it", "just", "language", "mark", "marks", "me", "my", "of", "one", "only",
+    "a", "aa", "about", "again", "an", "and", "answer", "answers", "any", "aapo", "are",
+    "can", "chap", "chapter", "check", "correct", "current", "do", "detail", "details", "easy", "example", "examples",
+    "exercise", "exercises", "explain", "explanation", "for", "from", "full", "give", "help", "homework", "how",
+    "hint", "hints", "i", "in", "is", "it", "just", "ka", "karo", "ke", "ki", "ko", "language", "mark", "marks", "me", "my",
+    "na", "ne", "nu", "of", "one", "only", "overview", "paath", "path",
     "please", "practice", "question", "questions", "quiz", "repeat", "revision",
-    "revise", "right", "show", "simple", "solution", "solutions", "solve", "summary",
-    "same", "selected", "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
-    "what", "with", "without", "wrong", "you", "your",
+    "revise", "right", "samjao", "samjhao", "samajhao", "same", "selected", "show", "simple", "solution", "solutions", "solve", "summary",
+    "tell", "test", "that", "the", "this", "three", "topic", "two", "understand",
+    "what", "with", "without", "wrong", "ye", "yeh", "you", "your",
 }
 
 
+def _is_contextual_chapter_request(message_text: str) -> bool:
+    norm = _normalize_syllabus_lookup_text(message_text)
+    if not norm:
+        return True
+    contextual_patterns = (
+        r"\b(?:is|ye|yeh|aa|this|current|selected)\s+chapter\b",
+        r"\bchapter\s+(?:ko|samjhao|samajhao|samjao|explain|overview|summary|details?)\b",
+        r"\b(?:explain|samjhao|samajhao|samjao|describe)\s+(?:is|ye|yeh|aa|this|current)?\s*chapter\b",
+        r"\bchapter\s+(?:ka|ki|ke|nu|na|ne)\b",
+        r"\b(?:is|ye|yeh|aa|this|current)\s+paath\b",
+        r"\bpaath\s+(?:ko|samjhao|explain)\b",
+    )
+    return any(re.search(pattern, norm) for pattern in contextual_patterns)
+
+
 def _message_allows_context_topic_fallback(message_text: str) -> bool:
-    """Allow stale-context fallback only for clearly referential tutor requests."""
+    """Allow stale-context fallback for clearly referential tutor requests."""
 
     if not message_text:
         return True
@@ -630,7 +646,14 @@ def _message_allows_context_topic_fallback(message_text: str) -> bool:
     if any(phrase in message_text for phrase in evaluation_phrases):
         return True
 
-    tokens = set(message_text.split())
+    norm = _normalize_syllabus_lookup_text(message_text)
+    if not norm:
+        return True
+
+    if _is_contextual_chapter_request(norm):
+        return True
+
+    tokens = set(norm.split())
     return bool(tokens) and all(
         token in _CONTEXT_FALLBACK_WORDS or token.isdigit()
         for token in tokens
@@ -6235,6 +6258,14 @@ def offline_tutor_response(
 
     if provider_failed:
         return "The online tutor could not respond right now. Your question is saved. Please tap Retry." + attachment_note
+
+    if not context.current_subject or not context.current_chapter:
+        if _is_contextual_chapter_request(cleaned):
+            return (
+                "Which subject or chapter would you like to study? "
+                "Please select a subject and chapter from the top bar or specify which chapter you want to learn."
+                + attachment_note
+            )
 
     chapter = context.current_chapter or "the current chapter"
     subject = context.current_subject or "the current subject"
