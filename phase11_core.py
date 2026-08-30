@@ -5677,30 +5677,56 @@ def _source_description(match: SyllabusTopicMatch) -> str:
 
 
 def render_syllabus_grounding(match: SyllabusTopicMatch) -> str:
+    chapter = match.chapter
     topic = match.topic
     lines = [
         f"Board: {match.syllabus.board}",
         f"Medium: {match.syllabus.medium}",
         f"Standard: {match.syllabus.standard}",
         f"Subject: {match.syllabus.subject}",
-        f"Chapter: {match.chapter.number}. {match.chapter.title}",
-        f"Topic: {topic.title}",
-        f"Content origin: {topic.content_origin}",
+        f"Chapter: {chapter.number}. {chapter.title}",
     ]
-    if topic.learning_objectives:
-        lines.append("Learning objectives: " + "; ".join(topic.learning_objectives))
-    if topic.explanation:
-        lines.append("Explanation: " + topic.explanation)
-    if topic.examples:
-        lines.append("Examples: " + " | ".join(topic.examples))
-    if topic.exercises:
-        lines.append("Exercises: " + " | ".join(topic.exercises))
-    if topic.solutions:
-        lines.append("Solution logic: " + " | ".join(topic.solutions))
-    if topic.practice_questions:
-        lines.append("Practice templates: " + " | ".join(topic.practice_questions))
-    if topic.practice_solutions:
-        lines.append("Practice answer logic: " + " | ".join(topic.practice_solutions))
+    is_chapter_level = match.matched_by in {"message-chapter", "context-chapter-fallback"}
+    if is_chapter_level:
+        lines.append("Chapter Topic Titles: " + " | ".join(t.title for t in chapter.topics))
+        lines.append("Full Chapter Grounding Context:")
+        for idx, t in enumerate(chapter.topics, start=1):
+            lines.append(f"--- Topic {idx}: {t.title} ---")
+            if t.content_origin:
+                lines.append(f"Content origin: {t.content_origin}")
+            if t.learning_objectives:
+                lines.append("Learning objectives: " + "; ".join(t.learning_objectives))
+            if t.explanation:
+                lines.append("Explanation: " + t.explanation)
+            if t.examples:
+                lines.append("Examples: " + " | ".join(t.examples))
+            if t.exercises:
+                lines.append("Exercises: " + " | ".join(t.exercises))
+            if t.solutions:
+                lines.append("Solution logic: " + " | ".join(t.solutions))
+            if t.practice_questions:
+                lines.append("Practice templates: " + " | ".join(t.practice_questions))
+            if t.practice_solutions:
+                lines.append("Practice answer logic: " + " | ".join(t.practice_solutions))
+    else:
+        lines.extend([
+            f"Topic: {topic.title}",
+            f"Content origin: {topic.content_origin}",
+        ])
+        if topic.learning_objectives:
+            lines.append("Learning objectives: " + "; ".join(topic.learning_objectives))
+        if topic.explanation:
+            lines.append("Explanation: " + topic.explanation)
+        if topic.examples:
+            lines.append("Examples: " + " | ".join(topic.examples))
+        if topic.exercises:
+            lines.append("Exercises: " + " | ".join(topic.exercises))
+        if topic.solutions:
+            lines.append("Solution logic: " + " | ".join(topic.solutions))
+        if topic.practice_questions:
+            lines.append("Practice templates: " + " | ".join(topic.practice_questions))
+        if topic.practice_solutions:
+            lines.append("Practice answer logic: " + " | ".join(topic.practice_solutions))
     return "\n".join(lines)
 
 

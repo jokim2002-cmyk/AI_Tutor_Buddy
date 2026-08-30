@@ -772,6 +772,122 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
             self.assertIn("Social Science Standard 8", eval_soc)
             service._client.models.generate_content_stream.assert_not_called()
 
+    def test_std8_science_chapter1_three_examples_count_provider(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Agricultural Practices and Preparation of Soil",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="1. Preparation of soil by tilling.\n2. Sowing using seed drills.\n3. Irrigation using drip system.\n\nSource type: Teacher-authored content. GSEB English Standard 8 Science & Technology."
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="give me 3 example of chapter 1", context=ctx)
+
+        self.assertIn("1. Preparation of soil", resp)
+        self.assertIn("2. Sowing using", resp)
+        self.assertIn("3. Irrigation using", resp)
+        self.assertIn("Source type:", resp)
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+    def test_flexible_example_request_uses_provider_when_configured(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Agricultural Practices and Preparation of Soil",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Here are flexible examples grounded in Chapter 1:\n1. Tilling using plough\n2. Sowing healthy seeds"
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="give me examples of preparation of soil in simple language", context=ctx)
+
+        self.assertIn("flexible examples grounded in Chapter 1", resp)
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+    def test_provider_failure_falls_back_to_local_answer(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Agricultural Practices and Preparation of Soil",
+        )
+        service._client.models.generate_content.side_effect = RuntimeError("API Connection Failure")
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(message="give me 3 example of chapter 1", context=ctx)
+
+        self.assertIn("Teacher-authored content", resp)
+        self.assertTrue(service.last_metrics.fallback_used)
+        self.assertIn("fallback", service.last_metrics.route)
+
+    def test_test_evaluation_does_not_call_provider(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 1 - Crop Production and Management",
+            topic="Agricultural Practices and Preparation of Soil",
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            # Generate test paper locally
+            test_resp = service.ask(message="Chapter 1 test banao", context=ctx)
+            self.assertIn("Chapter test", test_resp)
+            service._client.models.generate_content.assert_not_called()
+
+            # Evaluate test paper locally
+            eval_resp = service.ask(
+                message="check my test answers\n1. ans1\n2. ans2\n3. ans3",
+                context=ctx,
+            )
+            self.assertIn("Test Evaluation", eval_resp)
+            self.assertEqual(service.last_metrics.route, "local-syllabus")
+            service._client.models.generate_content.assert_not_called()
+
+    def test_exact_stored_question_hint_uses_local_deterministic_route(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="Inexhaustible and Exhaustible Natural Resources",
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(
+                message="Give me a hint for the question: Is natural gas exhaustible or inexhaustible?",
+                context=ctx,
+            )
+
+        self.assertIn("Hint:", resp)
+        self.assertEqual(service.last_metrics.route, "local-syllabus")
+        service._client.models.generate_content.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

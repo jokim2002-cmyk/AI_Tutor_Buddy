@@ -1260,7 +1260,7 @@ def main(page: ft.Page) -> None:
             if not answer_text:
                 return
 
-            def split_spoken_text(value: str, limit: int = 700) -> list[str]:
+            def split_spoken_text(value: str, limit: int = 320) -> list[str]:
                 cleaned = " ".join(str(value or "").split())
                 if not cleaned:
                     return []
@@ -1286,7 +1286,7 @@ def main(page: ft.Page) -> None:
                         current = part
                 if current:
                     chunks.append(current)
-                return chunks[:8]
+                return chunks[:20]
 
             ai_service.stop_playback()
             if hasattr(ai_service, "_stop_playback_event"):
@@ -1312,12 +1312,22 @@ def main(page: ft.Page) -> None:
                         )
                         page.update()
 
-                    audio_bytes = ai_service.synthesize(
-                        chunk,
-                        language_hint=context.preferred_language,
-                    )
+                    try:
+                        audio_bytes = ai_service.synthesize(
+                            chunk,
+                            language_hint=context.preferred_language,
+                        )
+                    except Exception:
+                        if voice_status_ctrl:
+                            voice_status_ctrl.value = f"Natural voice skipped one part • {idx}/{len(chunks)}"
+                            page.update()
+                        continue
+
                     if not audio_bytes.startswith(b"RIFF") or b"WAVE" not in audio_bytes[:16]:
-                        raise AIServiceError("Natural voice returned invalid audio.")
+                        if voice_status_ctrl:
+                            voice_status_ctrl.value = f"Natural voice skipped invalid part • {idx}/{len(chunks)}"
+                            page.update()
+                        continue
 
                     ai_service.play_wav_bytes(audio_bytes)
                     voice_state = VoiceState.PLAYING
@@ -1345,7 +1355,7 @@ def main(page: ft.Page) -> None:
                 voice_state = VoiceState.ERROR
                 if voice_status_ctrl:
                     voice_status_ctrl.value = "Natural voice failed. Tap Play to retry."
-                notify("Natural voice failed. Please retry with a shorter answer.", error=True)
+                notify("Natural voice could not play this answer. Try again.", error=True)
             finally:
                 if voice_state != VoiceState.ERROR:
                     voice_state = VoiceState.IDLE
