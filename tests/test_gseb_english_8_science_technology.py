@@ -1149,6 +1149,35 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertNotIn("| --- |", resp)
         self.assertNotIn("...", resp)
 
+    def test_interrupted_provider_stream_uses_complete_local_fallback_for_5_5_examples(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="",
+        )
+
+        def stream_generator():
+            yield MagicMock(text="Useful Microorganisms:\n1. Lactobacillus — converts milk to curd.\n2. ")
+            raise RuntimeError("Network stream dropped mid-response")
+
+        service._client.models.generate_content_stream.side_effect = lambda **kwargs: stream_generator()
+
+        answer = service.ask_stream(
+            message="mujhe chapter 2 ke microorganisms wale harmful aur useful examples exactly 5-5 do",
+            context=ctx,
+        )
+
+        self.assertNotIn("Response interrupted", answer)
+        self.assertNotIn("Tap Replay", answer)
+        self.assertIn("Useful Microorganisms (5 Examples)", answer)
+        self.assertIn("Harmful Microorganisms (5 Examples)", answer)
+        self.assertIn("1. Lactobacillus", answer)
+        self.assertIn("5. Decomposers", answer)
+        self.assertIn("1. Salmonella typhi", answer)
+        self.assertIn("5. Rust of Wheat", answer)
+        self.assertEqual(service.last_backend, "offline-fallback")
+        self.assertTrue(service.last_metrics.fallback_used)
+
 
 if __name__ == "__main__":
     unittest.main()

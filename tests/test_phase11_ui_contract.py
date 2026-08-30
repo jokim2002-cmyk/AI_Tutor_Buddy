@@ -64,6 +64,12 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn("btn_replay", voice_controls_block)
         self.assertNotIn("Natural voice available", voice_controls_block)
 
+    def test_no_runtime_or_user_facing_string_contains_tap_replay(self):
+        AI = (ROOT / "phase11_ai.py").read_text(encoding="utf-8")
+        self.assertNotIn("Tap Replay", UI)
+        self.assertNotIn("Tap Replay", CORE)
+        self.assertNotIn("Tap Replay", AI)
+
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)

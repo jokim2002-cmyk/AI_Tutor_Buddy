@@ -1411,8 +1411,30 @@ class GyanVerseAIService:
             reason = f"{type(exc).__name__}: {exc}"
             self.defer_online_after_failure(reason)
             if chunks:
+                local_fallback = self._local_syllabus_answer(
+                    message=clean_msg,
+                    context=context,
+                    attachments=attachments,
+                    t_start=t_start,
+                )
+                if local_fallback is not None:
+                    answer = self.offline_answer(
+                        message=clean_msg,
+                        context=context,
+                        attachments=attachments,
+                        reason=reason,
+                        t_start=t_start,
+                        prompt_build_ms=prompt_build_ms,
+                        attachment_prepare_ms=attachment_prepare_ms,
+                        provider_ms=(time.perf_counter() - t_prov_start) * 1000.0,
+                        timed_out="Timeout" in type(exc).__name__,
+                    )
+                    if callable(on_chunk):
+                        on_chunk(answer, answer)
+                    return answer
+
                 partial_text = "".join(chunks).strip()
-                interrupted_notice = f"{partial_text}\n\n[Response interrupted due to network issue. Tap Replay or ask again.]"
+                interrupted_notice = f"{partial_text}\n\n[Response interrupted due to network issue. Please ask again.]"
                 self.last_backend = "Gemini (interrupted)"
                 self._history.append((clean_msg or "[homework attachment]", interrupted_notice))
                 self._history = self._history[-self.max_history_turns :]
