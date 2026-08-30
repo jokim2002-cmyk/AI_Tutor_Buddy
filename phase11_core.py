@@ -1136,6 +1136,7 @@ def classify_syllabus_tutor_request(message: str) -> SyllabusTutorRequest:
         "mcq",
         "question paper",
         "test paper",
+        "chapter test",
         "exam paper",
         "exam",
         "paper banao",
@@ -6182,9 +6183,17 @@ def detect_context_from_message(
         flags=re.IGNORECASE,
     )
     if chapter_match:
-        chapter = f"Chapter {chapter_match.group(1)}"
-        changes["current_chapter"] = chapter
-        detected["chapter"] = chapter
+        tok = chapter_match.group(1).casefold()
+        non_chapter_words = {
+            "test", "paper", "exam", "quiz", "mcq", "banao", "summary",
+            "revision", "exercise", "exercises", "practice", "overview",
+            "notes", "question", "questions", "answer", "answers",
+            "ka", "ke", "ki", "ko", "wala", "wali", "wale", "se", "delhi"
+        }
+        if tok not in non_chapter_words:
+            chapter = f"Chapter {chapter_match.group(1)}"
+            changes["current_chapter"] = chapter
+            detected["chapter"] = chapter
 
     semester_chapter_reference = _semester_chapter_reference(normalized)
 
@@ -6419,6 +6428,19 @@ def _check_strict_scope_mismatch(
     """Return top selector instruction if request explicitly names a different subject or chapter."""
 
     if not context.current_subject or not context.current_chapter:
+        return None
+
+    req = classify_syllabus_tutor_request(message_text)
+    msg_lower = message_text.casefold()
+    eval_phrases = (
+        "check my test answers", "check test answers", "evaluate my test answers",
+        "evaluate test answers", "evaluate my answers", "check my answers",
+        "check my paper", "evaluate my paper", "mera paper check karo", "paper check karo",
+        "check answers out of", "evaluate answers out of", "here are my answers",
+        "here are my test answers", "my answers:", "my answers", "check answers", "evaluate answers",
+    )
+    is_test_eval = any(p in msg_lower for p in eval_phrases) or bool(re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message_text, re.IGNORECASE))
+    if req.intent == "test" or is_test_eval:
         return None
 
     norm = _normalize_syllabus_lookup_text(message_text)

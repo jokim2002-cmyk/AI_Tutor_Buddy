@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 import wave
+import dataclasses
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Sequence
@@ -704,12 +705,17 @@ class GyanVerseAIService:
     ) -> GeneratedTestPaper | None:
         """Capture and store the generated test paper object for the active session across all routes."""
         try:
-            if (
-                self._last_generated_test_paper is not None
-                and context.current_subject
-                and self._last_generated_test_paper.subject.casefold() != context.current_subject.casefold()
-            ):
-                self._last_generated_test_paper = None
+            if self._last_generated_test_paper is not None:
+                if (
+                    context.current_subject
+                    and self._last_generated_test_paper.subject.casefold() != context.current_subject.casefold()
+                ):
+                    self._last_generated_test_paper = None
+                elif context.current_chapter and getattr(self._last_generated_test_paper, "scope", None) and self._last_generated_test_paper.scope.scope_type == "single_chapter":
+                    last_ch = re.search(r"\b(?:chapter|ch|chap|path)\s*(\d{1,2})\b", str(self._last_generated_test_paper.scope.description or ""), re.IGNORECASE)
+                    cur_ch = re.search(r"\b(?:chapter|ch|chap|path)\s*(\d{1,2})\b", str(context.current_chapter or ""), re.IGNORECASE)
+                    if last_ch and cur_ch and last_ch.group(1) != cur_ch.group(1):
+                        self._last_generated_test_paper = None
 
             msg_lower = message.casefold()
             eval_phrases = (
@@ -1051,29 +1057,16 @@ class GyanVerseAIService:
         )
         if syllabus_answer is not None:
             if reason:
-                route_label = (
-                    "timeout-fallback" if timed_out else "provider-error-fallback"
-                )
-                self.last_backend = "offline-fallback"
                 self.last_error = clean_student_text(reason, max_length=500)
-                self.last_metrics = TutorLatencyMetrics(
-                    route=route_label,
-                    request_start_ms=t_start * 1000.0,
-                    prompt_build_ms=prompt_build_ms,
-                    attachment_prepare_ms=attachment_prepare_ms,
-                    provider_first_chunk_ms=0.0,
-                    ui_first_visible_ms=0.0,
-                    provider_complete_ms=provider_ms,
-                    formatting_ms=self.last_metrics.formatting_ms,
-                    final_render_ms=0.0,
-                    provider_ms=provider_ms,
-                    total_ms=(time.perf_counter() - t_start) * 1000.0,
-                    backend="offline-fallback",
-                    fallback_used=True,
-                    timed_out=timed_out,
-                    stream_used=False,
-                    chunk_count=1,
-                )
+                if hasattr(self, "last_metrics") and self.last_metrics is not None:
+                    route_label = (
+                        "timeout-fallback" if timed_out else "provider-error-fallback"
+                    )
+                    self.last_metrics = dataclasses.replace(
+                        self.last_metrics,
+                        route=route_label,
+                        fallback_used=True,
+                    )
             return syllabus_answer
         req_start_ms = t_start * 1000.0
         route_label = (
@@ -1432,28 +1425,18 @@ class GyanVerseAIService:
         except Exception as exc:
             reason = f"{type(exc).__name__}: {exc}"
             self.defer_online_after_failure(reason)
-            if chunks:
-                local_fallback = self._local_syllabus_answer(
-                    message=clean_msg,
-                    context=context,
-                    attachments=attachments,
-                    t_start=t_start,
-                )
-                if local_fallback is not None:
-                    answer = self.offline_answer(
-                        message=clean_msg,
-                        context=context,
-                        attachments=attachments,
-                        reason=reason,
-                        t_start=t_start,
-                        prompt_build_ms=prompt_build_ms,
-                        attachment_prepare_ms=attachment_prepare_ms,
-                        provider_ms=(time.perf_counter() - t_prov_start) * 1000.0,
-                        timed_out="Timeout" in type(exc).__name__,
-                    )
-                    if callable(on_chunk):
-                        on_chunk(answer, answer)
-                    return answer
+            local_fallback = self._local_syllabus_answer(
+                message=clean_msg,
+                context=context,
+                attachments=attachments,
+                t_start=t_start,
+            )
+            if local_fallback is not None:
+                if callable(on_chunk):
+                    on_chunk(local_fallback, local_fallback)
+                if hasattr(self, "last_metrics") and self.last_metrics is not None:
+                    self.last_metrics = dataclasses.replace(self.last_metrics, fallback_used=True)
+                return local_fallback
 
                 partial_text = "".join(chunks).strip()
                 interrupted_notice = f"{partial_text}\n\n[Response interrupted due to network issue. Please ask again.]"
@@ -2410,3 +2393,11 @@ finally {
                 winsound.PlaySound(None, winsound.SND_PURGE)
             except Exception:
                 pass
+
+# GyanVerse Chat-only Scope Guard Hotfix v1
+try:
+    import phase11_chatonly_scope_hotfix as _gyanverse_chatonly_scope_hotfix_v1
+    _gyanverse_chatonly_scope_hotfix_v1.apply()
+except Exception:
+    pass
+

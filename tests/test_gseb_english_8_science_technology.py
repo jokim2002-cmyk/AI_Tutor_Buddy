@@ -1175,7 +1175,7 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertIn("5. Decomposers", answer)
         self.assertIn("1. Salmonella typhi", answer)
         self.assertIn("5. Rust of Wheat", answer)
-        self.assertEqual(service.last_backend, "offline-fallback")
+        self.assertEqual(service.last_backend, "local syllabus")
         self.assertTrue(service.last_metrics.fallback_used)
 
     def test_science_selected_math_fraction_prompt_asks_to_select_mathematics(self) -> None:
@@ -1229,6 +1229,17 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertNotIn("interpret the graph or data display", paper_str.lower())
         for q_item in paper_obj.questions:
             self.assertTrue(q_item.solution_guide and len(q_item.solution_guide) > 5)
+
+    def test_selected_science_chapter_3_generic_chapter_test_prompt_returns_chapter_3_paper(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            subject="Science & Technology",
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        resp = service.ask(message="chapter test banao", context=ctx)
+        self.assertIn("Test Paper: Chapter 3 - Coal and Petroleum", resp)
+        self.assertNotIn("Chapter 1 - Crop Production", resp)
 
 
 if __name__ == "__main__":
