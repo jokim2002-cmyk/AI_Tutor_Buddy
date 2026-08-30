@@ -70,6 +70,27 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn("Tap Replay", CORE)
         self.assertNotIn("Tap Replay", AI)
 
+    def test_no_duplicate_online_error_card_on_scope_mismatch(self):
+        from phase11_ai import GyanVerseAIService
+        from phase11_core import StudentLearningContext
+        service = GyanVerseAIService(api_key="mock_key")
+        ctx = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            current_subject="Science & Technology",
+            current_chapter="Chapter 2 - Microorganisms : Friend and Foe",
+        ).validate()
+        resp = service.ask_stream(
+            message="explain fraction comparison and rational numbers",
+            context=ctx,
+        )
+        self.assertEqual(service.last_backend, "local scope guard")
+        self.assertEqual(service.last_error, "")
+        self.assertNotIn("could not respond right now", resp.lower())
+        self.assertNotIn("Tap Retry", resp)
+        self.assertIn("select Mathematics", resp)
+
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)

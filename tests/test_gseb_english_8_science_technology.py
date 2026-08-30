@@ -1178,6 +1178,58 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertEqual(service.last_backend, "offline-fallback")
         self.assertTrue(service.last_metrics.fallback_used)
 
+    def test_science_selected_math_fraction_prompt_asks_to_select_mathematics(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="",
+        )
+        resp = service.ask(
+            message="explain fraction comparison and rational numbers",
+            context=ctx,
+        )
+        self.assertIn("select Mathematics", resp)
+        self.assertEqual(service.last_backend, "local scope guard")
+        self.assertEqual(service.last_error, "")
+
+    def test_coke_coal_tar_coal_gas_comparison_contains_no_pipe_table(self) -> None:
+        raw_output = (
+            "| Feature | Coke | Coal Tar | Coal Gas |\n"
+            "|---|---|---|---|\n"
+            "| Physical State | Solid | Liquid | Gas |\n"
+            "| Uses | Steel manufacture | Synthetic dyes | Fuel |\n"
+        )
+        from phase11_core import format_tutor_response
+        formatted = format_tutor_response(raw_output, student_message="compare coke, coal tar and coal gas")
+        self.assertNotIn("|", formatted)
+        self.assertNotIn("|---|", formatted)
+        self.assertIn("Coke", formatted)
+        self.assertIn("Coal Tar", formatted)
+        self.assertIn("Coal Gas", formatted)
+
+    def test_science_chapter_3_test_paper_contains_no_social_reform_or_generic_question(self) -> None:
+        from phase11_core import parse_test_paper_scope, render_test_paper, validate_generated_test_paper
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        syl = service.syllabus_repository.find(
+            board=ctx.board,
+            medium=ctx.medium,
+            standard=ctx.standard,
+            subject=ctx.current_subject,
+        )
+        scope = parse_test_paper_scope("Chapter 3 25m test paper", ctx, syl)
+        paper_str, paper_obj = render_test_paper(syl, scope, context=ctx, message="Chapter 3 25m test paper")
+        self.assertTrue(validate_generated_test_paper(paper_obj, syl))
+        self.assertNotIn("social reform", paper_str.lower())
+        self.assertNotIn("constitution", paper_str.lower())
+        self.assertNotIn("political", paper_str.lower())
+        self.assertNotIn("interpret the graph or data display", paper_str.lower())
+        for q_item in paper_obj.questions:
+            self.assertTrue(q_item.solution_guide and len(q_item.solution_guide) > 5)
+
 
 if __name__ == "__main__":
     unittest.main()

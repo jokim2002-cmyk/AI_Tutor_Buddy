@@ -5212,8 +5212,18 @@ def _is_valid_question_for_subject(q_txt: str, sol_txt: str, subject: str) -> bo
         forbidden_terms = (
             "physiographic",
             "constitutional role",
+            "constitution",
+            "constitutional",
             "political history",
+            "political",
             "administration, social life",
+            "administration",
+            "social life",
+            "social reform movements",
+            "social reform",
+            "society reform",
+            "reform movement",
+            "social movement",
             "dynasty",
             "ruler",
             "emperor",
@@ -5223,6 +5233,10 @@ def _is_valid_question_for_subject(q_txt: str, sol_txt: str, subject: str) -> bo
             "paragraph unity",
             "subject-verb agreement",
             "interpret the graph or data display",
+            "graph/data display",
+            "data display",
+            "graph display",
+            "interpret the graph",
             "axes, values, comparison, and conclusion",
             "pie graph",
             "circle graph",
@@ -6448,7 +6462,48 @@ def _check_strict_scope_mismatch(
                     f"To study Chapter {requested_ch_num}, please select Chapter {requested_ch_num} from the top selector first."
                 )
 
-    # Concept-based strict scope lock: check if request or answer-review belongs exclusively to another chapter
+    # Concept-based strict scope lock: check if request belongs to another subject or chapter
+    if "science" in cur_sub_clean:
+        math_terms = (
+            r"\brational\s+numbers?\b",
+            r"\bfractions?\b",
+            r"\bfraction\s+comparison\b",
+            r"\badditive\s+inverse\b",
+            r"\bmultiplicative\s+inverse\b",
+            r"\breciprocals?\b",
+            r"\bquadrilaterals?\b",
+            r"\bintegers?\b",
+            r"\bequations?\b",
+            r"\blinear\s+equations?\b",
+            r"\balgebraic\s+expressions?\b",
+            r"\bexponents?\b",
+            r"\bsquare\s+roots?\b",
+            r"\bcube\s+roots?\b",
+            r"\bparallelograms?\b",
+            r"\brhombus\b",
+            r"\btrapezi?um\b",
+            r"\bpolygons?\b",
+        )
+        if any(re.search(pat, norm) for pat in math_terms):
+            return f"You are currently studying {context.current_subject}, {context.current_chapter}. To study Mathematics topics, please select Mathematics and the correct chapter from the top selector first."
+
+    if "math" in cur_sub_clean:
+        sc_ch3_terms = (
+            r"\bcoal\b", r"\bcoal\s+tar\b", r"\bcoke\b", r"\bpetroleum\b",
+            r"\bnatural\s+gas\b", r"\bcng\b", r"\bcarbonisation\b", r"\bcarbonization\b",
+            r"\bbitumen\b", r"\bparaffin\s+wax\b",
+        )
+        if any(re.search(pat, norm) for pat in sc_ch3_terms):
+            return "Please select Science & Technology and Chapter 3 - Coal and Petroleum from the top selector first, then ask again."
+
+        other_sc_terms = (
+            r"\bmicroorganisms?\b", r"\bfermentation\b", r"\birrigation\b",
+            r"\bpathogens?\b", r"\bnitrogen\s+cycle\b", r"\bcrop\s+production\b",
+            r"\bweedicides?\b", r"\bphotosynthesis\b", r"\bcombustion\b",
+        )
+        if any(re.search(pat, norm) for pat in other_sc_terms):
+            return f"You are currently studying {context.current_subject}, {context.current_chapter}. To study Science & Technology topics, please select Science & Technology and the correct chapter from the top selector first."
+
     ch3_concepts = (
         r"\bcoal\b", r"\bpetroleum\b", r"\bnatural\s+gas\b", r"\bfossil\s+fuels?\b",
         r"\bcarbonisation\b", r"\bcarbonization\b", r"\bcoke\b", r"\bcoal\s+tar\b",
@@ -6548,6 +6603,66 @@ def attachment_prompt(records: Sequence[AttachmentRecord]) -> str:
     return "\n".join(lines)
 
 
+def _convert_pipe_tables_to_plain_sections(text: str) -> str:
+    if "|" not in text or "Test Evaluation" in text:
+        return text
+
+    lines = text.split("\n")
+    new_lines: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if "|" in line:
+            table_block: list[str] = []
+            while i < len(lines) and "|" in lines[i]:
+                table_block.append(lines[i])
+                i += 1
+
+            parsed_rows: list[list[str]] = []
+            for tline in table_block:
+                stripped = tline.strip()
+                if set(stripped) <= {"|", "-", ":", " "}:
+                    continue
+                cells = [c.strip() for c in stripped.split("|")]
+                if cells and not cells[0]:
+                    cells = cells[1:]
+                if cells and not cells[-1]:
+                    cells = cells[:-1]
+                if any(cells):
+                    parsed_rows.append(cells)
+
+            if parsed_rows:
+                headers = parsed_rows[0]
+                data_rows = parsed_rows[1:]
+                if not data_rows:
+                    for h in headers:
+                        if h:
+                            new_lines.append(h)
+                else:
+                    if len(headers) >= 2:
+                        header_title = f"Comparison: {' vs '.join(headers[1:])}"
+                        new_lines.append(header_title)
+                        new_lines.append("")
+                        for row in data_rows:
+                            feat = row[0] if row else "Feature"
+                            new_lines.append(f"{feat}:")
+                            for col_idx in range(1, len(headers)):
+                                entity = headers[col_idx]
+                                val = row[col_idx] if col_idx < len(row) else ""
+                                new_lines.append(f"- {entity}: {val}")
+                            new_lines.append("")
+                    else:
+                        for row in data_rows:
+                            new_lines.append("- " + ": ".join(row))
+            continue
+        else:
+            new_lines.append(line)
+            i += 1
+
+    result = "\n".join(new_lines)
+    return re.sub(r"\n{3,}", "\n\n", result).strip()
+
+
 def format_tutor_response(
     text: str,
     *,
@@ -6562,6 +6677,7 @@ def format_tutor_response(
 
     text = str(text or "")[:20000]
     text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = _convert_pipe_tables_to_plain_sections(text)
 
     greeted = bool(
         re.match(

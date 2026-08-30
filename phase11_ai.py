@@ -809,6 +809,22 @@ class GyanVerseAIService:
         t_start: float | None = None,
         allow_provider_review: bool = False,
     ) -> str | None:
+        scope_mismatch = _check_strict_scope_mismatch(message, context)
+        if scope_mismatch:
+            if t_start is None:
+                t_start = time.perf_counter()
+            t_format_start = time.perf_counter()
+            answer = format_tutor_response(scope_mismatch, student_message=message)
+            self._record_local_response_metrics(
+                message=message,
+                answer=answer,
+                backend="local scope guard",
+                route="local-scope-guard",
+                t_start=t_start,
+                t_format_start=t_format_start,
+            )
+            return answer
+
         if attachments or self.syllabus_repository is None:
             return None
 
@@ -874,22 +890,6 @@ class GyanVerseAIService:
                     t_format_start=t_format_start,
                 )
                 return answer
-
-        scope_mismatch = _check_strict_scope_mismatch(message, context)
-        if scope_mismatch:
-            if t_start is None:
-                t_start = time.perf_counter()
-            t_format_start = time.perf_counter()
-            answer = format_tutor_response(scope_mismatch, student_message=message)
-            self._record_local_response_metrics(
-                message=message,
-                answer=answer,
-                backend="local scope guard",
-                route="local-scope-guard",
-                t_start=t_start,
-                t_format_start=t_format_start,
-            )
-            return answer
 
         match = self.syllabus_repository.lookup_topic(
             message=message,
@@ -1035,6 +1035,14 @@ class GyanVerseAIService:
     ) -> str:
         if t_start is None:
             t_start = time.perf_counter()
+        scope_mismatch = _check_strict_scope_mismatch(message, context)
+        if scope_mismatch:
+            return self._local_syllabus_answer(
+                message=message,
+                context=context,
+                attachments=attachments,
+                t_start=t_start,
+            )
         syllabus_answer = self._local_syllabus_answer(
             message=message,
             context=context,
@@ -1283,6 +1291,20 @@ class GyanVerseAIService:
         t_start = time.perf_counter()
         clean_msg = clean_student_text(message)
         self.ensure_test_paper_context(clean_msg, context)
+
+        scope_mismatch = _check_strict_scope_mismatch(clean_msg, context)
+        if scope_mismatch:
+            ans = self._local_syllabus_answer(
+                message=clean_msg,
+                context=context,
+                attachments=attachments,
+                t_start=t_start,
+            )
+            if callable(on_chunk):
+                on_chunk(ans, ans)
+            if callable(on_first_visible):
+                on_first_visible(self.last_metrics.total_ms)
+            return ans
 
         if not attachments:
             intent = classify_instant_intent(clean_msg)

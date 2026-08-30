@@ -567,6 +567,21 @@ class Grade8MathematicsSyllabusTests(unittest.TestCase):
         self.assertEqual(result, "Incorrect")
         self.assertIn("30 students", feedback)
 
+    def test_math_selected_coal_tar_prompt_asks_to_select_science_chapter_3(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 1 - Rational Numbers",
+            topic="",
+        )
+        resp = service.ask(
+            message="what is coal tar and coke?",
+            context=ctx,
+        )
+        self.assertIn("Science & Technology", resp)
+        self.assertIn("Chapter 3 - Coal and Petroleum", resp)
+        self.assertEqual(service.last_backend, "local scope guard")
+        self.assertEqual(service.last_error, "")
+
 
 if __name__ == "__main__":
     unittest.main()
