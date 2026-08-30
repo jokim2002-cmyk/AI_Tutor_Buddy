@@ -1406,34 +1406,7 @@ def main(page: ft.Page) -> None:
                 page.update()
 
         def create_tutor_voice_controls(answer_text: str, message_id: str) -> tuple[ft.Row, ft.Text]:
-            voice_name = ai_service.tts_voice_name
-            init_status = f"Natural voice available • {voice_name}"
-            voice_status_control = ft.Text(init_status, size=11, color=COLOR_MUTED)
-
-            def handle_play(_: object = None) -> None:
-                ai_service.stop_playback()
-                voice_status_control.value = f"Connecting natural voice • {voice_name}..."
-                try:
-                    page.update()
-                except Exception:
-                    pass
-
-                threading.Thread(
-                    target=play_answer_audio,
-                    args=(answer_text, voice_status_control),
-                    daemon=True,
-                ).start()
-
-            def handle_stop(_: object = None) -> None:
-                ai_service.stop_playback()
-                voice_status_control.value = "Audio stopped"
-                try:
-                    page.update()
-                except Exception:
-                    pass
-
-            def handle_replay(_: object = None) -> None:
-                handle_play()
+            voice_status_control = ft.Text("", visible=False)
 
             def copy_full_answer_to_clipboard(full_text: str) -> bool:
                 text_to_copy = str(full_text or "")
@@ -1468,13 +1441,11 @@ def main(page: ft.Page) -> None:
                     btn_copy.icon = ft.Icons.CHECK
                     btn_copy.icon_color = COLOR_SUCCESS
                     btn_copy.tooltip = "Copied!"
-                    voice_status_control.value = "Full answer copied to clipboard"
                     try:
                         page.update()
                     except Exception:
                         pass
                 except Exception:
-                    voice_status_control.value = "Clipboard unavailable — select text to copy"
                     try:
                         page.update()
                     except Exception:
@@ -1487,40 +1458,12 @@ def main(page: ft.Page) -> None:
                 tooltip="Copy answer to clipboard",
                 on_click=copy_answer,
             )
-            btn_play = ft.IconButton(
-                icon=ft.Icons.PLAY_ARROW, icon_size=16, padding=2, tooltip="Play spoken answer", on_click=handle_play
-            )
-            btn_stop = ft.IconButton(
-                icon=ft.Icons.STOP, icon_size=16, padding=2, tooltip="Stop audio", on_click=handle_stop
-            )
-            btn_replay = ft.IconButton(
-                icon=ft.Icons.REPLAY, icon_size=16, padding=2, tooltip="Replay answer", on_click=handle_replay
-            )
 
             controls_row = ft.Row(
-                [voice_status_control, btn_copy, btn_play, btn_stop, btn_replay],
+                [btn_copy],
                 spacing=2,
                 alignment=ft.MainAxisAlignment.END,
             )
-
-            if ai_service.tts_prefetch_policy == "on-answer-complete":
-                def prefetch_worker():
-                    try:
-                        ai_service.synthesize(
-                            answer_text,
-                            language_hint=context.preferred_language,
-                            answer_id=message_id,
-                        )
-                        voice_status_control.value = f"Natural voice cached • {voice_name}"
-                        try:
-                            page.update()
-                        except Exception:
-                            pass
-                    except Exception:
-                        pass
-
-                asyncio.to_thread(prefetch_worker)
-
             return controls_row, voice_status_control
 
         def persist_message(
@@ -2258,13 +2201,12 @@ def main(page: ft.Page) -> None:
         if stored_messages:
             active_test_suffix = " • Active test paper restored" if restored_active_test_paper else ""
             status_text.value = f"Restored {len(stored_messages)} local chat message(s){active_test_suffix}"
-            speak_button.disabled = not bool(latest_tutor_answer)
         else:
             add_message(
                 "tutor",
                 (
                     f"Namaste {context.name}. Your current learning profile is {context.board} • {context.medium} • Standard {context.standard}. "
-                    "Tell me what your class studied today, ask a doubt, speak using the mic, or attach homework with +."
+                    "Tell me what your class studied today, ask a doubt, or attach homework with +."
                 ),
                 persist=False,
             )
@@ -2279,8 +2221,6 @@ def main(page: ft.Page) -> None:
                             attach_button,
                             composer_slot,
                             busy,
-                            speak_button,
-                            mic_button,
                             send_button,
                         ],
                         spacing=2,

@@ -32,33 +32,37 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn("delete", new_chat_block.casefold())
         self.assertNotIn("list_messages", new_chat_block)
 
-    def test_tutor_composer_attachment_and_voice_contracts_exist(self):
+    def test_tutor_composer_chat_only_v1_contracts_exist(self):
+        # Assert Chat UI elements exist
         for marker in (
             "multiline=True",
             "ft.FilePicker().pick_files",
             "with_data=True",
-            "AudioRecorder",
-            "has_permission()",
-            "stop_recording()",
-            "AudioEncoder.WAV",
-            "output_path=str(voice_capture_path)",
-            "is_supported_encoder",
-            "Voice text ready — edit it before sending",
             "LearningMode.HOMEWORK",
-            "Read last tutor answer",
-            "SPOKEN_ANSWER_DEADLINE_SECONDS = 95.0",
-            "SPOKEN_PLAYBACK_DEADLINE_SECONDS = 300.0",
-            "active_audio = None",
-            "await active_audio.release()",
-            "page.services.append(audio)",
-            "await asyncio.sleep(0.15)",
-            "await asyncio.wait_for(audio.play(), timeout=20.0)",
-            "on_state_change=handle_audio_state",
-            "ai_service.native_playback_available",
-            "asyncio.to_thread(ai_service.play_wav_bytes, audio_bytes)",
-            "ai_service.last_tts_backend",
+            "attach_button",
+            "send_button",
+            "composer_slot",
         ):
             self.assertIn(marker, UI)
+
+        # Assert voice controls are NOT present in composer row
+        composer_row_block = UI.split("composer_shell = ft.Container", 1)[1].split("lesson_context_text =", 1)[0]
+        self.assertNotIn("speak_button", composer_row_block)
+        self.assertNotIn("mic_button", composer_row_block)
+        self.assertIn("attach_button", composer_row_block)
+        self.assertIn("send_button", composer_row_block)
+
+        # Assert welcome text does not mention speak using the mic
+        welcome_block = UI.split('add_message(\n                "tutor",', 1)[1].split('composer_shell =', 1)[0]
+        self.assertNotIn("speak using the mic", welcome_block.casefold())
+
+        # Assert create_tutor_voice_controls appends ONLY btn_copy and no play/stop/replay buttons or voice status text
+        voice_controls_block = UI.split("def create_tutor_voice_controls", 1)[1].split("def persist_message", 1)[0]
+        self.assertIn("btn_copy", voice_controls_block)
+        self.assertNotIn("btn_play", voice_controls_block)
+        self.assertNotIn("btn_stop", voice_controls_block)
+        self.assertNotIn("btn_replay", voice_controls_block)
+        self.assertNotIn("Natural voice available", voice_controls_block)
 
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
@@ -111,7 +115,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("padding=ft.Padding(left=6, top=2, right=4, bottom=2)", shell_block)
         self.assertIn("border_radius=18", shell_block)
         self.assertIn("                            attach_button,", shell_block)
-        self.assertIn("                            busy,\n                            speak_button,\n                            mic_button,", shell_block)
+        self.assertIn("                            busy,\n                            send_button,", shell_block)
         self.assertIn("                        spacing=2,", shell_block)
         self.assertIn("attachment_preview.visible = bool(selected_attachments)", UI)
         self.assertNotIn("Enter sends • Shift+Enter adds a new line", shell_block)
@@ -175,10 +179,11 @@ class Phase11UIContractTests(unittest.TestCase):
         config = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
         self.assertEqual(config["tool"]["flet"]["android"]["min_sdk_version"], 24)
         permissions = config["tool"]["flet"]["android"]["permission"]
-        self.assertTrue(permissions["android.permission.RECORD_AUDIO"])
+        self.assertNotIn("android.permission.RECORD_AUDIO", permissions)
         self.assertTrue(permissions["android.permission.CAMERA"])
         dependencies = config["project"]["dependencies"]
-        self.assertTrue(any(item.startswith("flet-audio-recorder") for item in dependencies))
+        self.assertFalse(any(item.startswith("flet-audio-recorder") for item in dependencies))
+        self.assertFalse(any(item.startswith("flet-audio") for item in dependencies))
         self.assertFalse(
             any(item.startswith("SpeechRecognition") for item in dependencies),
             "Android Flet builds evaluate markers on the Windows host, so SpeechRecognition must not be a base dependency.",
@@ -607,7 +612,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("def copy_full_answer_to_clipboard(full_text: str) -> bool:", UI)
         self.assertIn("[Console]::In.ReadToEnd() | Set-Clipboard", UI)
         self.assertIn("input=text_to_copy", UI)
-        self.assertIn("Full answer copied to clipboard", UI)
+        self.assertIn('btn_copy.tooltip = "Copied!"', UI)
         self.assertIn('raise RuntimeError("Clipboard unavailable")', UI)
 
     def test_app_launch_smoke_test_catches_unsupported_flet_kwargs(self):
