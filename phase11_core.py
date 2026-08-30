@@ -5883,19 +5883,14 @@ def render_syllabus_match(
         table_str = (
             f"Comparison: {t1.title} vs {t3.title}\n\n"
             f"Feature / Concept:\n"
-            f"- {t1.title}: {t1.explanation[:120]}...\n"
-            f"- {t3.title}: {t3.explanation[:120]}...\n\n"
+            f"- {t1.title}: {t1.explanation}\n"
+            f"- {t3.title}: {t3.explanation}\n\n"
             f"Natural Occurrence:\n"
             f"- {t1.title}: Plentiful / Unlimited quantity in nature.\n"
             f"- {t3.title}: Underground deposits formed over millions of years.\n\n"
             f"Primary Examples:\n"
             f"- {t1.title}: {', '.join(t1.examples[:2]) or 'Sunlight, Air'}\n"
-            f"- {t3.title}: {', '.join(t3.examples[:2]) or 'Petrol, Diesel, Kerosene'}\n\n"
-            f"| Feature / Parameter | {t1.title} | {t3.title} |\n"
-            "| --- | --- | --- |\n"
-            f"| Definition / Concept | {t1.explanation[:120]}... | {t3.explanation[:120]}... |\n"
-            f"| Natural Occurrence | Plentiful / Unlimited quantity in nature. | Underground deposits formed over millions of years. |\n"
-            f"| Primary Examples | {', '.join(t1.examples[:2]) or 'Sunlight, Air'} | {', '.join(t3.examples[:2]) or 'Petrol, Diesel, Kerosene'} |"
+            f"- {t3.title}: {', '.join(t3.examples[:2]) or 'Petrol, Diesel, Kerosene'}"
         )
         return table_str
 

@@ -639,8 +639,9 @@ class GyanVerseAIService:
             )
         if re.search(r"\b(table|tabular|table\s*me|difference\s+table)\b", msg_lower):
             style_constraints.append(
-                "The student explicitly requested a markdown table ('table me do'). "
-                "Structure your comparison or explanation strictly using a markdown table (| ... | ... |)."
+                "The student requested a comparison ('table me do'). "
+                "Structure your comparison cleanly using bulleted comparison sections (e.g. Feature / Concept:\n- Topic A: ...\n- Topic B: ...). "
+                "Do not use raw pipe (|) markdown table rows."
             )
         if re.search(r"\b(difference|compare|distinguish|bhed|fark|vs)\b", msg_lower):
             style_constraints.append(

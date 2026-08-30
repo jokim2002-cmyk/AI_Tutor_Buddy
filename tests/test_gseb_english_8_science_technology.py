@@ -1033,7 +1033,7 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
             message="chapter 3 first aur third topic difference table me do",
             context=ctx,
         )
-        self.assertIn("|", resp)
+        self.assertIn("Feature / Concept:", resp)
         self.assertIn("Inexhaustible and Exhaustible Natural Resources", resp)
         self.assertIn("Petroleum", resp)
 
@@ -1133,7 +1133,7 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         self.assertIn("e.g. 2,4-D", sentences[0])
         self.assertIn("Harvested grains", sentences[1])
 
-    def test_comparison_table_includes_readable_bullets_and_markdown_table(self) -> None:
+    def test_comparison_table_includes_readable_bullets_and_no_pipe_tables(self) -> None:
         service = self.service(api_key="")
         ctx = self.context(
             chapter="Chapter 3 - Coal and Petroleum",
@@ -1145,7 +1145,9 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         )
         self.assertIn("Feature / Concept:", resp)
         self.assertIn("- Inexhaustible and Exhaustible Natural Resources:", resp)
-        self.assertIn("| Feature / Parameter |", resp)
+        self.assertNotIn("| Feature", resp)
+        self.assertNotIn("| --- |", resp)
+        self.assertNotIn("...", resp)
 
 
 if __name__ == "__main__":
