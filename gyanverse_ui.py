@@ -5,8 +5,10 @@ import base64
 import io
 import json
 import os
+import re
 import subprocess
 import tempfile
+import threading
 import time
 import uuid
 import wave
@@ -1257,30 +1259,96 @@ def main(page: ft.Page) -> None:
             nonlocal voice_state
             if not answer_text:
                 return
+
+            def split_spoken_text(value: str, limit: int = 700) -> list[str]:
+                cleaned = " ".join(str(value or "").split())
+                if not cleaned:
+                    return []
+                parts = re.split(r"(?<=[.!?])\s+", cleaned)
+                chunks: list[str] = []
+                current = ""
+                for part in parts:
+                    if not part:
+                        continue
+                    if len(part) > limit:
+                        if current:
+                            chunks.append(current)
+                            current = ""
+                        for start in range(0, len(part), limit):
+                            chunks.append(part[start:start + limit].strip())
+                        continue
+                    candidate = f"{current} {part}".strip()
+                    if len(candidate) <= limit:
+                        current = candidate
+                    else:
+                        if current:
+                            chunks.append(current)
+                        current = part
+                if current:
+                    chunks.append(current)
+                return chunks[:8]
+
             ai_service.stop_playback()
+            if hasattr(ai_service, "_stop_playback_event"):
+                ai_service._stop_playback_event.clear()
+
+            chunks = split_spoken_text(answer_text)
+            if not chunks:
+                return
+
             try:
                 voice_state = VoiceState.PROCESSING
                 if voice_status_ctrl:
-                    voice_status_ctrl.value = f"Preparing natural voice • {ai_service.tts_voice_name}…" if ai_service.tts_mode != "local" else "Preparing local voice…"
+                    voice_status_ctrl.value = f"Preparing natural voice • {ai_service.tts_voice_name}..."
                     page.update()
-                audio_bytes = ai_service.synthesize(
-                    answer_text,
-                    language_hint=context.preferred_language,
-                )
-                m = ai_service.last_tts_metrics
-                if ai_service.native_playback_available:
+
+                for idx, chunk in enumerate(chunks, start=1):
+                    if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
+                        break
+
+                    if voice_status_ctrl:
+                        voice_status_ctrl.value = (
+                            f"Preparing natural voice • {ai_service.tts_voice_name} • {idx}/{len(chunks)}"
+                        )
+                        page.update()
+
+                    audio_bytes = ai_service.synthesize(
+                        chunk,
+                        language_hint=context.preferred_language,
+                    )
+                    if not audio_bytes.startswith(b"RIFF") or b"WAVE" not in audio_bytes[:16]:
+                        raise AIServiceError("Natural voice returned invalid audio.")
+
                     ai_service.play_wav_bytes(audio_bytes)
                     voice_state = VoiceState.PLAYING
                     if voice_status_ctrl:
-                        voice_status_ctrl.value = f"Playing • {m.selected_voice}" if ai_service.tts_mode != "local" else "Playing local voice"
-                else:
-                    notify("Audio playback unavailable", error=True)
-            except Exception as exc:
+                        voice_status_ctrl.value = f"Playing natural voice • {ai_service.tts_voice_name} • {idx}/{len(chunks)}"
+                        page.update()
+
+                    duration = 3.0
+                    try:
+                        duration = max(0.5, ai_service._parse_wav_duration(audio_bytes))
+                    except Exception:
+                        pass
+
+                    waited = 0.0
+                    while waited < duration:
+                        if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
+                            break
+                        time.sleep(0.1)
+                        waited += 0.1
+
+                if voice_status_ctrl:
+                    voice_status_ctrl.value = "Ready"
+
+            except Exception:
                 voice_state = VoiceState.ERROR
                 if voice_status_ctrl:
-                    voice_status_ctrl.value = "Natural voice failed • Tap Play to retry"
-                notify(str(exc), error=True)
+                    voice_status_ctrl.value = "Natural voice failed. Tap Play to retry."
+                notify("Natural voice failed. Please retry with a shorter answer.", error=True)
             finally:
+                if voice_state != VoiceState.ERROR:
+                    voice_state = VoiceState.IDLE
                 page.update()
 
         def stop_answer_audio(voice_status_ctrl: ft.Text | None = None) -> None:
@@ -1320,61 +1388,17 @@ def main(page: ft.Page) -> None:
 
             def handle_play(_: object = None) -> None:
                 ai_service.stop_playback()
-                voice_status_control.value = f"Connecting natural voice • {voice_name}…"
+                voice_status_control.value = f"Connecting natural voice • {voice_name}..."
                 try:
                     page.update()
                 except Exception:
                     pass
 
-                def play_worker():
-                    def on_playable(chunk_bytes: bytes) -> None:
-                        voice_status_control.value = f"Playing • {voice_name} • streaming"
-                        try:
-                            page.update()
-                        except Exception:
-                            pass
-
-                    try:
-                        audio_bytes = ai_service.synthesize(
-                            answer_text,
-                            language_hint=context.preferred_language,
-                            answer_id=message_id,
-                            on_playable_chunk=on_playable,
-                        )
-                        m = ai_service.last_tts_metrics
-                        if m.cache_hit:
-                            voice_status_control.value = f"Natural voice cached • {voice_name}"
-                        else:
-                            voice_status_control.value = f"Playing • {voice_name}"
-                        try:
-                            page.update()
-                        except Exception:
-                            pass
-
-                        if ai_service.native_playback_available:
-                            ai_service.play_wav_bytes(audio_bytes)
-                            voice_status_control.value = f"Natural voice cached • {voice_name}"
-                            try:
-                                page.update()
-                            except Exception:
-                                pass
-                    except AIServiceError as exc:
-                        if getattr(exc, "quota_limited", False) or "quota" in str(exc).lower() or "429" in str(exc):
-                            voice_status_control.value = "Natural voice temporarily unavailable • quota limit"
-                        else:
-                            voice_status_control.value = "Natural voice failed • Retry"
-                        try:
-                            page.update()
-                        except Exception:
-                            pass
-                    except Exception:
-                        voice_status_control.value = "Natural voice failed • Retry"
-                        try:
-                            page.update()
-                        except Exception:
-                            pass
-
-                asyncio.to_thread(play_worker)
+                threading.Thread(
+                    target=play_answer_audio,
+                    args=(answer_text, voice_status_control),
+                    daemon=True,
+                ).start()
 
             def handle_stop(_: object = None) -> None:
                 ai_service.stop_playback()
