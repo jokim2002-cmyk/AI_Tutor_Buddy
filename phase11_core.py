@@ -974,23 +974,22 @@ class SyllabusRepository:
                     matched_by="message-chapter",
                 )
 
-        if context_candidates and _message_allows_context_topic_fallback(message_text):
+        if context_candidates:
             return max(context_candidates, key=lambda item: item[0])[1]
 
-        # Profile context can still support a generic chapter request even when
-        # no topic was saved, but must not hijack an unrelated academic question.
-        if _message_allows_context_topic_fallback(message_text):
-            for chapter in syllabus.chapters:
-                chapter_context_match, _ = chapter_signals.get(
-                    chapter.chapter_id, (False, False)
+        # Profile context can still support an in-scope chapter request even when
+        # no specific sub-topic title matched, using the selected chapter.
+        for chapter in syllabus.chapters:
+            chapter_context_match, _ = chapter_signals.get(
+                chapter.chapter_id, (False, False)
+            )
+            if chapter_context_match and chapter.topics:
+                return SyllabusTopicMatch(
+                    syllabus=syllabus,
+                    chapter=chapter,
+                    topic=chapter.topics[0],
+                    matched_by="context-chapter-fallback",
                 )
-                if chapter_context_match and chapter.topics:
-                    return SyllabusTopicMatch(
-                        syllabus=syllabus,
-                        chapter=chapter,
-                        topic=chapter.topics[0],
-                        matched_by="context-chapter-fallback",
-                    )
 
         return None
 
@@ -1037,6 +1036,8 @@ class SyllabusRepository:
             "weedicide": ("Science & Technology", "Chapter 1 - Crop Production and Management"),
             "additive inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "multiplicative inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "reciprocal": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "reciprocals": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "rational number": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "rational numbers": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "fraction comparison": ("Mathematics", ""),
@@ -1061,6 +1062,8 @@ class SyllabusRepository:
                     return f"Please select {target_sub} from the top selector first, then ask again."
                 elif target_ch_title and target_ch_title.casefold() not in context.current_chapter.casefold():
                     return f"Please select {target_ch_title} from the top selector first, then ask again."
+                else:
+                    return None
 
         # 2. Skip scope guard for test requests or test/question answer evaluation submissions
         req = classify_syllabus_tutor_request(message)
