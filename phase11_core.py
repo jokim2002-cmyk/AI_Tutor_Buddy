@@ -5881,7 +5881,16 @@ def render_syllabus_match(
         t1 = match.chapter.topics[0]
         t3 = match.chapter.topics[2]
         table_str = (
-            f"Comparison Table: {t1.title} vs {t3.title}\n\n"
+            f"Comparison: {t1.title} vs {t3.title}\n\n"
+            f"Feature / Concept:\n"
+            f"- {t1.title}: {t1.explanation[:120]}...\n"
+            f"- {t3.title}: {t3.explanation[:120]}...\n\n"
+            f"Natural Occurrence:\n"
+            f"- {t1.title}: Plentiful / Unlimited quantity in nature.\n"
+            f"- {t3.title}: Underground deposits formed over millions of years.\n\n"
+            f"Primary Examples:\n"
+            f"- {t1.title}: {', '.join(t1.examples[:2]) or 'Sunlight, Air'}\n"
+            f"- {t3.title}: {', '.join(t3.examples[:2]) or 'Petrol, Diesel, Kerosene'}\n\n"
             f"| Feature / Parameter | {t1.title} | {t3.title} |\n"
             "| --- | --- | --- |\n"
             f"| Definition / Concept | {t1.explanation[:120]}... | {t3.explanation[:120]}... |\n"
@@ -5916,7 +5925,7 @@ def render_syllabus_match(
         if topic.explanation:
             norm_msg = _normalize_syllabus_lookup_text(message)
             if re.search(r"\b(step\s*by\s*step|stepwise|steps|samjhao|samajhao|samjao)\b", norm_msg):
-                sentences = [s.strip() for s in re.split(r"(?<=[.!\?])\s+", topic.explanation) if s.strip()]
+                sentences = _split_into_teaching_sentences(topic.explanation)
                 if len(sentences) >= 2:
                     sections.append("Step-by-step Explanation:\n" + _numbered_lines(sentences))
                 else:
@@ -6070,7 +6079,7 @@ def render_syllabus_match(
         if topic.explanation:
             norm_msg = _normalize_syllabus_lookup_text(message)
             if re.search(r"\b(step\s*by\s*step|stepwise|steps|samjhao|samajhao|samjao)\b", norm_msg):
-                sentences = [s.strip() for s in re.split(r"(?<=[.!\?])\s+", topic.explanation) if s.strip()]
+                sentences = _split_into_teaching_sentences(topic.explanation)
                 if len(sentences) >= 2:
                     sections.append("Step-by-step Explanation:\n" + _numbered_lines(sentences))
                 else:
@@ -6380,6 +6389,20 @@ def _local_arithmetic_answer(message: str) -> str:
     return f"{match.group(1)} {operator} {match.group(3)} = {formatted}."
 
 
+def _split_into_teaching_sentences(text: str) -> list[str]:
+    if not text or not text.strip():
+        return []
+    protected = text.strip()
+    abbrevs = ["e.g.", "i.e.", "etc.", "dr.", "mr.", "mrs.", "std.", "fig.", "vs.", "vol.", "no."]
+    for abb in abbrevs:
+        pattern = re.compile(re.escape(abb), re.IGNORECASE)
+        placeholder = abb.replace(".", "___DOT___")
+        protected = pattern.sub(placeholder, protected)
+
+    parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", protected) if p.strip()]
+    return [p.replace("___DOT___", ".") for p in parts]
+
+
 def _check_strict_scope_mismatch(
     message_text: str,
     context: StudentLearningContext,
@@ -6429,6 +6452,16 @@ def _check_strict_scope_mismatch(
                     f"You are currently studying {context.current_subject}, {context.current_chapter}. "
                     f"To study Chapter {requested_ch_num}, please select Chapter {requested_ch_num} from the top selector first."
                 )
+
+    # Concept-based strict scope lock: check if request or answer-review belongs exclusively to another chapter
+    ch3_concepts = (
+        r"\bcoal\b", r"\bpetroleum\b", r"\bnatural\s+gas\b", r"\bfossil\s+fuels?\b",
+        r"\bcarbonisation\b", r"\bcarbonization\b", r"\bcoke\b", r"\bcoal\s+tar\b",
+        r"\bcoal\s+gas\b", r"\bparaffin\s+wax\b", r"\bbitumen\b",
+    )
+    if "chapter 3" not in context.current_chapter.lower() and "coal" not in context.current_chapter.lower():
+        if any(re.search(pat, norm) for pat in ch3_concepts):
+            return "Please select Chapter 3 - Coal and Petroleum from the top selector first, then ask again."
 
     return None
 

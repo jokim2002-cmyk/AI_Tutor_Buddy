@@ -1098,6 +1098,55 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         for q_item in paper_obj.questions:
             self.assertTrue(q_item.solution_guide and len(q_item.solution_guide) > 5)
 
+    def test_strict_scope_lock_applies_to_answer_reviews_and_concepts(self) -> None:
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 2 - Microorganisms : Friend and Foe",
+            topic="Friendly Microorganisms and Commercial Uses",
+        )
+        # Test 1: Answer review for Ch3 concept (carbonisation, coal) while Ch2 is selected
+        resp1 = service.ask(
+            message="check my answer: coal is formed by carbonisation",
+            context=ctx,
+        )
+        self.assertIn("Please select Chapter 3 - Coal and Petroleum from the top selector first", resp1)
+
+        # Test 2: Question for Ch3 concept (coal tar, coke) while Ch2 is selected
+        resp2 = service.ask(
+            message="what is coal tar and coke?",
+            context=ctx,
+        )
+        self.assertIn("Please select Chapter 3 - Coal and Petroleum from the top selector first", resp2)
+
+        # Test 3: Yes/No question for Ch3 concept (fossil fuel) while Ch2 is selected
+        resp3 = service.ask(
+            message="is coal tar a fossil fuel?",
+            context=ctx,
+        )
+        self.assertIn("Please select Chapter 3 - Coal and Petroleum from the top selector first", resp3)
+
+    def test_abbreviation_safe_step_by_step_sentence_splitting(self) -> None:
+        from phase11_core import _split_into_teaching_sentences
+        text = "Weeds are unwanted plants removed manually or using weedicides (e.g. 2,4-D). Harvested grains are dried before storage in silos."
+        sentences = _split_into_teaching_sentences(text)
+        self.assertEqual(len(sentences), 2)
+        self.assertIn("e.g. 2,4-D", sentences[0])
+        self.assertIn("Harvested grains", sentences[1])
+
+    def test_comparison_table_includes_readable_bullets_and_markdown_table(self) -> None:
+        service = self.service(api_key="")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        resp = service.ask(
+            message="chapter 3 first aur third topic difference table me do",
+            context=ctx,
+        )
+        self.assertIn("Feature / Concept:", resp)
+        self.assertIn("- Inexhaustible and Exhaustible Natural Resources:", resp)
+        self.assertIn("| Feature / Parameter |", resp)
+
 
 if __name__ == "__main__":
     unittest.main()
