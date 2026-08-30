@@ -612,6 +612,34 @@ _CONTEXT_FALLBACK_WORDS = {
 }
 
 
+def _extract_ordinal_topic_index(message_text: str) -> int | None:
+    norm = _normalize_syllabus_lookup_text(message_text)
+    if not norm:
+        return None
+    first_patterns = (
+        r"\b(?:first|1st|one|pehla|pahela|1)\s+topic\b",
+        r"\btopic\s+(?:1|one|first|1st|pehla|pahela)\b",
+    )
+    second_patterns = (
+        r"\b(?:second|2nd|two|doosra|bija|2)\s+topic\b",
+        r"\btopic\s+(?:2|two|second|2nd|doosra|bija)\b",
+    )
+    third_patterns = (
+        r"\b(?:third|3rd|three|teesra|trija|3)\s+topic\b",
+        r"\btopic\s+(?:3|three|third|3rd|teesra|trija)\b",
+    )
+    for pattern in first_patterns:
+        if re.search(pattern, norm):
+            return 0
+    for pattern in second_patterns:
+        if re.search(pattern, norm):
+            return 1
+    for pattern in third_patterns:
+        if re.search(pattern, norm):
+            return 2
+    return None
+
+
 def _is_contextual_chapter_request(message_text: str) -> bool:
     norm = _normalize_syllabus_lookup_text(message_text)
     if not norm:
@@ -913,6 +941,21 @@ class SyllabusRepository:
 
         if message_candidates:
             return max(message_candidates, key=lambda item: item[0])[1]
+
+        ordinal_index = _extract_ordinal_topic_index(message_text)
+        if ordinal_index is not None:
+            for chapter in syllabus.chapters:
+                chapter_context_match, chapter_message_match = chapter_signals.get(
+                    chapter.chapter_id, (False, False)
+                )
+                if (chapter_message_match or chapter_context_match) and chapter.topics:
+                    target_idx = min(ordinal_index, len(chapter.topics) - 1)
+                    return SyllabusTopicMatch(
+                        syllabus=syllabus,
+                        chapter=chapter,
+                        topic=chapter.topics[target_idx],
+                        matched_by="message-topic-ordinal",
+                    )
 
         # A chapter-level request (for example, "Chapter 1 test") may not name
         # one topic.  Return a representative topic while preserving the exact
@@ -5778,7 +5821,15 @@ def render_syllabus_match(
     if request.intent == "explain" and not chapter_level:
         sections.append(topic.title)
         if topic.explanation:
-            sections.append(topic.explanation)
+            norm_msg = _normalize_syllabus_lookup_text(message)
+            if re.search(r"\b(step\s*by\s*step|stepwise|steps|samjhao|samajhao|samjao)\b", norm_msg):
+                sentences = [s.strip() for s in re.split(r"(?<=[.!\?])\s+", topic.explanation) if s.strip()]
+                if len(sentences) >= 2:
+                    sections.append("Step-by-step Explanation:\n" + _numbered_lines(sentences))
+                else:
+                    sections.append(f"Step-by-step Explanation:\n1. {topic.explanation}")
+            else:
+                sections.append(topic.explanation)
         if topic.examples:
             sections.append("Example: " + topic.examples[0])
     elif request.intent == "example":
@@ -5924,7 +5975,14 @@ def render_syllabus_match(
         if context.learning_mode == LearningMode.REVISION.value and topic.learning_objectives:
             sections.append("Key objectives: " + "; ".join(topic.learning_objectives[:3]))
         if topic.explanation:
-            if teaching_guidance and teaching_guidance.get("step_size") in {"very_small", "small"}:
+            norm_msg = _normalize_syllabus_lookup_text(message)
+            if re.search(r"\b(step\s*by\s*step|stepwise|steps|samjhao|samajhao|samjao)\b", norm_msg):
+                sentences = [s.strip() for s in re.split(r"(?<=[.!\?])\s+", topic.explanation) if s.strip()]
+                if len(sentences) >= 2:
+                    sections.append("Step-by-step Explanation:\n" + _numbered_lines(sentences))
+                else:
+                    sections.append(f"Step-by-step Explanation:\n1. {topic.explanation}")
+            elif teaching_guidance and teaching_guidance.get("step_size") in {"very_small", "small"}:
                 sections.append("Key idea: " + topic.explanation)
             else:
                 sections.append(topic.explanation)

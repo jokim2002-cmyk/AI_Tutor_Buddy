@@ -950,6 +950,46 @@ Ans: Permanent Settlement was introduced by Lord Cornwallis in 1793 in Bengal.""
         resp = service.ask(message="is chapter ko explain karo", context=ctx)
         self.assertIn("Which subject or chapter", resp)
 
+    def test_std8_science_chapter3_first_topic_step_by_step_samjhao(self) -> None:
+        # Test Provider Route with style constraint
+        service = self.service(api_key="mock_key")
+        ctx = self.context(
+            chapter="Chapter 3 - Coal and Petroleum",
+            topic="",
+        )
+        service._client.models.generate_content.return_value = MagicMock(
+            text="1. Inexhaustible natural resources are present in unlimited quantities.\n2. Exhaustible natural resources are limited in nature."
+        )
+
+        with patch.object(
+            GyanVerseAIService,
+            "configured",
+            new_callable=PropertyMock,
+            return_value=True,
+        ):
+            resp = service.ask(
+                message="is chapter ke first topic ko step by step samjao",
+                context=ctx,
+            )
+
+        self.assertIn("Inexhaustible", resp)
+        self.assertIn("1.", resp)
+        service._client.models.generate_content.assert_called_once()
+        prompt_arg = service._client.models.generate_content.call_args[1]["contents"][0]
+        self.assertIn("Inexhaustible and Exhaustible Natural Resources", prompt_arg)
+        self.assertIn("PRIVATE TEACHING STYLE CONSTRAINT", prompt_arg)
+        self.assertIn("step-by-step", prompt_arg)
+
+        # Test Local Fallback Route with step-by-step numbered output
+        local_service = self.service(api_key="")
+        local_resp = local_service.ask(
+            message="is chapter ke first topic ko step by step samjao",
+            context=ctx,
+        )
+        self.assertIn("Inexhaustible and Exhaustible Natural Resources", local_resp)
+        self.assertIn("Step-by-step Explanation", local_resp)
+        self.assertIn("1.", local_resp)
+
 
 if __name__ == "__main__":
     unittest.main()
