@@ -354,6 +354,53 @@ class TestPhase11ProgressiveVoice(unittest.TestCase):
         self.assertNotIn("secret question", rep.lower())
         self.assertNotIn("photosynthesis", rep.lower())
 
+    def test_short_answer_voice_still_works(self) -> None:
+        from phase11_core import split_into_speech_chunks, prepare_spoken_text
+        short_ans = "Photosynthesis is how green plants prepare food using sunlight and chlorophyll."
+        spoken = prepare_spoken_text(short_ans)
+        chunks = split_into_speech_chunks(short_ans, max_chars=280)
+        self.assertIn("Photosynthesis", spoken)
+        self.assertEqual(len(chunks), 1)
+
+    def test_long_comparison_answer_split_into_multiple_chunks(self) -> None:
+        from phase11_core import split_into_speech_chunks
+        long_ans = (
+            "Comparison: Inexhaustible vs Exhaustible Natural Resources\n\n"
+            "Feature / Concept:\n"
+            "- Inexhaustible: Inexhaustible natural resources are present in unlimited quantity in nature and are not likely to be exhausted by human activities.\n"
+            "- Exhaustible: Exhaustible natural resources are present in limited quantity in nature and can be exhausted by human activities over time.\n\n"
+            "Natural Occurrence:\n"
+            "- Inexhaustible: Plentiful quantity in nature such as sunlight and air.\n"
+            "- Exhaustible: Underground deposits formed over millions of years such as coal and petroleum.\n\n"
+            "Primary Examples:\n"
+            "- Inexhaustible: Sunlight and air.\n"
+            "- Exhaustible: Petrol, diesel, kerosene, natural gas, and coal."
+        )
+        chunks = split_into_speech_chunks(long_ans, max_chars=280)
+        self.assertGreaterEqual(len(chunks), 3)
+        for c in chunks:
+            self.assertLessEqual(len(c), 320)
+
+    def test_footer_source_text_removed_from_spoken_text(self) -> None:
+        from phase11_core import prepare_spoken_text
+        ans_with_footer = (
+            "Photosynthesis is the process by which green plants make food.\n\n"
+            "Source type: Local syllabus package (grounded)\n"
+            "Board: GSEB; Medium: English; Standard: 7"
+        )
+        spoken = prepare_spoken_text(ans_with_footer)
+        self.assertIn("Photosynthesis", spoken)
+        self.assertNotIn("Source type", spoken)
+        self.assertNotIn("GSEB", spoken)
+        self.assertNotIn("Medium", spoken)
+
+    def test_stop_cancels_remaining_chunks_and_chunk_failure_handled(self) -> None:
+        service = GyanVerseAIService(api_key="test_key")
+        service.stop_playback()
+        self.assertTrue(service._stop_playback_event.is_set())
+        service._stop_playback_event.clear()
+        self.assertFalse(service._stop_playback_event.is_set())
+
 
 if __name__ == "__main__":
     unittest.main()

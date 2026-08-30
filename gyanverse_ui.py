@@ -44,6 +44,8 @@ from phase11_core import (
     detect_context_from_message,
     evaluate_test_paper,
     format_tutor_response,
+    prepare_spoken_text,
+    split_into_speech_chunks,
 )
 from tutor_engine import TutorEngine
 
@@ -1260,80 +1262,87 @@ def main(page: ft.Page) -> None:
             if not answer_text:
                 return
 
-            def split_spoken_text(value: str, limit: int = 320) -> list[str]:
-                cleaned = " ".join(str(value or "").split())
-                if not cleaned:
-                    return []
-                parts = re.split(r"(?<=[.!?])\s+", cleaned)
-                chunks: list[str] = []
-                current = ""
-                for part in parts:
-                    if not part:
-                        continue
-                    if len(part) > limit:
-                        if current:
-                            chunks.append(current)
-                            current = ""
-                        for start in range(0, len(part), limit):
-                            chunks.append(part[start:start + limit].strip())
-                        continue
-                    candidate = f"{current} {part}".strip()
-                    if len(candidate) <= limit:
-                        current = candidate
-                    else:
-                        if current:
-                            chunks.append(current)
-                        current = part
-                if current:
-                    chunks.append(current)
-                return chunks[:20]
-
             ai_service.stop_playback()
             if hasattr(ai_service, "_stop_playback_event"):
                 ai_service._stop_playback_event.clear()
 
-            chunks = split_spoken_text(answer_text)
+            chunks = split_into_speech_chunks(answer_text, max_chars=280)
             if not chunks:
+                if voice_status_ctrl:
+                    voice_status_ctrl.value = "No spoken content available"
+                    try:
+                        page.update()
+                    except Exception:
+                        pass
                 return
 
             try:
                 voice_state = VoiceState.PROCESSING
-                if voice_status_ctrl:
-                    voice_status_ctrl.value = f"Preparing natural voice • {ai_service.tts_voice_name}..."
-                    page.update()
-
                 for idx, chunk in enumerate(chunks, start=1):
                     if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
                         break
 
                     if voice_status_ctrl:
-                        voice_status_ctrl.value = (
-                            f"Preparing natural voice • {ai_service.tts_voice_name} • {idx}/{len(chunks)}"
-                        )
-                        page.update()
+                        voice_status_ctrl.value = f"Preparing natural voice {idx}/{len(chunks)}"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
 
+                    audio_bytes: bytes | None = None
                     try:
                         audio_bytes = ai_service.synthesize(
                             chunk,
                             language_hint=context.preferred_language,
                         )
                     except Exception:
-                        if voice_status_ctrl:
-                            voice_status_ctrl.value = f"Natural voice skipped one part • {idx}/{len(chunks)}"
-                            page.update()
-                        continue
+                        # Retry once with smaller chunk split if chunk fails or times out
+                        if len(chunk) > 120:
+                            mid = len(chunk) // 2
+                            sp = chunk.rfind(" ", 0, mid + 20)
+                            if sp <= 0:
+                                sp = mid
+                            s1 = chunk[:sp].strip()
+                            s2 = chunk[sp:].strip()
+                            pcm_parts: list[bytes] = []
+                            if s1:
+                                try:
+                                    b1 = ai_service.synthesize(s1, language_hint=context.preferred_language)
+                                    if b1 and b1.startswith(b"RIFF") and len(b1) > 44:
+                                        pcm_parts.append(b1[44:])
+                                except Exception:
+                                    pass
+                            if s2:
+                                try:
+                                    b2 = ai_service.synthesize(s2, language_hint=context.preferred_language)
+                                    if b2 and b2.startswith(b"RIFF") and len(b2) > 44:
+                                        pcm_parts.append(b2[44:])
+                                except Exception:
+                                    pass
+                            if pcm_parts:
+                                from phase11_ai import pcm_to_wav_bytes
+                                audio_bytes = pcm_to_wav_bytes(b"".join(pcm_parts))
 
-                    if not audio_bytes.startswith(b"RIFF") or b"WAVE" not in audio_bytes[:16]:
+                    if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
+                        break
+
+                    if not audio_bytes or not audio_bytes.startswith(b"RIFF") or b"WAVE" not in audio_bytes[:16]:
                         if voice_status_ctrl:
-                            voice_status_ctrl.value = f"Natural voice skipped invalid part • {idx}/{len(chunks)}"
-                            page.update()
+                            voice_status_ctrl.value = f"Natural voice skipped part {idx}/{len(chunks)}"
+                            try:
+                                page.update()
+                            except Exception:
+                                pass
                         continue
 
                     ai_service.play_wav_bytes(audio_bytes)
                     voice_state = VoiceState.PLAYING
                     if voice_status_ctrl:
-                        voice_status_ctrl.value = f"Playing natural voice • {ai_service.tts_voice_name} • {idx}/{len(chunks)}"
-                        page.update()
+                        voice_status_ctrl.value = f"Playing natural voice {idx}/{len(chunks)}"
+                        try:
+                            page.update()
+                        except Exception:
+                            pass
 
                     duration = 3.0
                     try:
@@ -1345,21 +1354,26 @@ def main(page: ft.Page) -> None:
                     while waited < duration:
                         if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
                             break
-                        time.sleep(0.1)
-                        waited += 0.1
+                        time.sleep(0.05)
+                        waited += 0.05
 
                 if voice_status_ctrl:
-                    voice_status_ctrl.value = "Ready"
+                    if hasattr(ai_service, "_stop_playback_event") and ai_service._stop_playback_event.is_set():
+                        voice_status_ctrl.value = "Audio stopped"
+                    else:
+                        voice_status_ctrl.value = "Ready"
 
             except Exception:
                 voice_state = VoiceState.ERROR
                 if voice_status_ctrl:
-                    voice_status_ctrl.value = "Natural voice failed. Tap Play to retry."
-                notify("Natural voice could not play this answer. Try again.", error=True)
+                    voice_status_ctrl.value = "Natural voice unavailable • Tap Play to retry"
             finally:
                 if voice_state != VoiceState.ERROR:
                     voice_state = VoiceState.IDLE
-                page.update()
+                try:
+                    page.update()
+                except Exception:
+                    pass
 
         def stop_answer_audio(voice_status_ctrl: ft.Text | None = None) -> None:
             nonlocal voice_state

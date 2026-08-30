@@ -6752,3 +6752,98 @@ def split_into_sentences(text: str) -> list[str]:
             i += 1
 
     return merged_results
+
+
+def prepare_spoken_text(text: str) -> str:
+    """Strip non-speaking metadata/footer lines and formatting before TTS synthesis."""
+    if not text or not str(text).strip():
+        return ""
+    lines = str(text).strip().splitlines()
+    clean_lines: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        lowered = stripped.lower()
+        if (
+            lowered.startswith((
+                "source type:", "source:", "board:", "medium:", "standard:",
+                "subject:", "chapter:", "topic:", "learning mode:",
+                "only ", "note:", "(source:", "check yourself:"
+            ))
+            or "source type:" in lowered
+        ):
+            continue
+        # Remove markdown headers and line bullets
+        line_clean = re.sub(r"^[#*\-\s]+", "", stripped).strip()
+        # Clean markdown formatting like **bold**, *italic*, `code`, | table pipes
+        line_clean = re.sub(r"[\*\_\`~|]+", "", line_clean).strip()
+        if line_clean:
+            clean_lines.append(line_clean)
+
+    result = " ".join(clean_lines)
+    # Strip any trailing footer metadata
+    result = re.sub(r"\s*(?:Source type|Source|Board|Medium|Standard|Subject|Chapter):.*$", "", result, flags=re.IGNORECASE)
+    return result.strip()
+
+
+def split_into_speech_chunks(text: str, max_chars: int = 280) -> list[str]:
+    """Split spoken text into safe speech chunks (250-320 max_chars) without truncating long answers."""
+    spoken = prepare_spoken_text(text)
+    if not spoken:
+        return []
+    sentences = split_into_sentences(spoken)
+    if not sentences:
+        return [spoken[:max_chars]] if len(spoken) <= max_chars else []
+
+    limit = max(100, min(320, max_chars))
+    chunks: list[str] = []
+    current = ""
+
+    for sentence in sentences:
+        s = sentence.strip()
+        if not s:
+            continue
+        if len(s) > limit:
+            if current:
+                chunks.append(current.strip())
+                current = ""
+            # Sub-split long sentence by clause boundaries or space
+            sub_parts = re.split(r"(?<=[,;:])\s+", s)
+            for sub in sub_parts:
+                sub_clean = sub.strip()
+                if not sub_clean:
+                    continue
+                if len(sub_clean) > limit:
+                    # Break by spaces
+                    words = sub_clean.split()
+                    temp = ""
+                    for w in words:
+                        if len(f"{temp} {w}".strip()) <= limit:
+                            temp = f"{temp} {w}".strip()
+                        else:
+                            if temp:
+                                chunks.append(temp)
+                            temp = w
+                    if temp:
+                        chunks.append(temp)
+                else:
+                    if len(f"{current} {sub_clean}".strip()) <= limit:
+                        current = f"{current} {sub_clean}".strip()
+                    else:
+                        if current:
+                            chunks.append(current.strip())
+                        current = sub_clean
+        else:
+            candidate = f"{current} {s}".strip() if current else s
+            if len(candidate) <= limit:
+                current = candidate
+            else:
+                if current:
+                    chunks.append(current.strip())
+                current = s
+
+    if current and current.strip():
+        chunks.append(current.strip())
+
+    return [c for c in chunks if c]
