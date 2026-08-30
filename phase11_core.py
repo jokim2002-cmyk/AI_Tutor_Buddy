@@ -1008,6 +1008,240 @@ class SyllabusRepository:
             "official_coverage_percent": round((official / topics) * 100, 2) if topics else 0.0,
         }
 
+    def find_scope_mismatch(
+        self,
+        message: str,
+        context: StudentLearningContext,
+    ) -> str | None:
+        """Return top selector instruction if request explicitly names or matches a different subject or chapter."""
+
+        if not context or not context.current_subject or not context.current_chapter:
+            return None
+
+        concept_chapter_map = {
+            "coal": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "coal tar": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "coke": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "petroleum": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "natural gas": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "cng": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "carbonisation": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "carbonization": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
+            "microorganism": ("Science & Technology", "Chapter 2 - Microorganisms : Friend and Foe"),
+            "microorganisms": ("Science & Technology", "Chapter 2 - Microorganisms : Friend and Foe"),
+            "fermentation": ("Science & Technology", "Chapter 2 - Microorganisms : Friend and Foe"),
+            "pathogen": ("Science & Technology", "Chapter 2 - Microorganisms : Friend and Foe"),
+            "pathogens": ("Science & Technology", "Chapter 2 - Microorganisms : Friend and Foe"),
+            "photosynthesis": ("Science & Technology", ""),
+            "irrigation": ("Science & Technology", "Chapter 1 - Crop Production and Management"),
+            "weedicide": ("Science & Technology", "Chapter 1 - Crop Production and Management"),
+            "additive inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "multiplicative inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "rational number": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "rational numbers": ("Mathematics", "Chapter 1 - Rational Numbers"),
+            "fraction comparison": ("Mathematics", ""),
+            "preposition": ("English", ""),
+            "prepositions": ("English", ""),
+            "constitution": ("Social Science", "Chapter 15 - Indian Constitution"),
+        }
+
+        msg_lower = message.casefold()
+        msg_norm = _normalize_syllabus_lookup_text(message)
+        if not msg_norm:
+            return None
+
+        # 1. Check canonical concept map first (authoritative exact mapping)
+        cur_sub_clean = clean_student_text(context.current_subject).lower()
+        for concept, (target_sub, target_ch_title) in concept_chapter_map.items():
+            if re.search(rf"\b{re.escape(concept)}\b", msg_norm):
+                target_sub_clean = target_sub.lower()
+                if target_sub_clean not in cur_sub_clean and cur_sub_clean not in target_sub_clean:
+                    if target_ch_title and context.standard == 8:
+                        return f"Please select {target_sub} and {target_ch_title} from the top selector first, then ask again."
+                    return f"Please select {target_sub} from the top selector first, then ask again."
+                elif target_ch_title and target_ch_title.casefold() not in context.current_chapter.casefold():
+                    return f"Please select {target_ch_title} from the top selector first, then ask again."
+
+        # 2. Skip scope guard for test requests or test/question answer evaluation submissions
+        req = classify_syllabus_tutor_request(message)
+        eval_phrases = (
+            "question:", "my answer:", "is my answer correct", "is my answer right",
+            "check my answer", "evaluate my answer", "check test answers", "check my test answers",
+            "evaluate test answers", "evaluate my test answers", "check my paper", "evaluate my paper",
+            "mera paper check karo", "paper check karo", "check answers", "evaluate answers",
+        )
+        is_test_eval = any(p in msg_lower for p in eval_phrases) or bool(
+            re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message, re.IGNORECASE)
+        )
+        if req.intent == "test" or is_test_eval:
+            return None
+
+        # 3. Skip scope guard for generic in-scope prompts
+        generic_phrases = (
+            "is chapter", "this chapter", "first topic", "topic ko", "step by step",
+            "samjao", "samjhao", "explain karo", "give examples", "chapter test", "test paper",
+        )
+        if any(p in msg_lower for p in generic_phrases):
+            return None
+
+        # 4. Check explicit subject aliases mentioned in prompt
+        subject_aliases = {
+            "science": "Science & Technology",
+            "science & technology": "Science & Technology",
+            "mathematics": "Mathematics",
+            "maths": "Mathematics",
+            "math": "Mathematics",
+            "english": "English",
+            "social science": "Social Science",
+            "social": "Social Science",
+            "ss": "Social Science",
+        }
+
+        for term, canonical_subject in subject_aliases.items():
+            if re.search(rf"\b{re.escape(term)}\b", msg_norm):
+                canonical_clean = canonical_subject.lower()
+                if canonical_clean not in cur_sub_clean and cur_sub_clean not in canonical_clean:
+                    ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|unit|lesson)\s*(\d{1,2})\b", msg_norm)
+                    target_ch_str = f"Chapter {ch_num_m.group(1)}" if ch_num_m else ""
+                    target_str = f"{canonical_subject}{' ' + target_ch_str if target_ch_str else ''}".strip()
+                    return f"Please select {target_str} from the top selector first, then ask again."
+
+        # Check explicit chapter number mentions in prompt (e.g. "Chapter 2 test" or "Explain Chapter 3")
+        ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b", msg_norm)
+        if ch_num_m:
+            requested_ch_num = ch_num_m.group(1)
+            cur_ch_m = re.search(r"\d{1,2}", context.current_chapter)
+            if cur_ch_m:
+                cur_ch_num = cur_ch_m.group(0)
+                if requested_ch_num != cur_ch_num:
+                    return f"Please select Chapter {requested_ch_num} from the top selector first, then ask again."
+
+        # 5. Search across all loaded syllabi for medium to find best-matching subject/chapter
+        all_syllabi = self.all(board=context.board)
+        relevant_syllabi = [
+            s for s in all_syllabi
+            if s.medium.casefold() == context.medium.casefold()
+        ]
+
+        if not relevant_syllabi:
+            return None
+
+        stop_words = {
+            "what", "is", "are", "the", "a", "an", "and", "or", "in", "of", "to", "for",
+            "with", "on", "at", "by", "from", "explain", "samjhao", "batao", "kya", "hai",
+            "ka", "ke", "ki", "ko", "se", "main", "par", "hote", "hain", "chapter", "unit",
+            "lesson", "test", "paper", "exam", "question", "questions", "answer", "answers",
+            "give", "example", "examples", "define", "describe", "write", "about", "short",
+            "note", "notes", "detail", "meaning", "different", "difference", "between",
+            "banao", "please", "karo", "types", "method", "methods", "system", "systems",
+            "role", "roles", "importance", "uses", "use", "process", "rule", "rules",
+            "part", "parts", "following", "given", "find", "calculate", "solve", "how",
+            "tell", "me", "discuss", "concept", "concepts", "topic", "topics", "first"
+        }
+
+        words = [w for w in re.findall(r"\b[a-z]{3,}\b", msg_norm) if w not in stop_words]
+        bigrams = [f"{words[i]} {words[i+1]}" for i in range(len(words)-1)]
+
+        best_other_match: tuple[int, str, SyllabusChapter | None, BoardSyllabus | None] = (0, "", None, None)
+        cur_subject_match_score = 0
+        cur_chapter_primary_score = 0
+
+        for syl in relevant_syllabi:
+            is_cur_subject = (
+                syl.subject.casefold() in cur_sub_clean
+                or cur_sub_clean in syl.subject.casefold()
+            )
+
+            for ch in syl.chapters:
+                is_cur_chapter = is_cur_subject and (
+                    ch.title.casefold() in context.current_chapter.casefold()
+                    or context.current_chapter.casefold() in ch.title.casefold()
+                )
+
+                titles_text = (ch.title + " " + " ".join(t.title + " " + " ".join(t.aliases) for t in ch.topics)).lower()
+                ex_text = ""
+                for top in ch.topics:
+                    ex_text += " " + getattr(top, "explanation", "") + " " + getattr(top, "summary", "")
+                    for ex in top.exercises:
+                        if isinstance(ex, str):
+                            ex_text += " " + ex
+                        else:
+                            ex_text += " " + getattr(ex, "question_text", "") + " " + getattr(ex, "explanation", "") + " " + getattr(ex, "solution_guide", "")
+                ex_text = ex_text.lower()
+
+                for bg in bigrams:
+                    score = 0
+                    if re.search(rf"\b{re.escape(bg)}\b", titles_text):
+                        score = len(bg) * 15
+                    elif re.search(rf"\b{re.escape(bg)}\b", ex_text):
+                        score = len(bg) * 8
+
+                    if score > 0:
+                        if is_cur_subject:
+                            cur_subject_match_score = max(cur_subject_match_score, score)
+                            if is_cur_chapter and re.search(rf"\b{re.escape(bg)}\b", titles_text):
+                                cur_chapter_primary_score = max(cur_chapter_primary_score, score)
+                        else:
+                            if score > best_other_match[0]:
+                                best_other_match = (score, syl.subject, ch, syl)
+
+                for w in words:
+                    if len(w) >= 4:
+                        score = 0
+                        if re.search(rf"\b{re.escape(w)}\b", titles_text):
+                            score = len(w) * 10
+                        elif re.search(rf"\b{re.escape(w)}\b", ex_text):
+                            score = len(w) * 4
+
+                        if score > 0:
+                            if is_cur_subject:
+                                cur_subject_match_score = max(cur_subject_match_score, score)
+                                if is_cur_chapter and re.search(rf"\b{re.escape(w)}\b", titles_text):
+                                    cur_chapter_primary_score = max(cur_chapter_primary_score, score)
+                            else:
+                                if score > best_other_match[0]:
+                                    best_other_match = (score, syl.subject, ch, syl)
+
+        # 6. If an out-of-scope subject match strongly outweighs current subject match:
+        best_score, other_subject, other_chapter, other_syl = best_other_match
+        if best_score >= 15 and best_score > cur_subject_match_score:
+            if other_chapter and other_syl and other_syl.standard == context.standard:
+                return f"Please select {other_subject} and {other_chapter.title} from the top selector first, then ask again."
+            return f"Please select {other_subject} from the top selector first, then ask again."
+
+        # 7. If same subject but prompt strongly matches a DIFFERENT chapter than current selected chapter:
+        if cur_subject_match_score >= 15 and cur_chapter_primary_score == 0:
+            cur_syl = self.find(
+                board=context.board,
+                medium=context.medium,
+                standard=context.standard,
+                subject=context.current_subject,
+            )
+            if cur_syl:
+                best_ch_score = 0
+                best_ch_obj = None
+                for ch in cur_syl.chapters:
+                    if (
+                        ch.title.casefold() in context.current_chapter.casefold()
+                        or context.current_chapter.casefold() in ch.title.casefold()
+                    ):
+                        continue
+                    titles_text = (ch.title + " " + " ".join(t.title + " " + " ".join(t.aliases) for t in ch.topics)).lower()
+                    for bg in bigrams:
+                        if re.search(rf"\b{re.escape(bg)}\b", titles_text):
+                            score = len(bg) * 15
+                            if score > best_ch_score:
+                                best_ch_score, best_ch_obj = score, ch
+                    for w in words:
+                        if len(w) >= 4 and re.search(rf"\b{re.escape(w)}\b", titles_text):
+                            score = len(w) * 10
+                            if score > best_ch_score:
+                                best_ch_score, best_ch_obj = score, ch
+                if best_ch_score >= 35 and best_ch_obj:
+                    return f"Please select {best_ch_obj.title} from the top selector first, then ask again."
+
+        return None
+
 
 GSEBSyllabus = BoardSyllabus
 GSEBSyllabusRepository = SyllabusRepository
@@ -6421,119 +6655,26 @@ def _split_into_teaching_sentences(text: str) -> list[str]:
     return [p.replace("___DOT___", ".") for p in parts]
 
 
+
 def _check_strict_scope_mismatch(
     message_text: str,
     context: StudentLearningContext,
+    repository: SyllabusRepository | None = None,
 ) -> str | None:
     """Return top selector instruction if request explicitly names a different subject or chapter."""
 
     if not context.current_subject or not context.current_chapter:
         return None
 
-    req = classify_syllabus_tutor_request(message_text)
-    msg_lower = message_text.casefold()
-    eval_phrases = (
-        "check my test answers", "check test answers", "evaluate my test answers",
-        "evaluate test answers", "evaluate my answers", "check my answers",
-        "check my paper", "evaluate my paper", "mera paper check karo", "paper check karo",
-        "check answers out of", "evaluate answers out of", "here are my answers",
-        "here are my test answers", "my answers:", "my answers", "check answers", "evaluate answers",
-    )
-    is_test_eval = any(p in msg_lower for p in eval_phrases) or bool(re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message_text, re.IGNORECASE))
-    if req.intent == "test" or is_test_eval:
-        return None
+    if repository is None:
+        try:
+            repo_path = Path(__file__).resolve().parent / "syllabus"
+            repository = SyllabusRepository(repo_path)
+        except Exception:
+            repository = None
 
-    norm = _normalize_syllabus_lookup_text(message_text)
-    if not norm:
-        return None
-
-    subject_aliases = {
-        "science": "Science & Technology",
-        "science & technology": "Science & Technology",
-        "mathematics": "Mathematics",
-        "maths": "Mathematics",
-        "math": "Mathematics",
-        "english": "English",
-        "social science": "Social Science",
-        "social": "Social Science",
-        "ss": "Social Science",
-    }
-    cur_sub_clean = clean_student_text(context.current_subject).lower()
-
-    for term, canonical_subject in subject_aliases.items():
-        if re.search(rf"\b{re.escape(term)}\b", norm):
-            canonical_clean = canonical_subject.lower()
-            if canonical_clean not in cur_sub_clean and cur_sub_clean not in canonical_clean:
-                ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath)\s*(\d{1,2})\b", norm)
-                target_ch_str = f"Chapter {ch_num_m.group(1)}" if ch_num_m else ""
-                target_str = f"{canonical_subject}{' ' + target_ch_str if target_ch_str else ''}".strip()
-                return (
-                    f"You are currently studying {context.current_subject}, {context.current_chapter}. "
-                    f"To study {target_str}, please select {target_str} from the top selector first."
-                )
-
-    ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b", norm)
-    if ch_num_m:
-        requested_ch_num = ch_num_m.group(1)
-        cur_ch_m = re.search(r"\d{1,2}", context.current_chapter)
-        if cur_ch_m:
-            cur_ch_num = cur_ch_m.group(0)
-            if requested_ch_num != cur_ch_num:
-                return (
-                    f"You are currently studying {context.current_subject}, {context.current_chapter}. "
-                    f"To study Chapter {requested_ch_num}, please select Chapter {requested_ch_num} from the top selector first."
-                )
-
-    # Concept-based strict scope lock: check if request belongs to another subject or chapter
-    if "science" in cur_sub_clean:
-        math_terms = (
-            r"\brational\s+numbers?\b",
-            r"\bfractions?\b",
-            r"\bfraction\s+comparison\b",
-            r"\badditive\s+inverse\b",
-            r"\bmultiplicative\s+inverse\b",
-            r"\breciprocals?\b",
-            r"\bquadrilaterals?\b",
-            r"\bintegers?\b",
-            r"\bequations?\b",
-            r"\blinear\s+equations?\b",
-            r"\balgebraic\s+expressions?\b",
-            r"\bexponents?\b",
-            r"\bsquare\s+roots?\b",
-            r"\bcube\s+roots?\b",
-            r"\bparallelograms?\b",
-            r"\brhombus\b",
-            r"\btrapezi?um\b",
-            r"\bpolygons?\b",
-        )
-        if any(re.search(pat, norm) for pat in math_terms):
-            return f"You are currently studying {context.current_subject}, {context.current_chapter}. To study Mathematics topics, please select Mathematics and the correct chapter from the top selector first."
-
-    if "math" in cur_sub_clean:
-        sc_ch3_terms = (
-            r"\bcoal\b", r"\bcoal\s+tar\b", r"\bcoke\b", r"\bpetroleum\b",
-            r"\bnatural\s+gas\b", r"\bcng\b", r"\bcarbonisation\b", r"\bcarbonization\b",
-            r"\bbitumen\b", r"\bparaffin\s+wax\b",
-        )
-        if any(re.search(pat, norm) for pat in sc_ch3_terms):
-            return "Please select Science & Technology and Chapter 3 - Coal and Petroleum from the top selector first, then ask again."
-
-        other_sc_terms = (
-            r"\bmicroorganisms?\b", r"\bfermentation\b", r"\birrigation\b",
-            r"\bpathogens?\b", r"\bnitrogen\s+cycle\b", r"\bcrop\s+production\b",
-            r"\bweedicides?\b", r"\bphotosynthesis\b", r"\bcombustion\b",
-        )
-        if any(re.search(pat, norm) for pat in other_sc_terms):
-            return f"You are currently studying {context.current_subject}, {context.current_chapter}. To study Science & Technology topics, please select Science & Technology and the correct chapter from the top selector first."
-
-    ch3_concepts = (
-        r"\bcoal\b", r"\bpetroleum\b", r"\bnatural\s+gas\b", r"\bfossil\s+fuels?\b",
-        r"\bcarbonisation\b", r"\bcarbonization\b", r"\bcoke\b", r"\bcoal\s+tar\b",
-        r"\bcoal\s+gas\b", r"\bparaffin\s+wax\b", r"\bbitumen\b",
-    )
-    if "chapter 3" not in context.current_chapter.lower() and "coal" not in context.current_chapter.lower():
-        if any(re.search(pat, norm) for pat in ch3_concepts):
-            return "Please select Chapter 3 - Coal and Petroleum from the top selector first, then ask again."
+    if repository is not None:
+        return repository.find_scope_mismatch(message_text, context)
 
     return None
 

@@ -815,7 +815,7 @@ class GyanVerseAIService:
         t_start: float | None = None,
         allow_provider_review: bool = False,
     ) -> str | None:
-        scope_mismatch = _check_strict_scope_mismatch(message, context)
+        scope_mismatch = _check_strict_scope_mismatch(message, context, self.syllabus_repository)
         if scope_mismatch:
             if t_start is None:
                 t_start = time.perf_counter()
@@ -1041,7 +1041,7 @@ class GyanVerseAIService:
     ) -> str:
         if t_start is None:
             t_start = time.perf_counter()
-        scope_mismatch = _check_strict_scope_mismatch(message, context)
+        scope_mismatch = _check_strict_scope_mismatch(message, context, self.syllabus_repository)
         if scope_mismatch:
             return self._local_syllabus_answer(
                 message=message,
@@ -1285,7 +1285,7 @@ class GyanVerseAIService:
         clean_msg = clean_student_text(message)
         self.ensure_test_paper_context(clean_msg, context)
 
-        scope_mismatch = _check_strict_scope_mismatch(clean_msg, context)
+        scope_mismatch = _check_strict_scope_mismatch(clean_msg, context, self.syllabus_repository)
         if scope_mismatch:
             ans = self._local_syllabus_answer(
                 message=clean_msg,
@@ -2394,10 +2394,5 @@ finally {
             except Exception:
                 pass
 
-# GyanVerse Chat-only Scope Guard Hotfix v1
-try:
-    import phase11_chatonly_scope_hotfix as _gyanverse_chatonly_scope_hotfix_v1
-    _gyanverse_chatonly_scope_hotfix_v1.apply()
-except Exception:
-    pass
+
 
