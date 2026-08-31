@@ -1100,6 +1100,7 @@ class SyllabusRepository:
             "ss": "Social Science",
         }
 
+        explicit_current_subject = False
         for term, canonical_subject in subject_aliases.items():
             if re.search(rf"\b{re.escape(term)}\b", msg_norm):
                 canonical_clean = canonical_subject.lower()
@@ -1108,6 +1109,7 @@ class SyllabusRepository:
                     target_ch_str = f"Chapter {ch_num_m.group(1)}" if ch_num_m else ""
                     target_str = f"{canonical_subject}{' ' + target_ch_str if target_ch_str else ''}".strip()
                     return f"Please select {target_str} from the top selector first, then ask again."
+                explicit_current_subject = True
 
         # Check explicit chapter number mentions in prompt (e.g. "Chapter 2 test" or "Explain Chapter 3")
         ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b", msg_norm)
@@ -1118,6 +1120,11 @@ class SyllabusRepository:
                 cur_ch_num = cur_ch_m.group(0)
                 if requested_ch_num != cur_ch_num:
                     return f"Please select Chapter {requested_ch_num} from the top selector first, then ask again."
+
+        # An explicit mention of the already-selected subject anchors the request
+        # to that subject. Do not let broad fuzzy syllabus matching override it.
+        if explicit_current_subject:
+            return None
 
         # 5. Search across all loaded syllabi for medium to find best-matching subject/chapter
         all_syllabi = self.all(board=context.board)

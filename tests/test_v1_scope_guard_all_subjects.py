@@ -122,6 +122,17 @@ class V1ScopeGuardAllSubjectsTests(unittest.TestCase):
         resp3 = service.ask(message="who was Vasco da Gama?", context=ctx_ss)
         self.assertNotIn("Please select", resp3)
 
+        # Explicit current-subject wording must not be overridden by fuzzy
+        # matches from another installed subject.
+        ctx_eng7 = self.context(7, "English", "Chapter 1 - The Day the River Spoke")
+        resp4 = service.ask(message="muje English ka 1st chapter padhaao", context=ctx_eng7)
+        self.assertNotIn("Please select Social Science", resp4)
+        self.assertNotIn("Please select Science & Technology", resp4)
+        self.assertNotIn("Please select Mathematics", resp4)
+
+        resp5 = service.ask(message="Teach me English first chapter", context=ctx_eng7)
+        self.assertNotIn("Please select", resp5)
+
     # D. Test answer evaluation
     def test_answer_evaluation_routing_after_paper_generation(self) -> None:
         service = self.service()
