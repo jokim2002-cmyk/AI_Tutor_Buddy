@@ -133,6 +133,58 @@ class V1ScopeGuardAllSubjectsTests(unittest.TestCase):
         resp5 = service.ask(message="Teach me English first chapter", context=ctx_eng7)
         self.assertNotIn("Please select", resp5)
 
+    def test_natural_tutor_navigation_never_false_redirects(self) -> None:
+        service = self.service()
+
+        ctx_science = self.context(
+            7,
+            "Science & Technology",
+            "Semester 1 ? Motion, Time and Measurement",
+        )
+
+        prompts = (
+            "next",
+            "next topic",
+            "continue",
+            "aage padhaao",
+            "Teach me full chapter",
+            "explain this chapter",
+            "give another example",
+            "simple language me samjhao",
+            "repeat",
+            "practice questions do",
+        )
+
+        for prompt in prompts:
+            with self.subTest(prompt=prompt):
+                response = service.ask(message=prompt, context=ctx_science)
+                self.assertNotIn("Please select Mathematics", response)
+                self.assertNotIn("Please select English", response)
+                self.assertNotIn("Please select Social Science", response)
+
+        ctx_eng = self.context(
+            7,
+            "English",
+            "Chapter 1 - The Day the River Spoke",
+        )
+
+        english_prompts = (
+            "muje first chapter padhaao",
+            "muje English ka 1st chapter padhaao",
+            "Teach me English first chapter",
+            "next",
+            "next topic",
+            "continue",
+            "Teach me full chapter",
+        )
+
+        for prompt in english_prompts:
+            with self.subTest(prompt=prompt):
+                response = service.ask(message=prompt, context=ctx_eng)
+                self.assertNotIn("Please select Mathematics", response)
+                self.assertNotIn("Please select Science & Technology", response)
+                self.assertNotIn("Please select Social Science", response)
+
     # D. Test answer evaluation
     def test_answer_evaluation_routing_after_paper_generation(self) -> None:
         service = self.service()

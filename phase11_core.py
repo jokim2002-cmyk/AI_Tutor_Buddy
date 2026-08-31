@@ -1012,11 +1012,64 @@ class SyllabusRepository:
         message: str,
         context: StudentLearningContext,
     ) -> str | None:
-        """Return top selector instruction if request explicitly names or matches a different subject or chapter."""
+        """
+        Return a selector instruction only when the student clearly asks for
+        another subject/chapter.
+
+        Important rule:
+        The currently selected lesson is the default authority. Ordinary tutor
+        conversation must never be redirected because of incidental words that
+        happen to exist in another textbook.
+        """
 
         if not context or not context.current_subject or not context.current_chapter:
             return None
 
+        msg_lower = message.casefold()
+        msg_norm = _normalize_syllabus_lookup_text(message)
+        if not msg_norm:
+            return None
+
+        cur_sub_clean = clean_student_text(context.current_subject).lower()
+
+        # ------------------------------------------------------------
+        # 1. Test / answer-review traffic belongs to current context.
+        # ------------------------------------------------------------
+        req = classify_syllabus_tutor_request(message)
+        eval_phrases = (
+            "question:",
+            "my answer:",
+            "is my answer correct",
+            "is my answer right",
+            "check my answer",
+            "evaluate my answer",
+            "check test answers",
+            "check my test answers",
+            "evaluate test answers",
+            "evaluate my test answers",
+            "check my paper",
+            "evaluate my paper",
+            "mera paper check karo",
+            "paper check karo",
+            "check answers",
+            "evaluate answers",
+        )
+        is_test_eval = any(p in msg_lower for p in eval_phrases) or bool(
+            re.search(
+                r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]",
+                message,
+                re.IGNORECASE,
+            )
+        )
+        if req.intent == "test" or is_test_eval:
+            return None
+
+        # ------------------------------------------------------------
+        # 2. Strong concept map.
+        #
+        # These are deliberate curriculum concepts, not fuzzy matches.
+        # Cross-subject redirects are allowed for these.
+        # ------------------------------------------------------------
         concept_chapter_map = {
             "coal": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
             "coal tar": ("Science & Technology", "Chapter 3 - Coal and Petroleum"),
@@ -1034,6 +1087,7 @@ class SyllabusRepository:
             "photosynthesis": ("Science & Technology", ""),
             "irrigation": ("Science & Technology", "Chapter 1 - Crop Production and Management"),
             "weedicide": ("Science & Technology", "Chapter 1 - Crop Production and Management"),
+
             "additive inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "multiplicative inverse": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "reciprocal": ("Mathematics", "Chapter 1 - Rational Numbers"),
@@ -1041,215 +1095,331 @@ class SyllabusRepository:
             "rational number": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "rational numbers": ("Mathematics", "Chapter 1 - Rational Numbers"),
             "fraction comparison": ("Mathematics", ""),
+
             "preposition": ("English", ""),
             "prepositions": ("English", ""),
+            "writing process": ("English", ""),
+
             "constitution": ("Social Science", "Chapter 15 - Indian Constitution"),
+            "revolt": ("Social Science", ""),
         }
 
-        msg_lower = message.casefold()
-        msg_norm = _normalize_syllabus_lookup_text(message)
-        if not msg_norm:
+        # Longest concepts first so "coal tar" wins before "coal".
+        for concept in sorted(concept_chapter_map, key=len, reverse=True):
+            target_sub, target_ch_title = concept_chapter_map[concept]
+
+            if not re.search(rf"\b{re.escape(concept)}\b", msg_norm):
+                continue
+
+            target_sub_clean = target_sub.lower()
+            same_subject = (
+                target_sub_clean in cur_sub_clean
+                or cur_sub_clean in target_sub_clean
+            )
+
+            if not same_subject:
+                # Std 8 canonical chapter mappings are known and tested.
+                if target_ch_title and context.standard == 8:
+                    return (
+                        f"Please select {target_sub} and {target_ch_title} "
+                        "from the top selector first, then ask again."
+                    )
+                return (
+                    f"Please select {target_sub} from the top selector first, "
+                    "then ask again."
+                )
+
+            # Same subject, but a known Std 8 concept belongs to another chapter.
+            if (
+                target_ch_title
+                and context.standard == 8
+                and target_ch_title.casefold()
+                not in context.current_chapter.casefold()
+            ):
+                return (
+                    f"Please select {target_ch_title} from the top selector "
+                    "first, then ask again."
+                )
+
             return None
 
-        # 1. Check canonical concept map first (authoritative exact mapping)
-        cur_sub_clean = clean_student_text(context.current_subject).lower()
-        for concept, (target_sub, target_ch_title) in concept_chapter_map.items():
-            if re.search(rf"\b{re.escape(concept)}\b", msg_norm):
-                target_sub_clean = target_sub.lower()
-                if target_sub_clean not in cur_sub_clean and cur_sub_clean not in target_sub_clean:
-                    if target_ch_title and context.standard == 8:
-                        return f"Please select {target_sub} and {target_ch_title} from the top selector first, then ask again."
-                    return f"Please select {target_sub} from the top selector first, then ask again."
-                elif target_ch_title and target_ch_title.casefold() not in context.current_chapter.casefold():
-                    return f"Please select {target_ch_title} from the top selector first, then ask again."
-                else:
-                    return None
-
-        # 2. Skip scope guard for test requests or test/question answer evaluation submissions
-        req = classify_syllabus_tutor_request(message)
-        eval_phrases = (
-            "question:", "my answer:", "is my answer correct", "is my answer right",
-            "check my answer", "evaluate my answer", "check test answers", "check my test answers",
-            "evaluate test answers", "evaluate my test answers", "check my paper", "evaluate my paper",
-            "mera paper check karo", "paper check karo", "check answers", "evaluate answers",
-        )
-        is_test_eval = any(p in msg_lower for p in eval_phrases) or bool(
-            re.search(r"(?:^|\n)\s*(?:1|q1|ans\s*1)\s*[:\.\)]", message, re.IGNORECASE)
-        )
-        if req.intent == "test" or is_test_eval:
-            return None
-
-        # 3. Skip scope guard for generic in-scope prompts
-        generic_phrases = (
-            "is chapter", "this chapter", "first topic", "topic ko", "step by step",
-            "samjao", "samjhao", "explain karo", "give examples", "chapter test", "test paper",
-        )
-        if any(p in msg_lower for p in generic_phrases):
-            return None
-
-        # 4. Check explicit subject aliases mentioned in prompt
+        # ------------------------------------------------------------
+        # 3. Explicit subject names.
+        #
+        # If student clearly says another subject, redirect.
+        # If they name the already-selected subject, anchor there.
+        # ------------------------------------------------------------
         subject_aliases = {
-            "science": "Science & Technology",
             "science & technology": "Science & Technology",
+            "science": "Science & Technology",
             "mathematics": "Mathematics",
             "maths": "Mathematics",
             "math": "Mathematics",
             "english": "English",
             "social science": "Social Science",
+            "social studies": "Social Science",
             "social": "Social Science",
-            "ss": "Social Science",
         }
 
         explicit_current_subject = False
-        for term, canonical_subject in subject_aliases.items():
-            if re.search(rf"\b{re.escape(term)}\b", msg_norm):
-                canonical_clean = canonical_subject.lower()
-                if canonical_clean not in cur_sub_clean and cur_sub_clean not in canonical_clean:
-                    ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|unit|lesson)\s*(\d{1,2})\b", msg_norm)
-                    target_ch_str = f"Chapter {ch_num_m.group(1)}" if ch_num_m else ""
-                    target_str = f"{canonical_subject}{' ' + target_ch_str if target_ch_str else ''}".strip()
-                    return f"Please select {target_str} from the top selector first, then ask again."
-                explicit_current_subject = True
 
-        # Check explicit chapter number mentions in prompt (e.g. "Chapter 2 test" or "Explain Chapter 3")
-        ch_num_m = re.search(r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b", msg_norm)
-        if ch_num_m:
-            requested_ch_num = ch_num_m.group(1)
-            cur_ch_m = re.search(r"\d{1,2}", context.current_chapter)
-            if cur_ch_m:
-                cur_ch_num = cur_ch_m.group(0)
-                if requested_ch_num != cur_ch_num:
-                    return f"Please select Chapter {requested_ch_num} from the top selector first, then ask again."
+        # Prefer longer aliases first.
+        for term in sorted(subject_aliases, key=len, reverse=True):
+            canonical_subject = subject_aliases[term]
 
-        # An explicit mention of the already-selected subject anchors the request
-        # to that subject. Do not let broad fuzzy syllabus matching override it.
+            if not re.search(rf"\b{re.escape(term)}\b", msg_norm):
+                continue
+
+            canonical_clean = canonical_subject.lower()
+            same_subject = (
+                canonical_clean in cur_sub_clean
+                or cur_sub_clean in canonical_clean
+            )
+
+            if not same_subject:
+                return (
+                    f"Please select {canonical_subject} from the top selector "
+                    "first, then ask again."
+                )
+
+            explicit_current_subject = True
+            break
+
+        # ------------------------------------------------------------
+        # 4. Understand chapter numbers in natural student language.
+        #
+        # Supports:
+        #   chapter 2
+        #   unit 2
+        #   2nd chapter
+        #   first chapter
+        #   second lesson
+        # ------------------------------------------------------------
+        requested_ch_num = None
+
+        forward = re.search(
+            r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b",
+            msg_norm,
+        )
+        if forward:
+            requested_ch_num = forward.group(1)
+
+        if requested_ch_num is None:
+            reversed_num = re.search(
+                r"\b(\d{1,2})(?:st|nd|rd|th)\s+"
+                r"(?:chapter|chap|paath|lesson|unit)\b",
+                msg_norm,
+            )
+            if reversed_num:
+                requested_ch_num = reversed_num.group(1)
+
+        ordinal_words = {
+            "first": "1",
+            "second": "2",
+            "third": "3",
+            "fourth": "4",
+            "fifth": "5",
+            "sixth": "6",
+            "seventh": "7",
+            "eighth": "8",
+            "ninth": "9",
+            "tenth": "10",
+            "eleventh": "11",
+            "twelfth": "12",
+            "thirteenth": "13",
+            "fourteenth": "14",
+            "fifteenth": "15",
+            "sixteenth": "16",
+            "seventeenth": "17",
+            "eighteenth": "18",
+            "nineteenth": "19",
+            "twentieth": "20",
+        }
+
+        if requested_ch_num is None:
+            ordinal_match = re.search(
+                r"\b("
+                + "|".join(ordinal_words)
+                + r")\s+(?:chapter|chap|paath|lesson|unit)\b",
+                msg_norm,
+            )
+            if ordinal_match:
+                requested_ch_num = ordinal_words[ordinal_match.group(1)]
+
+        current_ch_num = None
+
+        # Prefer an actual chapter/unit/lesson marker instead of the first
+        # unrelated digit (for example a semester number).
+        current_match = re.search(
+            r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b",
+            context.current_chapter,
+            re.IGNORECASE,
+        )
+        if current_match:
+            current_ch_num = current_match.group(1)
+
+        if requested_ch_num and current_ch_num:
+            if int(requested_ch_num) != int(current_ch_num):
+                return (
+                    f"Please select Chapter {int(requested_ch_num)} from the "
+                    "top selector first, then ask again."
+                )
+
+            # Student explicitly requested the chapter already selected.
+            return None
+
+        # Naming current subject is also a strong current-context anchor.
         if explicit_current_subject:
             return None
 
-        # 5. Search across all loaded syllabi for medium to find best-matching subject/chapter
-        all_syllabi = self.all(board=context.board)
+        # ------------------------------------------------------------
+        # 5. Conversational tutor/navigation commands.
+        #
+        # These NEVER trigger syllabus switching.
+        # They continue the selected lesson.
+        # ------------------------------------------------------------
+        tutor_navigation_patterns = (
+            r"\bnext\b",
+            r"\bnext topic\b",
+            r"\bnext lesson\b",
+            r"\bcontinue\b",
+            r"\bcontinue karo\b",
+            r"\baage\b",
+            r"\baage padha",
+            r"\baage samjha",
+            r"\bstart\b",
+            r"\bstart karo\b",
+            r"\bteach me\b",
+            r"\bteach\b",
+            r"\bfull chapter\b",
+            r"\bwhole chapter\b",
+            r"\bcomplete chapter\b",
+            r"\bchapter padha",
+            r"\btopic padha",
+            r"\bpadhao\b",
+            r"\bpadhaao\b",
+            r"\bsamjhao\b",
+            r"\bsamjao\b",
+            r"\bexplain\b",
+            r"\bexplain karo\b",
+            r"\bexample\b",
+            r"\bexamples\b",
+            r"\banother example\b",
+            r"\bdusra example\b",
+            r"\baur example\b",
+            r"\brepeat\b",
+            r"\bagain\b",
+            r"\bsimple language\b",
+            r"\beasy language\b",
+            r"\bsimpler\b",
+            r"\bsummary\b",
+            r"\bsummarize\b",
+            r"\brevision\b",
+            r"\bpractice\b",
+            r"\bhint\b",
+            r"\bfirst topic\b",
+            r"\bthis topic\b",
+            r"\bthis chapter\b",
+            r"\bis chapter\b",
+        )
+
+        if any(re.search(pattern, msg_norm) for pattern in tutor_navigation_patterns):
+            return None
+
+        # ------------------------------------------------------------
+        # 6. Safe deterministic curriculum-title matching.
+        #
+        # Search ONLY chapter/topic titles and aliases.
+        # Never scan explanations, exercises or solution text for scope
+        # switching. That old behaviour caused random Mathematics/English/
+        # Social Science redirects for normal messages such as "next".
+        # ------------------------------------------------------------
         relevant_syllabi = [
-            s for s in all_syllabi
+            s
+            for s in self.all(board=context.board)
             if s.medium.casefold() == context.medium.casefold()
+            and s.standard == context.standard
         ]
 
         if not relevant_syllabi:
             return None
 
-        stop_words = {
-            "what", "is", "are", "the", "a", "an", "and", "or", "in", "of", "to", "for",
-            "with", "on", "at", "by", "from", "explain", "samjhao", "batao", "kya", "hai",
-            "ka", "ke", "ki", "ko", "se", "main", "par", "hote", "hain", "chapter", "unit",
-            "lesson", "test", "paper", "exam", "question", "questions", "answer", "answers",
-            "give", "example", "examples", "define", "describe", "write", "about", "short",
-            "note", "notes", "detail", "meaning", "different", "difference", "between",
-            "banao", "please", "karo", "types", "method", "methods", "system", "systems",
-            "role", "roles", "importance", "uses", "use", "process", "rule", "rules",
-            "part", "parts", "following", "given", "find", "calculate", "solve", "how",
-            "tell", "me", "discuss", "concept", "concepts", "topic", "topics", "first"
+        query_tokens = {
+            token
+            for token in re.findall(r"\b[a-z]{4,}\b", msg_norm)
+            if token
+            not in {
+                "what", "when", "where", "which", "who", "whom", "whose",
+                "why", "how", "tell", "please", "about", "give", "show",
+                "explain", "describe", "define", "write", "find", "solve",
+                "chapter", "lesson", "topic", "unit", "question", "answer",
+                "student", "teacher", "today", "first", "second", "third",
+                "next", "full", "complete", "whole", "continue", "teach",
+                "padhao", "padhaao", "samjhao", "samjao", "karo",
+            }
         }
 
-        words = [w for w in re.findall(r"\b[a-z]{3,}\b", msg_norm) if w not in stop_words]
-        bigrams = [f"{words[i]} {words[i+1]}" for i in range(len(words)-1)]
+        # Tiny/ambiguous prompts stay in current context.
+        if not query_tokens:
+            return None
 
-        best_other_match: tuple[int, str, SyllabusChapter | None, BoardSyllabus | None] = (0, "", None, None)
-        cur_subject_match_score = 0
-        cur_chapter_primary_score = 0
+        best_other = None
+        best_other_score = 0
+        best_current_score = 0
 
-        for syl in relevant_syllabi:
-            is_cur_subject = (
-                syl.subject.casefold() in cur_sub_clean
-                or cur_sub_clean in syl.subject.casefold()
+        for syllabus in relevant_syllabi:
+            syllabus_clean = syllabus.subject.casefold()
+            is_current_subject = (
+                syllabus_clean in cur_sub_clean
+                or cur_sub_clean in syllabus_clean
             )
 
-            for ch in syl.chapters:
-                is_cur_chapter = is_cur_subject and (
-                    ch.title.casefold() in context.current_chapter.casefold()
-                    or context.current_chapter.casefold() in ch.title.casefold()
+            for chapter in syllabus.chapters:
+                searchable_parts = [chapter.title]
+
+                for topic in chapter.topics:
+                    searchable_parts.append(topic.title)
+                    searchable_parts.extend(topic.aliases)
+
+                title_text = _normalize_syllabus_lookup_text(
+                    " ".join(searchable_parts)
+                )
+                title_tokens = set(
+                    re.findall(r"\b[a-z]{4,}\b", title_text)
                 )
 
-                titles_text = (ch.title + " " + " ".join(t.title + " " + " ".join(t.aliases) for t in ch.topics)).lower()
-                ex_text = ""
-                for top in ch.topics:
-                    ex_text += " " + getattr(top, "explanation", "") + " " + getattr(top, "summary", "")
-                    for ex in top.exercises:
-                        if isinstance(ex, str):
-                            ex_text += " " + ex
-                        else:
-                            ex_text += " " + getattr(ex, "question_text", "") + " " + getattr(ex, "explanation", "") + " " + getattr(ex, "solution_guide", "")
-                ex_text = ex_text.lower()
+                overlap = query_tokens & title_tokens
+                if not overlap:
+                    continue
 
-                for bg in bigrams:
-                    score = 0
-                    if re.search(rf"\b{re.escape(bg)}\b", titles_text):
-                        score = len(bg) * 15
-                    elif re.search(rf"\b{re.escape(bg)}\b", ex_text):
-                        score = len(bg) * 8
+                # Require meaningful evidence:
+                # - at least two matching content words, OR
+                # - one long/specific word (8+ chars).
+                specific = [word for word in overlap if len(word) >= 8]
+                if len(overlap) < 2 and not specific:
+                    continue
 
-                    if score > 0:
-                        if is_cur_subject:
-                            cur_subject_match_score = max(cur_subject_match_score, score)
-                            if is_cur_chapter and re.search(rf"\b{re.escape(bg)}\b", titles_text):
-                                cur_chapter_primary_score = max(cur_chapter_primary_score, score)
-                        else:
-                            if score > best_other_match[0]:
-                                best_other_match = (score, syl.subject, ch, syl)
+                score = sum(len(word) for word in overlap)
 
-                for w in words:
-                    if len(w) >= 4:
-                        score = 0
-                        if re.search(rf"\b{re.escape(w)}\b", titles_text):
-                            score = len(w) * 10
-                        elif re.search(rf"\b{re.escape(w)}\b", ex_text):
-                            score = len(w) * 4
+                if is_current_subject:
+                    best_current_score = max(best_current_score, score)
+                elif score > best_other_score:
+                    best_other_score = score
+                    best_other = (syllabus, chapter)
 
-                        if score > 0:
-                            if is_cur_subject:
-                                cur_subject_match_score = max(cur_subject_match_score, score)
-                                if is_cur_chapter and re.search(rf"\b{re.escape(w)}\b", titles_text):
-                                    cur_chapter_primary_score = max(cur_chapter_primary_score, score)
-                            else:
-                                if score > best_other_match[0]:
-                                    best_other_match = (score, syl.subject, ch, syl)
-
-        # 6. If an out-of-scope subject match strongly outweighs current subject match:
-        best_score, other_subject, other_chapter, other_syl = best_other_match
-        if best_score >= 15 and best_score > cur_subject_match_score:
-            if other_chapter and other_syl and other_syl.standard == context.standard:
-                return f"Please select {other_subject} and {other_chapter.title} from the top selector first, then ask again."
-            return f"Please select {other_subject} from the top selector first, then ask again."
-
-        # 7. If same subject but prompt strongly matches a DIFFERENT chapter than current selected chapter:
-        if cur_subject_match_score >= 15 and cur_chapter_primary_score == 0:
-            cur_syl = self.find(
-                board=context.board,
-                medium=context.medium,
-                standard=context.standard,
-                subject=context.current_subject,
+        # Another subject must beat current-context evidence clearly.
+        if (
+            best_other is not None
+            and best_other_score >= 12
+            and best_other_score >= best_current_score + 5
+        ):
+            syllabus, chapter = best_other
+            return (
+                f"Please select {syllabus.subject} and {chapter.title} "
+                "from the top selector first, then ask again."
             )
-            if cur_syl:
-                best_ch_score = 0
-                best_ch_obj = None
-                for ch in cur_syl.chapters:
-                    if (
-                        ch.title.casefold() in context.current_chapter.casefold()
-                        or context.current_chapter.casefold() in ch.title.casefold()
-                    ):
-                        continue
-                    titles_text = (ch.title + " " + " ".join(t.title + " " + " ".join(t.aliases) for t in ch.topics)).lower()
-                    for bg in bigrams:
-                        if re.search(rf"\b{re.escape(bg)}\b", titles_text):
-                            score = len(bg) * 15
-                            if score > best_ch_score:
-                                best_ch_score, best_ch_obj = score, ch
-                    for w in words:
-                        if len(w) >= 4 and re.search(rf"\b{re.escape(w)}\b", titles_text):
-                            score = len(w) * 10
-                            if score > best_ch_score:
-                                best_ch_score, best_ch_obj = score, ch
-                if best_ch_score >= 35 and best_ch_obj:
-                    return f"Please select {best_ch_obj.title} from the top selector first, then ask again."
 
+        # Ambiguous language always stays with the selected lesson.
         return None
 
 
