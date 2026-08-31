@@ -94,7 +94,8 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
-        self.assertIn("transcript_height = max(220.0 if is_mobile else 260.0, viewport_height - (160.0 if is_mobile else 230.0))", UI)
+        self.assertIn("mobile_reserved_height = 335.0", UI)
+        self.assertIn("viewport_height - (mobile_reserved_height if is_mobile else 230.0)", UI)
         self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
         self.assertIn("transcript = ft.Column(", UI)
         self.assertIn("height=transcript_height", UI)
@@ -133,7 +134,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("def estimated_composer_lines() -> int:", UI)
         self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
-        self.assertIn("header_offset = 150.0 if is_m else 180.0", UI)
+        self.assertIn("header_offset = 335.0 if is_m else 180.0", UI)
         mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
         self.assertIn("width=110 if is_mobile else 140", mode_block)
         self.assertIn("text_size=12 if is_mobile else 13", mode_block)
@@ -147,8 +148,11 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("attachment_preview.visible = bool(selected_attachments)", UI)
         self.assertNotIn("Enter sends • Shift+Enter adds a new line", shell_block)
         banner_block = UI.split("context_banner = ft.Container(", 1)[1].split("conversation_area = ft.Container(", 1)[0]
-        self.assertIn("                    mode_dropdown,", banner_block)
-        self.assertIn("                        expand=True,", banner_block)
+        banner_content_block = UI.split("context_banner_content = (", 1)[1].split("context_banner = ft.Container(", 1)[0]
+        self.assertIn("context_banner_content = (", UI)
+        self.assertIn("                            mode_dropdown,", banner_content_block)
+        self.assertIn("                        expand=True,", banner_content_block)
+        self.assertIn("content=context_banner_content", banner_block)
         self.assertIn("alignment=ft.MainAxisAlignment.SPACE_BETWEEN", UI)
         self.assertIn("conversation_area = ft.Container(", UI)
         self.assertNotIn("                        transcript,\n                        composer_shell,", UI)
@@ -183,6 +187,7 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_mobile_width_and_assets(self):
         self.assertIn("page.window.min_width = 360", UI)
+        self.assertIn("initial_is_mobile = float(getattr(page, \"width\", 0) or 1180) < 700.0", UI)
         self.assertIn("is_mobile = viewport_width < 700.0", UI)
         self.assertIn("status_column = ft.Column(", UI)
         self.assertIn("visible=not (float(getattr(page, \"width\", 0) or 1180) < 700.0)", UI)
@@ -304,7 +309,7 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_ui_readability_and_chatgpt_layout_contracts(self):
         self.assertIn('COLOR_TEXT = "#0F172A"', UI)
-        self.assertIn('title_text = ft.Text("Tutor", size=24, weight=ft.FontWeight.BOLD', UI)
+        self.assertIn("size=20 if initial_is_mobile else 24", UI)
         self.assertIn("size=font_size", UI)
         self.assertNotIn("line_height", UI)
         self.assertIn("text_size=15 if is_mobile else 16", UI)
@@ -318,6 +323,17 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
         self.assertIn("height=560", UI)
+
+    def test_android_mobile_shell_uses_root_safe_area_and_preserves_composer(self):
+        self.assertIn("page.add(\n        ft.SafeArea(", UI)
+        self.assertIn("content=ft.Column([topbar, body], expand=True, spacing=0)", UI)
+        build_tutor_return = UI.split("page.on_resize = handle_tutor_resize", 1)[1].split("builders = {", 1)[0]
+        self.assertIn("return ft.Container(", build_tutor_return)
+        self.assertNotIn("return ft.SafeArea(", build_tutor_return)
+        self.assertIn("header_offset = 335.0 if is_m else 180.0", UI)
+        self.assertIn("title_text.size = 20 if is_mobile_res else 24", UI)
+        self.assertIn("context_text.size = 11 if is_mobile_res else 13", UI)
+
 
     def test_phase2b_attachment_answer_submission_contracts(self):
         self.assertIn("attach_button.on_click = pick_files", UI)

@@ -183,8 +183,19 @@ def main(page: ft.Page) -> None:
     selected_attachments = []
     cloud_sync_busy = False
 
-    title_text = ft.Text("Tutor", size=24, weight=ft.FontWeight.BOLD, color=COLOR_TEXT)
-    context_text = ft.Text(context.context_label, size=13, color=COLOR_MUTED, max_lines=1)
+    initial_is_mobile = float(getattr(page, "width", 0) or 1180) < 700.0
+    title_text = ft.Text(
+        "Tutor",
+        size=20 if initial_is_mobile else 24,
+        weight=ft.FontWeight.BOLD,
+        color=COLOR_TEXT,
+    )
+    context_text = ft.Text(
+        context.context_label,
+        size=11 if initial_is_mobile else 13,
+        color=COLOR_MUTED,
+        max_lines=1,
+    )
     lesson_context_text: ft.Text | None = None
     status_text = ft.Text("Ready", size=13, color=COLOR_MUTED)
     cloud_status_text = ft.Text("Cloud: signed out", size=13, color=COLOR_MUTED)
@@ -1172,7 +1183,11 @@ def main(page: ft.Page) -> None:
         viewport_width = float(getattr(page, "width", 0) or 1180)
         is_mobile = viewport_width < 700.0
         shared_conversation_width = max(300.0, viewport_width - 24.0) if is_mobile else max(340.0, min(1320.0, viewport_width - 48.0))
-        transcript_height = max(220.0 if is_mobile else 260.0, viewport_height - (160.0 if is_mobile else 230.0))
+        mobile_reserved_height = 335.0
+        transcript_height = max(
+            150.0 if is_mobile else 260.0,
+            viewport_height - (mobile_reserved_height if is_mobile else 230.0),
+        )
         transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)
         transcript = ft.Column(
             height=transcript_height,
@@ -1578,8 +1593,11 @@ def main(page: ft.Page) -> None:
             )
             vw = float(getattr(page, "width", 0) or 1180)
             is_m = vw < 700.0
-            header_offset = 150.0 if is_m else 180.0
-            resized_height = max(220.0 if is_m else 260.0, current_page_height - (header_offset + composer_height))
+            header_offset = 335.0 if is_m else 180.0
+            resized_height = max(
+                150.0 if is_m else 260.0,
+                current_page_height - (header_offset + composer_height),
+            )
             transcript.height = resized_height
             transcript_surface.height = resized_height
 
@@ -1605,6 +1623,10 @@ def main(page: ft.Page) -> None:
                 pass
             shared_w = max(300.0, new_width - 24.0) if is_mobile_res else max(340.0, min(1320.0, new_width - 48.0))
             mode_dropdown.width = 110 if is_mobile_res else 140
+            title_text.size = 20 if is_mobile_res else 24
+            context_text.size = 11 if is_mobile_res else 13
+            if lesson_context_text is not None:
+                lesson_context_text.size = 11 if is_mobile_res else 13
             conversation_area.width = shared_w
             composer_container.width = shared_w
             update_compact_tutor_layout(page_height=new_height)
@@ -2261,24 +2283,61 @@ def main(page: ft.Page) -> None:
 
         lesson_context_text = ft.Text(
             context.context_label,
-            size=12 if is_mobile else 13,
+            size=11 if is_mobile else 13,
             color=COLOR_MUTED,
             max_lines=1,
             overflow=ft.TextOverflow.ELLIPSIS,
         )
-        context_banner = ft.Container(
-            content=ft.Row(
+        context_banner_content = (
+            ft.Column(
                 [
-                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=16 if is_mobile else 18),
+                    ft.Row(
+                        [
+                            ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=16),
+                            ft.Container(content=lesson_context_text, expand=True),
+                        ],
+                        spacing=6,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                    ),
+                    ft.Row(
+                        [
+                            mode_dropdown,
+                            ft.Container(expand=True),
+                            ft.IconButton(
+                                ft.Icons.EDIT_OUTLINED,
+                                tooltip="Change student profile",
+                                icon_size=16,
+                                on_click=open_profile_dialog,
+                            ),
+                        ],
+                        spacing=4,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                    ),
+                ],
+                spacing=2,
+                tight=True,
+            )
+            if is_mobile
+            else ft.Row(
+                [
+                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
                     ft.Container(
                         content=lesson_context_text,
                         expand=True,
                     ),
                     mode_dropdown,
-                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=16 if is_mobile else 18, on_click=open_profile_dialog),
+                    ft.IconButton(
+                        ft.Icons.EDIT_OUTLINED,
+                        tooltip="Change student profile",
+                        icon_size=18,
+                        on_click=open_profile_dialog,
+                    ),
                 ],
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
-            ),
+            )
+        )
+        context_banner = ft.Container(
+            content=context_banner_content,
             padding=ft.Padding(left=8 if is_mobile else 12, top=4 if is_mobile else 6, right=4 if is_mobile else 6, bottom=4 if is_mobile else 6),
             bgcolor=COLOR_BANNER,
             border=ft.Border.all(1, COLOR_BANNER_BORDER),
@@ -2307,7 +2366,7 @@ def main(page: ft.Page) -> None:
         page.on_resize = handle_tutor_resize
         refresh_attachment_preview()
 
-        return ft.SafeArea(
+        return ft.Container(
             expand=True,
             content=ft.Container(
                 expand=True,
@@ -2410,7 +2469,12 @@ def main(page: ft.Page) -> None:
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.Padding(left=6, top=6, right=10, bottom=6),
+        padding=ft.Padding(
+            left=4 if initial_is_mobile else 6,
+            top=4 if initial_is_mobile else 6,
+            right=6 if initial_is_mobile else 10,
+            bottom=4 if initial_is_mobile else 6,
+        ),
         bgcolor=COLOR_SURFACE,
         border=ft.Border(bottom=ft.BorderSide(1, COLOR_SOFT_BORDER)),
         shadow=ft.BoxShadow(
@@ -2421,7 +2485,12 @@ def main(page: ft.Page) -> None:
         ),
     )
 
-    page.add(ft.Column([topbar, body], expand=True, spacing=0))
+    page.add(
+        ft.SafeArea(
+            expand=True,
+            content=ft.Column([topbar, body], expand=True, spacing=0),
+        )
+    )
     show_view("tutor")
     saved_oauth_token = oauth_token_store.load() if google_provider is not None else ""
     if saved_oauth_token:
