@@ -1168,19 +1168,15 @@ def main(page: ft.Page) -> None:
 
     def build_tutor() -> ft.Control:
         nonlocal selected_attachments, latest_tutor_answer, lesson_context_text
-        # Stable desktop layout: use a fixed-height scrollable Column.
-        # The earlier ListView clipped dynamic-height chat bubbles at its
-        # viewport edge on Windows. A non-expanded Column avoids that render
-        # path, keeps full controls mounted, and uses native auto-scroll
-        # pinning that pauses when the student scrolls away from the end.
         viewport_height = float(getattr(page, "height", 0) or 760)
         viewport_width = float(getattr(page, "width", 0) or 1180)
-        shared_conversation_width = max(340.0, min(1320.0, viewport_width - 48.0))
-        transcript_height = max(260.0, viewport_height - 230.0)
-        transcript_bottom_spacer = ft.Container(height=24)
+        is_mobile = viewport_width < 700.0
+        shared_conversation_width = max(300.0, viewport_width - 24.0) if is_mobile else max(340.0, min(1320.0, viewport_width - 48.0))
+        transcript_height = max(220.0 if is_mobile else 260.0, viewport_height - (160.0 if is_mobile else 230.0))
+        transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)
         transcript = ft.Column(
             height=transcript_height,
-            spacing=12,
+            spacing=8 if is_mobile else 12,
             horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
             scroll=ft.ScrollMode.AUTO,
             auto_scroll=True,
@@ -1190,7 +1186,7 @@ def main(page: ft.Page) -> None:
         transcript_surface = ft.Container(
             content=transcript,
             height=transcript_height,
-            padding=ft.Padding(left=8, top=8, right=8, bottom=8),
+            padding=ft.Padding(left=4 if is_mobile else 8, top=4 if is_mobile else 8, right=4 if is_mobile else 8, bottom=4 if is_mobile else 8),
             bgcolor=COLOR_PANEL,
             clip_behavior=ft.ClipBehavior.HARD_EDGE,
         )
@@ -1205,14 +1201,14 @@ def main(page: ft.Page) -> None:
             filled=True,
             dense=True,
             content_padding=ft.Padding(left=0, top=4, right=0, bottom=4),
-            text_size=16,
+            text_size=15 if is_mobile else 16,
         )
         composer_slot = ft.Container(content=composer, expand=True)
         mode_dropdown = ft.Dropdown(
             value=context.learning_mode,
-            width=140,
+            width=110 if is_mobile else 140,
             dense=True,
-            text_size=13,
+            text_size=12 if is_mobile else 13,
             options=[
                 ft.dropdown.Option(LearningMode.EXPLAIN.value, "Explain"),
                 ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework Help"),
@@ -1508,37 +1504,39 @@ def main(page: ft.Page) -> None:
                 if saved_message is not None
                 else message_id or f"msg_{time.time_ns()}"
             )
+            viewport_w = float(getattr(page, "width", 0) or 1180)
+            is_mobile_screen = viewport_w < 700.0
+            shared_w = max(300.0, viewport_w - 24.0) if is_mobile_screen else max(340.0, min(1320.0, viewport_w - 48.0))
+            target_bubble_width = max(280.0, shared_w - 12.0) if is_mobile_screen else max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))
+            font_size = 15 if is_mobile_screen else 17
+
             message_controls: list[ft.Control] = [
                 ft.Text(
                     "You" if is_student else "GyanVerse Tutor",
-                    size=12,
+                    size=11 if is_mobile_screen else 12,
                     weight=ft.FontWeight.BOLD,
                     color=COLOR_PRIMARY if is_student else COLOR_SUCCESS,
                 ),
-                ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=17),
+                ft.Text(text, selectable=True, color=COLOR_ERROR if error else COLOR_TEXT, size=font_size),
             ]
             if not is_student and not error:
                 controls_row, _ = create_tutor_voice_controls(text, resolved_message_id)
                 message_controls.append(controls_row)
 
-            viewport_w = float(getattr(page, "width", 0) or 1180)
-            shared_w = max(340.0, min(1320.0, viewport_w - 48.0))
-            target_bubble_width = max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))
-
             bubble = ft.Container(
                 content=ft.Column(
                     message_controls,
-                    spacing=6,
+                    spacing=4 if is_mobile_screen else 6,
                 ),
                 bgcolor=COLOR_USER if is_student else COLOR_TUTOR,
                 border=ft.Border.all(1, COLOR_USER_BORDER if is_student else COLOR_TUTOR_BORDER),
                 border_radius=ft.BorderRadius.only(
-                    top_left=16,
-                    top_right=16,
-                    bottom_left=16 if is_student else 4,
-                    bottom_right=4 if is_student else 16,
+                    top_left=14 if is_mobile_screen else 16,
+                    top_right=14 if is_mobile_screen else 16,
+                    bottom_left=14 if (is_mobile_screen and is_student) else (16 if is_student else 4),
+                    bottom_right=4 if is_student else (14 if is_mobile_screen else 16),
                 ),
-                padding=ft.Padding(left=18, top=16, right=18, bottom=16),
+                padding=ft.Padding(left=12, top=10, right=12, bottom=10) if is_mobile_screen else ft.Padding(left=18, top=16, right=18, bottom=16),
                 width=target_bubble_width,
                 shadow=ft.BoxShadow(
                     blur_radius=10,
@@ -1559,8 +1557,9 @@ def main(page: ft.Page) -> None:
 
         def estimated_composer_lines() -> int:
             value = composer.value or ""
-            available_width = max(320.0, float(getattr(page, "width", 0) or 1200) - 290.0)
-            chars_per_line = max(32, int(available_width / 8.0))
+            vw = float(getattr(page, "width", 0) or 1200)
+            available_width = max(280.0, vw - 120.0) if vw < 700.0 else max(320.0, vw - 290.0)
+            chars_per_line = max(24 if vw < 700.0 else 32, int(available_width / 8.0))
             visual_lines = 0
             for segment in value.split("\n"):
                 visual_lines += max(1, (len(segment) + chars_per_line - 1) // chars_per_line)
@@ -1577,7 +1576,10 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "height", 0)
                 or 760
             )
-            resized_height = max(260.0, current_page_height - (180.0 + composer_height))
+            vw = float(getattr(page, "width", 0) or 1180)
+            is_m = vw < 700.0
+            header_offset = 150.0 if is_m else 180.0
+            resized_height = max(220.0 if is_m else 260.0, current_page_height - (header_offset + composer_height))
             transcript.height = resized_height
             transcript_surface.height = resized_height
 
@@ -1596,11 +1598,18 @@ def main(page: ft.Page) -> None:
                 or getattr(page, "width", 0)
                 or 1180
             )
-            shared_w = max(340.0, min(1320.0, new_width - 48.0))
+            is_mobile_res = new_width < 700.0
+            try:
+                status_column.visible = not is_mobile_res
+            except Exception:
+                pass
+            shared_w = max(300.0, new_width - 24.0) if is_mobile_res else max(340.0, min(1320.0, new_width - 48.0))
+            mode_dropdown.width = 110 if is_mobile_res else 140
             conversation_area.width = shared_w
             composer_container.width = shared_w
             update_compact_tutor_layout(page_height=new_height)
             try:
+                topbar.update()
                 conversation_area.update()
                 composer_container.update()
                 transcript_surface.update()
@@ -2202,12 +2211,19 @@ def main(page: ft.Page) -> None:
             active_test_suffix = " • Active test paper restored" if restored_active_test_paper else ""
             status_text.value = f"Restored {len(stored_messages)} local chat message(s){active_test_suffix}"
         else:
-            add_message(
-                "tutor",
-                (
+            is_mobile_welcome = viewport_width < 700.0
+            welcome_text = (
+                f"Namaste {context.name}! Profile: {context.board} • Std {context.standard}.\n"
+                "Ask a doubt or paste a homework question below."
+                if is_mobile_welcome
+                else (
                     f"Namaste {context.name}. Your current learning profile is {context.board} • {context.medium} • Standard {context.standard}. "
                     "Tell me what your class studied today, ask a doubt, or attach homework with +."
-                ),
+                )
+            )
+            add_message(
+                "tutor",
+                welcome_text,
                 persist=False,
             )
 
@@ -2245,24 +2261,25 @@ def main(page: ft.Page) -> None:
 
         lesson_context_text = ft.Text(
             context.context_label,
-            size=13,
+            size=12 if is_mobile else 13,
             color=COLOR_MUTED,
             max_lines=1,
+            overflow=ft.TextOverflow.ELLIPSIS,
         )
         context_banner = ft.Container(
             content=ft.Row(
                 [
-                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=18),
+                    ft.Icon(ft.Icons.AUTO_AWESOME, color=COLOR_ACCENT, size=16 if is_mobile else 18),
                     ft.Container(
                         content=lesson_context_text,
                         expand=True,
                     ),
                     mode_dropdown,
-                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=18, on_click=open_profile_dialog),
+                    ft.IconButton(ft.Icons.EDIT_OUTLINED, tooltip="Change student profile", icon_size=16 if is_mobile else 18, on_click=open_profile_dialog),
                 ],
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
-            padding=ft.Padding(left=12, top=6, right=6, bottom=6),
+            padding=ft.Padding(left=8 if is_mobile else 12, top=4 if is_mobile else 6, right=4 if is_mobile else 6, bottom=4 if is_mobile else 6),
             bgcolor=COLOR_BANNER,
             border=ft.Border.all(1, COLOR_BANNER_BORDER),
             border_radius=12,
@@ -2278,7 +2295,7 @@ def main(page: ft.Page) -> None:
             width=shared_conversation_width,
             content=ft.Column(
                 [context_banner, transcript_surface],
-                spacing=8,
+                spacing=6 if is_mobile else 8,
                 tight=True,
             ),
         )
@@ -2294,12 +2311,12 @@ def main(page: ft.Page) -> None:
             expand=True,
             content=ft.Container(
                 expand=True,
-                padding=ft.Padding(left=16, top=10, right=16, bottom=8),
+                padding=ft.Padding(left=6 if is_mobile else 16, top=6 if is_mobile else 10, right=6 if is_mobile else 16, bottom=6 if is_mobile else 8),
                 alignment=ft.alignment.Alignment(0, -1),
                 content=ft.Column(
                     [conversation_area, composer_container],
                     expand=True,
-                    spacing=8,
+                    spacing=6 if is_mobile else 8,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
@@ -2371,18 +2388,29 @@ def main(page: ft.Page) -> None:
         ],
     )
 
+    status_column = ft.Column(
+        [status_text, cloud_status_text],
+        spacing=0,
+        horizontal_alignment=ft.CrossAxisAlignment.END,
+        visible=not (float(getattr(page, "width", 0) or 1180) < 700.0),
+    )
+    context_text.max_lines = 1
+    context_text.overflow = ft.TextOverflow.ELLIPSIS
+    title_text.max_lines = 1
+    title_text.overflow = ft.TextOverflow.ELLIPSIS
+
     topbar = ft.Container(
         content=ft.Row(
             [
                 menu_button,
                 ft.Column([title_text, context_text], spacing=0, expand=True),
-                ft.Column([status_text, cloud_status_text], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.END),
+                status_column,
                 new_chat_button,
                 account_button,
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        padding=ft.Padding(left=8, top=8, right=14, bottom=8),
+        padding=ft.Padding(left=6, top=6, right=10, bottom=6),
         bgcolor=COLOR_SURFACE,
         border=ft.Border(bottom=ft.BorderSide(1, COLOR_SOFT_BORDER)),
         shadow=ft.BoxShadow(

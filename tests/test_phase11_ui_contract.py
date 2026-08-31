@@ -94,8 +94,8 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
         self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
-        self.assertIn("transcript_height = max(260.0, viewport_height - 230.0)", UI)
-        self.assertIn("transcript_bottom_spacer = ft.Container(height=24)", UI)
+        self.assertIn("transcript_height = max(220.0 if is_mobile else 260.0, viewport_height - (160.0 if is_mobile else 230.0))", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
         self.assertIn("transcript = ft.Column(", UI)
         self.assertIn("height=transcript_height", UI)
         self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.STRETCH", UI)
@@ -126,17 +126,17 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("shift_enter=True", composer_block)
         self.assertIn("dense=True", composer_block)
         self.assertIn("content_padding=ft.Padding(left=0, top=4, right=0, bottom=4)", composer_block)
-        self.assertIn("text_size=16", composer_block)
+        self.assertIn("text_size=15 if is_mobile else 16", composer_block)
         self.assertIn("composer_slot = ft.Container(content=composer, expand=True)", composer_block)
         self.assertIn("composer.on_change = handle_composer_change", UI)
         self.assertIn("composer.on_submit = queue_send", UI)
         self.assertIn("def estimated_composer_lines() -> int:", UI)
         self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
-        self.assertIn("current_page_height - (180.0 + composer_height)", UI)
+        self.assertIn("header_offset = 150.0 if is_m else 180.0", UI)
         mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
-        self.assertIn("width=140", mode_block)
-        self.assertIn("text_size=13", mode_block)
+        self.assertIn("width=110 if is_mobile else 140", mode_block)
+        self.assertIn("text_size=12 if is_mobile else 13", mode_block)
         shell_block = UI.split("composer_shell = ft.Container(", 1)[1].split("context_banner = ft.Container(", 1)[0]
         self.assertIn("height=52", shell_block)
         self.assertIn("padding=ft.Padding(left=6, top=2, right=4, bottom=2)", shell_block)
@@ -183,6 +183,10 @@ class Phase11UIContractTests(unittest.TestCase):
 
     def test_mobile_width_and_assets(self):
         self.assertIn("page.window.min_width = 360", UI)
+        self.assertIn("is_mobile = viewport_width < 700.0", UI)
+        self.assertIn("status_column = ft.Column(", UI)
+        self.assertIn("visible=not (float(getattr(page, \"width\", 0) or 1180) < 700.0)", UI)
+        self.assertIn("width=110 if is_mobile else 140", UI)
         expected = {
             "icon.png": (1024, 1024),
             "icon_android.png": (1024, 1024),
@@ -301,18 +305,17 @@ class Phase11UIContractTests(unittest.TestCase):
     def test_ui_readability_and_chatgpt_layout_contracts(self):
         self.assertIn('COLOR_TEXT = "#0F172A"', UI)
         self.assertIn('title_text = ft.Text("Tutor", size=24, weight=ft.FontWeight.BOLD', UI)
-        self.assertIn("size=17", UI)
+        self.assertIn("size=font_size", UI)
         self.assertNotIn("line_height", UI)
-        self.assertIn("text_size=16", UI)
-        self.assertIn("shared_conversation_width = max(340.0, min(1320.0, viewport_width - 48.0))", UI)
+        self.assertIn("text_size=15 if is_mobile else 16", UI)
+        self.assertIn("shared_conversation_width = max(300.0, viewport_width - 24.0) if is_mobile else max(340.0, min(1320.0, viewport_width - 48.0))", UI)
         self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.CENTER", UI)
         self.assertIn("alignment=ft.alignment.Alignment(0, -1)", UI)
         self.assertNotIn("top_center", UI)
-        self.assertIn("target_bubble_width = max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))", UI)
-        self.assertIn("tutor_bubble_width = max(320.0, min(1040.0, shared_w - 40.0))", UI)
+        self.assertIn("target_bubble_width = max(280.0, shared_w - 12.0) if is_mobile_screen else max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))", UI)
         self.assertIn("ft.Icons.COPY", UI)
         self.assertIn("page.set_clipboard(", UI)
-        self.assertIn("transcript_bottom_spacer = ft.Container(height=24)", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
         self.assertIn("height=560", UI)
 
