@@ -92,31 +92,22 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("select Mathematics", resp)
 
 
-    def test_tutor_transcript_uses_fixed_height_non_lazy_column(self):
-        self.assertIn("viewport_height = float(getattr(page, \"height\", 0) or 760)", UI)
-        self.assertIn("mobile_reserved_height = 335.0", UI)
-        self.assertIn("viewport_height - (mobile_reserved_height if is_mobile else 230.0)", UI)
-        self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
-        self.assertIn("transcript = ft.Column(", UI)
-        self.assertIn("height=transcript_height", UI)
-        self.assertIn("horizontal_alignment=ft.CrossAxisAlignment.STRETCH", UI)
-        self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
-        self.assertIn("auto_scroll=True", UI)
-        self.assertIn("auto_scroll_animation=0", UI)
-        self.assertIn("controls=[transcript_bottom_spacer]", UI)
-        self.assertIn("transcript_surface = ft.Container(", UI)
-        self.assertIn("content=transcript", UI)
-        self.assertIn("[context_banner, transcript_surface]", UI)
-        self.assertIn("page.on_resize = handle_tutor_resize", UI)
-        self.assertIn("transcript_surface.height = resized_height", UI)
-        self.assertIn("transcript_surface.update()", UI)
+    def test_tutor_transcript_uses_ime_safe_flex_column(self):
+        self.assertNotIn("mobile_reserved_height = 335.0", UI)
+        self.assertNotIn("header_offset = 335.0 if is_m else 180.0", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=20 if is_mobile else 24)", UI)
+        transcript_block = UI.split("transcript = ft.Column(", 1)[1].split("transcript_surface = ft.Container(", 1)[0]
+        self.assertIn("expand=True", transcript_block)
+        self.assertIn("scroll=ft.ScrollMode.AUTO", transcript_block)
+        self.assertIn("auto_scroll=True", transcript_block)
+        self.assertIn("controls=[transcript_bottom_spacer]", transcript_block)
+        surface_block = UI.split("transcript_surface = ft.Container(", 1)[1].split("composer = ft.TextField(", 1)[0]
+        self.assertIn("content=transcript", surface_block)
+        self.assertIn("expand=True", surface_block)
+        self.assertNotIn("height=transcript_height", surface_block)
+        self.assertNotIn("clip_behavior=ft.ClipBehavior.HARD_EDGE", surface_block)
         self.assertIn("transcript.controls.insert(", UI)
         self.assertNotIn("transcript = ft.ListView(", UI)
-        self.assertNotIn("build_controls_on_demand", UI)
-        self.assertNotIn("cache_extent", UI)
-        self.assertNotIn("await transcript.scroll_to(", UI)
-        transcript_block = UI.split("transcript = ft.Column(", 1)[1].split("composer = ft.TextField(", 1)[0]
-        self.assertNotIn("expand=True", transcript_block)
 
 
     def test_tutor_layout_uses_auto_growing_ultra_compact_composer(self):
@@ -134,7 +125,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("def estimated_composer_lines() -> int:", UI)
         self.assertIn("composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra", UI)
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
-        self.assertIn("header_offset = 335.0 if is_m else 180.0", UI)
+        self.assertNotIn("header_offset = 335.0 if is_m else 180.0", UI)
         mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
         self.assertIn("width=110 if is_mobile else 140", mode_block)
         self.assertIn("text_size=12 if is_mobile else 13", mode_block)
@@ -153,7 +144,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("                            mode_dropdown,", banner_content_block)
         self.assertIn("                        expand=True,", banner_content_block)
         self.assertIn("content=context_banner_content", banner_block)
-        self.assertIn("alignment=ft.MainAxisAlignment.SPACE_BETWEEN", UI)
+        self.assertIn("alignment=ft.MainAxisAlignment.START", UI)
         self.assertIn("conversation_area = ft.Container(", UI)
         self.assertNotIn("                        transcript,\n                        composer_shell,", UI)
 
@@ -320,7 +311,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("target_bubble_width = max(280.0, shared_w - 12.0) if is_mobile_screen else max(320.0, min(860.0 if is_student else 1040.0, shared_w - 40.0))", UI)
         self.assertIn("ft.Icons.COPY", UI)
         self.assertIn("page.set_clipboard(", UI)
-        self.assertIn("transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)", UI)
+        self.assertIn("transcript_bottom_spacer = ft.Container(height=20 if is_mobile else 24)", UI)
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
         self.assertIn("height=560", UI)
 
@@ -330,7 +321,7 @@ class Phase11UIContractTests(unittest.TestCase):
         build_tutor_return = UI.split("page.on_resize = handle_tutor_resize", 1)[1].split("builders = {", 1)[0]
         self.assertIn("return ft.Container(", build_tutor_return)
         self.assertNotIn("return ft.SafeArea(", build_tutor_return)
-        self.assertIn("header_offset = 335.0 if is_m else 180.0", UI)
+        self.assertNotIn("header_offset = 335.0 if is_m else 180.0", UI)
         self.assertIn("title_text.size = 20 if is_mobile_res else 24", UI)
         self.assertIn("context_text.size = 11 if is_mobile_res else 13", UI)
 

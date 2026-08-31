@@ -1179,18 +1179,12 @@ def main(page: ft.Page) -> None:
 
     def build_tutor() -> ft.Control:
         nonlocal selected_attachments, latest_tutor_answer, lesson_context_text
-        viewport_height = float(getattr(page, "height", 0) or 760)
         viewport_width = float(getattr(page, "width", 0) or 1180)
         is_mobile = viewport_width < 700.0
         shared_conversation_width = max(300.0, viewport_width - 24.0) if is_mobile else max(340.0, min(1320.0, viewport_width - 48.0))
-        mobile_reserved_height = 335.0
-        transcript_height = max(
-            150.0 if is_mobile else 260.0,
-            viewport_height - (mobile_reserved_height if is_mobile else 230.0),
-        )
-        transcript_bottom_spacer = ft.Container(height=16 if is_mobile else 24)
+        transcript_bottom_spacer = ft.Container(height=20 if is_mobile else 24)
         transcript = ft.Column(
-            height=transcript_height,
+            expand=True,
             spacing=8 if is_mobile else 12,
             horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
             scroll=ft.ScrollMode.AUTO,
@@ -1200,10 +1194,9 @@ def main(page: ft.Page) -> None:
         )
         transcript_surface = ft.Container(
             content=transcript,
-            height=transcript_height,
+            expand=True,
             padding=ft.Padding(left=4 if is_mobile else 8, top=4 if is_mobile else 8, right=4 if is_mobile else 8, bottom=4 if is_mobile else 8),
             bgcolor=COLOR_PANEL,
-            clip_behavior=ft.ClipBehavior.HARD_EDGE,
         )
         composer = ft.TextField(
             hint_text="Ask your doubt or describe today's chapter...",
@@ -1586,20 +1579,6 @@ def main(page: ft.Page) -> None:
             composer_height = 52.0 + ((line_count - 1) * 18.0) + attachment_extra
             composer_shell.height = composer_height
 
-            current_page_height = float(
-                page_height
-                or getattr(page, "height", 0)
-                or 760
-            )
-            vw = float(getattr(page, "width", 0) or 1180)
-            is_m = vw < 700.0
-            header_offset = 335.0 if is_m else 180.0
-            resized_height = max(
-                150.0 if is_m else 260.0,
-                current_page_height - (header_offset + composer_height),
-            )
-            transcript.height = resized_height
-            transcript_surface.height = resized_height
 
         def handle_composer_change(_: object = None) -> None:
             update_compact_tutor_layout()
@@ -1629,12 +1608,11 @@ def main(page: ft.Page) -> None:
                 lesson_context_text.size = 11 if is_mobile_res else 13
             conversation_area.width = shared_w
             composer_container.width = shared_w
-            update_compact_tutor_layout(page_height=new_height)
+            update_compact_tutor_layout()
             try:
                 topbar.update()
                 conversation_area.update()
                 composer_container.update()
-                transcript_surface.update()
                 composer_shell.update()
             except Exception:
                 pass
@@ -2352,10 +2330,11 @@ def main(page: ft.Page) -> None:
 
         conversation_area = ft.Container(
             width=shared_conversation_width,
+            expand=True,
             content=ft.Column(
                 [context_banner, transcript_surface],
+                expand=True,
                 spacing=6 if is_mobile else 8,
-                tight=True,
             ),
         )
         composer_container = ft.Container(
@@ -2377,7 +2356,7 @@ def main(page: ft.Page) -> None:
                     expand=True,
                     spacing=6 if is_mobile else 8,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                    alignment=ft.MainAxisAlignment.START,
                 ),
             ),
         )
