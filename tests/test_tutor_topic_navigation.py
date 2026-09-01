@@ -56,6 +56,19 @@ class TutorTopicNavigationRegressionTests(unittest.TestCase):
         self.assertIn("Jahnavi's conflict and decision", answer)
         self.assertNotIn("Mathematics", answer)
 
+    def test_ui_does_not_detect_context_after_relative_topic_navigation(self) -> None:
+        ui_source = (Path(__file__).resolve().parents[1] / "gyanverse_ui.py").read_text(
+            encoding="utf-8"
+        )
+        expected = """                navigated_context = resolve_relative_topic_navigation(text)
+                if navigated_context is not None:
+                    update_context(navigated_context)
+                else:
+                    detected_context, detected = detect_context_from_message(
+"""
+        self.assertIn(expected, ui_source)
+
+
     def test_ui_updates_context_before_tutor_answer(self) -> None:
         ui_source = (Path(__file__).resolve().parents[1] / "gyanverse_ui.py").read_text(
             encoding="utf-8"

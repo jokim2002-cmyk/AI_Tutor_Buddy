@@ -1902,14 +1902,14 @@ def main(page: ft.Page) -> None:
                 navigated_context = resolve_relative_topic_navigation(text)
                 if navigated_context is not None:
                     update_context(navigated_context)
-
-                detected_context, detected = detect_context_from_message(
-                    text,
-                    context,
-                    syllabus_repository=syllabus_repo,
-                )
-                if detected:
-                    update_context(detected_context)
+                else:
+                    detected_context, detected = detect_context_from_message(
+                        text,
+                        context,
+                        syllabus_repository=syllabus_repo,
+                    )
+                    if detected:
+                        update_context(detected_context)
                 if not is_retry:
                     add_message("student", text or "Please review my attached homework.")
 
