@@ -98,18 +98,38 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
             onboarding_complete=True,
         ).validate()
 
-    def test_exact_installed_topic_bypasses_provider(self) -> None:
+    def test_exact_installed_topic_grounds_provider_when_configured(self) -> None:
         self.repo.install_payload(syllabus_payload())
         service = self.service()
-        answer = service.ask(message="Explain addition", context=self.context())
-        self.assertIn("Teacher-authored integer addition explanation", answer)
-        self.assertIn("Teacher-authored content", answer)
-        self.assertEqual(service.last_backend, "local syllabus")
-        self.assertEqual(service.last_metrics.route, "local-syllabus")
-        self.assertFalse(service.last_metrics.fallback_used)
-        service._client.models.generate_content.assert_not_called()
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Grounded provider answer."
+        )
 
-    def test_board_and_medium_are_isolated(self) -> None:
+        answer = service.ask(
+            message="Explain addition",
+            context=self.context(),
+        )
+
+        self.assertEqual(answer, "Grounded provider answer.")
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+        prompt_arg = (
+            service._client.models.generate_content
+            .call_args[1]["contents"][0]
+        )
+        self.assertIn("Board: GSEB", prompt_arg)
+        self.assertIn("Medium: Gujarati", prompt_arg)
+        self.assertIn("Standard: 7", prompt_arg)
+        self.assertIn("Subject: Mathematics", prompt_arg)
+        self.assertIn("Chapter: 1. Integers", prompt_arg)
+        self.assertIn("Topic: Addition", prompt_arg)
+        self.assertIn(
+            "Teacher-authored integer addition explanation",
+            prompt_arg,
+        )
+
+    def test_board_and_medium_grounding_is_isolated(self) -> None:
         self.repo.install_payload(
             syllabus_payload(
                 board="GSEB",
@@ -124,38 +144,92 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
                 explanation="CBSE English explanation.",
             )
         )
+
         service = self.service()
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Grounded CBSE provider answer."
+        )
+
         answer = service.ask(
             message="Explain addition",
             context=self.context(board="CBSE", medium="English"),
         )
-        self.assertIn("CBSE English explanation", answer)
-        self.assertNotIn("GSEB Gujarati explanation", answer)
 
-    def test_standard_is_isolated(self) -> None:
+        self.assertEqual(answer, "Grounded CBSE provider answer.")
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+        prompt_arg = (
+            service._client.models.generate_content
+            .call_args[1]["contents"][0]
+        )
+        self.assertIn("Board: CBSE", prompt_arg)
+        self.assertIn("Medium: English", prompt_arg)
+        self.assertIn("CBSE English explanation.", prompt_arg)
+        self.assertNotIn("GSEB Gujarati explanation.", prompt_arg)
+
+    def test_standard_grounding_is_isolated(self) -> None:
         self.repo.install_payload(
-            syllabus_payload(standard=7, explanation="Standard seven explanation.")
+            syllabus_payload(
+                standard=7,
+                explanation="Standard seven explanation.",
+            )
         )
         self.repo.install_payload(
-            syllabus_payload(standard=8, explanation="Standard eight explanation.")
+            syllabus_payload(
+                standard=8,
+                explanation="Standard eight explanation.",
+            )
         )
+
         service = self.service()
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Grounded Standard 8 provider answer."
+        )
+
         answer = service.ask(
             message="Explain addition",
             context=self.context(standard=8),
         )
-        self.assertIn("Standard eight explanation", answer)
-        self.assertNotIn("Standard seven explanation", answer)
 
-    def test_context_topic_supports_exact_follow_up(self) -> None:
+        self.assertEqual(answer, "Grounded Standard 8 provider answer.")
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+        prompt_arg = (
+            service._client.models.generate_content
+            .call_args[1]["contents"][0]
+        )
+        self.assertIn("Standard: 8", prompt_arg)
+        self.assertIn("Standard eight explanation.", prompt_arg)
+        self.assertNotIn("Standard seven explanation.", prompt_arg)
+
+    def test_context_topic_exact_follow_up_grounds_provider(self) -> None:
         self.repo.install_payload(syllabus_payload())
+
         service = self.service()
+        service._client.models.generate_content.return_value = MagicMock(
+            text="Grounded follow-up provider answer."
+        )
+
         answer = service.ask(
             message="Explain this again",
             context=self.context(topic="Addition"),
         )
-        self.assertIn("Teacher-authored integer addition explanation", answer)
-        self.assertEqual(service.last_metrics.route, "local-syllabus")
+
+        self.assertEqual(answer, "Grounded follow-up provider answer.")
+        self.assertEqual(service.last_metrics.route, "gemini-text")
+        service._client.models.generate_content.assert_called_once()
+
+        prompt_arg = (
+            service._client.models.generate_content
+            .call_args[1]["contents"][0]
+        )
+        self.assertIn("Topic: Addition", prompt_arg)
+        self.assertIn(
+            "Teacher-authored integer addition explanation",
+            prompt_arg,
+        )
 
     def test_context_topic_supports_generic_hint_follow_up(self) -> None:
         payload = syllabus_payload(
@@ -284,22 +358,46 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         )
         self.assertIn("using the local tutor", answer.lower())
 
-    def test_streaming_local_route_emits_one_visible_chunk(self) -> None:
+    def test_streaming_grounded_provider_route_emits_visible_chunk(self) -> None:
         self.repo.install_payload(syllabus_payload())
         service = self.service()
+
+        service._client.models.generate_content_stream.return_value = [
+            MagicMock(text="Grounded streamed provider answer.")
+        ]
+
         chunks: list[tuple[str, str]] = []
         first_visible: list[float] = []
+
         answer = service.ask_stream(
             message="Explain addition",
             context=self.context(),
-            on_chunk=lambda accumulated, chunk: chunks.append((accumulated, chunk)),
+            on_chunk=lambda accumulated, chunk: chunks.append(
+                (accumulated, chunk)
+            ),
             on_first_visible=first_visible.append,
         )
+
+        self.assertEqual(answer, "Grounded streamed provider answer.")
         self.assertEqual(len(chunks), 1)
         self.assertEqual(chunks[0], (answer, answer))
         self.assertEqual(len(first_visible), 1)
-        self.assertEqual(service.last_metrics.route, "local-syllabus")
-        service._client.models.generate_content_stream.assert_not_called()
+        self.assertEqual(service.last_metrics.route, "gemini-single-chunk")
+        service._client.models.generate_content_stream.assert_called_once()
+
+        prompt_arg = (
+            service._client.models.generate_content_stream
+            .call_args[1]["contents"][0]
+        )
+        self.assertIn("Board: GSEB", prompt_arg)
+        self.assertIn("Medium: Gujarati", prompt_arg)
+        self.assertIn("Standard: 7", prompt_arg)
+        self.assertIn("Subject: Mathematics", prompt_arg)
+        self.assertIn("Topic: Addition", prompt_arg)
+        self.assertIn(
+            "Teacher-authored integer addition explanation",
+            prompt_arg,
+        )
 
     def test_online_exact_yes_no_review_stays_deterministic_local(self) -> None:
         payload = syllabus_payload(
@@ -480,6 +578,7 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
         project_root = Path(__file__).resolve().parents[1]
         syllabus_dir = project_root / "syllabus"
         repo = SyllabusRepository(syllabus_dir)
+
         service = GyanVerseAIService(
             api_key="mock-key",
             syllabus_repository=repo,
@@ -492,25 +591,21 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
                 "Mathematics",
                 "Chapter 1 - Rational Numbers",
                 "Rational Numbers",
-                "Mathematics",
             ),
             (
                 "English",
                 "Semester 1 Unit 1 - Landscapes",
                 "Landscapes",
-                "English",
             ),
             (
                 "Science & Technology",
                 "Chapter 1 - Crop Production and Management",
                 "Crop Production and Management",
-                "Science",
             ),
             (
                 "Social Science",
                 "Chapter 1 - Establishment of European and British Rule in India",
                 "Establishment of European and British Rule",
-                "Social Science",
             ),
         ]
 
@@ -520,7 +615,14 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
             new_callable=PropertyMock,
             return_value=True,
         ):
-            for subject, chapter, expected_title_keyword, expected_source_keyword in test_cases:
+            for subject, chapter, expected_title_keyword in test_cases:
+                service._client.models.generate_content_stream.reset_mock()
+                service._client.models.generate_content_stream.return_value = [
+                    MagicMock(
+                        text=f"Grounded provider response for {subject}."
+                    )
+                ]
+
                 ctx = StudentLearningContext(
                     board="GSEB",
                     medium="English",
@@ -531,55 +633,47 @@ class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
                     onboarding_complete=True,
                 ).validate()
 
-                prompt = "Explain Chapter 1 with two examples."
-                response = service.ask_stream(message=prompt, context=ctx)
+                response = service.ask_stream(
+                    message="Explain Chapter 1 with two examples.",
+                    context=ctx,
+                )
 
-                self.assertIn(
-                    expected_title_keyword,
+                self.assertEqual(
                     response,
-                    f"Local response for {subject} must contain topic/chapter keyword '{expected_title_keyword}'",
+                    f"Grounded provider response for {subject}.",
                 )
-                self.assertIn(
-                    "Examples:",
-                    response,
-                    f"Response for {subject} must contain 'Examples:' section",
-                )
-                self.assertIn(
-                    "1.",
-                    response,
-                    f"Response for {subject} must contain first example '1.'",
-                )
-                self.assertIn(
-                    "2.",
-                    response,
-                    f"Response for {subject} must contain second example '2.'",
-                )
-                self.assertIn(
-                    "Source type:",
-                    response,
-                    f"Response for {subject} must contain source footer",
-                )
-                self.assertIn(
-                    expected_source_keyword,
-                    response,
-                    f"Source footer for {subject} must contain '{expected_source_keyword}'",
-                )
-                self.assertNotIn(
-                    "किस विषय",
-                    response,
-                    f"Response for {subject} must not contain Hindi subject clarification",
-                )
-                self.assertNotIn(
-                    "which subject",
-                    response.lower(),
-                    f"Response for {subject} must not ask which subject",
-                )
-                self.assertIn(
+                self.assertEqual(
                     service.last_metrics.route,
-                    {"local-syllabus", "local-syllabus-missing-content"},
+                    "gemini-single-chunk",
                 )
-                service._client.models.generate_content_stream.assert_not_called()
+                service._client.models.generate_content_stream.assert_called_once()
 
+                prompt_arg = (
+                    service._client.models.generate_content_stream
+                    .call_args[1]["contents"][0]
+                )
+
+                self.assertIn("Board: GSEB", prompt_arg)
+                self.assertIn("Medium: English", prompt_arg)
+                self.assertIn("Standard: 8", prompt_arg)
+                self.assertIn(f"Subject: {subject}", prompt_arg)
+                self.assertIn(expected_title_keyword, prompt_arg)
+                self.assertIn(
+                    "PRIVATE SYLLABUS GROUNDING",
+                    prompt_arg,
+                )
+                self.assertIn(
+                    "Full Chapter Grounding Context:",
+                    prompt_arg,
+                )
+                self.assertIn(
+                    "CURRENT REQUEST:",
+                    prompt_arg,
+                )
+                self.assertIn(
+                    "Explain Chapter 1 with two examples.",
+                    prompt_arg,
+                )
 
 
 

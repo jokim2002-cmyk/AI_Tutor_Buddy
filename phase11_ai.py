@@ -958,7 +958,7 @@ class GyanVerseAIService:
             message=message,
             teaching_guidance=guidance,
         )
-        if allow_provider_review:
+        if allow_provider_review and match.has_validated_content:
             # Exact stored yes/no and short-numeric reviews can be decided by the
             # validated local renderer. Keep those deterministic even while the
             # provider is online so the verdict, installed reasoning and source
@@ -1438,6 +1438,7 @@ class GyanVerseAIService:
                     self.last_metrics = dataclasses.replace(self.last_metrics, fallback_used=True)
                 return local_fallback
 
+            if chunks:
                 partial_text = "".join(chunks).strip()
                 interrupted_notice = f"{partial_text}\n\n[Response interrupted due to network issue. Please ask again.]"
                 self.last_backend = "Gemini (interrupted)"

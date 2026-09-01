@@ -977,18 +977,192 @@ class SyllabusRepository:
         if context_candidates:
             return max(context_candidates, key=lambda item: item[0])[1]
 
-        # Profile context can still support an in-scope chapter request even when
-        # no specific sub-topic title matched, using the selected chapter.
+        # Selected chapter context is authoritative for natural in-chapter
+        # tutoring requests, but it must not swallow genuinely unrelated
+        # concepts. Match meaningful query words only against the selected
+        # chapter and its validated topic content.
+        fallback_tokens = re.findall(r"[a-zA-Z]+", message_text.casefold())
+        fallback_stop_words = {
+            "a", "about", "again", "an", "and", "another", "are",
+            "chapter", "continue", "current", "did", "do", "does",
+            "easy", "example", "examples", "explain", "first", "for",
+            "full", "give", "how", "in", "is", "it", "language",
+            "lesson", "me", "more", "next", "of", "one", "please",
+            "repeat", "second", "simple", "start", "step", "summary",
+            "teach", "tell", "the", "this", "topic", "two", "what",
+            "when", "where", "which", "who", "why", "with",
+            # Common Hinglish tutoring/navigation words.
+            "aage", "batao", "bataao", "hai", "ka", "karo", "ke",
+            "ki", "ko", "muje", "mujhe", "padhao", "padhaao",
+            "samjao", "samjhao",
+        }
+        substantive_fallback_tokens = [
+            token
+            for token in fallback_tokens
+            if len(token) >= 3 and token not in fallback_stop_words
+        ]
+
+        def fallback_words(value: str) -> set[str]:
+            normalized = _normalize_syllabus_lookup_text(value)
+            return {
+                token
+                for token in re.findall(r"[a-zA-Z]+", normalized.casefold())
+                if len(token) >= 3 and token not in fallback_stop_words
+            }
+
+        def fallback_token_match(query_token: str, evidence_token: str) -> bool:
+            if query_token == evidence_token:
+                return True
+
+            # Small morphology tolerance for natural questions:
+            # fail/failed/failure, property/properties, rule/ruled, etc.
+            if len(query_token) >= 4 and len(evidence_token) >= 4:
+                common = 0
+                for left, right in zip(query_token, evidence_token):
+                    if left != right:
+                        break
+                    common += 1
+                if common >= 4:
+                    return True
+
+            return False
+
+        query_tokens = set(substantive_fallback_tokens)
+
         for chapter in syllabus.chapters:
             chapter_context_match, _ = chapter_signals.get(
                 chapter.chapter_id, (False, False)
             )
-            if chapter_context_match and chapter.topics:
+            if not chapter_context_match or not chapter.topics:
+                continue
+
+            # Generic commands such as "next", "continue", "teach this
+            # chapter", etc. intentionally stay in the selected chapter.
+            if not query_tokens:
                 return SyllabusTopicMatch(
                     syllabus=syllabus,
                     chapter=chapter,
                     topic=chapter.topics[0],
                     matched_by="context-chapter-fallback",
+                )
+
+            chapter_text_parts = [
+                chapter.title,
+                *getattr(chapter, "aliases", ()),
+            ]
+            chapter_words: set[str] = set()
+            for part in chapter_text_parts:
+                chapter_words.update(fallback_words(str(part or "")))
+
+            chapter_matched_queries = {
+                query
+                for query in query_tokens
+                if any(
+                    fallback_token_match(query, evidence)
+                    for evidence in chapter_words
+                )
+            }
+
+            best_topic = None
+            best_topic_score = (-1, -1, -1, -1)
+            best_matched_queries: set[str] = set()
+
+            for topic_index, topic in enumerate(chapter.topics):
+                title_alias_words: set[str] = set()
+                for part in (
+                    topic.title,
+                    *getattr(topic, "aliases", ()),
+                ):
+                    title_alias_words.update(
+                        fallback_words(str(part or ""))
+                    )
+
+                teaching_words: set[str] = set(title_alias_words)
+
+                rich_parts = [
+                    *getattr(topic, "learning_objectives", ()),
+                    getattr(topic, "explanation", ""),
+                    *getattr(topic, "examples", ()),
+                    *getattr(topic, "exercises", ()),
+                    *getattr(topic, "solutions", ()),
+                    *getattr(topic, "practice_questions", ()),
+                    *getattr(topic, "practice_solutions", ()),
+                ]
+                for part in rich_parts:
+                    teaching_words.update(
+                        fallback_words(str(part or ""))
+                    )
+
+                title_matches = {
+                    query
+                    for query in query_tokens
+                    if any(
+                        fallback_token_match(query, evidence)
+                        for evidence in title_alias_words
+                    )
+                }
+                teaching_matches = {
+                    query
+                    for query in query_tokens
+                    if any(
+                        fallback_token_match(query, evidence)
+                        for evidence in teaching_words
+                    )
+                }
+
+                combined_matches = (
+                    chapter_matched_queries | teaching_matches
+                )
+
+                score = (
+                    len(combined_matches),
+                    len(title_matches),
+                    len(teaching_matches),
+                    -topic_index,
+                )
+
+                if score > best_topic_score:
+                    best_topic_score = score
+                    best_topic = topic
+                    best_matched_queries = combined_matches
+
+            # One distinctive term is enough when it directly names a
+            # chapter/topic concept. Otherwise require two pieces of evidence.
+            title_or_chapter_direct = False
+            if best_topic is not None:
+                direct_words: set[str] = set(chapter_words)
+                for part in (
+                    best_topic.title,
+                    *getattr(best_topic, "aliases", ()),
+                ):
+                    direct_words.update(
+                        fallback_words(str(part or ""))
+                    )
+
+                title_or_chapter_direct = any(
+                    any(
+                        fallback_token_match(query, evidence)
+                        for evidence in direct_words
+                    )
+                    for query in query_tokens
+                )
+
+            relevant = False
+            if len(best_matched_queries) >= 2:
+                relevant = True
+            elif len(best_matched_queries) == 1:
+                only_match = next(iter(best_matched_queries))
+                relevant = (
+                    title_or_chapter_direct
+                    or len(only_match) >= 6
+                )
+
+            if relevant and best_topic is not None:
+                return SyllabusTopicMatch(
+                    syllabus=syllabus,
+                    chapter=chapter,
+                    topic=best_topic,
+                    matched_by="context-chapter-relevance",
                 )
 
         return None
@@ -1061,7 +1235,7 @@ class SyllabusRepository:
                 re.IGNORECASE,
             )
         )
-        if req.intent == "test" or is_test_eval:
+        if req.intent == "test":
             return None
 
         # ------------------------------------------------------------
@@ -1143,6 +1317,12 @@ class SyllabusRepository:
 
             return None
 
+        # Answer-review messages remain anchored to the selected lesson only
+        # after strong curriculum concepts have had a chance to enforce the
+        # correct subject/chapter scope.
+        if is_test_eval:
+            return None
+
         # ------------------------------------------------------------
         # 3. Explicit subject names.
         #
@@ -1177,8 +1357,68 @@ class SyllabusRepository:
             )
 
             if not same_subject:
+                requested_subject_chapter = None
+
+                forward_subject_chapter = re.search(
+                    r"\b(?:chapter|chap|ch|paath|lesson|unit)\s*(\d{1,2})\b",
+                    msg_norm,
+                )
+                if forward_subject_chapter:
+                    requested_subject_chapter = int(
+                        forward_subject_chapter.group(1)
+                    )
+
+                if requested_subject_chapter is None:
+                    reversed_subject_chapter = re.search(
+                        r"\b(\d{1,2})(?:st|nd|rd|th)\s+"
+                        r"(?:chapter|chap|paath|lesson|unit)\b",
+                        msg_norm,
+                    )
+                    if reversed_subject_chapter:
+                        requested_subject_chapter = int(
+                            reversed_subject_chapter.group(1)
+                        )
+
+                if requested_subject_chapter is None:
+                    subject_ordinal_words = {
+                        "first": 1,
+                        "second": 2,
+                        "third": 3,
+                        "fourth": 4,
+                        "fifth": 5,
+                        "sixth": 6,
+                        "seventh": 7,
+                        "eighth": 8,
+                        "ninth": 9,
+                        "tenth": 10,
+                        "eleventh": 11,
+                        "twelfth": 12,
+                        "thirteenth": 13,
+                        "fourteenth": 14,
+                        "fifteenth": 15,
+                        "sixteenth": 16,
+                        "seventeenth": 17,
+                        "eighteenth": 18,
+                        "nineteenth": 19,
+                        "twentieth": 20,
+                    }
+                    ordinal_subject_chapter = re.search(
+                        r"\b("
+                        + "|".join(subject_ordinal_words)
+                        + r")\s+(?:chapter|chap|paath|lesson|unit)\b",
+                        msg_norm,
+                    )
+                    if ordinal_subject_chapter:
+                        requested_subject_chapter = subject_ordinal_words[
+                            ordinal_subject_chapter.group(1)
+                        ]
+
+                target = canonical_subject
+                if requested_subject_chapter is not None:
+                    target += f" Chapter {requested_subject_chapter}"
+
                 return (
-                    f"Please select {canonical_subject} from the top selector "
+                    f"Please select {target} from the top selector "
                     "first, then ask again."
                 )
 
@@ -5621,9 +5861,14 @@ def _is_valid_question_for_subject(q_txt: str, sol_txt: str, subject: str) -> bo
     if not q_txt or not sol_txt:
         return False
     combined = (q_txt + " " + sol_txt).lower()
-    sub_lower = subject.lower()
+    sub_lower = subject.casefold().strip()
+    is_science_subject = sub_lower in {
+        "science",
+        "science & technology",
+        "science and technology",
+    }
 
-    if "science" in sub_lower:
+    if is_science_subject:
         forbidden_terms = (
             "physiographic",
             "constitutional role",
@@ -6148,18 +6393,256 @@ def render_test_paper(
                         replacement = build_contextual_section_d_fallback_question(topic_title, sol_text)
                     q_text, sol_text = replacement
 
-            if not _is_valid_question_for_subject(q_text, sol_text, syllabus.subject):
-                if "science" in syllabus.subject.lower():
-                    q_text = f"Describe in detail the process, scientific principles, observations, and practical applications of {topic_title}."
-                    sol_text = f"Explain the core scientific principles of {topic_title}, give one clear observation or daily-life application, and conclude with key scientific conclusions."
-                elif "math" in syllabus.subject.lower():
-                    q_text = f"Explain the mathematical principles, steps, and working method for {topic_title}."
-                    sol_text = f"State the formula or rule for {topic_title}, show step-by-step working, and provide the final calculated answer."
-                elif "english" in syllabus.subject.lower():
-                    q_text = f"Explain {topic_title} using clear textual examples and key concepts."
-                    sol_text = f"Provide definitions, textual examples, and explain the key literary or language concepts of {topic_title}."
+            if not _is_valid_question_for_subject(
+                q_text,
+                sol_text,
+                syllabus.subject,
+            ):
+                subject_key = syllabus.subject.casefold().strip()
 
-            mark_question_used(topic_title, q_text, used_q_texts, used_intents)
+                is_science_subject = subject_key in {
+                    "science",
+                    "science & technology",
+                    "science and technology",
+                }
+                is_math_subject = subject_key in {
+                    "math",
+                    "maths",
+                    "mathematics",
+                }
+                is_english_subject = subject_key == "english"
+
+                if is_science_subject:
+                    if mark_per_q == 6:
+                        q_text = (
+                            "Describe in detail the scientific principles, "
+                            f"observations, and practical applications of {topic_title}."
+                        )
+                        sol_text = (
+                            f"Explain the core scientific principles of {topic_title}, "
+                            "give clear observations or applications, and conclude "
+                            "with the main scientific findings."
+                        )
+                    elif mark_per_q == 3:
+                        q_text = (
+                            f"Explain {topic_title} using one scientific observation "
+                            "and one practical example."
+                        )
+                    elif mark_per_q == 2:
+                        q_text = (
+                            f"Explain one important scientific property of "
+                            f"{topic_title} with one observation."
+                        )
+                    else:
+                        q_text = (
+                            f"State one important scientific fact about {topic_title}."
+                        )
+
+                elif is_math_subject:
+                    q_text = (
+                        f"Explain the mathematical principles and working method "
+                        f"for {topic_title}."
+                    )
+                    sol_text = (
+                        f"State the relevant rule for {topic_title}, show the "
+                        "working steps, and give the result."
+                    )
+
+                elif is_english_subject:
+                    q_text = (
+                        f"Explain {topic_title} using clear textual examples "
+                        "and key concepts."
+                    )
+                    sol_text = (
+                        "Provide the relevant definition or idea, suitable textual "
+                        "examples, and the key language or literary concepts."
+                    )
+
+            # A candidate can become a duplicate AFTER subject-safety rewriting.
+            # Run deduplication again on the final student-facing text.
+            if is_duplicate_question(
+                topic_title,
+                q_text,
+                used_q_texts,
+                used_intents,
+            ):
+                replacement_item = None
+
+                # First preference: another installed question/variant with the
+                # correct marks and no duplicate intent.
+                for alt_chapter in target_chapters:
+                    for alt_topic in alt_chapter.topics:
+                        for alt_item in get_topic_fallback_variants(
+                            alt_topic,
+                            mark_per_q,
+                        ):
+                            (
+                                alt_title,
+                                alt_q,
+                                alt_sol,
+                                alt_marks,
+                            ) = alt_item
+
+                            if alt_marks != mark_per_q:
+                                continue
+
+                            if is_duplicate_question(
+                                alt_title,
+                                alt_q,
+                                used_q_texts,
+                                used_intents,
+                            ):
+                                continue
+
+                            if not _is_valid_question_for_subject(
+                                alt_q,
+                                alt_sol,
+                                syllabus.subject,
+                            ):
+                                continue
+
+                            if not is_suitable_for_section(
+                                alt_q,
+                                alt_sol,
+                                mark_per_q,
+                            ):
+                                continue
+
+                            replacement_item = (
+                                alt_title,
+                                alt_q,
+                                alt_sol,
+                                mark_per_q,
+                            )
+                            break
+
+                        if replacement_item is not None:
+                            break
+
+                    if replacement_item is not None:
+                        break
+
+                # Second preference: build a fresh topic-grounded question.
+                if replacement_item is None:
+                    for alt_chapter in target_chapters:
+                        for alt_topic in alt_chapter.topics:
+                            alt_title = alt_topic.title
+                            alt_exp = (
+                                alt_topic.explanation
+                                or "Use the installed topic explanation."
+                            ).strip()
+
+                            if mark_per_q == 6:
+                                natural = build_natural_6mark_question(
+                                    alt_title,
+                                    alt_exp,
+                                    list(alt_topic.examples),
+                                )
+                                if natural is None:
+                                    alt_q, alt_sol = (
+                                        build_contextual_section_d_fallback_question(
+                                            alt_title,
+                                            alt_exp,
+                                            alt_topic.examples,
+                                        )
+                                    )
+                                else:
+                                    alt_q, alt_sol = natural
+
+                            elif mark_per_q == 3:
+                                if alt_topic.examples:
+                                    example = alt_topic.examples[0].strip()
+                                    alt_q = (
+                                        f"Explain with an example: {example}"
+                                    )
+                                    alt_sol = (
+                                        f"Example solution: {example} demonstrates "
+                                        f"{alt_exp}"
+                                    )
+                                else:
+                                    alt_q = (
+                                        f"Explain {alt_title} with one relevant "
+                                        "example and one key point."
+                                    )
+                                    alt_sol = alt_exp
+
+                            elif mark_per_q == 2:
+                                alt_q = (
+                                    f"Explain one important point about "
+                                    f"{alt_title}."
+                                )
+                                sentences = [
+                                    value.strip()
+                                    for value in alt_exp.split(".")
+                                    if value.strip()
+                                ]
+                                alt_sol = (
+                                    ". ".join(sentences[:2]).strip() + "."
+                                )
+
+                            else:
+                                alt_q = (
+                                    f"State one important fact about {alt_title}."
+                                )
+                                first = alt_exp.split(".")[0].strip()
+                                alt_sol = first + "."
+
+                            if is_duplicate_question(
+                                alt_title,
+                                alt_q,
+                                used_q_texts,
+                                used_intents,
+                            ):
+                                continue
+
+                            if not _is_valid_question_for_subject(
+                                alt_q,
+                                alt_sol,
+                                syllabus.subject,
+                            ):
+                                continue
+
+                            if not is_suitable_for_section(
+                                alt_q,
+                                alt_sol,
+                                mark_per_q,
+                            ):
+                                continue
+
+                            replacement_item = (
+                                alt_title,
+                                alt_q,
+                                alt_sol,
+                                mark_per_q,
+                            )
+                            break
+
+                        if replacement_item is not None:
+                            break
+
+                if replacement_item is not None:
+                    (
+                        topic_title,
+                        q_text,
+                        sol_text,
+                        _,
+                    ) = replacement_item
+
+                # Never silently emit an exact duplicate.
+                if " ".join(
+                    q_text.casefold().strip().split()
+                ) in used_q_texts:
+                    raise Phase11Error(
+                        "Unable to generate a unique test-paper question "
+                        f"for {mark_per_q} marks."
+                    )
+
+            mark_question_used(
+                topic_title,
+                q_text,
+                used_q_texts,
+                used_intents,
+            )
 
             lbl = "Mark" if mark_per_q == 1 else "Marks"
             lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
