@@ -109,6 +109,51 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertIn("Subject: English", answer)
         self.assertIn("Total Marks:", answer)
 
+    def test_hinglish_or_between_chapter_numbers_generates_multi_chapter_test(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Chapter 1 - Crop Production and Management",
+            current_topic="Agricultural Practices and Preparation of Soil",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="chapter 1 or 2 ka 20 marks ka test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Chapters 1, 2 (2 Chapters)", answer)
+        self.assertIn("Total Marks: 20 Marks", answer)
+        self.assertIn("Subject: Science & Technology", answer)
+        self.assertNotIn("Chapter 1 - Crop Production and Management ? Chapter test", answer)
+
+    def test_hinglish_aur_between_chapter_numbers_generates_multi_chapter_test(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Chapter 1 - Crop Production and Management",
+            current_topic="Agricultural Practices and Preparation of Soil",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="chapter 1 aur 2 ka 20 marks ka test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Chapters 1, 2 (2 Chapters)", answer)
+        self.assertIn("Total Marks: 20 Marks", answer)
+        self.assertIn("Subject: Science & Technology", answer)
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(

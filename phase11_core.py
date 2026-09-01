@@ -4287,7 +4287,7 @@ def parse_test_paper_scope(
 
     # Multi-chapter list (e.g. Chapters 1, 2 and 3)
     list_match = re.search(
-        r"\bchapters?\s*(\d{1,2}(?:\s*,\s*\d{1,2})*(?:\s*(?:and|&)\s*\d{1,2})+)\b",
+        r"\bchapters?\s*(\d{1,2}(?:\s*,\s*\d{1,2})*(?:\s*(?:and|aur|or|&)\s*\d{1,2})+)\b",
         message,
         re.IGNORECASE,
     )
