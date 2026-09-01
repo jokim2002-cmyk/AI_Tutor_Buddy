@@ -4622,6 +4622,9 @@ def _build_english_section_d_prompt(topic_title: str, sol_text: str) -> tuple[st
         "adolescence", "deforestation", "coal", "petroleum", "earthquake",
         "travellers", "nalanda", "harshavardhana", "social reform", "parliament",
         "constitution", "resource", "mineral", "industry", "population", "disaster",
+        "government", "mla", "legislature", "legislative", "election", "accountability",
+        "citizen", "public facility", "public facilities", "democracy", "sultanate",
+        "rajput", "latitude", "longitude",
     )
     if any(k in t_lower for k in non_english_section_d_cues):
         return None
@@ -6492,8 +6495,21 @@ def render_test_paper(
                     )
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
-            if mark_per_q == 6 and is_generic_topic_title_question(q_text, topic_title):
-                subject_lower = syllabus.subject.casefold().strip()
+            subject_lower = syllabus.subject.casefold().strip()
+            q_leak_check = q_text.casefold()
+            non_english_prompt_leak = (
+                subject_lower != "english"
+                and (
+                    "audience awareness" in q_leak_check
+                    or "format, examples, and common mistakes" in q_leak_check
+                    or "reading or writing" in q_leak_check
+                    or "english language or literature" in q_leak_check
+                )
+            )
+            if mark_per_q == 6 and (
+                is_generic_topic_title_question(q_text, topic_title)
+                or non_english_prompt_leak
+            ):
                 if subject_lower in {"science", "science & technology", "science and technology"}:
                     q_text = (
                         f"Explain {topic_title}, including important definitions, observations, "
@@ -6507,7 +6523,7 @@ def render_test_paper(
                 elif subject_lower == "social science":
                     q_text = (
                         f"Explain {topic_title}, including causes or meaning, key points, "
-                        "examples, and importance."
+                        "examples, and public importance."
                     )
                 else:
                     q_text = (

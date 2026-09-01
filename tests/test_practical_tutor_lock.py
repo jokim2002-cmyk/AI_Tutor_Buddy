@@ -306,6 +306,32 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertNotIn("Test Paper: Chapter 1 - The Day the River Spoke", answer)
         self.assertNotIn("? Chapter test", answer)
 
+    def test_social_science_section_d_does_not_use_english_writing_prompt(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Social Science",
+            current_chapter="Semester 1 ? Two Big States",
+            current_topic="Purpose and functions of government",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="semester 1 ka test banao 50 marks ka",
+            context=context,
+        )
+
+        self.assertIn("Subject: Social Science", answer)
+        self.assertIn("Test Paper: Semester 1", answer)
+        self.assertIn("Total Marks: 50 Marks", answer)
+        self.assertNotIn("audience awareness", answer.casefold())
+        self.assertNotIn("format, examples, and common mistakes", answer.casefold())
+        self.assertNotIn("reading or writing", answer.casefold())
+        self.assertRegex(answer, r"(?is)Section D \(6 Marks Each\).*\n\d+\. Explain .+\(6 Marks\)")
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(
