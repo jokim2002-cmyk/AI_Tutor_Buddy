@@ -97,6 +97,71 @@ def _gv_practical_tutor_mode() -> bool:
     }
 
 
+def _gv_practical_is_exact_textbook_text_request(message: str) -> bool:
+    norm = re.sub(r"[^a-z0-9]+", " ", str(message or "").casefold()).strip()
+    if not norm:
+        return False
+
+    allowed_workflows = (
+        "test",
+        "paper",
+        "quiz",
+        "remember for exam",
+        "exam points",
+        "important points",
+        "practice question",
+        "homework question",
+        "solve this",
+        "check my answer",
+        "is my answer correct",
+    )
+    if any(term in norm for term in allowed_workflows):
+        return False
+
+    exact_text_signals = (
+        "full poem",
+        "poem summary from textbook",
+        "full poem summary",
+        "original poem",
+        "textbook poem",
+        "full textbook",
+        "exact textbook",
+        "textbook line",
+        "line by line",
+        "full text",
+        "exact text",
+        "from textbook",
+        "official textbook",
+        "book ma thi",
+        "book se",
+        "textbook se",
+    )
+    return any(term in norm for term in exact_text_signals)
+
+
+def _gv_practical_exact_textbook_boundary_answer(context: StudentLearningContext) -> str:
+    selected_subject = clean_student_text(getattr(context, "current_subject", ""), max_length=100)
+    selected_chapter = clean_student_text(getattr(context, "current_chapter", ""), max_length=180)
+
+    lines = [
+        "I do not have the exact full textbook poem/text stored for this chapter.",
+        "",
+    ]
+
+    if selected_subject or selected_chapter:
+        lines.append(f"Selected subject: {selected_subject or 'Not selected'}")
+        lines.append(f"Selected chapter: {selected_chapter or 'Not selected'}")
+        lines.append("")
+
+    lines.extend(
+        [
+            "Practical Tutor can answer stored questions, make a chapter test, give exam points, or check your pasted answer.",
+            "For exact textbook poem/text work, paste the exact lines or the exact textbook question first.",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def _gv_practical_no_match_answer(message: str, context: StudentLearningContext) -> str:
     selected_subject = clean_student_text(getattr(context, "current_subject", ""), max_length=100)
     selected_chapter = clean_student_text(getattr(context, "current_chapter", ""), max_length=180)
@@ -1446,6 +1511,27 @@ class GyanVerseAIService:
             context=context,
         )
         request = classify_syllabus_tutor_request(message)
+
+        if (
+            _gv_practical_tutor_mode()
+            and _gv_practical_is_exact_textbook_text_request(message)
+        ):
+            if t_start is None:
+                t_start = time.perf_counter()
+            t_format_start = time.perf_counter()
+            answer = format_tutor_response(
+                _gv_practical_exact_textbook_boundary_answer(context),
+                student_message=message,
+            )
+            self._record_local_response_metrics(
+                message=message,
+                answer=answer,
+                backend="practical tutor",
+                route="practical-exact-textbook-boundary",
+                t_start=t_start,
+                t_format_start=t_format_start,
+            )
+            return answer
 
         if (
             _gv_practical_tutor_mode()

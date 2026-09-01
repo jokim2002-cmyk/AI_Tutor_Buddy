@@ -109,6 +109,29 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertIn("Subject: English", answer)
         self.assertIn("Total Marks:", answer)
 
+    def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Semester 1 Unit 1 - Landscapes",
+            current_topic="Land Art and Environmental Appreciation",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="write full poem summary from textbook",
+            context=context,
+        )
+
+        self.assertIn("I do not have the exact full textbook poem/text stored", answer)
+        self.assertIn("paste the exact lines", answer.lower())
+        self.assertEqual(service.last_metrics.route, "practical-exact-textbook-boundary")
+        self.assertNotIn("Land Art refers to artistic creations", answer)
+
     def test_ui_labels_are_practical_not_ai_teacher_promises(self) -> None:
         ui_source = (self.root / "gyanverse_ui.py").read_text(encoding="utf-8")
 
