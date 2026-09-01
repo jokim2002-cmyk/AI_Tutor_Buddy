@@ -1785,6 +1785,87 @@ def main(page: ft.Page) -> None:
             status_text.value = message
             page.update()
 
+        def resolve_relative_topic_navigation(
+            message_text: str,
+        ) -> StudentLearningContext | None:
+            norm = re.sub(
+                r"[^a-z0-9]+",
+                " ",
+                str(message_text or "").casefold(),
+            ).strip()
+
+            if not norm:
+                return None
+
+            is_next_topic = bool(
+                re.search(
+                    r"\b(next\s+topic|topic\s+next|aage\s+topic|agla\s+topic|agle\s+topic)\b",
+                    norm,
+                )
+            )
+            is_previous_topic = bool(
+                re.search(
+                    r"\b(previous\s+topic|prev\s+topic|last\s+topic|pichla\s+topic|pichle\s+topic)\b",
+                    norm,
+                )
+            )
+
+            if not (is_next_topic or is_previous_topic):
+                return None
+
+            syllabus = syllabus_repo.find(
+                board=context.board,
+                medium=context.medium,
+                standard=context.standard,
+                subject=context.current_subject,
+            )
+
+            if syllabus is None:
+                return None
+
+            selected_chapter = next(
+                (
+                    chapter
+                    for chapter in syllabus.chapters
+                    if chapter.title == context.current_chapter
+                ),
+                None,
+            )
+
+            if selected_chapter is None or not selected_chapter.topics:
+                return None
+
+            def nav_norm(value: object) -> str:
+                return re.sub(
+                    r"[^a-z0-9]+",
+                    " ",
+                    str(value or "").casefold(),
+                ).strip()
+
+            current_topic_norm = nav_norm(context.current_topic)
+            current_topic_index = 0
+
+            for topic_index, topic in enumerate(selected_chapter.topics):
+                topic_terms = [topic.title, *topic.aliases]
+                if any(nav_norm(term) == current_topic_norm for term in topic_terms if term):
+                    current_topic_index = topic_index
+                    break
+
+            delta = 1 if is_next_topic else -1
+            target_topic_index = max(
+                0,
+                min(len(selected_chapter.topics) - 1, current_topic_index + delta),
+            )
+
+            if target_topic_index == current_topic_index:
+                return None
+
+            return replace(
+                context,
+                current_topic=selected_chapter.topics[target_topic_index].title,
+            )
+
+
         is_sending = False
 
         def queue_send(_: object = None) -> None:
@@ -1818,6 +1899,10 @@ def main(page: ft.Page) -> None:
                 requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
                 if requested_mode != context.learning_mode:
                     update_context(replace(context, learning_mode=requested_mode))
+                navigated_context = resolve_relative_topic_navigation(text)
+                if navigated_context is not None:
+                    update_context(navigated_context)
+
                 detected_context, detected = detect_context_from_message(
                     text,
                     context,

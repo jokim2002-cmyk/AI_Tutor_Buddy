@@ -136,6 +136,8 @@ class StudentLearningContext:
             parts.append(self.current_subject)
         if self.current_chapter:
             parts.append(self.current_chapter)
+        if self.current_topic:
+            parts.append(self.current_topic)
         return " • ".join(parts)
 
 
@@ -640,6 +642,36 @@ def _extract_ordinal_topic_index(message_text: str) -> int | None:
     return None
 
 
+def _extract_relative_topic_navigation(message_text: str) -> int | None:
+    """Return +1/-1 for explicit next/previous topic navigation."""
+    norm = _normalize_syllabus_lookup_text(message_text)
+    if not norm:
+        return None
+
+    next_patterns = (
+        r"\bnext\s+topic\b",
+        r"\btopic\s+next\b",
+        r"\baage\s+topic\b",
+        r"\bagla\s+topic\b",
+        r"\bagle\s+topic\b",
+        r"\bnext\s+lesson\s+topic\b",
+    )
+    previous_patterns = (
+        r"\bprevious\s+topic\b",
+        r"\bprev\s+topic\b",
+        r"\blast\s+topic\b",
+        r"\bpichla\s+topic\b",
+        r"\bpichle\s+topic\b",
+    )
+
+    if any(re.search(pattern, norm) for pattern in next_patterns):
+        return 1
+    if any(re.search(pattern, norm) for pattern in previous_patterns):
+        return -1
+
+    return None
+
+
 def _is_contextual_chapter_request(message_text: str) -> bool:
     norm = _normalize_syllabus_lookup_text(message_text)
     if not norm:
@@ -943,6 +975,54 @@ class SyllabusRepository:
 
         if message_candidates:
             return max(message_candidates, key=lambda item: item[0])[1]
+
+        relative_topic_navigation = _extract_relative_topic_navigation(message_text)
+        if relative_topic_navigation is not None:
+            for chapter in syllabus.chapters:
+                chapter_context_match, chapter_message_match = chapter_signals.get(
+                    chapter.chapter_id, (False, False)
+                )
+                if not (chapter_context_match or chapter_message_match):
+                    continue
+                if not chapter.topics:
+                    continue
+
+                current_topic_index = 0
+                if topic_context:
+                    for topic_index, topic in enumerate(chapter.topics):
+                        topic_terms = [
+                            _normalize_syllabus_lookup_text(topic.title),
+                            *(
+                                _normalize_syllabus_lookup_text(alias)
+                                for alias in topic.aliases
+                            ),
+                        ]
+                        if any(
+                            term
+                            and (
+                                topic_context == term
+                                or _contains_syllabus_phrase(topic_context, term)
+                                or _contains_syllabus_phrase(term, topic_context)
+                            )
+                            for term in topic_terms
+                        ):
+                            current_topic_index = topic_index
+                            break
+
+                target_topic_index = max(
+                    0,
+                    min(
+                        len(chapter.topics) - 1,
+                        current_topic_index + relative_topic_navigation,
+                    ),
+                )
+
+                return SyllabusTopicMatch(
+                    syllabus=syllabus,
+                    chapter=chapter,
+                    topic=chapter.topics[target_topic_index],
+                    matched_by="message-topic-relative",
+                )
 
         ordinal_index = _extract_ordinal_topic_index(message_text)
         if ordinal_index is not None:
