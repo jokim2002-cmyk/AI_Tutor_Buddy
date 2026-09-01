@@ -4268,6 +4268,31 @@ def parse_test_paper_scope(
                 re.IGNORECASE,
             )
         ]
+
+        # Some installed books use plain "Chapter 1..." titles without a
+        # "Semester 1/2" prefix. In that case, split numeric chapters into
+        # first half / second half instead of falling back to the current chapter.
+        if not matched:
+            numbered_chapters: list[tuple[int, BoardSyllabusChapter]] = []
+            for c in syllabus.chapters:
+                raw_number = str(getattr(c, "number", "") or "")
+                raw_title = str(getattr(c, "title", "") or "")
+                num_match = re.search(r"\bchapter\s*(\d{1,2})\b", raw_title, re.IGNORECASE)
+                if num_match:
+                    chapter_num = int(num_match.group(1))
+                else:
+                    digits = re.sub(r"\D", "", raw_number)
+                    if not digits:
+                        continue
+                    chapter_num = int(digits)
+                numbered_chapters.append((chapter_num, c))
+
+            if len(numbered_chapters) >= 2:
+                numbered_chapters.sort(key=lambda item: item[0])
+                midpoint = (len(numbered_chapters) + 1) // 2
+                chosen = numbered_chapters[:midpoint] if semester_no == "1" else numbered_chapters[midpoint:]
+                matched = [c for _, c in chosen]
+
         if matched:
             total_marks = explicit_marks if explicit_marks is not None else 50
             duration = (

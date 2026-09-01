@@ -283,6 +283,29 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertIn("Total Marks: 50 Marks", answer)
         self.assertNotIn("Test Paper: Semester 1 ? Pie Graph ? Chapter test", answer)
 
+    def test_semester_2_std7_english_numeric_chapter_titles_do_not_fallback_to_chapter_1(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Chapter 1 - The Day the River Spoke",
+            current_topic="",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="semester 2 ka 30 marks test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Semester 2", answer)
+        self.assertIn("Total Marks: 30 Marks", answer)
+        self.assertNotIn("Test Paper: Chapter 1 - The Day the River Spoke", answer)
+        self.assertNotIn("? Chapter test", answer)
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(
