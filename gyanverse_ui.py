@@ -1899,9 +1899,18 @@ def main(page: ft.Page) -> None:
                 requested_mode = mode_dropdown.value or LearningMode.EXPLAIN.value
                 if requested_mode != context.learning_mode:
                     update_context(replace(context, learning_mode=requested_mode))
+                tutor_service_message = text
+                tutor_service_context = context
+
                 navigated_context = resolve_relative_topic_navigation(text)
                 if navigated_context is not None:
                     update_context(navigated_context)
+                    tutor_service_context = navigated_context
+                    tutor_service_message = (
+                        f"Teach the selected topic: {navigated_context.current_topic}"
+                        if navigated_context.current_topic
+                        else "Teach the selected topic"
+                    )
                 else:
                     detected_context, detected = detect_context_from_message(
                         text,
@@ -1910,6 +1919,7 @@ def main(page: ft.Page) -> None:
                     )
                     if detected:
                         update_context(detected_context)
+                        tutor_service_context = detected_context
                 if not is_retry:
                     add_message("student", text or "Please review my attached homework.")
 
@@ -1970,8 +1980,8 @@ def main(page: ft.Page) -> None:
                     answer = await asyncio.wait_for(
                         asyncio.to_thread(
                             ai_service.ask_stream,
-                            message=text,
-                            context=context,
+                            message=tutor_service_message,
+                            context=tutor_service_context,
                             attachments=request_attachments,
                             on_chunk=on_chunk,
                         ),
@@ -1982,8 +1992,8 @@ def main(page: ft.Page) -> None:
                         f"Tutor response exceeded {FAST_REPLY_DEADLINE_SECONDS:.0f} seconds."
                     )
                     answer = ai_service.offline_answer(
-                        message=text,
-                        context=context,
+                        message=tutor_service_message,
+                        context=tutor_service_context,
                         attachments=request_attachments,
                         reason=ai_service.last_error,
                     )

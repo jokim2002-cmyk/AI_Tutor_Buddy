@@ -56,6 +56,17 @@ class TutorTopicNavigationRegressionTests(unittest.TestCase):
         self.assertIn("Jahnavi's conflict and decision", answer)
         self.assertNotIn("Mathematics", answer)
 
+    def test_ui_sends_target_topic_prompt_after_relative_navigation(self) -> None:
+        ui_source = (Path(__file__).resolve().parents[1] / "gyanverse_ui.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("tutor_service_message = text", ui_source)
+        self.assertIn("tutor_service_context = context", ui_source)
+        self.assertIn("Teach the selected topic:", ui_source)
+        self.assertIn("message=tutor_service_message", ui_source)
+        self.assertIn("context=tutor_service_context", ui_source)
+
+
     def test_ui_does_not_detect_context_after_relative_topic_navigation(self) -> None:
         ui_source = (Path(__file__).resolve().parents[1] / "gyanverse_ui.py").read_text(
             encoding="utf-8"
@@ -63,6 +74,12 @@ class TutorTopicNavigationRegressionTests(unittest.TestCase):
         expected = """                navigated_context = resolve_relative_topic_navigation(text)
                 if navigated_context is not None:
                     update_context(navigated_context)
+                    tutor_service_context = navigated_context
+                    tutor_service_message = (
+                        f"Teach the selected topic: {navigated_context.current_topic}"
+                        if navigated_context.current_topic
+                        else "Teach the selected topic"
+                    )
                 else:
                     detected_context, detected = detect_context_from_message(
 """
