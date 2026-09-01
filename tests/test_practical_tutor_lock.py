@@ -154,6 +154,51 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertIn("Total Marks: 20 Marks", answer)
         self.assertIn("Subject: Science & Technology", answer)
 
+    def test_comma_only_chapter_list_generates_multi_chapter_test(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Semester 1 Unit 1 - Landscapes",
+            current_topic="Land Art and Environmental Appreciation",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="chapter 1,2,3 ka 50 marks test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Chapters 1, 2, 3 (3 Chapters)", answer)
+        self.assertIn("Total Marks: 50 Marks", answer)
+        self.assertIn("Subject: English", answer)
+
+    def test_visible_test_paper_questions_do_not_show_topic_brackets(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="English",
+            current_chapter="Semester 1 Unit 1 - Landscapes",
+            current_topic="Land Art and Environmental Appreciation",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="chapter 1 or 2 ka 20 marks ka test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Chapters 1, 2 (2 Chapters)", answer)
+        self.assertNotRegex(answer, r"\n\d+\.\s+\[[^\]]+\]")
+        self.assertIsNotNone(service._last_generated_test_paper)
+        self.assertTrue(service._last_generated_test_paper.questions[0].topic_title)
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(

@@ -4285,9 +4285,9 @@ def parse_test_paper_scope(
                 description=f"Chapters {ch_str} ({len(matched)} Chapters)",
             )
 
-    # Multi-chapter list (e.g. Chapters 1, 2 and 3)
+    # Multi-chapter list (e.g. Chapters 1, 2 and 3 / chapter 1,2,3 / chapter 1 or 2)
     list_match = re.search(
-        r"\bchapters?\s*(\d{1,2}(?:\s*,\s*\d{1,2})*(?:\s*(?:and|aur|or|&)\s*\d{1,2})+)\b",
+        r"\bchapters?\s*(\d{1,2}(?:\s*,\s*\d{1,2})+(?:\s*(?:and|aur|or|&)\s*\d{1,2})?|\d{1,2}(?:\s*(?:and|aur|or|&)\s*\d{1,2})+)\b",
         message,
         re.IGNORECASE,
     )
@@ -6725,7 +6725,7 @@ def render_test_paper(
             )
 
             lbl = "Mark" if mark_per_q == 1 else "Marks"
-            lines.append(f"{q_num}. [{topic_title}] {q_text} ({mark_per_q} {lbl})")
+            lines.append(f"{q_num}. {q_text} ({mark_per_q} {lbl})")
             answers_list.append((q_num, topic_title, sol_text))
             eval_rules = derive_structured_evaluation_rules(q_text, sol_text, topic_title)
             items.append(
