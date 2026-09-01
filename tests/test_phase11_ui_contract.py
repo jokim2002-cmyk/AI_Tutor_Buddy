@@ -705,6 +705,23 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("local_logout_click", ui_source)
         self.assertNotIn("ft.alignment.center", ui_source)
         self.assertNotIn("ft.border.all", ui_source)
+        self.assertIn("owner_id_for_email(existing_local_session.email)", ui_source)
+        self.assertIn("current_owner_id = authenticated_owner_id", ui_source)
+        self.assertIn("owner_id=current_owner_id", ui_source)
+        self.assertIn("content=ft.Column(", ui_source)
+
+    def test_local_auth_owner_id_is_stable_and_private(self) -> None:
+        from tempfile import TemporaryDirectory
+        from local_app_auth import LocalAuthStore
+
+        with TemporaryDirectory() as tmp:
+            store = LocalAuthStore(Path(tmp))
+            owner_a = store.owner_id_for_email("Student@Gmail.com")
+            owner_b = store.owner_id_for_email("student@gmail.com")
+
+        self.assertEqual(owner_a, owner_b)
+        self.assertTrue(owner_a.startswith("local-auth:"))
+        self.assertNotIn("student@gmail.com", owner_a)
 
 if __name__ == "__main__":
     unittest.main()

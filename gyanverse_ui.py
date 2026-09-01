@@ -278,7 +278,12 @@ def main(page: ft.Page) -> None:
                 expand=True,
                 bgcolor=COLOR_PANEL,
                 padding=20,
-                content=card,
+                content=ft.Column(
+                    [card],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    expand=True,
+                ),
             )
         )
         page.update()
@@ -310,12 +315,17 @@ def main(page: ft.Page) -> None:
         context = context_store.save(canonical_context)
     device_identity = DeviceIdentityStore(DATA_DIR / "device_identity.json").load_or_create()
     local_owner_id = device_identity.local_owner_id
-    current_owner_id = local_owner_id
+    authenticated_owner_id = (
+        local_auth_store.owner_id_for_email(existing_local_session.email)
+        if require_local_login and existing_local_session is not None
+        else local_owner_id
+    )
+    current_owner_id = authenticated_owner_id
     conversation_store = ConversationStore(
         DATA_DIR / "conversations.db", device_id=device_identity.device_id
     )
     active_conversation = conversation_store.get_or_create_active(
-        owner_id=local_owner_id,
+        owner_id=current_owner_id,
         student_id=context.student_id,
         board=context.board,
         standard=context.standard,

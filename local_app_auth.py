@@ -50,6 +50,12 @@ class LocalAuthStore:
         return normalized
 
     @staticmethod
+    def owner_id_for_email(email: str) -> str:
+        email = LocalAuthStore.validate_gmail(email)
+        digest = hashlib.sha256(email.encode("utf-8")).hexdigest()[:32]
+        return f"local-auth:{digest}"
+
+    @staticmethod
     def validate_password(password: str) -> str:
         password = str(password or "")
         if len(password) < 6:
