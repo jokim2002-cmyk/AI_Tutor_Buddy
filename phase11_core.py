@@ -6428,6 +6428,28 @@ def render_test_paper(
                     )
 
             topic_title, q_text, sol_text, raw_intended_m = selected_item
+            if mark_per_q == 6 and is_generic_topic_title_question(q_text, topic_title):
+                subject_lower = syllabus.subject.casefold().strip()
+                if subject_lower in {"science", "science & technology", "science and technology"}:
+                    q_text = (
+                        f"Explain {topic_title}, including important definitions, observations, "
+                        "safety rules or applications, and suitable examples."
+                    )
+                elif subject_lower == "mathematics":
+                    q_text = (
+                        f"Explain the method used in {topic_title}, including formula or rule, "
+                        "steps, and one worked example."
+                    )
+                elif subject_lower == "social science":
+                    q_text = (
+                        f"Explain {topic_title}, including causes or meaning, key points, "
+                        "examples, and importance."
+                    )
+                else:
+                    q_text = (
+                        f"Explain {topic_title}, including key points, examples, and importance."
+                    )
+
             if mark_per_q == 6:
                 topic_scope = topic_title.casefold()
                 q_scope = q_text.casefold()

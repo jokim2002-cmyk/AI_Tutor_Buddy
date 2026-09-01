@@ -199,6 +199,33 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertIsNotNone(service._last_generated_test_paper)
         self.assertTrue(service._last_generated_test_paper.questions[0].topic_title)
 
+    def test_science_chapter_12_section_d_does_not_show_generic_lesson_question(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=8,
+            preferred_language="English",
+            current_subject="Science & Technology",
+            current_chapter="Chapter 12 - Some Natural Phenomena",
+            current_topic="",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="chapter 12 ka 20 marks test banao",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Chapter 12 - Some Natural Phenomena", answer)
+        self.assertIn("Total Marks: 20 Marks", answer)
+        self.assertNotIn(
+            "Explain the lesson using clear definitions, key points, suitable examples, importance, and a short conclusion.",
+            answer,
+        )
+        self.assertNotRegex(answer, r"\n\d+\.\s+\[[^\]]+\]")
+        self.assertRegex(answer, r"10\. Explain .+\(6 Marks\)")
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(
