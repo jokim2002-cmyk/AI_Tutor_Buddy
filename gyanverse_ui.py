@@ -274,16 +274,23 @@ def main(page: ft.Page) -> None:
 
         page.clean()
         page.add(
-            ft.Container(
+            ft.Row(
+                [
+                    ft.Container(
+                        expand=True,
+                        bgcolor=COLOR_PANEL,
+                        padding=20,
+                        content=ft.Column(
+                            [card],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                            expand=True,
+                        ),
+                    )
+                ],
                 expand=True,
-                bgcolor=COLOR_PANEL,
-                padding=20,
-                content=ft.Column(
-                    [card],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                    expand=True,
-                ),
+                alignment=ft.MainAxisAlignment.CENTER,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
             )
         )
         page.update()

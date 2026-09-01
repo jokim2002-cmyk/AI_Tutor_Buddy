@@ -709,6 +709,8 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("current_owner_id = authenticated_owner_id", ui_source)
         self.assertIn("owner_id=current_owner_id", ui_source)
         self.assertIn("content=ft.Column(", ui_source)
+        self.assertIn("page.add(\n            ft.Row(", ui_source)
+        self.assertIn("vertical_alignment=ft.CrossAxisAlignment.CENTER", ui_source)
 
     def test_local_auth_owner_id_is_stable_and_private(self) -> None:
         from tempfile import TemporaryDirectory
