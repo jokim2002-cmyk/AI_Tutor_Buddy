@@ -2,7 +2,9 @@ import ast
 import struct
 import tomllib
 import unittest
+import os
 from pathlib import Path
+os.environ.setdefault("GYANVERSE_REQUIRE_LOCAL_LOGIN", "0")
 
 ROOT = Path(__file__).resolve().parents[1]
 UI = (ROOT / "gyanverse_ui.py").read_text(encoding="utf-8")
@@ -684,6 +686,23 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertTrue(isinstance(b64, str))
         json.dumps({"src": b64})
 
+
+    def test_local_gmail_password_login_gate_contracts_exist(self) -> None:
+        project_root = Path(__file__).resolve().parents[1]
+        auth_source = (project_root / "local_app_auth.py").read_text(encoding="utf-8")
+        ui_source = (project_root / "gyanverse_ui.py").read_text(encoding="utf-8")
+
+        self.assertIn("class LocalAuthStore", auth_source)
+        self.assertIn("pbkdf2_hmac", auth_source)
+        self.assertIn("@gmail.com", auth_source)
+        self.assertIn("write_daily_backup", auth_source)
+        self.assertIn("cleanup_old_backups", auth_source)
+
+        self.assertIn("Login to GyanVerse", ui_source)
+        self.assertIn("GyanVerse app password", ui_source)
+        self.assertIn("_show_local_login_gate", ui_source)
+        self.assertIn("return", ui_source)
+        self.assertIn("local_logout_click", ui_source)
 
 if __name__ == "__main__":
     unittest.main()

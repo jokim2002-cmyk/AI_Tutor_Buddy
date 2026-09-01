@@ -29,6 +29,7 @@ from cloud_sync import (
 )
 from conversation_store import ConversationStore, DeviceIdentityStore
 from gyanverse_ui_helpers import mode_label, safe_text
+from local_app_auth import LocalAuthStore
 from phase11_ai import AIServiceError, GyanVerseAIService
 from phase11_core import (
     GeneratedTestPaper,
@@ -132,6 +133,168 @@ def main(page: ft.Page) -> None:
     except Exception:
         pass
 
+    local_auth_store = LocalAuthStore(DATA_DIR)
+    require_local_login = (
+        str(os.environ.get("GYANVERSE_REQUIRE_LOCAL_LOGIN", "1")).strip().casefold()
+        not in {"0", "false", "no", "off", "test"}
+    )
+    existing_local_session = (
+        local_auth_store.current_session() if require_local_login else None
+    )
+
+    def _show_local_login_gate() -> None:
+        is_signup = {"value": existing_local_session is None}
+
+        title = ft.Text(
+            "Login to GyanVerse",
+            size=26,
+            weight=ft.FontWeight.BOLD,
+            color=COLOR_TEXT,
+            text_align=ft.TextAlign.CENTER,
+        )
+        subtitle = ft.Text(
+            "Use your Gmail address and create a GyanVerse app password.",
+            size=13,
+            color=COLOR_MUTED,
+            text_align=ft.TextAlign.CENTER,
+        )
+        mode_text = ft.Text(
+            "Create account" if is_signup["value"] else "Login",
+            size=18,
+            weight=ft.FontWeight.W_600,
+            color=COLOR_TEXT,
+            text_align=ft.TextAlign.CENTER,
+        )
+        email_field = ft.TextField(
+            label="Gmail address",
+            hint_text="example@gmail.com",
+            keyboard_type=ft.KeyboardType.EMAIL,
+            autofocus=True,
+        )
+        password_field = ft.TextField(
+            label="GyanVerse password",
+            password=True,
+            can_reveal_password=True,
+        )
+        confirm_field = ft.TextField(
+            label="Confirm password",
+            password=True,
+            can_reveal_password=True,
+            visible=is_signup["value"],
+        )
+        error_text = ft.Text("", size=12, color=COLOR_ERROR, text_align=ft.TextAlign.CENTER)
+        submit_button = ft.FilledButton(
+            "Create account" if is_signup["value"] else "Login",
+            height=44,
+        )
+        switch_button = ft.TextButton(
+            "Already have account? Login" if is_signup["value"] else "New student? Create account"
+        )
+
+        def _set_error(message: str) -> None:
+            error_text.value = message
+            page.update()
+
+        def _switch_mode(_: object = None) -> None:
+            is_signup["value"] = not is_signup["value"]
+            mode_text.value = "Create account" if is_signup["value"] else "Login"
+            confirm_field.visible = is_signup["value"]
+            submit_button.text = "Create account" if is_signup["value"] else "Login"
+            switch_button.text = (
+                "Already have account? Login"
+                if is_signup["value"]
+                else "New student? Create account"
+            )
+            error_text.value = ""
+            page.update()
+
+        def _enter_app(session_email: str) -> None:
+            local_auth_store.write_daily_backup(
+                session_email,
+                extra={"reason": "login-success"},
+            )
+            page.clean()
+            main(page)
+
+        def _submit(_: object = None) -> None:
+            email = str(email_field.value or "")
+            password = str(password_field.value or "")
+            confirm = str(confirm_field.value or "")
+            try:
+                if is_signup["value"]:
+                    if password != confirm:
+                        raise ValueError("Password and confirm password must match.")
+                    session = local_auth_store.signup(email, password)
+                else:
+                    session = local_auth_store.login(email, password)
+                _enter_app(session.email)
+            except Exception as exc:
+                _set_error(str(exc))
+
+        submit_button.on_click = _submit
+        switch_button.on_click = _switch_mode
+        password_field.on_submit = _submit
+        confirm_field.on_submit = _submit
+
+        card = ft.Container(
+            width=420,
+            padding=24,
+            bgcolor=COLOR_SURFACE,
+            border_radius=18,
+            shadow=ft.BoxShadow(
+                blur_radius=20,
+                spread_radius=0,
+                color="#22000000",
+                offset=ft.Offset(0, 8),
+            ),
+            content=ft.Column(
+                [
+                    title,
+                    subtitle,
+                    ft.Divider(height=18, color=COLOR_BORDER),
+                    mode_text,
+                    email_field,
+                    password_field,
+                    confirm_field,
+                    error_text,
+                    submit_button,
+                    switch_button,
+                    ft.Text(
+                        "This is not your real Gmail password. It is only for this app.",
+                        size=11,
+                        color=COLOR_MUTED,
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+                ],
+                spacing=12,
+                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                tight=True,
+            ),
+        )
+
+        page.clean()
+        page.add(
+            ft.Container(
+                expand=True,
+                bgcolor=COLOR_PANEL,
+                alignment=ft.alignment.center,
+                padding=20,
+                content=card,
+            )
+        )
+        page.update()
+
+    if require_local_login and existing_local_session is None:
+        _show_local_login_gate()
+        return
+
+    if require_local_login and existing_local_session is not None:
+        local_auth_store.cleanup_old_backups(max_age_seconds=86_400)
+        local_auth_store.write_daily_backup(
+            existing_local_session.email,
+            extra={"reason": "app-open"},
+        )
+
     context_store = LearningContextStore(DATA_DIR / "student_context.json")
     context = context_store.load()
     if context.medium.casefold() not in {item.casefold() for item in GYANVERSE_V1_ALLOWED_MEDIUMS}:
@@ -214,6 +377,7 @@ def main(page: ft.Page) -> None:
     status_text = ft.Text("Ready", size=13, color=COLOR_MUTED)
     cloud_status_text = ft.Text("Cloud: signed out", size=13, color=COLOR_MUTED)
     account_button = ft.IconButton(icon=ft.Icons.ACCOUNT_CIRCLE_OUTLINED, tooltip="Google account and cloud sync")
+    logout_button = ft.IconButton(icon=ft.Icons.LOGOUT, tooltip="Logout")
     new_chat_button = ft.IconButton(
         icon=ft.Icons.ADD,
         tooltip="Start new chat",
@@ -320,6 +484,13 @@ def main(page: ft.Page) -> None:
         selected_attachments = []
         status_text.value = "New chat started"
         show_view("tutor")
+
+    def local_logout_click(_: object = None) -> None:
+        local_auth_store.logout()
+        page.clean()
+        main(page)
+
+    logout_button.on_click = local_logout_click
 
     def refresh_cloud_status(message: str | None = None, *, error: bool = False) -> None:
         if not GYANVERSE_V1_CLOUD_SYNC_ENABLED:
@@ -2629,7 +2800,7 @@ def main(page: ft.Page) -> None:
                 ft.Column([title_text, context_text], spacing=0, expand=True),
                 status_column,
                 new_chat_button,
-                account_button,
+                account_button, logout_button,
             ],
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
