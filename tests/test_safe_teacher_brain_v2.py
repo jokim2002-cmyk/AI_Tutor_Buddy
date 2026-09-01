@@ -42,6 +42,16 @@ class SafeTeacherBrainV2Tests(unittest.TestCase):
         self.assertIn("Source type:", answer)
         self.assertNotIn("Test Paper:", answer)
 
+    def test_short_summary_adds_understanding_check_without_test_paper(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        answer = service.ask(message="short summary do", context=self.context)
+
+        self.assertIn("Try this", answer)
+        self.assertIn("Send your answer", answer)
+        self.assertIn("Source type:", answer)
+        self.assertNotIn("Test Paper:", answer)
+
+
     def test_explicit_test_request_still_generates_test_paper(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         answer = service.ask(message="test banao", context=self.context)

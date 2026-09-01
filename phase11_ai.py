@@ -257,6 +257,67 @@ def _gv_is_exam_memory_request(message: object) -> bool:
     )
 
 
+def _gv_is_summary_request(message: object) -> bool:
+    norm = _gv_teacher_norm(message)
+    if not norm:
+        return False
+    return bool(
+        re.search(
+            r"\b(short\s+summary|summary|summarize|key\s+points|short\s+me|short\s+mein)\b",
+            norm,
+        )
+    )
+
+
+def _gv_finalize_local_teacher_answer(
+    answer: str,
+    *,
+    message: str,
+    match: SyllabusTopicMatch | None,
+) -> str:
+    """Improve local teaching-shaped answers without bypassing routing or provider guardrails."""
+    clean_answer = str(answer or "").strip()
+    if not clean_answer or match is None:
+        return clean_answer
+
+    lower = clean_answer.casefold()
+
+    # Never mutate deterministic guard/test/review/solution outputs.
+    if any(
+        marker.casefold() in lower
+        for marker in ("Test Paper:", "Result:", "Validated solution:", "Please select ")
+    ):
+        return clean_answer
+
+    if not _gv_is_summary_request(message):
+        return clean_answer
+
+    teacher_markers = (
+        "try this",
+        "now your turn",
+        "send your answer",
+        "practice:",
+        "question:",
+    )
+    if any(marker in lower for marker in teacher_markers):
+        return clean_answer
+
+    questions = _gv_topic_questions(match, limit=1)
+    check_block = (
+        f"Try this: {questions[0]}\n"
+        "Send your answer in one or two lines. I will check whether your idea is correct."
+    )
+
+    source_index = lower.rfind("source type:")
+    if source_index >= 0:
+        body = clean_answer[:source_index].rstrip()
+        footer = clean_answer[source_index:].strip()
+        return body + "\n\n" + check_block + "\n\n" + footer
+
+    footer = _gv_source_footer_from_match(match)
+    return clean_answer + "\n\n" + check_block + "\n\n" + footer
+
+
 def _gv_origin_label(origin: object) -> str:
     return {
         "official": "Official content",
@@ -1217,6 +1278,11 @@ class GyanVerseAIService:
         answer = format_tutor_response(
             raw_answer,
             student_message=message,
+        )
+        answer = _gv_finalize_local_teacher_answer(
+            answer,
+            message=message,
+            match=match,
         )
         t_end = time.perf_counter()
         route = (
