@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -59,11 +60,17 @@ def syllabus_payload(
 
 class Phase3LocalSyllabusRoutingTests(unittest.TestCase):
     def setUp(self) -> None:
+        self._old_tutor_mode = os.environ.get("GYANVERSE_TUTOR_MODE")
+        os.environ["GYANVERSE_TUTOR_MODE"] = "ai"
         self.temp = tempfile.TemporaryDirectory(prefix="gyanverse_phase3_")
         self.root = Path(self.temp.name)
         self.repo = SyllabusRepository(self.root / "syllabus")
 
     def tearDown(self) -> None:
+        if self._old_tutor_mode is None:
+            os.environ.pop("GYANVERSE_TUTOR_MODE", None)
+        else:
+            os.environ["GYANVERSE_TUTOR_MODE"] = self._old_tutor_mode
         self.temp.cleanup()
 
     def service(self) -> GyanVerseAIService:

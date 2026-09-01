@@ -1199,7 +1199,7 @@ def main(page: ft.Page) -> None:
             bgcolor=COLOR_PANEL,
         )
         composer = ft.TextField(
-            hint_text="Ask your doubt or describe today's chapter...",
+            hint_text="Ask a textbook question from the selected chapter...",
             multiline=True,
             min_lines=1,
             max_lines=4,
@@ -1218,10 +1218,10 @@ def main(page: ft.Page) -> None:
             dense=True,
             text_size=12 if is_mobile else 13,
             options=[
-                ft.dropdown.Option(LearningMode.EXPLAIN.value, "Explain"),
-                ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework Help"),
+                ft.dropdown.Option(LearningMode.EXPLAIN.value, "Answer"),
+                ft.dropdown.Option(LearningMode.HOMEWORK.value, "Homework"),
                 ft.dropdown.Option(LearningMode.REVISION.value, "Revision"),
-                ft.dropdown.Option(LearningMode.EXAM.value, "Exam Answer"),
+                ft.dropdown.Option(LearningMode.EXAM.value, "Test / Exam"),
             ],
         )
         attachment_preview = ft.Row(

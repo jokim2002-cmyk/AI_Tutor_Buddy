@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import json
 import os
 import re
 import shutil
@@ -65,6 +66,278 @@ class AIServiceError(RuntimeError):
     def __init__(self, message: str = "", *, quota_limited: bool = False) -> None:
         super().__init__(message)
         self.quota_limited = quota_limited
+
+
+
+# === GYANVERSE PRACTICAL CODE-ONLY TUTOR LOCK V1 START ===
+#
+# Final V1 tutor scope:
+# 1. Answer from stored textbook/question-bank content.
+# 2. Help with homework using stored solutions.
+# 3. Generate chapter tests from selected chapter.
+# 4. Generate full-book tests when requested.
+# 5. Avoid repeating the same generated test paper where possible.
+# 6. Check student answers against stored solution logic.
+# 7. Stay locked to selected board/medium/standard/subject/chapter.
+# 8. Ask the student to select a chapter when no chapter is selected.
+# 9. Do not pretend to deeply explain in different ways without AI.
+# 10. Do not use online AI for core textbook answers in practical mode.
+
+def _gv_practical_tutor_mode() -> bool:
+    return os.getenv("GYANVERSE_TUTOR_MODE", "practical").strip().casefold() in {
+        "",
+        "1",
+        "true",
+        "yes",
+        "practical",
+        "code",
+        "code-only",
+        "local",
+        "offline",
+    }
+
+
+def _gv_practical_no_match_answer(message: str, context: StudentLearningContext) -> str:
+    selected_subject = clean_student_text(getattr(context, "current_subject", ""), max_length=100)
+    selected_chapter = clean_student_text(getattr(context, "current_chapter", ""), max_length=180)
+
+    if not selected_subject or not selected_chapter:
+        return (
+            "Please select Board, Medium, Standard, Subject and Chapter first.\n\n"
+            "Practical Tutor works only after a chapter is selected. "
+            "After that, ask a textbook question from that selected chapter."
+        )
+
+    return (
+        "I can answer only from the selected chapter.\n\n"
+        f"Selected subject: {selected_subject}\n"
+        f"Selected chapter: {selected_chapter}\n\n"
+        "I could not find this exact question in the stored question-answer bank for this chapter. "
+        "Please paste the exact textbook question, or select the correct chapter from the top selector."
+    )
+
+
+
+def _gv_practical_norm(value: object) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
+
+
+def _gv_practical_contains_phrase(haystack: str, needle: str) -> bool:
+    haystack = f" {haystack} "
+    needle = _gv_practical_norm(needle)
+    return bool(needle and f" {needle} " in haystack)
+
+
+def _gv_practical_reject_context_only_match(
+    message: str,
+    match: SyllabusTopicMatch,
+) -> bool:
+    matched_by = str(getattr(match, "matched_by", "") or "").casefold()
+    if not matched_by.startswith("context"):
+        return False
+
+    norm = _gv_practical_norm(message)
+    if not norm:
+        return False
+
+    safe_context_commands = (
+        "answer",
+        "chapter",
+        "check",
+        "correct",
+        "current",
+        "exam",
+        "example",
+        "explain",
+        "full",
+        "help",
+        "homework",
+        "important",
+        "marks",
+        "paper",
+        "practice",
+        "previous",
+        "question",
+        "quiz",
+        "remember",
+        "revision",
+        "selected",
+        "solve",
+        "summary",
+        "test",
+        "textbook",
+        "topic",
+        "agla",
+        "aage",
+        "banao",
+        "do",
+        "is chapter",
+        "is topic",
+        "padhao",
+        "padhaao",
+        "pichla",
+        "samajhao",
+        "samjao",
+        "samjhao",
+        "ye chapter",
+        "ye topic",
+        "yeh chapter",
+        "yeh topic",
+    )
+
+    if any(command in norm for command in safe_context_commands):
+        return False
+
+    chapter_title = getattr(getattr(match, "chapter", None), "title", "")
+    chapter_title_norm = _gv_practical_norm(chapter_title)
+    chapter_title_without_prefix = re.sub(
+        r"^(?:semester|sem)\s+\d+\s+",
+        "",
+        chapter_title_norm,
+    ).strip()
+
+    searchable_terms = [
+        chapter_title,
+        chapter_title_without_prefix,
+        getattr(getattr(match, "chapter", None), "number", ""),
+        getattr(getattr(match, "topic", None), "title", ""),
+    ]
+    searchable_terms.extend(getattr(getattr(match, "topic", None), "aliases", ()) or ())
+
+    if any(_gv_practical_contains_phrase(norm, term) for term in searchable_terms):
+        return False
+
+    return True
+
+
+def _gv_practical_history_path() -> Path:
+    return Path(__file__).resolve().parent / "data" / "practical_test_history.json"
+
+
+def _gv_practical_load_history() -> dict[str, list[str]]:
+    path = _gv_practical_history_path()
+    try:
+        if not path.exists():
+            return {}
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        raw_history = payload.get("history", payload) if isinstance(payload, dict) else {}
+        if isinstance(raw_history, dict):
+            return {
+                str(key): [str(item) for item in value if str(item)]
+                for key, value in raw_history.items()
+                if isinstance(value, list)
+            }
+    except Exception:
+        return {}
+    return {}
+
+
+def _gv_practical_save_history(history: dict[str, list[str]]) -> None:
+    try:
+        path = _gv_practical_history_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                {"schema_version": 1, "history": history},
+                indent=2,
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+            newline="\n",
+        )
+    except Exception:
+        pass
+
+
+def _gv_practical_test_key(syllabus: object, scope: object, context: StudentLearningContext) -> str:
+    raw = "|".join(
+        [
+            str(getattr(syllabus, "key", "")),
+            str(getattr(syllabus, "subject", "")),
+            str(getattr(context, "student_id", "")),
+            str(getattr(scope, "scope_type", "")),
+            str(getattr(scope, "description", "")),
+            str(getattr(scope, "total_marks", "")),
+        ]
+    )
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:24]
+
+
+def _gv_practical_question_signature(raw_answer: str) -> str:
+    cleaned = str(raw_answer or "")
+    cleaned = re.sub(r"Generated at:.*", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"Test ID:.*", "", cleaned, flags=re.IGNORECASE)
+
+    questionish_lines: list[str] = []
+    for line in cleaned.splitlines():
+        stripped = line.strip()
+        if re.match(r"^(?:Q\.?\s*)?\d+[\).\s:-]", stripped, flags=re.IGNORECASE):
+            questionish_lines.append(stripped)
+        elif re.match(r"^[A-D][\).\s:-]", stripped):
+            questionish_lines.append(stripped)
+
+    signature_source = "\n".join(questionish_lines).strip()
+    if not signature_source:
+        signature_source = re.sub(r"\s+", " ", cleaned).strip()
+
+    return hashlib.sha256(signature_source.encode("utf-8")).hexdigest()
+
+
+def _gv_render_practical_test_paper(
+    syllabus: object,
+    scope: object,
+    *,
+    context: StudentLearningContext,
+    message: str,
+) -> tuple[str, GeneratedTestPaper]:
+    if not _gv_practical_tutor_mode():
+        return render_test_paper(syllabus, scope, context=context, message=message)
+
+    history = _gv_practical_load_history()
+    key = _gv_practical_test_key(syllabus, scope, context)
+    used_list = list(history.get(key, []))
+    used = set(used_list)
+
+    chosen_raw = ""
+    chosen_paper = None
+    chosen_sig = ""
+
+    for _ in range(30):
+        raw_answer, paper_obj = render_test_paper(
+            syllabus,
+            scope,
+            context=context,
+            message=message,
+        )
+        sig = _gv_practical_question_signature(raw_answer)
+
+        if not chosen_raw:
+            chosen_raw = raw_answer
+            chosen_paper = paper_obj
+            chosen_sig = sig
+
+        if sig and sig not in used:
+            chosen_raw = raw_answer
+            chosen_paper = paper_obj
+            chosen_sig = sig
+            break
+
+    if chosen_paper is None:
+        chosen_raw, chosen_paper = render_test_paper(
+            syllabus,
+            scope,
+            context=context,
+            message=message,
+        )
+        chosen_sig = _gv_practical_question_signature(chosen_raw)
+
+    if chosen_sig and chosen_sig not in used:
+        history[key] = (used_list + [chosen_sig])[-500:]
+        _gv_practical_save_history(history)
+
+    return chosen_raw, chosen_paper
+
+# === GYANVERSE PRACTICAL CODE-ONLY TUTOR LOCK V1 END ===
 
 
 @dataclass(frozen=True)
@@ -1070,7 +1343,7 @@ class GyanVerseAIService:
 
             if syllabus is not None:
                 scope = parse_test_paper_scope(message, context, syllabus)
-                _, paper_obj = render_test_paper(syllabus, scope, context=context, message=message)
+                _, paper_obj = _gv_render_practical_test_paper(syllabus, scope, context=context, message=message)
                 self._last_generated_test_paper = paper_obj
                 return paper_obj
         except Exception:
@@ -1173,6 +1446,28 @@ class GyanVerseAIService:
             context=context,
         )
         request = classify_syllabus_tutor_request(message)
+
+        if (
+            _gv_practical_tutor_mode()
+            and match is not None
+            and _gv_practical_reject_context_only_match(message, match)
+        ):
+            if t_start is None:
+                t_start = time.perf_counter()
+            t_format_start = time.perf_counter()
+            answer = format_tutor_response(
+                _gv_practical_no_match_answer(message, context),
+                student_message=message,
+            )
+            self._record_local_response_metrics(
+                message=message,
+                answer=answer,
+                backend="practical tutor",
+                route="practical-no-match",
+                t_start=t_start,
+                t_format_start=t_format_start,
+            )
+            return answer
         if _gv_is_exam_memory_request(message) and match is not None:
             if t_start is None:
                 t_start = time.perf_counter()
@@ -1222,7 +1517,7 @@ class GyanVerseAIService:
                     t_start = time.perf_counter()
                 t_format_start = time.perf_counter()
                 scope = parse_test_paper_scope(message, context, syllabus)
-                raw_answer, paper_obj = render_test_paper(syllabus, scope, context=context, message=message)
+                raw_answer, paper_obj = _gv_render_practical_test_paper(syllabus, scope, context=context, message=message)
                 self._last_generated_test_paper = paper_obj
                 answer = format_tutor_response(raw_answer, student_message=message)
                 self._record_local_response_metrics(
@@ -1247,7 +1542,11 @@ class GyanVerseAIService:
             message=message,
             teaching_guidance=guidance,
         )
-        if allow_provider_review and match.has_validated_content:
+        if (
+            allow_provider_review
+            and match.has_validated_content
+            and not _gv_practical_tutor_mode()
+        ):
             # Exact stored yes/no and short-numeric reviews can be decided by the
             # validated local renderer. Keep those deterministic even while the
             # provider is online so the verdict, installed reasoning and source
@@ -1456,6 +1755,22 @@ class GyanVerseAIService:
         if syllabus_answer is not None:
             return syllabus_answer
 
+        if _gv_practical_tutor_mode() and not attachments:
+            t_format_start = time.perf_counter()
+            answer = format_tutor_response(
+                _gv_practical_no_match_answer(clean_msg, context),
+                student_message=clean_msg,
+            )
+            self._record_local_response_metrics(
+                message=clean_msg,
+                answer=answer,
+                backend="practical tutor",
+                route="practical-no-match",
+                t_start=t_start,
+                t_format_start=t_format_start,
+            )
+            return answer
+
         if not self.configured:
             if self._client is None or types is None:
                 reason = self.last_error or "Online AI is not configured on this device."
@@ -1620,6 +1935,26 @@ class GyanVerseAIService:
             if callable(on_first_visible):
                 on_first_visible(self.last_metrics.total_ms)
             return syllabus_answer
+
+        if _gv_practical_tutor_mode() and not attachments:
+            t_format_start = time.perf_counter()
+            answer = format_tutor_response(
+                _gv_practical_no_match_answer(clean_msg, context),
+                student_message=clean_msg,
+            )
+            self._record_local_response_metrics(
+                message=clean_msg,
+                answer=answer,
+                backend="practical tutor",
+                route="practical-no-match",
+                t_start=t_start,
+                t_format_start=t_format_start,
+            )
+            if callable(on_chunk):
+                on_chunk(answer, answer)
+            if callable(on_first_visible):
+                on_first_visible(self.last_metrics.total_ms)
+            return answer
 
         if not self.configured or not hasattr(
             getattr(self._client, "models", None), "generate_content_stream"
