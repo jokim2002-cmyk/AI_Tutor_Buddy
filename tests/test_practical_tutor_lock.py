@@ -226,6 +226,63 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertNotRegex(answer, r"\n\d+\.\s+\[[^\]]+\]")
         self.assertRegex(answer, r"10\. Explain .+\(6 Marks\)")
 
+    def test_semester_1_30_marks_test_uses_requested_marks(self) -> None:
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Mathematics",
+            current_chapter="Semester 1 ? Pie Graph",
+            current_topic="Reading and interpreting pie graphs",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="Semester 1 ka test banao 30 marks ka",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Semester 1", answer)
+        self.assertIn("Total Marks: 30 Marks", answer)
+        self.assertNotIn("Total Marks: 25 Marks", answer)
+        self.assertNotIn("? Chapter test", answer)
+
+    def test_semester_2_50_marks_test_does_not_use_current_semester_1_chapter(self) -> None:
+        syllabus = self.repo.find(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            subject="Mathematics",
+        )
+        self.assertIsNotNone(syllabus)
+        self.assertTrue(
+            any(ch.title.casefold().startswith("semester 2") for ch in syllabus.chapters),
+            "Std 7 Mathematics English fixture must include Semester 2 chapters",
+        )
+
+        service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
+        context = StudentLearningContext(
+            board="GSEB",
+            medium="English",
+            standard=7,
+            preferred_language="English",
+            current_subject="Mathematics",
+            current_chapter="Semester 1 ? Pie Graph",
+            current_topic="Reading and interpreting pie graphs",
+            onboarding_complete=True,
+        ).validate()
+
+        answer = service.ask(
+            message="semester 2 ka test banao 50 marks ka",
+            context=context,
+        )
+
+        self.assertIn("Test Paper: Semester 2", answer)
+        self.assertIn("Total Marks: 50 Marks", answer)
+        self.assertNotIn("Test Paper: Semester 1 ? Pie Graph ? Chapter test", answer)
+
     def test_exact_textbook_poem_request_does_not_fake_full_text(self) -> None:
         service = GyanVerseAIService(api_key="", syllabus_repository=self.repo)
         context = StudentLearningContext(

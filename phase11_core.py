@@ -4198,7 +4198,7 @@ def parse_test_paper_scope(
     )
 
     marks_match = re.search(
-        r"\b(20|25|50|80|100)\s*(?:marks?|mark|m)\b",
+        r"\b(20|25|30|50|80|100)\s*(?:marks?|mark|m)\b",
         message,
         re.IGNORECASE,
     )
@@ -4239,7 +4239,7 @@ def parse_test_paper_scope(
             else (
                 180
                 if total_marks == 100
-                else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 180)
+                else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 180)
             )
         )
         return TestPaperScope(
@@ -4250,6 +4250,39 @@ def parse_test_paper_scope(
             include_answers=include_answers,
             description=f"Full Syllabus — Full book test ({len(syllabus.chapters)} Chapters / Full Book)",
         )
+
+    # Semester scope (e.g. "semester 1 ka test", "sem 2 ka 50 marks paper")
+    semester_match = re.search(
+        r"\b(?:semester|sem)\s*([12])\b",
+        message,
+        re.IGNORECASE,
+    )
+    if semester_match:
+        semester_no = semester_match.group(1)
+        matched = [
+            c
+            for c in syllabus.chapters
+            if re.match(
+                rf"^\s*semester\s*{semester_no}\b",
+                c.title,
+                re.IGNORECASE,
+            )
+        ]
+        if matched:
+            total_marks = explicit_marks if explicit_marks is not None else 50
+            duration = (
+                explicit_duration
+                if explicit_duration is not None
+                else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+            )
+            return TestPaperScope(
+                scope_type="multi_chapter",
+                chapters=matched,
+                total_marks=total_marks,
+                duration_minutes=duration,
+                include_answers=include_answers,
+                description=f"Semester {semester_no} ({len(matched)} Chapters)",
+            )
 
     # Multi-chapter range
     range_match = re.search(
@@ -4272,7 +4305,7 @@ def parse_test_paper_scope(
                 else (
                     90
                     if total_marks == 50
-                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                    else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
                 )
             )
             ch_str = ", ".join(c.number for c in matched)
@@ -4306,7 +4339,7 @@ def parse_test_paper_scope(
                 else (
                     90
                     if total_marks == 50
-                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                    else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
                 )
             )
             ch_str = ", ".join(c.number for c in matched)
@@ -4336,7 +4369,7 @@ def parse_test_paper_scope(
                 else (
                     90
                     if total_marks == 50
-                    else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
+                    else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 90)
                 )
             )
             ch_str = ", ".join(c.number for c in matched)
@@ -4394,7 +4427,7 @@ def parse_test_paper_scope(
         else (
             45
             if total_marks == 25
-            else {20: 30, 25: 45, 50: 90, 80: 120, 100: 180}.get(total_marks, 45)
+            else {20: 30, 25: 45, 30: 60, 50: 90, 80: 120, 100: 180}.get(total_marks, 45)
         )
     )
     return TestPaperScope(
@@ -6055,6 +6088,12 @@ def render_test_paper(
         25: [
             ("Section A (1 Mark Each)", 1, 5),
             ("Section B (2 Marks Each)", 2, 4),
+            ("Section C (3 Marks Each)", 3, 2),
+            ("Section D (6 Marks Each)", 6, 1),
+        ],
+        30: [
+            ("Section A (1 Mark Each)", 1, 6),
+            ("Section B (2 Marks Each)", 2, 6),
             ("Section C (3 Marks Each)", 3, 2),
             ("Section D (6 Marks Each)", 6, 1),
         ],
