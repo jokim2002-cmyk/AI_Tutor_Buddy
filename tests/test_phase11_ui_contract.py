@@ -703,6 +703,8 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("_show_local_login_gate", ui_source)
         self.assertIn("return", ui_source)
         self.assertIn("local_logout_click", ui_source)
+        self.assertNotIn("ft.alignment.center", ui_source)
+        self.assertNotIn("ft.border.all", ui_source)
 
 if __name__ == "__main__":
     unittest.main()

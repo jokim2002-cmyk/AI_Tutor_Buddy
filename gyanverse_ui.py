@@ -277,7 +277,6 @@ def main(page: ft.Page) -> None:
             ft.Container(
                 expand=True,
                 bgcolor=COLOR_PANEL,
-                alignment=ft.alignment.center,
                 padding=20,
                 content=card,
             )
