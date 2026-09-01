@@ -157,6 +157,27 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertNotIn('"Gujarati", "English", "Hindi"', medium_block)
         self.assertNotIn('"Gujarati", "Hindi", "English"', language_block)
 
+    def test_v1_mobile_ui_and_cloud_polish_contracts_exist(self) -> None:
+        ui_source = (self.root / "gyanverse_ui.py").read_text(encoding="utf-8")
+
+        self.assertIn("GYANVERSE_V1_CLOUD_SYNC_ENABLED = False", ui_source)
+        self.assertIn("Cloud: disabled in English V1 pilot", ui_source)
+        self.assertIn("Google sign-in is disabled in the English V1 pilot", ui_source)
+        self.assertIn("visible=GYANVERSE_V1_CLOUD_SYNC_ENABLED", ui_source)
+
+        self.assertIn("dialog_is_mobile = dialog_viewport_width < 700.0", ui_source)
+        self.assertIn("dialog_width = max(300.0, min(560.0, dialog_viewport_width - 44.0))", ui_source)
+        self.assertIn("dialog_height = max(420.0, min(500.0, dialog_viewport_height - 230.0))", ui_source)
+        self.assertIn("profile_field_width = max(260.0, dialog_width - 32.0)", ui_source)
+        self.assertIn("locked_scope_text = ft.Text(", ui_source)
+        self.assertIn("selected_lesson_hint = ft.Text(", ui_source)
+        self.assertIn("Selected chapter:", ui_source)
+        self.assertIn("Selected topic:", ui_source)
+        self.assertIn("visible=not dialog_is_mobile", ui_source)
+
+        self.assertIn("width=136 if is_mobile else 140", ui_source)
+        self.assertIn("mode_dropdown.width = 136 if is_mobile_res else 140", ui_source)
+
     def test_ui_labels_are_practical_not_ai_teacher_promises(self) -> None:
         ui_source = (self.root / "gyanverse_ui.py").read_text(encoding="utf-8")
 

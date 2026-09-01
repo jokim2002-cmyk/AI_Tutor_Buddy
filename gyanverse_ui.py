@@ -71,6 +71,7 @@ ACTIVE_TEST_PAPERS_PATH = DATA_DIR / "active_test_papers.json"
 # Only English medium is exposed. Gujarati can be added later after the English pilot succeeds.
 GYANVERSE_V1_ALLOWED_MEDIUMS = ("English",)
 GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES = ("English",)
+GYANVERSE_V1_CLOUD_SYNC_ENABLED = False
 
 NAV_ITEMS = (
     ("home", "Home", ft.Icons.HOME_OUTLINED, ft.Icons.HOME),
@@ -321,6 +322,14 @@ def main(page: ft.Page) -> None:
         show_view("tutor")
 
     def refresh_cloud_status(message: str | None = None, *, error: bool = False) -> None:
+        if not GYANVERSE_V1_CLOUD_SYNC_ENABLED:
+            label = "Cloud: disabled in English V1 pilot"
+            cloud_status_text.value = label
+            cloud_status_text.color = COLOR_MUTED
+            account_button.icon = ft.Icons.ACCOUNT_CIRCLE_OUTLINED
+            account_button.tooltip = label
+            return
+
         session = firebase_sessions.session
         if message is not None:
             label = message
@@ -341,6 +350,10 @@ def main(page: ft.Page) -> None:
 
     async def sync_cloud_now(*, show_result: bool = True, refresh_tutor: bool = True) -> None:
         nonlocal cloud_sync_busy
+        if not GYANVERSE_V1_CLOUD_SYNC_ENABLED:
+            if show_result:
+                notify("Cloud sync is disabled in the English V1 pilot. Local tutor and local chat remain available.")
+            return
         if cloud_sync_busy:
             return
         if firebase_sessions.session is None:
@@ -385,6 +398,9 @@ def main(page: ft.Page) -> None:
         await sync_cloud_now()
 
     async def google_login_click(_: object = None) -> None:
+        if not GYANVERSE_V1_CLOUD_SYNC_ENABLED:
+            notify("Google sign-in is disabled in the English V1 pilot. Use the local tutor without signing in.")
+            return
         if google_provider is None:
             missing = ", ".join(firebase_config.missing_live_sync_fields())
             notify(f"Google cloud setup is incomplete: {missing}", error=True)
@@ -605,36 +621,90 @@ def main(page: ft.Page) -> None:
             "Science & Technology",
             "Social Science",
         }
-        name_field = ft.TextField(label="Student name", value=context.name, width=520)
+        dialog_viewport_width = float(getattr(page, "width", 0) or 560)
+        dialog_viewport_height = float(getattr(page, "height", 0) or 760)
+        dialog_is_mobile = dialog_viewport_width < 700.0
+        dialog_width = max(300.0, min(560.0, dialog_viewport_width - 44.0)) if dialog_is_mobile else 560.0
+        dialog_height = max(420.0, min(500.0, dialog_viewport_height - 230.0)) if dialog_is_mobile else 560.0
+        profile_field_width = max(260.0, dialog_width - 32.0)
+        compact_field_height = 50 if dialog_is_mobile else None
+
+        name_field = ft.TextField(
+            label="Student name",
+            value=context.name,
+            width=profile_field_width,
+            dense=dialog_is_mobile,
+            height=compact_field_height,
+            visible=not dialog_is_mobile,
+        )
         board_field = ft.Dropdown(
             label="Board",
-            width=150,
+            width=140 if dialog_is_mobile else 150,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
             value=context.board if context.board in {"GSEB", "CBSE"} else "GSEB",
             options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE")],
         )
         medium_field = ft.Dropdown(
             label="Medium",
-            width=180,
+            width=profile_field_width,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
             value=context.medium if context.medium in GYANVERSE_V1_ALLOWED_MEDIUMS else GYANVERSE_V1_ALLOWED_MEDIUMS[0],
             options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_MEDIUMS],
+            visible=False,
         )
         standard_field = ft.Dropdown(
             label="Standard",
-            width=120,
+            width=116 if dialog_is_mobile else 120,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
             value=str(context.standard) if 1 <= context.standard <= 10 else "7",
             options=[ft.dropdown.Option(str(item)) for item in range(1, 11)],
         )
         language_field = ft.Dropdown(
             label="Tutor language",
-            width=180,
+            width=profile_field_width,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
             value=context.preferred_language if context.preferred_language in GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES else GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES[0],
             options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES],
+            visible=False,
         )
 
-        subject_field = ft.Dropdown(label="Subject", width=520)
-        chapter_field = ft.Dropdown(label="Chapter", width=520)
-        topic_field = ft.Dropdown(label="Topic", width=520)
-        package_status = ft.Text(size=10, color=COLOR_MUTED)
+        locked_scope_text = ft.Text(
+            "English medium is locked for V1 pilot.",
+            size=10,
+            color=COLOR_MUTED,
+            visible=dialog_is_mobile,
+        )
+        selected_lesson_hint = ft.Text(
+            "",
+            size=10 if dialog_is_mobile else 11,
+            color=COLOR_MUTED,
+            max_lines=2,
+            overflow=ft.TextOverflow.ELLIPSIS,
+            visible=dialog_is_mobile,
+        )
+        subject_field = ft.Dropdown(
+            label="Subject",
+            width=profile_field_width,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
+        )
+        chapter_field = ft.Dropdown(
+            label="Chapter",
+            width=profile_field_width,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
+        )
+        topic_field = ft.Dropdown(
+            label="Topic",
+            width=profile_field_width,
+            height=compact_field_height,
+            dense=dialog_is_mobile,
+        )
+        package_status = ft.Text(size=10, color=COLOR_MUTED, max_lines=2)
 
         def matching_syllabi() -> list[object]:
             board = board_field.value or "GSEB"
@@ -669,6 +739,10 @@ def main(page: ft.Page) -> None:
             topic_titles = [item.title for item in (chapter.topics if chapter is not None else ())]
             topic_field.options = [ft.dropdown.Option(item) for item in topic_titles]
             topic_field.value = old_value if old_value in topic_titles else (topic_titles[0] if topic_titles else None)
+            selected_lesson_hint.value = (
+                f"Selected chapter: {chapter_field.value or 'Not selected'}\n"
+                f"Selected topic: {topic_field.value or 'Not selected'}"
+            )
 
         def refresh_chapters(*, preserve: bool = True) -> None:
             syllabus = selected_syllabus()
@@ -750,16 +824,18 @@ def main(page: ft.Page) -> None:
             modal=first_use,
             title=ft.Text("Set up your personal tutor", size=20, weight=ft.FontWeight.BOLD),
             content=ft.Container(
-                width=560,
-                height=560,
+                width=dialog_width,
+                height=dialog_height,
                 content=ft.Column(
                     [
                         name_field,
-                        ft.Row([board_field, medium_field, standard_field], spacing=12, wrap=True),
+                        ft.Row([board_field, medium_field, standard_field], spacing=10, wrap=True),
+                        locked_scope_text,
                         language_field,
-                        ft.Divider(height=8),
+                        ft.Divider(height=6),
                         ft.Text("Current school lesson", size=15, weight=ft.FontWeight.BOLD),
                         package_status,
+                        selected_lesson_hint,
                         subject_field,
                         chapter_field,
                         topic_field,
@@ -1134,15 +1210,15 @@ def main(page: ft.Page) -> None:
                     surface(
                         ft.Column(
                             [
-                                ft.Text("Google account & cloud sync", size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text("Google account & cloud sync (future)", size=16, weight=ft.FontWeight.BOLD),
                                 ft.Text(cloud_status_text.value, color=cloud_status_text.color),
                                 ft.Text(
-                                    "Chats stay in local SQLite first. Signed-in messages are uploaded to owner-isolated Firestore paths.",
+                                    "English V1 pilot is local-first. Google sign-in is disabled until cloud setup is production-ready.",
                                     size=11,
                                     color=COLOR_MUTED,
                                 ),
                                 ft.Text(
-                                    "Remember me is encrypted only when GYANVERSE_AUTH_STORAGE_SECRET is configured.",
+                                    "No Google account is required for this pilot APK.",
                                     size=10,
                                     color=COLOR_MUTED,
                                 ),
@@ -1168,6 +1244,7 @@ def main(page: ft.Page) -> None:
                                         ),
                                     ],
                                     wrap=True,
+                                    visible=GYANVERSE_V1_CLOUD_SYNC_ENABLED,
                                 ),
                             ],
                             spacing=8,
@@ -1227,7 +1304,7 @@ def main(page: ft.Page) -> None:
         composer_slot = ft.Container(content=composer, expand=True)
         mode_dropdown = ft.Dropdown(
             value=context.learning_mode,
-            width=110 if is_mobile else 140,
+            width=136 if is_mobile else 140,
             dense=True,
             text_size=12 if is_mobile else 13,
             options=[
@@ -1614,7 +1691,7 @@ def main(page: ft.Page) -> None:
             except Exception:
                 pass
             shared_w = max(300.0, new_width - 24.0) if is_mobile_res else max(340.0, min(1320.0, new_width - 48.0))
-            mode_dropdown.width = 110 if is_mobile_res else 140
+            mode_dropdown.width = 136 if is_mobile_res else 140
             title_text.size = 20 if is_mobile_res else 24
             context_text.size = 11 if is_mobile_res else 13
             if lesson_context_text is not None:
@@ -2052,7 +2129,7 @@ def main(page: ft.Page) -> None:
                 busy.visible = False
                 send_button.disabled = False
                 page.update()
-                if firebase_sessions.session is not None:
+                if GYANVERSE_V1_CLOUD_SYNC_ENABLED and firebase_sessions.session is not None:
                     asyncio.create_task(sync_cloud_now(show_result=False, refresh_tutor=False))
 
                 try:

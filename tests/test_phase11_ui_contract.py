@@ -127,7 +127,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("attachment_extra = 34.0 if selected_attachments else 0.0", UI)
         self.assertNotIn("header_offset = 335.0 if is_m else 180.0", UI)
         mode_block = UI.split("mode_dropdown = ft.Dropdown(", 1)[1].split("attachment_preview = ft.Row(", 1)[0]
-        self.assertIn("width=110 if is_mobile else 140", mode_block)
+        self.assertIn("width=136 if is_mobile else 140", mode_block)
         self.assertIn("text_size=12 if is_mobile else 13", mode_block)
         shell_block = UI.split("composer_shell = ft.Container(", 1)[1].split("context_banner = ft.Container(", 1)[0]
         self.assertIn("height=52", shell_block)
@@ -167,14 +167,20 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertNotIn('options=[ft.dropdown.Option(item) for item in ("GSEB", "CBSE", "ICSE", "Other")]', UI)
 
     def test_profile_dialog_uses_non_overlapping_dropdown_layout(self):
-        self.assertIn('name_field = ft.TextField(label="Student name", value=context.name, width=520)', UI)
-        self.assertIn('width=560', UI)
-        self.assertIn('height=560', UI)
-        self.assertIn('ft.Row([board_field, medium_field, standard_field], spacing=12, wrap=True)', UI)
-        self.assertIn('subject_field = ft.Dropdown(label="Subject", width=520)', UI)
-        self.assertIn('chapter_field = ft.Dropdown(label="Chapter", width=520)', UI)
-        self.assertIn('topic_field = ft.Dropdown(label="Topic", width=520)', UI)
-        self.assertIn('tight=False', UI)
+        self.assertIn("dialog_is_mobile = dialog_viewport_width < 700.0", UI)
+        self.assertIn("dialog_width = max(300.0, min(560.0, dialog_viewport_width - 44.0))", UI)
+        self.assertIn("dialog_height = max(420.0, min(500.0, dialog_viewport_height - 230.0))", UI)
+        self.assertIn("profile_field_width = max(260.0, dialog_width - 32.0)", UI)
+        self.assertIn("height=compact_field_height", UI)
+        self.assertIn("dense=dialog_is_mobile", UI)
+        self.assertIn("locked_scope_text = ft.Text(", UI)
+        self.assertIn("selected_lesson_hint = ft.Text(", UI)
+        self.assertIn("Selected chapter:", UI)
+        self.assertIn("Selected topic:", UI)
+        self.assertIn("visible=not dialog_is_mobile", UI)
+        self.assertIn("width=dialog_width", UI)
+        self.assertIn("height=dialog_height", UI)
+        self.assertIn("tight=False", UI)
 
     def test_mobile_width_and_assets(self):
         self.assertIn("page.window.min_width = 360", UI)
@@ -182,7 +188,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("is_mobile = viewport_width < 700.0", UI)
         self.assertIn("status_column = ft.Column(", UI)
         self.assertIn("visible=not (float(getattr(page, \"width\", 0) or 1180) < 700.0)", UI)
-        self.assertIn("width=110 if is_mobile else 140", UI)
+        self.assertIn("width=136 if is_mobile else 140", UI)
         expected = {
             "icon.png": (1024, 1024),
             "icon_android.png": (1024, 1024),
@@ -313,7 +319,7 @@ class Phase11UIContractTests(unittest.TestCase):
         self.assertIn("page.set_clipboard(", UI)
         self.assertIn("transcript_bottom_spacer = ft.Container(height=20 if is_mobile else 24)", UI)
         self.assertIn("scroll=ft.ScrollMode.AUTO", UI)
-        self.assertIn("height=560", UI)
+        self.assertIn("height=dialog_height", UI)
 
     def test_android_mobile_shell_uses_root_safe_area_and_preserves_composer(self):
         self.assertIn("page.add(\n        ft.SafeArea(", UI)
