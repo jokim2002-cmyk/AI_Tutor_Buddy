@@ -132,6 +132,31 @@ class PracticalTutorLockTests(unittest.TestCase):
         self.assertEqual(service.last_metrics.route, "practical-exact-textbook-boundary")
         self.assertNotIn("Land Art refers to artistic creations", answer)
 
+    def test_v1_ui_exposes_only_english_medium_and_language(self) -> None:
+        ui_source = (self.root / "gyanverse_ui.py").read_text(encoding="utf-8")
+
+        self.assertIn('GYANVERSE_V1_ALLOWED_MEDIUMS = ("English",)', ui_source)
+        self.assertIn('GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES = ("English",)', ui_source)
+        self.assertIn(
+            "options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_MEDIUMS]",
+            ui_source,
+        )
+        self.assertIn(
+            "options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES]",
+            ui_source,
+        )
+        self.assertIn("medium=medium_field.value or GYANVERSE_V1_ALLOWED_MEDIUMS[0]", ui_source)
+        self.assertIn(
+            "preferred_language=language_field.value or GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES[0]",
+            ui_source,
+        )
+
+        medium_block = ui_source.split("medium_field = ft.Dropdown(", 1)[1].split("standard_field = ft.Dropdown(", 1)[0]
+        language_block = ui_source.split("language_field = ft.Dropdown(", 1)[1].split("subject_field = ft.Dropdown(", 1)[0]
+
+        self.assertNotIn('"Gujarati", "English", "Hindi"', medium_block)
+        self.assertNotIn('"Gujarati", "Hindi", "English"', language_block)
+
     def test_ui_labels_are_practical_not_ai_teacher_promises(self) -> None:
         ui_source = (self.root / "gyanverse_ui.py").read_text(encoding="utf-8")
 

@@ -67,6 +67,11 @@ DATA_DIR.mkdir(exist_ok=True)
 ASSETS_DIR.mkdir(exist_ok=True)
 ACTIVE_TEST_PAPERS_PATH = DATA_DIR / "active_test_papers.json"
 
+# V1 commercial pilot scope:
+# Only English medium is exposed. Gujarati can be added later after the English pilot succeeds.
+GYANVERSE_V1_ALLOWED_MEDIUMS = ("English",)
+GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES = ("English",)
+
 NAV_ITEMS = (
     ("home", "Home", ft.Icons.HOME_OUTLINED, ft.Icons.HOME),
     ("tutor", "Tutor", ft.Icons.SCHOOL_OUTLINED, ft.Icons.SCHOOL),
@@ -128,6 +133,14 @@ def main(page: ft.Page) -> None:
 
     context_store = LearningContextStore(DATA_DIR / "student_context.json")
     context = context_store.load()
+    if context.medium.casefold() not in {item.casefold() for item in GYANVERSE_V1_ALLOWED_MEDIUMS}:
+        context = context_store.save(
+            replace(
+                context,
+                medium=GYANVERSE_V1_ALLOWED_MEDIUMS[0],
+                preferred_language=GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES[0],
+            )
+        )
     syllabus_repo = GSEBSyllabusRepository(APP_DIR / "syllabus")
     canonical_context = canonicalize_installed_syllabus_context(context, syllabus_repo)
     if canonical_context != context:
@@ -602,8 +615,8 @@ def main(page: ft.Page) -> None:
         medium_field = ft.Dropdown(
             label="Medium",
             width=180,
-            value=context.medium,
-            options=[ft.dropdown.Option(item) for item in ("Gujarati", "English", "Hindi")],
+            value=context.medium if context.medium in GYANVERSE_V1_ALLOWED_MEDIUMS else GYANVERSE_V1_ALLOWED_MEDIUMS[0],
+            options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_MEDIUMS],
         )
         standard_field = ft.Dropdown(
             label="Standard",
@@ -614,8 +627,8 @@ def main(page: ft.Page) -> None:
         language_field = ft.Dropdown(
             label="Tutor language",
             width=180,
-            value=context.preferred_language,
-            options=[ft.dropdown.Option(item) for item in ("Gujarati", "Hindi", "English")],
+            value=context.preferred_language if context.preferred_language in GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES else GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES[0],
+            options=[ft.dropdown.Option(item) for item in GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES],
         )
 
         subject_field = ft.Dropdown(label="Subject", width=520)
@@ -625,7 +638,7 @@ def main(page: ft.Page) -> None:
 
         def matching_syllabi() -> list[object]:
             board = board_field.value or "GSEB"
-            medium = medium_field.value or "Gujarati"
+            medium = medium_field.value or GYANVERSE_V1_ALLOWED_MEDIUMS[0]
             standard = int(standard_field.value or 7)
             return [
                 item
@@ -717,9 +730,9 @@ def main(page: ft.Page) -> None:
                         context,
                         name=(name_field.value or "Student").strip(),
                         board=board_field.value or "GSEB",
-                        medium=medium_field.value or "Gujarati",
+                        medium=medium_field.value or GYANVERSE_V1_ALLOWED_MEDIUMS[0],
                         standard=int(standard_field.value or 7),
-                        preferred_language=language_field.value or "Gujarati",
+                        preferred_language=language_field.value or GYANVERSE_V1_ALLOWED_TUTOR_LANGUAGES[0],
                         current_subject=subject_field.value,
                         current_chapter=chapter_field.value,
                         current_topic=topic_field.value,
